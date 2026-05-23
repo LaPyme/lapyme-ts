@@ -1,0 +1,39 @@
+speakeasyVersion: 1.764.1
+sources:
+    La Pyme API:
+        sourceNamespace: la-pyme-api
+        sourceRevisionDigest: sha256:801c40549fd43179dcf54cd0af54e4cf2d0e79149061b9eb60f2ed32174dc720
+        sourceBlobDigest: sha256:04ea3ee27061c61085be27a46f0d1a393d9dfd02db2caf6b6474ff3ecaa77363
+        tags:
+            - latest
+            - 1.0.0
+targets:
+    lapyme:
+        source: La Pyme API
+        sourceNamespace: la-pyme-api
+        sourceRevisionDigest: sha256:801c40549fd43179dcf54cd0af54e4cf2d0e79149061b9eb60f2ed32174dc720
+        sourceBlobDigest: sha256:04ea3ee27061c61085be27a46f0d1a393d9dfd02db2caf6b6474ff3ecaa77363
+        codeSamplesNamespace: la-pyme-api-typescript-code-samples
+        codeSamplesRevisionDigest: sha256:cb30d89429c0b88706e6d3a7dc16cafa4152b76871b7c82dd2f7916515b92bba
+workflow:
+    workflowVersion: 1.0.0
+    speakeasyVersion: latest
+    sources:
+        La Pyme API:
+            inputs:
+                - location: https://docs.lapyme.com.ar/api-reference/openapi.json
+            overlays:
+                - location: .speakeasy/speakeasy-modifications-overlay.yaml
+            output: .speakeasy/out.openapi.yaml
+            registry:
+                location: registry.speakeasyapi.dev/lapyme/la-pyme/la-pyme-api
+    targets:
+        lapyme:
+            target: typescript
+            source: La Pyme API
+            codeSamples:
+                registry:
+                    location: registry.speakeasyapi.dev/lapyme/la-pyme/la-pyme-api-typescript-code-samples
+                labelOverride:
+                    fixedValue: Typescript (SDK)
+                blocking: false

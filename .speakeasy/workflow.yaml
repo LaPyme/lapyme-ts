@@ -1,0 +1,21 @@
+workflowVersion: 1.0.0
+speakeasyVersion: latest
+sources:
+    La Pyme API:
+        inputs:
+            - location: https://docs.lapyme.com.ar/api-reference/openapi.json
+        overlays:
+            - location: .speakeasy/speakeasy-modifications-overlay.yaml
+        output: .speakeasy/out.openapi.yaml
+        registry:
+            location: registry.speakeasyapi.dev/lapyme/la-pyme/la-pyme-api
+targets:
+    lapyme:
+        target: typescript
+        source: La Pyme API
+        codeSamples:
+            registry:
+                location: registry.speakeasyapi.dev/lapyme/la-pyme/la-pyme-api-typescript-code-samples
+            labelOverride:
+                fixedValue: Typescript (SDK)
+            blocking: false
