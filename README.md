@@ -13,7 +13,7 @@ Developer-friendly & type-safe Typescript SDK specifically catered to leverage *
 <!-- Start Summary [summary] -->
 ## Summary
 
-La Pyme API: API externa para integrar con el sistema de gestión La Pyme. v1 cubre clientes, productos, ventas, stock y transferencias. v2 agrega compras, proveedores y reportes con errores estructurados e idempotencia.
+La Pyme API: Resources and workflows for purchases, sales, inventory, contacts, products, reports, and settings.
 <!-- End Summary [summary] -->
 
 <!-- Start Table of Contents [toc] -->
@@ -85,10 +85,12 @@ For supported JavaScript runtimes, please consult [RUNTIMES.md](RUNTIMES.md).
 ```typescript
 import { Lapyme } from "lapyme";
 
-const lapyme = new Lapyme();
+const lapyme = new Lapyme({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
 
 async function run() {
-  const result = await lapyme.health.check();
+  const result = await lapyme.suppliers.list({});
 
   console.log(result);
 }
@@ -118,7 +120,7 @@ const lapyme = new Lapyme({
 });
 
 async function run() {
-  const result = await lapyme.health.check();
+  const result = await lapyme.suppliers.list({});
 
   console.log(result);
 }
@@ -136,83 +138,159 @@ run();
 
 ### [Categories](docs/sdks/categories/README.md)
 
-* [get](docs/sdks/categories/README.md#get) - Obtener lista de categorías
-* [create](docs/sdks/categories/README.md#create) - Crear nueva categoría
-* [getById](docs/sdks/categories/README.md#getbyid) - Obtener categoría por ID
-* [updateById](docs/sdks/categories/README.md#updatebyid) - Actualizar categoría
+* [get](docs/sdks/categories/README.md#get) - Listar categorías
+* [create](docs/sdks/categories/README.md#create) - Crear categoría
+* [getById](docs/sdks/categories/README.md#getbyid) - Obtener categoría
+* [updateCategory](docs/sdks/categories/README.md#updatecategory) - Actualizar categoría
+
+### [CustomerPayments](docs/sdks/customerpayments/README.md)
+
+* [listCustomerPayments](docs/sdks/customerpayments/README.md#listcustomerpayments) - Listar cobranzas de clientes
+* [createCustomerPayment](docs/sdks/customerpayments/README.md#createcustomerpayment) - Crear cobranza de cliente
+* [getCustomerPayment](docs/sdks/customerpayments/README.md#getcustomerpayment) - Obtener cobranza de cliente
+* [void](docs/sdks/customerpayments/README.md#void) - Anular cobranza de cliente
 
 ### [Customers](docs/sdks/customers/README.md)
 
-* [get](docs/sdks/customers/README.md#get) - Obtener lista de clientes
-* [create](docs/sdks/customers/README.md#create) - Crear nuevo cliente
-* [getById](docs/sdks/customers/README.md#getbyid) - Obtener cliente por ID
-* [update](docs/sdks/customers/README.md#update) - Actualizar cliente
+* [get](docs/sdks/customers/README.md#get) - Listar clientes
+* [create](docs/sdks/customers/README.md#create) - Crear cliente
+* [getCustomerById](docs/sdks/customers/README.md#getcustomerbyid) - Obtener cliente por ID
+* [updateCustomer](docs/sdks/customers/README.md#updatecustomer) - Actualizar cliente
+* [applyTags](docs/sdks/customers/README.md#applytags) - Aplicar etiquetas a clientes
 
-### [Health](docs/sdks/health/README.md)
+### [FulfillmentOrders](docs/sdks/fulfillmentorders/README.md)
 
-* [check](docs/sdks/health/README.md#check) - Estado del servicio
+* [start](docs/sdks/fulfillmentorders/README.md#start) - Iniciar orden de preparación
+* [cancelFulfillmentOrder](docs/sdks/fulfillmentorders/README.md#cancelfulfillmentorder) - Cancelar orden de preparación
+
+### [Fulfillments](docs/sdks/fulfillments/README.md)
+
+* [createFulfillment](docs/sdks/fulfillments/README.md#createfulfillment) - Crear fulfillment
+* [voidFulfillment](docs/sdks/fulfillments/README.md#voidfulfillment) - Anular fulfillment
+
+### [Inventory](docs/sdks/inventory/README.md)
+
+* [listInventory](docs/sdks/inventory/README.md#listinventory) - Consultar inventario por depósito
+* [listInventoryMovements](docs/sdks/inventory/README.md#listinventorymovements) - Listar movimientos de inventario
+
+### [Orders](docs/sdks/orders/README.md)
+
+* [listOrders](docs/sdks/orders/README.md#listorders) - Listar pedidos
+* [createOrder](docs/sdks/orders/README.md#createorder) - Crear pedido
+* [getOrderById](docs/sdks/orders/README.md#getorderbyid) - Obtener pedido
+* [updateOrderNotes](docs/sdks/orders/README.md#updateordernotes) - Actualizar notas del pedido
+* [deleteArchived](docs/sdks/orders/README.md#deletearchived) - Eliminar pedido archivado
+* [complete](docs/sdks/orders/README.md#complete) - Completar pedido
+* [cancel](docs/sdks/orders/README.md#cancel) - Cancelar pedido
+* [prepare](docs/sdks/orders/README.md#prepare) - Preparar pedido
+* [package](docs/sdks/orders/README.md#package) - Empaquetar pedido
+* [unprepare](docs/sdks/orders/README.md#unprepare) - Revertir preparación del pedido
+* [changeFulfillmentLocation](docs/sdks/orders/README.md#changefulfillmentlocation) - Cambiar ubicación de preparación
+* [unarchive](docs/sdks/orders/README.md#unarchive) - Desarchivar pedido
+* [listFulfillmentOrders](docs/sdks/orders/README.md#listfulfillmentorders) - Listar órdenes de preparación del pedido
+* [invoice](docs/sdks/orders/README.md#invoice) - Facturar pedido
 
 ### [PaymentMethods](docs/sdks/paymentmethods/README.md)
 
-* [list](docs/sdks/paymentmethods/README.md#list) - Obtener lista de métodos de pago
-* [create](docs/sdks/paymentmethods/README.md#create) - Crear nuevo método de pago
-* [getById](docs/sdks/paymentmethods/README.md#getbyid) - Obtener método de pago por ID
-* [update](docs/sdks/paymentmethods/README.md#update) - Actualizar método de pago
+* [list](docs/sdks/paymentmethods/README.md#list) - Listar métodos de pago
+* [create](docs/sdks/paymentmethods/README.md#create) - Crear método de pago
+* [get](docs/sdks/paymentmethods/README.md#get) - Obtener método de pago
+* [updatePaymentMethod](docs/sdks/paymentmethods/README.md#updatepaymentmethod) - Actualizar método de pago
+
+### [PointsOfSale](docs/sdks/pointsofsale/README.md)
+
+* [listPointsOfSale](docs/sdks/pointsofsale/README.md#listpointsofsale) - Listar puntos de venta
 
 ### [PriceLists](docs/sdks/pricelists/README.md)
 
-* [get](docs/sdks/pricelists/README.md#get) - Obtener lista de listas de precios
-* [getById](docs/sdks/pricelists/README.md#getbyid) - Obtener lista de precios por ID
+* [get](docs/sdks/pricelists/README.md#get) - Listar listas de precios
+* [createPriceList](docs/sdks/pricelists/README.md#createpricelist) - Crear lista de precios
+* [getPriceListById](docs/sdks/pricelists/README.md#getpricelistbyid) - Obtener lista de precios por ID
+* [updatePriceList](docs/sdks/pricelists/README.md#updatepricelist) - Actualizar lista de precios
+
+### [ProductBulkAdjustments](docs/sdks/productbulkadjustments/README.md)
+
+* [create](docs/sdks/productbulkadjustments/README.md#create) - Ajustar productos en lote
 
 ### [Products](docs/sdks/products/README.md)
 
-* [list](docs/sdks/products/README.md#list) - Obtener lista de productos
-* [create](docs/sdks/products/README.md#create) - Crear nuevo producto
-* [getById](docs/sdks/products/README.md#getbyid) - Obtener producto por ID
+* [list](docs/sdks/products/README.md#list) - Listar productos
+* [create](docs/sdks/products/README.md#create) - Crear producto
+* [getProductById](docs/sdks/products/README.md#getproductbyid) - Obtener producto por ID
 * [update](docs/sdks/products/README.md#update) - Actualizar producto
+* [applyProductTags](docs/sdks/products/README.md#applyproducttags) - Aplicar etiquetas a productos
+
+### [PurchaseOrders](docs/sdks/purchaseorders/README.md)
+
+* [listPurchaseOrders](docs/sdks/purchaseorders/README.md#listpurchaseorders) - Listar órdenes de compra
+* [createPurchaseOrder](docs/sdks/purchaseorders/README.md#createpurchaseorder) - Crear orden de compra
+* [getPurchaseOrderById](docs/sdks/purchaseorders/README.md#getpurchaseorderbyid) - Obtener orden de compra por ID
+* [confirm](docs/sdks/purchaseorders/README.md#confirm) - Confirmar orden de compra
+* [close](docs/sdks/purchaseorders/README.md#close) - Cerrar orden de compra
+* [reopen](docs/sdks/purchaseorders/README.md#reopen) - Reabrir orden de compra
+
+#### [PurchaseOrders.Receipts](docs/sdks/receipts/README.md)
+
+* [receive](docs/sdks/receipts/README.md#receive) - Recibir orden de compra
 
 ### [Purchases](docs/sdks/purchases/README.md)
 
-* [create](docs/sdks/purchases/README.md#create) - Crear compra (v2)
+* [listPurchases](docs/sdks/purchases/README.md#listpurchases) - Listar compras
+* [createPurchase](docs/sdks/purchases/README.md#createpurchase) - Crear compra
+* [getPurchaseById](docs/sdks/purchases/README.md#getpurchasebyid) - Obtener compra por ID
+* [applyPurchaseTags](docs/sdks/purchases/README.md#applypurchasetags) - Aplicar etiquetas a compras
 
 ### [Reports](docs/sdks/reports/README.md)
 
-* [query](docs/sdks/reports/README.md#query) - Consultar reporte (v2)
+* [query](docs/sdks/reports/README.md#query) - Consultar reporte
 
 ### [Sales](docs/sdks/sales/README.md)
 
-* [list](docs/sdks/sales/README.md#list) - Obtener lista de ventas
-* [create](docs/sdks/sales/README.md#create) - Crear nueva venta
-* [getById](docs/sdks/sales/README.md#getbyid) - Obtener venta por ID
+* [list](docs/sdks/sales/README.md#list) - Listar ventas
+* [create](docs/sdks/sales/README.md#create) - Crear venta
+* [getSaleById](docs/sdks/sales/README.md#getsalebyid) - Obtener venta por ID
 
-### [StockPerWarehouse](docs/sdks/stockperwarehouse/README.md)
+### [SaleTags](docs/sdks/saletags/README.md)
 
-* [list](docs/sdks/stockperwarehouse/README.md#list) - Obtener stock por ubicación
+* [apply](docs/sdks/saletags/README.md#apply) - Aplicar etiquetas a ventas
+
+### [StockMovements](docs/sdks/stockmovements/README.md)
+
+* [createStockMovement](docs/sdks/stockmovements/README.md#createstockmovement) - Crear movimiento de stock
+
+### [StockTransfers](docs/sdks/stocktransfers/README.md)
+
+* [listStockTransfers](docs/sdks/stocktransfers/README.md#liststocktransfers) - Listar transferencias de stock
+* [createStockTransfer](docs/sdks/stocktransfers/README.md#createstocktransfer) - Crear transferencia de stock
+* [getStockTransferById](docs/sdks/stocktransfers/README.md#getstocktransferbyid) - Obtener transferencia por ID
+
+### [SupplierPayments](docs/sdks/supplierpayments/README.md)
+
+* [listSupplierPayments](docs/sdks/supplierpayments/README.md#listsupplierpayments) - Listar pagos a proveedores
+* [createSupplierPayment](docs/sdks/supplierpayments/README.md#createsupplierpayment) - Crear pago a proveedor
+* [getSupplierPayment](docs/sdks/supplierpayments/README.md#getsupplierpayment) - Obtener pago a proveedor
+* [voidSupplierPayment](docs/sdks/supplierpayments/README.md#voidsupplierpayment) - Anular pago a proveedor
 
 ### [Suppliers](docs/sdks/suppliers/README.md)
 
-* [list](docs/sdks/suppliers/README.md#list) - Listar proveedores (v2)
+* [list](docs/sdks/suppliers/README.md#list) - Listar proveedores
+* [createSupplier](docs/sdks/suppliers/README.md#createsupplier) - Crear proveedor
+* [getSupplier](docs/sdks/suppliers/README.md#getsupplier) - Obtener proveedor
+* [updateSupplier](docs/sdks/suppliers/README.md#updatesupplier) - Actualizar proveedor
+* [applySupplierTags](docs/sdks/suppliers/README.md#applysuppliertags) - Aplicar etiquetas a proveedores
 
-### [Transfers](docs/sdks/transfers/README.md)
+### [Tags](docs/sdks/tags/README.md)
 
-* [create](docs/sdks/transfers/README.md#create) - Crear nueva transferencia
-
-### [V2](docs/sdks/v2/README.md)
-
-* [retrieveProducts](docs/sdks/v2/README.md#retrieveproducts) - Listar productos (v2)
-* [retrieveWarehouses](docs/sdks/v2/README.md#retrievewarehouses) - Listar ubicaciones (v2)
-* [retrievePurchases](docs/sdks/v2/README.md#retrievepurchases) - Listar compras (v2)
-
-#### [V2.Purchases](docs/sdks/v2purchases/README.md)
-
-* [getById](docs/sdks/v2purchases/README.md#getbyid) - Obtener compra por ID (v2)
+* [listTags](docs/sdks/tags/README.md#listtags) - Listar etiquetas
+* [createTag](docs/sdks/tags/README.md#createtag) - Crear etiqueta
+* [updateTag](docs/sdks/tags/README.md#updatetag) - Actualizar etiqueta
 
 ### [Warehouses](docs/sdks/warehouses/README.md)
 
-* [list](docs/sdks/warehouses/README.md#list) - Obtener lista de depósitos
-* [create](docs/sdks/warehouses/README.md#create) - Crear nueva ubicación
-* [getById](docs/sdks/warehouses/README.md#getbyid) - Obtener ubicación por ID
-* [updateById](docs/sdks/warehouses/README.md#updatebyid) - Actualizar ubicación
+* [list](docs/sdks/warehouses/README.md#list) - Listar depósitos
+* [create](docs/sdks/warehouses/README.md#create) - Crear depósito
+* [getWarehouseById](docs/sdks/warehouses/README.md#getwarehousebyid) - Obtener depósito por ID
+* [updateWarehouse](docs/sdks/warehouses/README.md#updatewarehouse) - Actualizar depósito
 
 </details>
 <!-- End Available Resources and Operations [operations] -->
@@ -232,41 +310,90 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 
 <summary>Available standalone functions</summary>
 
-- [`categoriesCreate`](docs/sdks/categories/README.md#create) - Crear nueva categoría
-- [`categoriesGet`](docs/sdks/categories/README.md#get) - Obtener lista de categorías
-- [`categoriesGetById`](docs/sdks/categories/README.md#getbyid) - Obtener categoría por ID
-- [`categoriesUpdateById`](docs/sdks/categories/README.md#updatebyid) - Actualizar categoría
-- [`customersCreate`](docs/sdks/customers/README.md#create) - Crear nuevo cliente
-- [`customersGet`](docs/sdks/customers/README.md#get) - Obtener lista de clientes
-- [`customersGetById`](docs/sdks/customers/README.md#getbyid) - Obtener cliente por ID
-- [`customersUpdate`](docs/sdks/customers/README.md#update) - Actualizar cliente
-- [`healthCheck`](docs/sdks/health/README.md#check) - Estado del servicio
-- [`paymentMethodsCreate`](docs/sdks/paymentmethods/README.md#create) - Crear nuevo método de pago
-- [`paymentMethodsGetById`](docs/sdks/paymentmethods/README.md#getbyid) - Obtener método de pago por ID
-- [`paymentMethodsList`](docs/sdks/paymentmethods/README.md#list) - Obtener lista de métodos de pago
-- [`paymentMethodsUpdate`](docs/sdks/paymentmethods/README.md#update) - Actualizar método de pago
-- [`priceListsGet`](docs/sdks/pricelists/README.md#get) - Obtener lista de listas de precios
-- [`priceListsGetById`](docs/sdks/pricelists/README.md#getbyid) - Obtener lista de precios por ID
-- [`productsCreate`](docs/sdks/products/README.md#create) - Crear nuevo producto
-- [`productsGetById`](docs/sdks/products/README.md#getbyid) - Obtener producto por ID
-- [`productsList`](docs/sdks/products/README.md#list) - Obtener lista de productos
+- [`categoriesCreate`](docs/sdks/categories/README.md#create) - Crear categoría
+- [`categoriesGet`](docs/sdks/categories/README.md#get) - Listar categorías
+- [`categoriesGetById`](docs/sdks/categories/README.md#getbyid) - Obtener categoría
+- [`categoriesUpdateCategory`](docs/sdks/categories/README.md#updatecategory) - Actualizar categoría
+- [`customerPaymentsCreateCustomerPayment`](docs/sdks/customerpayments/README.md#createcustomerpayment) - Crear cobranza de cliente
+- [`customerPaymentsGetCustomerPayment`](docs/sdks/customerpayments/README.md#getcustomerpayment) - Obtener cobranza de cliente
+- [`customerPaymentsListCustomerPayments`](docs/sdks/customerpayments/README.md#listcustomerpayments) - Listar cobranzas de clientes
+- [`customerPaymentsVoid`](docs/sdks/customerpayments/README.md#void) - Anular cobranza de cliente
+- [`customersApplyTags`](docs/sdks/customers/README.md#applytags) - Aplicar etiquetas a clientes
+- [`customersCreate`](docs/sdks/customers/README.md#create) - Crear cliente
+- [`customersGet`](docs/sdks/customers/README.md#get) - Listar clientes
+- [`customersGetCustomerById`](docs/sdks/customers/README.md#getcustomerbyid) - Obtener cliente por ID
+- [`customersUpdateCustomer`](docs/sdks/customers/README.md#updatecustomer) - Actualizar cliente
+- [`fulfillmentOrdersCancelFulfillmentOrder`](docs/sdks/fulfillmentorders/README.md#cancelfulfillmentorder) - Cancelar orden de preparación
+- [`fulfillmentOrdersStart`](docs/sdks/fulfillmentorders/README.md#start) - Iniciar orden de preparación
+- [`fulfillmentsCreateFulfillment`](docs/sdks/fulfillments/README.md#createfulfillment) - Crear fulfillment
+- [`fulfillmentsVoidFulfillment`](docs/sdks/fulfillments/README.md#voidfulfillment) - Anular fulfillment
+- [`inventoryListInventory`](docs/sdks/inventory/README.md#listinventory) - Consultar inventario por depósito
+- [`inventoryListInventoryMovements`](docs/sdks/inventory/README.md#listinventorymovements) - Listar movimientos de inventario
+- [`ordersCancel`](docs/sdks/orders/README.md#cancel) - Cancelar pedido
+- [`ordersChangeFulfillmentLocation`](docs/sdks/orders/README.md#changefulfillmentlocation) - Cambiar ubicación de preparación
+- [`ordersComplete`](docs/sdks/orders/README.md#complete) - Completar pedido
+- [`ordersCreateOrder`](docs/sdks/orders/README.md#createorder) - Crear pedido
+- [`ordersDeleteArchived`](docs/sdks/orders/README.md#deletearchived) - Eliminar pedido archivado
+- [`ordersGetOrderById`](docs/sdks/orders/README.md#getorderbyid) - Obtener pedido
+- [`ordersInvoice`](docs/sdks/orders/README.md#invoice) - Facturar pedido
+- [`ordersListFulfillmentOrders`](docs/sdks/orders/README.md#listfulfillmentorders) - Listar órdenes de preparación del pedido
+- [`ordersListOrders`](docs/sdks/orders/README.md#listorders) - Listar pedidos
+- [`ordersPackage`](docs/sdks/orders/README.md#package) - Empaquetar pedido
+- [`ordersPrepare`](docs/sdks/orders/README.md#prepare) - Preparar pedido
+- [`ordersUnarchive`](docs/sdks/orders/README.md#unarchive) - Desarchivar pedido
+- [`ordersUnprepare`](docs/sdks/orders/README.md#unprepare) - Revertir preparación del pedido
+- [`ordersUpdateOrderNotes`](docs/sdks/orders/README.md#updateordernotes) - Actualizar notas del pedido
+- [`paymentMethodsCreate`](docs/sdks/paymentmethods/README.md#create) - Crear método de pago
+- [`paymentMethodsGet`](docs/sdks/paymentmethods/README.md#get) - Obtener método de pago
+- [`paymentMethodsList`](docs/sdks/paymentmethods/README.md#list) - Listar métodos de pago
+- [`paymentMethodsUpdatePaymentMethod`](docs/sdks/paymentmethods/README.md#updatepaymentmethod) - Actualizar método de pago
+- [`pointsOfSaleListPointsOfSale`](docs/sdks/pointsofsale/README.md#listpointsofsale) - Listar puntos de venta
+- [`priceListsCreatePriceList`](docs/sdks/pricelists/README.md#createpricelist) - Crear lista de precios
+- [`priceListsGet`](docs/sdks/pricelists/README.md#get) - Listar listas de precios
+- [`priceListsGetPriceListById`](docs/sdks/pricelists/README.md#getpricelistbyid) - Obtener lista de precios por ID
+- [`priceListsUpdatePriceList`](docs/sdks/pricelists/README.md#updatepricelist) - Actualizar lista de precios
+- [`productBulkAdjustmentsCreate`](docs/sdks/productbulkadjustments/README.md#create) - Ajustar productos en lote
+- [`productsApplyProductTags`](docs/sdks/products/README.md#applyproducttags) - Aplicar etiquetas a productos
+- [`productsCreate`](docs/sdks/products/README.md#create) - Crear producto
+- [`productsGetProductById`](docs/sdks/products/README.md#getproductbyid) - Obtener producto por ID
+- [`productsList`](docs/sdks/products/README.md#list) - Listar productos
 - [`productsUpdate`](docs/sdks/products/README.md#update) - Actualizar producto
-- [`purchasesCreate`](docs/sdks/purchases/README.md#create) - Crear compra (v2)
-- [`reportsQuery`](docs/sdks/reports/README.md#query) - Consultar reporte (v2)
-- [`salesCreate`](docs/sdks/sales/README.md#create) - Crear nueva venta
-- [`salesGetById`](docs/sdks/sales/README.md#getbyid) - Obtener venta por ID
-- [`salesList`](docs/sdks/sales/README.md#list) - Obtener lista de ventas
-- [`stockPerWarehouseList`](docs/sdks/stockperwarehouse/README.md#list) - Obtener stock por ubicación
-- [`suppliersList`](docs/sdks/suppliers/README.md#list) - Listar proveedores (v2)
-- [`transfersCreate`](docs/sdks/transfers/README.md#create) - Crear nueva transferencia
-- [`v2PurchasesGetById`](docs/sdks/v2purchases/README.md#getbyid) - Obtener compra por ID (v2)
-- [`v2RetrieveProducts`](docs/sdks/v2/README.md#retrieveproducts) - Listar productos (v2)
-- [`v2RetrievePurchases`](docs/sdks/v2/README.md#retrievepurchases) - Listar compras (v2)
-- [`v2RetrieveWarehouses`](docs/sdks/v2/README.md#retrievewarehouses) - Listar ubicaciones (v2)
-- [`warehousesCreate`](docs/sdks/warehouses/README.md#create) - Crear nueva ubicación
-- [`warehousesGetById`](docs/sdks/warehouses/README.md#getbyid) - Obtener ubicación por ID
-- [`warehousesList`](docs/sdks/warehouses/README.md#list) - Obtener lista de depósitos
-- [`warehousesUpdateById`](docs/sdks/warehouses/README.md#updatebyid) - Actualizar ubicación
+- [`purchaseOrdersClose`](docs/sdks/purchaseorders/README.md#close) - Cerrar orden de compra
+- [`purchaseOrdersConfirm`](docs/sdks/purchaseorders/README.md#confirm) - Confirmar orden de compra
+- [`purchaseOrdersCreatePurchaseOrder`](docs/sdks/purchaseorders/README.md#createpurchaseorder) - Crear orden de compra
+- [`purchaseOrdersGetPurchaseOrderById`](docs/sdks/purchaseorders/README.md#getpurchaseorderbyid) - Obtener orden de compra por ID
+- [`purchaseOrdersListPurchaseOrders`](docs/sdks/purchaseorders/README.md#listpurchaseorders) - Listar órdenes de compra
+- [`purchaseOrdersReceiptsReceive`](docs/sdks/receipts/README.md#receive) - Recibir orden de compra
+- [`purchaseOrdersReopen`](docs/sdks/purchaseorders/README.md#reopen) - Reabrir orden de compra
+- [`purchasesApplyPurchaseTags`](docs/sdks/purchases/README.md#applypurchasetags) - Aplicar etiquetas a compras
+- [`purchasesCreatePurchase`](docs/sdks/purchases/README.md#createpurchase) - Crear compra
+- [`purchasesGetPurchaseById`](docs/sdks/purchases/README.md#getpurchasebyid) - Obtener compra por ID
+- [`purchasesListPurchases`](docs/sdks/purchases/README.md#listpurchases) - Listar compras
+- [`reportsQuery`](docs/sdks/reports/README.md#query) - Consultar reporte
+- [`salesCreate`](docs/sdks/sales/README.md#create) - Crear venta
+- [`salesGetSaleById`](docs/sdks/sales/README.md#getsalebyid) - Obtener venta por ID
+- [`salesList`](docs/sdks/sales/README.md#list) - Listar ventas
+- [`saleTagsApply`](docs/sdks/saletags/README.md#apply) - Aplicar etiquetas a ventas
+- [`stockMovementsCreateStockMovement`](docs/sdks/stockmovements/README.md#createstockmovement) - Crear movimiento de stock
+- [`stockTransfersCreateStockTransfer`](docs/sdks/stocktransfers/README.md#createstocktransfer) - Crear transferencia de stock
+- [`stockTransfersGetStockTransferById`](docs/sdks/stocktransfers/README.md#getstocktransferbyid) - Obtener transferencia por ID
+- [`stockTransfersListStockTransfers`](docs/sdks/stocktransfers/README.md#liststocktransfers) - Listar transferencias de stock
+- [`supplierPaymentsCreateSupplierPayment`](docs/sdks/supplierpayments/README.md#createsupplierpayment) - Crear pago a proveedor
+- [`supplierPaymentsGetSupplierPayment`](docs/sdks/supplierpayments/README.md#getsupplierpayment) - Obtener pago a proveedor
+- [`supplierPaymentsListSupplierPayments`](docs/sdks/supplierpayments/README.md#listsupplierpayments) - Listar pagos a proveedores
+- [`supplierPaymentsVoidSupplierPayment`](docs/sdks/supplierpayments/README.md#voidsupplierpayment) - Anular pago a proveedor
+- [`suppliersApplySupplierTags`](docs/sdks/suppliers/README.md#applysuppliertags) - Aplicar etiquetas a proveedores
+- [`suppliersCreateSupplier`](docs/sdks/suppliers/README.md#createsupplier) - Crear proveedor
+- [`suppliersGetSupplier`](docs/sdks/suppliers/README.md#getsupplier) - Obtener proveedor
+- [`suppliersList`](docs/sdks/suppliers/README.md#list) - Listar proveedores
+- [`suppliersUpdateSupplier`](docs/sdks/suppliers/README.md#updatesupplier) - Actualizar proveedor
+- [`tagsCreateTag`](docs/sdks/tags/README.md#createtag) - Crear etiqueta
+- [`tagsListTags`](docs/sdks/tags/README.md#listtags) - Listar etiquetas
+- [`tagsUpdateTag`](docs/sdks/tags/README.md#updatetag) - Actualizar etiqueta
+- [`warehousesCreate`](docs/sdks/warehouses/README.md#create) - Crear depósito
+- [`warehousesGetWarehouseById`](docs/sdks/warehouses/README.md#getwarehousebyid) - Obtener depósito por ID
+- [`warehousesList`](docs/sdks/warehouses/README.md#list) - Listar depósitos
+- [`warehousesUpdateWarehouse`](docs/sdks/warehouses/README.md#updatewarehouse) - Actualizar depósito
 
 </details>
 <!-- End Standalone functions [standalone-funcs] -->
@@ -280,10 +407,12 @@ To change the default retry strategy for a single API call, simply provide a ret
 ```typescript
 import { Lapyme } from "lapyme";
 
-const lapyme = new Lapyme();
+const lapyme = new Lapyme({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
 
 async function run() {
-  const result = await lapyme.health.check({
+  const result = await lapyme.suppliers.list({}, {
     retries: {
       strategy: "backoff",
       backoff: {
@@ -318,10 +447,11 @@ const lapyme = new Lapyme({
     },
     retryConnectionErrors: false,
   },
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
 });
 
 async function run() {
-  const result = await lapyme.health.check();
+  const result = await lapyme.suppliers.list({});
 
   console.log(result);
 }
@@ -356,12 +486,7 @@ const lapyme = new Lapyme({
 
 async function run() {
   try {
-    const result = await lapyme.transfers.create({
-      sourceWarehouseId: "ea9f2225-403b-4e2c-93b0-0eda090ffa65",
-      targetWarehouseId: "d6903402-776f-48d6-8fba-0358959d34e5",
-      transferDate: new Date("2026-07-31T09:19:08.808Z"),
-      items: [],
-    });
+    const result = await lapyme.suppliers.list({});
 
     console.log(result);
   } catch (error) {
@@ -373,10 +498,9 @@ async function run() {
       console.log(error.headers);
 
       // Depending on the method different errors may be thrown
-      if (error instanceof errors.CreateTransferBadRequestError) {
-        console.log(error.data$.success); // boolean
-        console.log(error.data$.error); // string
-        console.log(error.data$.code); // string
+      if (error instanceof errors.ApiErrorEnvelope) {
+        console.log(error.data$.requestId); // string
+        console.log(error.data$.error); // models.ErrorT
       }
     }
   }
@@ -387,10 +511,11 @@ run();
 ```
 
 ### Error Classes
-**Primary error:**
+**Primary errors:**
 * [`LapymeError`](./src/models/errors/lapyme-error.ts): The base class for HTTP error responses.
+  * [`ApiErrorEnvelope`](./src/models/errors/api-error-envelope.ts): Generic error.
 
-<details><summary>Less common errors (21)</summary>
+<details><summary>Less common errors (6)</summary>
 
 <br />
 
@@ -403,26 +528,9 @@ run();
 
 
 **Inherit from [`LapymeError`](./src/models/errors/lapyme-error.ts)**:
-* [`RateLimitedError2`](./src/models/errors/rate-limited-error2.ts): Límite de solicitudes excedido para la organización. Status code `429`. Applicable to 26 of 35 methods.*
-* [`V2ErrorEnvelope2`](./src/models/errors/v2-error-envelope2.ts): Applicable to 6 of 35 methods.*
-* [`GetCustomerByIdNotFoundError`](./src/models/errors/get-customer-by-id-not-found-error.ts): Cliente no encontrado. Status code `404`. Applicable to 2 of 35 methods.*
-* [`GetProductByIdNotFoundError`](./src/models/errors/get-product-by-id-not-found-error.ts): Producto no encontrado. Status code `404`. Applicable to 2 of 35 methods.*
-* [`GetCategoryByIdNotFoundError`](./src/models/errors/get-category-by-id-not-found-error.ts): Categoría no encontrada. Status code `404`. Applicable to 2 of 35 methods.*
-* [`GetPaymentMethodByIdNotFoundError`](./src/models/errors/get-payment-method-by-id-not-found-error.ts): Método de pago no encontrado. Status code `404`. Applicable to 2 of 35 methods.*
-* [`GetWarehouseByIdNotFoundError`](./src/models/errors/get-warehouse-by-id-not-found-error.ts): Ubicación no encontrada. Status code `404`. Applicable to 2 of 35 methods.*
-* [`CreateTransferBadRequestError`](./src/models/errors/create-transfer-bad-request-error.ts): Error de validación o lógica de negocio. Status code `400`. Applicable to 1 of 35 methods.*
-* [`CreateSaleBadRequestError`](./src/models/errors/create-sale-bad-request-error.ts): Error de validación o lógica de negocio. Status code `400`. Applicable to 1 of 35 methods.*
-* [`V2ErrorEnvelope1`](./src/models/errors/v2-error-envelope1.ts): Parámetros inválidos. Applicable to 1 of 35 methods.*
-* [`CreateTransferNotFoundError`](./src/models/errors/create-transfer-not-found-error.ts): Ubicación o producto no encontrado. Status code `404`. Applicable to 1 of 35 methods.*
-* [`GetPriceListByIdNotFoundError`](./src/models/errors/get-price-list-by-id-not-found-error.ts): Lista de precios no encontrada. Status code `404`. Applicable to 1 of 35 methods.*
-* [`CreateSaleNotFoundError`](./src/models/errors/create-sale-not-found-error.ts): Recurso no encontrado. Status code `404`. Applicable to 1 of 35 methods.*
-* [`GetSaleByIdNotFoundError`](./src/models/errors/get-sale-by-id-not-found-error.ts): Venta no encontrada. Status code `404`. Applicable to 1 of 35 methods.*
-* [`RateLimitedError1`](./src/models/errors/rate-limited-error1.ts): Límite de solicitudes excedido para la organización. Status code `429`. Applicable to 1 of 35 methods.*
 * [`ResponseValidationError`](./src/models/errors/response-validation-error.ts): Type mismatch between the data returned from the server and the structure expected by the SDK. See `error.rawValue` for the raw value and `error.pretty()` for a nicely formatted multi-line string.
 
 </details>
-
-\* Check [the method documentation](#available-resources-and-operations) to see if the error is applicable.
 <!-- End Error Handling [errors] -->
 
 <!-- Start Server Selection [server] -->
@@ -436,10 +544,11 @@ import { Lapyme } from "lapyme";
 
 const lapyme = new Lapyme({
   serverURL: "https://api.lapyme.com.ar",
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
 });
 
 async function run() {
-  const result = await lapyme.health.check();
+  const result = await lapyme.suppliers.list({});
 
   console.log(result);
 }

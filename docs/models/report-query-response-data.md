@@ -11,28 +11,22 @@ let value: ReportQueryResponseData = {
       id: "<id>",
       ids: [
         "<value 1>",
-        "<value 2>",
-        "<value 3>",
       ],
-      labels: [],
-      measures: {
-        "key": 8605.26,
-      },
+      labels: [
+        "<value 1>",
+      ],
+      measures: {},
     },
   ],
-  totals: {
-    "key": 6595.15,
-    "key1": 1009,
-  },
+  totals: {},
   metadata: {
-    source: "sales",
+    source: "inventory",
     dimensions: [
       "<value 1>",
       "<value 2>",
     ],
     measures: [
       "<value 1>",
-      "<value 2>",
     ],
   },
 };
@@ -40,8 +34,8 @@ let value: ReportQueryResponseData = {
 
 ## Fields
 
-| Field                                                                                      | Type                                                                                       | Required                                                                                   | Description                                                                                |
-| ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ |
-| `rows`                                                                                     | [models.Row](../models/row.md)[]                                                           | :heavy_check_mark:                                                                         | N/A                                                                                        |
-| `totals`                                                                                   | Record<string, *number*>                                                                   | :heavy_check_mark:                                                                         | Totales agregados de todas las filas. Presente solo cuando se envía `includeTotals: true`. |
-| `metadata`                                                                                 | [models.Metadata](../models/metadata.md)                                                   | :heavy_check_mark:                                                                         | N/A                                                                                        |
+| Field                                                                            | Type                                                                             | Required                                                                         | Description                                                                      |
+| -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| `rows`                                                                           | [models.Row](../models/row.md)[]                                                 | :heavy_check_mark:                                                               | N/A                                                                              |
+| `totals`                                                                         | Record<string, *number*>                                                         | :heavy_check_mark:                                                               | Aggregated totals for all rows. Present only when `includeTotals: true` is sent. |
+| `metadata`                                                                       | [models.Metadata](../models/metadata.md)                                         | :heavy_check_mark:                                                               | N/A                                                                              |

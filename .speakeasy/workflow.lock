@@ -2,8 +2,8 @@ speakeasyVersion: 1.764.1
 sources:
     La Pyme API:
         sourceNamespace: la-pyme-api
-        sourceRevisionDigest: sha256:b84b589e3d2dd2761fde1c8f4a990d8c4c2aedaa8bcb124cf893d3e11c6e8fc1
-        sourceBlobDigest: sha256:4f01aa54b05304bd6c917f52fc56c460787dbcf7535df3ec037751b485a09c37
+        sourceRevisionDigest: sha256:af372f7267b026264e1467f26fd2795a1674d46dc6c2fdb75d9c03cb04ed266b
+        sourceBlobDigest: sha256:c7350626a31845f69a286653f85c97e85023d42cf2bdd1ae89681041c916fd0c
         tags:
             - latest
             - 1.0.0
@@ -11,17 +11,17 @@ targets:
     lapyme:
         source: La Pyme API
         sourceNamespace: la-pyme-api
-        sourceRevisionDigest: sha256:b84b589e3d2dd2761fde1c8f4a990d8c4c2aedaa8bcb124cf893d3e11c6e8fc1
-        sourceBlobDigest: sha256:4f01aa54b05304bd6c917f52fc56c460787dbcf7535df3ec037751b485a09c37
+        sourceRevisionDigest: sha256:af372f7267b026264e1467f26fd2795a1674d46dc6c2fdb75d9c03cb04ed266b
+        sourceBlobDigest: sha256:c7350626a31845f69a286653f85c97e85023d42cf2bdd1ae89681041c916fd0c
         codeSamplesNamespace: la-pyme-api-typescript-code-samples
-        codeSamplesRevisionDigest: sha256:9ac742c6c8dbb97b257ff3cbbf9391b87c4ad04ff251a49c42f8e9a51c877ecc
+        codeSamplesRevisionDigest: sha256:701127e5ea99998b9cea5291cf3a3bc049fdb7bcacf64a96bc6d5a7200761098
 workflow:
     workflowVersion: 1.0.0
     speakeasyVersion: latest
     sources:
         La Pyme API:
             inputs:
-                - location: https://docs.lapyme.com.ar/api-reference/openapi.json
+                - location: https://docs.lapyme.com.ar/api-reference/openapi-v1.json
             overlays:
                 - location: .speakeasy/speakeasy-modifications-overlay.yaml
             output: .speakeasy/out.openapi.yaml

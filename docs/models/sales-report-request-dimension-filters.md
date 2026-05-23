@@ -1,6 +1,6 @@
 # SalesReportRequestDimensionFilters
 
-Filtros por dimensión. Cada clave debe ser una dimensión filterable del source. El valor es un array de IDs o valores a incluir.
+Filtros por dimensión. Cada clave debe ser una dimensión filtrable para la fuente. El valor es un array de IDs o valores a incluir.
 
 ## Example Usage
 
@@ -16,11 +16,11 @@ let value: SalesReportRequestDimensionFilters = {};
 | --------------------- | --------------------- | --------------------- | --------------------- |
 | `customer`            | *string*[]            | :heavy_minus_sign:    | N/A                   |
 | `customerTaxCategory` | *string*[]            | :heavy_minus_sign:    | N/A                   |
-| `personType`          | *string*[]            | :heavy_minus_sign:    | N/A                   |
 | `province`            | *string*[]            | :heavy_minus_sign:    | N/A                   |
 | `city`                | *string*[]            | :heavy_minus_sign:    | N/A                   |
 | `product`             | *string*[]            | :heavy_minus_sign:    | N/A                   |
 | `category`            | *string*[]            | :heavy_minus_sign:    | N/A                   |
+| `subcategory`         | *string*[]            | :heavy_minus_sign:    | N/A                   |
 | `productType`         | *string*[]            | :heavy_minus_sign:    | N/A                   |
 | `salesperson`         | *string*[]            | :heavy_minus_sign:    | N/A                   |
 | `pointOfSale`         | *string*[]            | :heavy_minus_sign:    | N/A                   |

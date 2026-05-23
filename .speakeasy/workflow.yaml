@@ -3,7 +3,7 @@ speakeasyVersion: latest
 sources:
     La Pyme API:
         inputs:
-            - location: https://docs.lapyme.com.ar/api-reference/openapi.json
+            - location: https://docs.lapyme.com.ar/api-reference/openapi-v1.json
         overlays:
             - location: .speakeasy/speakeasy-modifications-overlay.yaml
         output: .speakeasy/out.openapi.yaml

@@ -11,5 +11,5 @@ let value: PurchasesReportRequestDimension = "month";
 ## Values
 
 ```typescript
-"date" | "week" | "month" | "quarter" | "year" | "supplier" | "supplierTaxCategory" | "supplierPersonType" | "supplierProvince" | "supplierCity" | "product" | "variant" | "category" | "productType" | "warehouse" | "voucherType" | "currency" | "taxRate"
+"date" | "week" | "month" | "quarter" | "year" | "supplier" | "supplierTaxCategory" | "supplierProvince" | "supplierCity" | "product" | "variant" | "category" | "subcategory" | "productType" | "warehouse" | "voucherType" | "currency" | "taxRate"
 ```

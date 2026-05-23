@@ -6,7 +6,7 @@
 import { Metadata } from "lapyme/models";
 
 let value: Metadata = {
-  source: "purchases",
+  source: "payments",
   dimensions: [
     "<value 1>",
   ],

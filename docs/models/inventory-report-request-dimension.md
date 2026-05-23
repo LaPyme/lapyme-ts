@@ -11,5 +11,5 @@ let value: InventoryReportRequestDimension = "productType";
 ## Values
 
 ```typescript
-"product" | "variant" | "category" | "productType" | "warehouse" | "currency"
+"product" | "variant" | "category" | "subcategory" | "productType" | "warehouse" | "currency"
 ```

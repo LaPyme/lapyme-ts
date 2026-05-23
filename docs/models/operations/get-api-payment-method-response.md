@@ -1,0 +1,37 @@
+# GetApiPaymentMethodResponse
+
+## Example Usage
+
+```typescript
+import { GetApiPaymentMethodResponse } from "lapyme/models/operations";
+
+let value: GetApiPaymentMethodResponse = {
+  headers: {},
+  result: {
+    requestId: "<id>",
+    data: {
+      object: "payment_method",
+      id: "97762df2-3408-4f79-9eea-b62850cf60d8",
+      name: "<value>",
+      icon: null,
+      type: "bank_transfer",
+      bankAccountId: "a543ada9-6803-4eab-bb56-cde7cdc459cd",
+      feePercentage: "<value>",
+      feeFixed: 779185,
+      requiresReference: true,
+      visibility: "sales",
+      isActive: false,
+      isDefault: false,
+      createdAt: new Date("2024-09-28T16:50:14.318Z"),
+      updatedAt: new Date("2025-09-12T20:54:03.880Z"),
+    },
+  },
+};
+```
+
+## Fields
+
+| Field                                                                                       | Type                                                                                        | Required                                                                                    | Description                                                                                 |
+| ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| `headers`                                                                                   | Record<string, *string*[]>                                                                  | :heavy_check_mark:                                                                          | N/A                                                                                         |
+| `result`                                                                                    | [models.ApiPaymentMethodDetailResponse](../../models/api-payment-method-detail-response.md) | :heavy_check_mark:                                                                          | N/A                                                                                         |

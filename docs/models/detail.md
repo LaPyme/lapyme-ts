@@ -15,6 +15,6 @@ let value: Detail = {
 
 | Field              | Type               | Required           | Description        |
 | ------------------ | ------------------ | ------------------ | ------------------ |
-| `path`             | *string*           | :heavy_minus_sign: | N/A                |
+| `field`            | *string*           | :heavy_minus_sign: | N/A                |
 | `code`             | *string*           | :heavy_check_mark: | N/A                |
 | `message`          | *string*           | :heavy_check_mark: | N/A                |

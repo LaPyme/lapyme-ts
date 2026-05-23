@@ -2,7 +2,7 @@ overlay: 1.0.0
 x-speakeasy-jsonpath: rfc9535
 info:
   title: Speakeasy Modifications
-  version: 0.0.2
+  version: 0.0.4
   x-speakeasy-metadata:
     after: ""
     before: ""
@@ -354,4 +354,724 @@ actions:
       before: sdk.v2.queryV2Report()
       created_at: 1779550432046
       reviewed_at: 1779550439744
+      type: method-name
+  - target: $["paths"]["/api/v1/sales/{sale_id}"]["patch"]
+    update:
+      x-speakeasy-group: sales
+      x-speakeasy-name-override: patchMetadata
+    x-speakeasy-metadata:
+      after: sdk.sales.patchMetadata()
+      before: sdk.API.patchApiSaleMetadata()
+      created_at: 1779565264847
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/supplier-payments"]["post"]
+    update:
+      x-speakeasy-group: supplierPayments
+      x-speakeasy-name-override: createSupplierPayment
+    x-speakeasy-metadata:
+      after: sdk.supplierPayments.createSupplierPayment()
+      before: sdk.API.createApiSupplierPayment()
+      created_at: 1779565264847
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/payment-methods/{payment_method_id}"]["get"]
+    update:
+      x-speakeasy-group: paymentMethods
+      x-speakeasy-name-override: get
+    x-speakeasy-metadata:
+      after: sdk.paymentMethods.get()
+      before: sdk.API.getApiPaymentMethod()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/fulfillment-orders/{fulfillment_order_id}/cancel"]["post"]
+    update:
+      x-speakeasy-group: fulfillmentOrders
+      x-speakeasy-name-override: cancelFulfillmentOrder
+    x-speakeasy-metadata:
+      after: sdk.fulfillmentOrders.cancelFulfillmentOrder()
+      before: sdk.API.cancelApiFulfillmentOrder()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/purchase-orders/{purchase_order_id}"]["get"]
+    update:
+      x-speakeasy-group: purchaseOrders
+      x-speakeasy-name-override: getPurchaseOrderById
+    x-speakeasy-metadata:
+      after: sdk.purchaseOrders.getPurchaseOrderById()
+      before: sdk.API.getApiPurchaseOrderById()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/warehouses/{warehouse_id}"]["put"]
+    update:
+      x-speakeasy-group: warehouses
+      x-speakeasy-name-override: updateWarehouse
+    x-speakeasy-metadata:
+      after: sdk.warehouses.updateWarehouse()
+      before: sdk.API.updateApiWarehouse()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/stock-movements"]["post"]
+    update:
+      x-speakeasy-group: stockMovements
+      x-speakeasy-name-override: createStockMovement
+    x-speakeasy-metadata:
+      after: sdk.stockMovements.createStockMovement()
+      before: sdk.API.createApiStockMovement()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/price-lists"]["post"]
+    update:
+      x-speakeasy-group: priceLists
+      x-speakeasy-name-override: createPriceList
+    x-speakeasy-metadata:
+      after: sdk.priceLists.createPriceList()
+      before: sdk.API.createApiPriceList()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/customers/{customer_id}"]["get"]
+    update:
+      x-speakeasy-group: customers
+      x-speakeasy-name-override: getCustomerById
+    x-speakeasy-metadata:
+      after: sdk.customers.getCustomerById()
+      before: sdk.API.getApiCustomerById()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/orders"]["post"]
+    update:
+      x-speakeasy-group: orders
+      x-speakeasy-name-override: createOrder
+    x-speakeasy-metadata:
+      after: sdk.orders.createOrder()
+      before: sdk.API.createApiOrder()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/suppliers/tags/apply"]["post"]
+    update:
+      x-speakeasy-group: suppliers
+      x-speakeasy-name-override: applySupplierTags
+    x-speakeasy-metadata:
+      after: sdk.suppliers.applySupplierTags()
+      before: sdk.API.applyApiSupplierTags()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/fulfillments"]["post"]
+    update:
+      x-speakeasy-group: fulfillments
+      x-speakeasy-name-override: createFulfillment
+    x-speakeasy-metadata:
+      after: sdk.fulfillments.createFulfillment()
+      before: sdk.API.createApiFulfillment()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/orders/{order_id}/fulfillment-orders"]["get"]
+    update:
+      x-speakeasy-group: orders
+      x-speakeasy-name-override: listFulfillmentOrders
+    x-speakeasy-metadata:
+      after: sdk.orders.listFulfillmentOrders()
+      before: sdk.API.listApiOrderFulfillmentOrders()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/sales/{sale_id}"]["get"]
+    update:
+      x-speakeasy-group: sales
+      x-speakeasy-name-override: getSaleById
+    x-speakeasy-metadata:
+      after: sdk.sales.getSaleById()
+      before: sdk.API.getApiSaleById()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/orders/{order_id}/complete"]["post"]
+    update:
+      x-speakeasy-group: orders
+      x-speakeasy-name-override: complete
+    x-speakeasy-metadata:
+      after: sdk.orders.complete()
+      before: sdk.API.completeApiOrder()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/orders/{order_id}/unarchive"]["post"]
+    update:
+      x-speakeasy-group: orders
+      x-speakeasy-name-override: unarchive
+    x-speakeasy-metadata:
+      after: sdk.orders.unarchive()
+      before: sdk.API.unarchiveApiOrder()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/purchase-orders/{purchase_order_id}/reopen"]["post"]
+    update:
+      x-speakeasy-group: purchaseOrders
+      x-speakeasy-name-override: reopen
+    x-speakeasy-metadata:
+      after: sdk.purchaseOrders.reopen()
+      before: sdk.API.reopenApiPurchaseOrder()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/customers/tags/apply"]["post"]
+    update:
+      x-speakeasy-group: customers
+      x-speakeasy-name-override: applyTags
+    x-speakeasy-metadata:
+      after: sdk.customers.applyTags()
+      before: sdk.API.applyApiCustomerTags()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/tags"]["get"]
+    update:
+      x-speakeasy-group: tags
+      x-speakeasy-name-override: listTags
+    x-speakeasy-metadata:
+      after: sdk.tags.listTags()
+      before: sdk.API.listApiTags()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/fulfillments/{fulfillment_id}/void"]["post"]
+    update:
+      x-speakeasy-group: fulfillments
+      x-speakeasy-name-override: voidFulfillment
+    x-speakeasy-metadata:
+      after: sdk.fulfillments.voidFulfillment()
+      before: sdk.API.voidApiFulfillment()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/purchases/{purchase_id}"]["get"]
+    update:
+      x-speakeasy-group: purchases
+      x-speakeasy-name-override: getPurchaseById
+    x-speakeasy-metadata:
+      after: sdk.purchases.getPurchaseById()
+      before: sdk.API.getApiPurchaseById()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/supplier-payments/{payment_id}"]["get"]
+    update:
+      x-speakeasy-group: supplierPayments
+      x-speakeasy-name-override: getSupplierPayment
+    x-speakeasy-metadata:
+      after: sdk.supplierPayments.getSupplierPayment()
+      before: sdk.API.getApiSupplierPayment()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/orders/{order_id}"]["get"]
+    update:
+      x-speakeasy-group: orders
+      x-speakeasy-name-override: getOrderById
+    x-speakeasy-metadata:
+      after: sdk.orders.getOrderById()
+      before: sdk.API.getApiOrderById()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/tags"]["post"]
+    update:
+      x-speakeasy-group: tags
+      x-speakeasy-name-override: createTag
+    x-speakeasy-metadata:
+      after: sdk.tags.createTag()
+      before: sdk.API.createApiTag()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/purchase-orders/{purchase_order_id}/close"]["post"]
+    update:
+      x-speakeasy-group: purchaseOrders
+      x-speakeasy-name-override: close
+    x-speakeasy-metadata:
+      after: sdk.purchaseOrders.close()
+      before: sdk.API.closeApiPurchaseOrder()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/warehouses/{warehouse_id}"]["get"]
+    update:
+      x-speakeasy-group: warehouses
+      x-speakeasy-name-override: getWarehouseById
+    x-speakeasy-metadata:
+      after: sdk.warehouses.getWarehouseById()
+      before: sdk.API.getApiWarehouseById()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/customer-payments"]["post"]
+    update:
+      x-speakeasy-group: customerPayments
+      x-speakeasy-name-override: createCustomerPayment
+    x-speakeasy-metadata:
+      after: sdk.customerPayments.createCustomerPayment()
+      before: sdk.API.createApiCustomerPayment()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/categories/{category_id}"]["put"]
+    update:
+      x-speakeasy-group: categories
+      x-speakeasy-name-override: updateCategory
+    x-speakeasy-metadata:
+      after: sdk.categories.updateCategory()
+      before: sdk.API.updateApiCategory()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/purchase-orders/{purchase_order_id}/receipts"]["post"]
+    update:
+      x-speakeasy-group: purchaseOrders.receipts
+      x-speakeasy-name-override: receive
+    x-speakeasy-metadata:
+      after: sdk.purchaseOrders.receipts.receive()
+      before: sdk.API.receiveApiPurchaseOrder()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/inventory"]["get"]
+    update:
+      x-speakeasy-group: inventory
+      x-speakeasy-name-override: listInventory
+    x-speakeasy-metadata:
+      after: sdk.inventory.listInventory()
+      before: sdk.API.listApiInventory()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/points-of-sale"]["get"]
+    update:
+      x-speakeasy-group: pointsOfSale
+      x-speakeasy-name-override: listPointsOfSale
+    x-speakeasy-metadata:
+      after: sdk.pointsOfSale.listPointsOfSale()
+      before: sdk.API.listApiPointsOfSale()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/suppliers/{supplier_id}"]["get"]
+    update:
+      x-speakeasy-group: suppliers
+      x-speakeasy-name-override: getSupplier
+    x-speakeasy-metadata:
+      after: sdk.suppliers.getSupplier()
+      before: sdk.API.getApiSupplier()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/fulfillment-orders/{fulfillment_order_id}/start"]["post"]
+    update:
+      x-speakeasy-group: fulfillmentOrders
+      x-speakeasy-name-override: start
+    x-speakeasy-metadata:
+      after: sdk.fulfillmentOrders.start()
+      before: sdk.API.startApiFulfillmentOrder()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/customer-payments/{payment_id}/void"]["post"]
+    update:
+      x-speakeasy-group: customerPayments
+      x-speakeasy-name-override: void
+    x-speakeasy-metadata:
+      after: sdk.customerPayments.void()
+      before: sdk.API.voidApiCustomerPayment()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/price-lists/{price_list_id}"]["put"]
+    update:
+      x-speakeasy-group: priceLists
+      x-speakeasy-name-override: updatePriceList
+    x-speakeasy-metadata:
+      after: sdk.priceLists.updatePriceList()
+      before: sdk.API.updateApiPriceList()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/orders/{order_id}"]["delete"]
+    update:
+      x-speakeasy-group: orders
+      x-speakeasy-name-override: deleteArchived
+    x-speakeasy-metadata:
+      after: sdk.orders.deleteArchived()
+      before: sdk.API.deleteApiArchivedOrder()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/suppliers"]["post"]
+    update:
+      x-speakeasy-group: suppliers
+      x-speakeasy-name-override: createSupplier
+    x-speakeasy-metadata:
+      after: sdk.suppliers.createSupplier()
+      before: sdk.API.createApiSupplier()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/tags/{tag_id}"]["patch"]
+    update:
+      x-speakeasy-group: tags
+      x-speakeasy-name-override: updateTag
+    x-speakeasy-metadata:
+      after: sdk.tags.updateTag()
+      before: sdk.API.updateApiTag()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/products/{product_id}"]["get"]
+    update:
+      x-speakeasy-group: products
+      x-speakeasy-name-override: getProductById
+    x-speakeasy-metadata:
+      after: sdk.products.getProductById()
+      before: sdk.API.getApiProductById()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/categories/{category_id}"]["get"]
+    update:
+      x-speakeasy-group: categories
+      x-speakeasy-name-override: getById
+    x-speakeasy-metadata:
+      after: sdk.categories.getById()
+      before: sdk.API.getApiCategory()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/purchases"]["post"]
+    update:
+      x-speakeasy-group: purchases
+      x-speakeasy-name-override: createPurchase
+    x-speakeasy-metadata:
+      after: sdk.purchases.createPurchase()
+      before: sdk.API.createApiPurchase()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/products/tags/apply"]["post"]
+    update:
+      x-speakeasy-group: products
+      x-speakeasy-name-override: applyProductTags
+    x-speakeasy-metadata:
+      after: sdk.products.applyProductTags()
+      before: sdk.API.applyApiProductTags()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/orders/{order_id}"]["patch"]
+    update:
+      x-speakeasy-group: orders
+      x-speakeasy-name-override: updateOrderNotes
+    x-speakeasy-metadata:
+      after: sdk.orders.updateOrderNotes()
+      before: sdk.API.patchApiOrder()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/supplier-payments/{payment_id}/void"]["post"]
+    update:
+      x-speakeasy-group: supplierPayments
+      x-speakeasy-name-override: voidSupplierPayment
+    x-speakeasy-metadata:
+      after: sdk.supplierPayments.voidSupplierPayment()
+      before: sdk.API.voidApiSupplierPayment()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/supplier-payments"]["get"]
+    update:
+      x-speakeasy-group: supplierPayments
+      x-speakeasy-name-override: listSupplierPayments
+    x-speakeasy-metadata:
+      after: sdk.supplierPayments.listSupplierPayments()
+      before: sdk.API.listApiSupplierPayments()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/purchase-orders/{purchase_order_id}/confirm"]["post"]
+    update:
+      x-speakeasy-group: purchaseOrders
+      x-speakeasy-name-override: confirm
+    x-speakeasy-metadata:
+      after: sdk.purchaseOrders.confirm()
+      before: sdk.API.confirmApiPurchaseOrder()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/customer-payments"]["get"]
+    update:
+      x-speakeasy-group: customerPayments
+      x-speakeasy-name-override: listCustomerPayments
+    x-speakeasy-metadata:
+      after: sdk.customerPayments.listCustomerPayments()
+      before: sdk.API.listApiCustomerPayments()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/price-lists/{price_list_id}"]["get"]
+    update:
+      x-speakeasy-group: priceLists
+      x-speakeasy-name-override: getPriceListById
+    x-speakeasy-metadata:
+      after: sdk.priceLists.getPriceListById()
+      before: sdk.API.getApiPriceListById()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/suppliers"]["get"]
+    update:
+      x-speakeasy-group: suppliers
+      x-speakeasy-name-override: list
+    x-speakeasy-metadata:
+      after: sdk.suppliers.list()
+      before: sdk.API.listApiSuppliers()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/orders/{order_id}/unprepare"]["post"]
+    update:
+      x-speakeasy-group: orders
+      x-speakeasy-name-override: unprepare
+    x-speakeasy-metadata:
+      after: sdk.orders.unprepare()
+      before: sdk.API.unprepareApiOrder()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/orders/{order_id}/change-fulfillment-location"]["post"]
+    update:
+      x-speakeasy-group: orders
+      x-speakeasy-name-override: changeFulfillmentLocation
+    x-speakeasy-metadata:
+      after: sdk.orders.changeFulfillmentLocation()
+      before: sdk.API.changeApiOrderFulfillmentLocation()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/orders"]["get"]
+    update:
+      x-speakeasy-group: orders
+      x-speakeasy-name-override: listOrders
+    x-speakeasy-metadata:
+      after: sdk.orders.listOrders()
+      before: sdk.API.listApiOrders()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/purchases/tags/apply"]["post"]
+    update:
+      x-speakeasy-group: purchases
+      x-speakeasy-name-override: applyPurchaseTags
+    x-speakeasy-metadata:
+      after: sdk.purchases.applyPurchaseTags()
+      before: sdk.API.applyApiPurchaseTags()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/inventory/movements"]["get"]
+    update:
+      x-speakeasy-group: inventory
+      x-speakeasy-name-override: listInventoryMovements
+    x-speakeasy-metadata:
+      after: sdk.inventory.listInventoryMovements()
+      before: sdk.API.listApiInventoryMovements()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/stock-transfers"]["get"]
+    update:
+      x-speakeasy-group: stockTransfers
+      x-speakeasy-name-override: listStockTransfers
+    x-speakeasy-metadata:
+      after: sdk.stockTransfers.listStockTransfers()
+      before: sdk.API.listApiStockTransfers()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/payment-methods/{payment_method_id}"]["put"]
+    update:
+      x-speakeasy-group: paymentMethods
+      x-speakeasy-name-override: updatePaymentMethod
+    x-speakeasy-metadata:
+      after: sdk.paymentMethods.updatePaymentMethod()
+      before: sdk.API.updateApiPaymentMethod()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/orders/{order_id}/invoice"]["post"]
+    update:
+      x-speakeasy-group: orders
+      x-speakeasy-name-override: invoice
+    x-speakeasy-metadata:
+      after: sdk.orders.invoice()
+      before: sdk.API.invoiceApiOrder()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/stock-transfers/{transfer_id}"]["get"]
+    update:
+      x-speakeasy-group: stockTransfers
+      x-speakeasy-name-override: getStockTransferById
+    x-speakeasy-metadata:
+      after: sdk.stockTransfers.getStockTransferById()
+      before: sdk.API.getApiStockTransferById()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/customer-payments/{payment_id}"]["get"]
+    update:
+      x-speakeasy-group: customerPayments
+      x-speakeasy-name-override: getCustomerPayment
+    x-speakeasy-metadata:
+      after: sdk.customerPayments.getCustomerPayment()
+      before: sdk.API.getApiCustomerPayment()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/reports/query"]["post"]
+    update:
+      x-speakeasy-group: reports
+      x-speakeasy-name-override: query
+    x-speakeasy-metadata:
+      after: sdk.reports.query()
+      before: sdk.API.queryApiReport()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/purchase-orders"]["post"]
+    update:
+      x-speakeasy-group: purchaseOrders
+      x-speakeasy-name-override: createPurchaseOrder
+    x-speakeasy-metadata:
+      after: sdk.purchaseOrders.createPurchaseOrder()
+      before: sdk.API.createApiPurchaseOrder()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/suppliers/{supplier_id}"]["put"]
+    update:
+      x-speakeasy-group: suppliers
+      x-speakeasy-name-override: updateSupplier
+    x-speakeasy-metadata:
+      after: sdk.suppliers.updateSupplier()
+      before: sdk.API.updateApiSupplier()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/orders/{order_id}/package"]["post"]
+    update:
+      x-speakeasy-group: orders
+      x-speakeasy-name-override: package
+    x-speakeasy-metadata:
+      after: sdk.orders.package()
+      before: sdk.API.packageApiOrder()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/products/{product_id}"]["put"]
+    update:
+      x-speakeasy-group: products
+      x-speakeasy-name-override: update
+    x-speakeasy-metadata:
+      after: sdk.products.update()
+      before: sdk.API.updateApiProduct()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/purchases"]["get"]
+    update:
+      x-speakeasy-group: purchases
+      x-speakeasy-name-override: listPurchases
+    x-speakeasy-metadata:
+      after: sdk.purchases.listPurchases()
+      before: sdk.API.listApiPurchases()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/orders/{order_id}/cancel"]["post"]
+    update:
+      x-speakeasy-group: orders
+      x-speakeasy-name-override: cancel
+    x-speakeasy-metadata:
+      after: sdk.orders.cancel()
+      before: sdk.API.cancelApiOrder()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/sales/tags/apply"]["post"]
+    update:
+      x-speakeasy-group: saleTags
+      x-speakeasy-name-override: apply
+    x-speakeasy-metadata:
+      after: sdk.saleTags.apply()
+      before: sdk.API.applyApiSaleTags()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/orders/{order_id}/prepare"]["post"]
+    update:
+      x-speakeasy-group: orders
+      x-speakeasy-name-override: prepare
+    x-speakeasy-metadata:
+      after: sdk.orders.prepare()
+      before: sdk.API.prepareApiOrder()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/stock-transfers"]["post"]
+    update:
+      x-speakeasy-group: stockTransfers
+      x-speakeasy-name-override: createStockTransfer
+    x-speakeasy-metadata:
+      after: sdk.stockTransfers.createStockTransfer()
+      before: sdk.API.createApiStockTransfer()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/products/bulk-adjustments"]["post"]
+    update:
+      x-speakeasy-group: productBulkAdjustments
+      x-speakeasy-name-override: create
+    x-speakeasy-metadata:
+      after: sdk.productBulkAdjustments.create()
+      before: sdk.API.createApiProductBulkAdjustment()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/purchase-orders"]["get"]
+    update:
+      x-speakeasy-group: purchaseOrders
+      x-speakeasy-name-override: listPurchaseOrders
+    x-speakeasy-metadata:
+      after: sdk.purchaseOrders.listPurchaseOrders()
+      before: sdk.API.listApiPurchaseOrders()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
+      type: method-name
+  - target: $["paths"]["/api/v1/customers/{customer_id}"]["put"]
+    update:
+      x-speakeasy-group: customers
+      x-speakeasy-name-override: updateCustomer
+    x-speakeasy-metadata:
+      after: sdk.customers.updateCustomer()
+      before: sdk.API.updateApiCustomer()
+      created_at: 1779565264848
+      reviewed_at: 1779565281318
       type: method-name

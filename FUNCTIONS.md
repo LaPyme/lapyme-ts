@@ -20,19 +20,21 @@ specific category of applications.
 
 ```typescript
 import { LapymeCore } from "lapyme/core.js";
-import { healthCheck } from "lapyme/funcs/health-check.js";
+import { suppliersList } from "lapyme/funcs/suppliers-list.js";
 
 // Use `LapymeCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
-const lapyme = new LapymeCore();
+const lapyme = new LapymeCore({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
 
 async function run() {
-  const res = await healthCheck(lapyme);
+  const res = await suppliersList(lapyme, {});
   if (res.ok) {
     const { value: result } = res;
     console.log(result);
   } else {
-    console.log("healthCheck failed:", res.error);
+    console.log("suppliersList failed:", res.error);
   }
 }
 

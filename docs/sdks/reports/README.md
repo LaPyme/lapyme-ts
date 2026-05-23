@@ -4,15 +4,17 @@
 
 ### Available Operations
 
-* [query](#query) - Consultar reporte (v2)
+* [query](#query) - Consultar reporte
 
 ## query
 
-Ejecuta una consulta analítica agrupada sobre ventas, compras o inventario. El campo `source` determina qué dimensiones y medidas están disponibles.
+Ejecuta una consulta analítica agrupada sobre ventas, compras, pagos o inventario. El campo `source` determina qué dimensiones y métricas están disponibles.
+
+Required scopes: `reports:read`.
 
 ### Example Usage: default
 
-<!-- UsageSnippet language="typescript" operationID="queryV2Report" method="post" path="/api/v2/reports/query" example="default" -->
+<!-- UsageSnippet language="typescript" operationID="queryApiReport" method="post" path="/api/v1/reports/query" example="default" -->
 ```typescript
 import { Lapyme } from "lapyme";
 
@@ -22,13 +24,14 @@ const lapyme = new Lapyme({
 
 async function run() {
   const result = await lapyme.reports.query({
-    source: "sales",
+    source: "payments",
     period: {
       startDate: new Date("2026-01-01"),
       endDate: new Date("2026-03-31"),
     },
-    measures: [],
-    dateBasis: "commercial",
+    measures: [
+      "paymentSplitCount",
+    ],
   });
 
   console.log(result);
@@ -53,13 +56,14 @@ const lapyme = new LapymeCore({
 
 async function run() {
   const res = await reportsQuery(lapyme, {
-    source: "sales",
+    source: "payments",
     period: {
       startDate: new Date("2026-01-01"),
       endDate: new Date("2026-03-31"),
     },
-    measures: [],
-    dateBasis: "commercial",
+    measures: [
+      "paymentSplitCount",
+    ],
   });
   if (res.ok) {
     const { value: result } = res;
@@ -73,7 +77,7 @@ run();
 ```
 ### Example Usage: inventory_snapshot
 
-<!-- UsageSnippet language="typescript" operationID="queryV2Report" method="post" path="/api/v2/reports/query" example="inventory_snapshot" -->
+<!-- UsageSnippet language="typescript" operationID="queryApiReport" method="post" path="/api/v1/reports/query" example="inventory_snapshot" -->
 ```typescript
 import { Lapyme } from "lapyme";
 
@@ -89,8 +93,8 @@ async function run() {
       "warehouse",
     ],
     measures: [
-      "stockOnHand",
-      "stockAvailable",
+      "daysOfInventoryRemaining",
+      "endingInventoryUnits",
     ],
     dateBasis: "commercial",
   });
@@ -123,8 +127,8 @@ async function run() {
       "warehouse",
     ],
     measures: [
-      "stockOnHand",
-      "stockAvailable",
+      "daysOfInventoryRemaining",
+      "endingInventoryUnits",
     ],
     dateBasis: "commercial",
   });
@@ -138,9 +142,82 @@ async function run() {
 
 run();
 ```
+### Example Usage: payments_by_method
+
+<!-- UsageSnippet language="typescript" operationID="queryApiReport" method="post" path="/api/v1/reports/query" example="payments_by_method" -->
+```typescript
+import { Lapyme } from "lapyme";
+
+const lapyme = new Lapyme({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const result = await lapyme.reports.query({
+    source: "payments",
+    period: {
+      startDate: new Date("2026-03-01"),
+      endDate: new Date("2026-03-31"),
+    },
+    dimensions: [
+      "paymentContactName",
+    ],
+    measures: [
+      "paymentBalance",
+      "paymentNetCashflow",
+      "avgPaymentAmount",
+    ],
+  });
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { LapymeCore } from "lapyme/core.js";
+import { reportsQuery } from "lapyme/funcs/reports-query.js";
+
+// Use `LapymeCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const lapyme = new LapymeCore({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const res = await reportsQuery(lapyme, {
+    source: "payments",
+    period: {
+      startDate: new Date("2026-03-01"),
+      endDate: new Date("2026-03-31"),
+    },
+    dimensions: [
+      "paymentContactName",
+    ],
+    measures: [
+      "paymentBalance",
+      "paymentNetCashflow",
+      "avgPaymentAmount",
+    ],
+  });
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("reportsQuery failed:", res.error);
+  }
+}
+
+run();
+```
 ### Example Usage: purchases_by_supplier
 
-<!-- UsageSnippet language="typescript" operationID="queryV2Report" method="post" path="/api/v2/reports/query" example="purchases_by_supplier" -->
+<!-- UsageSnippet language="typescript" operationID="queryApiReport" method="post" path="/api/v1/reports/query" example="purchases_by_supplier" -->
 ```typescript
 import { Lapyme } from "lapyme";
 
@@ -159,7 +236,7 @@ async function run() {
       "supplier",
     ],
     measures: [
-      "purchaseTotal",
+      "uniqueSuppliers",
       "purchaseCount",
     ],
   });
@@ -195,7 +272,7 @@ async function run() {
       "supplier",
     ],
     measures: [
-      "purchaseTotal",
+      "uniqueSuppliers",
       "purchaseCount",
     ],
   });
@@ -211,7 +288,7 @@ run();
 ```
 ### Example Usage: sales_by_product
 
-<!-- UsageSnippet language="typescript" operationID="queryV2Report" method="post" path="/api/v2/reports/query" example="sales_by_product" -->
+<!-- UsageSnippet language="typescript" operationID="queryApiReport" method="post" path="/api/v1/reports/query" example="sales_by_product" -->
 ```typescript
 import { Lapyme } from "lapyme";
 
@@ -288,7 +365,7 @@ run();
 ```
 ### Example Usage: sales_example
 
-<!-- UsageSnippet language="typescript" operationID="queryV2Report" method="post" path="/api/v2/reports/query" example="sales_example" -->
+<!-- UsageSnippet language="typescript" operationID="queryApiReport" method="post" path="/api/v1/reports/query" example="sales_example" -->
 ```typescript
 import { Lapyme } from "lapyme";
 
@@ -298,9 +375,12 @@ const lapyme = new Lapyme({
 
 async function run() {
   const result = await lapyme.reports.query({
-    source: "inventory",
+    source: "purchases",
+    period: {
+      startDate: new Date("2026-01-01"),
+      endDate: new Date("2026-03-31"),
+    },
     measures: [],
-    dateBasis: "commercial",
   });
 
   console.log(result);
@@ -325,9 +405,12 @@ const lapyme = new LapymeCore({
 
 async function run() {
   const res = await reportsQuery(lapyme, {
-    source: "inventory",
+    source: "purchases",
+    period: {
+      startDate: new Date("2026-01-01"),
+      endDate: new Date("2026-03-31"),
+    },
     measures: [],
-    dateBasis: "commercial",
   });
   if (res.ok) {
     const { value: result } = res;
@@ -351,13 +434,13 @@ run();
 
 ### Response
 
-**Promise\<[operations.QueryV2ReportResponse](../../models/operations/query-v2-report-response.md)\>**
+**Promise\<[operations.QueryApiReportResponse](../../models/operations/query-api-report-response.md)\>**
 
 ### Errors
 
 | Error Type                | Status Code               | Content Type              |
 | ------------------------- | ------------------------- | ------------------------- |
-| errors.V2ErrorEnvelope2   | 400, 401, 403             | application/json          |
-| errors.V2ErrorEnvelope2   | 429                       | application/json          |
-| errors.V2ErrorEnvelope2   | 500                       | application/json          |
+| errors.ApiErrorEnvelope   | 400, 401, 403             | application/json          |
+| errors.ApiErrorEnvelope   | 429                       | application/json          |
+| errors.ApiErrorEnvelope   | 500                       | application/json          |
 | errors.LapymeDefaultError | 4XX, 5XX                  | \*/\*                     |

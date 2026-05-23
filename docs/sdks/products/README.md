@@ -4,18 +4,21 @@
 
 ### Available Operations
 
-* [list](#list) - Obtener lista de productos
-* [create](#create) - Crear nuevo producto
-* [getById](#getbyid) - Obtener producto por ID
+* [list](#list) - Listar productos
+* [create](#create) - Crear producto
+* [getProductById](#getproductbyid) - Obtener producto por ID
 * [update](#update) - Actualizar producto
+* [applyProductTags](#applyproducttags) - Aplicar etiquetas a productos
 
 ## list
 
-Devuelve una lista paginada de productos de la organización. Podés filtrar por categoría, tipo de producto, estado activo o buscar por nombre/SKU.
+Lista los productos de la organización con precios. Soporta búsqueda y filtros por categoría, tipo y estado.
+
+Required scopes: `products:read`.
 
 ### Example Usage
 
-<!-- UsageSnippet language="typescript" operationID="getProducts" method="get" path="/api/v1/products" -->
+<!-- UsageSnippet language="typescript" operationID="listApiProducts" method="get" path="/api/v1/products" -->
 ```typescript
 import { Lapyme } from "lapyme";
 
@@ -24,13 +27,7 @@ const lapyme = new Lapyme({
 });
 
 async function run() {
-  const result = await lapyme.products.list({
-    search: "Smartphone",
-    categoryId: "cat-123e4567",
-    isActive: true,
-    productType: "product",
-    priceListId: "pl-123e4567",
-  });
+  const result = await lapyme.products.list({});
 
   console.log(result);
 }
@@ -53,13 +50,7 @@ const lapyme = new LapymeCore({
 });
 
 async function run() {
-  const res = await productsList(lapyme, {
-    search: "Smartphone",
-    categoryId: "cat-123e4567",
-    isActive: true,
-    productType: "product",
-    priceListId: "pl-123e4567",
-  });
+  const res = await productsList(lapyme, {});
   if (res.ok) {
     const { value: result } = res;
     console.log(result);
@@ -75,29 +66,33 @@ run();
 
 | Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `request`                                                                                                                                                                      | [operations.GetProductsRequest](../../models/operations/get-products-request.md)                                                                                               | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `request`                                                                                                                                                                      | [operations.ListApiProductsRequest](../../models/operations/list-api-products-request.md)                                                                                      | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
 | `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
 | `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 | `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
 
 ### Response
 
-**Promise\<[operations.GetProductsResponse](../../models/operations/get-products-response.md)\>**
+**Promise\<[operations.ListApiProductsResponse](../../models/operations/list-api-products-response.md)\>**
 
 ### Errors
 
 | Error Type                | Status Code               | Content Type              |
 | ------------------------- | ------------------------- | ------------------------- |
-| errors.RateLimitedError2  | 429                       | application/json          |
+| errors.ApiErrorEnvelope   | 400, 401, 403             | application/json          |
+| errors.ApiErrorEnvelope   | 429                       | application/json          |
+| errors.ApiErrorEnvelope   | 500                       | application/json          |
 | errors.LapymeDefaultError | 4XX, 5XX                  | \*/\*                     |
 
 ## create
 
-Crea un nuevo producto en la organización. Requiere nombre, SKU, costo, precio y tasa de impuesto.
+Crea un producto, servicio, combo o kit con su información comercial y de inventario.
+
+Required scopes: `products:write`.
 
 ### Example Usage
 
-<!-- UsageSnippet language="typescript" operationID="createProduct" method="post" path="/api/v1/products" -->
+<!-- UsageSnippet language="typescript" operationID="createApiProduct" method="post" path="/api/v1/products" example="default" -->
 ```typescript
 import { Lapyme } from "lapyme";
 
@@ -107,11 +102,11 @@ const lapyme = new Lapyme({
 
 async function run() {
   const result = await lapyme.products.create({
-    name: "<value>",
-    sku: "<value>",
-    cost: 7988.07,
-    price: 3215.05,
-    taxRateId: 682159,
+    idempotencyKey: "<value>",
+    body: {
+      name: "<value>",
+      sku: "<value>",
+    },
   });
 
   console.log(result);
@@ -136,11 +131,11 @@ const lapyme = new LapymeCore({
 
 async function run() {
   const res = await productsCreate(lapyme, {
-    name: "<value>",
-    sku: "<value>",
-    cost: 7988.07,
-    price: 3215.05,
-    taxRateId: 682159,
+    idempotencyKey: "<value>",
+    body: {
+      name: "<value>",
+      sku: "<value>",
+    },
   });
   if (res.ok) {
     const { value: result } = res;
@@ -157,29 +152,33 @@ run();
 
 | Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `request`                                                                                                                                                                      | [models.CreateProductRequest](../../models/create-product-request.md)                                                                                                          | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `request`                                                                                                                                                                      | [operations.CreateApiProductRequest](../../models/operations/create-api-product-request.md)                                                                                    | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
 | `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
 | `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 | `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
 
 ### Response
 
-**Promise\<[operations.CreateProductResponse](../../models/operations/create-product-response.md)\>**
+**Promise\<[operations.CreateApiProductResponse](../../models/operations/create-api-product-response.md)\>**
 
 ### Errors
 
 | Error Type                | Status Code               | Content Type              |
 | ------------------------- | ------------------------- | ------------------------- |
-| errors.RateLimitedError2  | 429                       | application/json          |
+| errors.ApiErrorEnvelope   | 400, 401, 403, 404, 409   | application/json          |
+| errors.ApiErrorEnvelope   | 429                       | application/json          |
+| errors.ApiErrorEnvelope   | 500                       | application/json          |
 | errors.LapymeDefaultError | 4XX, 5XX                  | \*/\*                     |
 
-## getById
+## getProductById
 
-Devuelve los datos de un producto específico usando su ID único.
+Devuelve el detalle persistido del producto.
+
+Required scopes: `products:read`.
 
 ### Example Usage
 
-<!-- UsageSnippet language="typescript" operationID="getProductById" method="get" path="/api/v1/products/{id}" -->
+<!-- UsageSnippet language="typescript" operationID="getApiProductById" method="get" path="/api/v1/products/{product_id}" -->
 ```typescript
 import { Lapyme } from "lapyme";
 
@@ -188,9 +187,8 @@ const lapyme = new Lapyme({
 });
 
 async function run() {
-  const result = await lapyme.products.getById({
-    id: "prod-123e4567",
-    priceListId: "pl-123e4567",
+  const result = await lapyme.products.getProductById({
+    productId: "87619507-5b02-4034-8550-8826df69ee5a",
   });
 
   console.log(result);
@@ -205,7 +203,7 @@ The standalone function version of this method:
 
 ```typescript
 import { LapymeCore } from "lapyme/core.js";
-import { productsGetById } from "lapyme/funcs/products-get-by-id.js";
+import { productsGetProductById } from "lapyme/funcs/products-get-product-by-id.js";
 
 // Use `LapymeCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -214,15 +212,14 @@ const lapyme = new LapymeCore({
 });
 
 async function run() {
-  const res = await productsGetById(lapyme, {
-    id: "prod-123e4567",
-    priceListId: "pl-123e4567",
+  const res = await productsGetProductById(lapyme, {
+    productId: "87619507-5b02-4034-8550-8826df69ee5a",
   });
   if (res.ok) {
     const { value: result } = res;
     console.log(result);
   } else {
-    console.log("productsGetById failed:", res.error);
+    console.log("productsGetProductById failed:", res.error);
   }
 }
 
@@ -233,30 +230,33 @@ run();
 
 | Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `request`                                                                                                                                                                      | [operations.GetProductByIdRequest](../../models/operations/get-product-by-id-request.md)                                                                                       | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `request`                                                                                                                                                                      | [operations.GetApiProductByIdRequest](../../models/operations/get-api-product-by-id-request.md)                                                                                | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
 | `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
 | `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 | `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
 
 ### Response
 
-**Promise\<[operations.GetProductByIdResponse](../../models/operations/get-product-by-id-response.md)\>**
+**Promise\<[operations.GetApiProductByIdResponse](../../models/operations/get-api-product-by-id-response.md)\>**
 
 ### Errors
 
-| Error Type                         | Status Code                        | Content Type                       |
-| ---------------------------------- | ---------------------------------- | ---------------------------------- |
-| errors.GetProductByIdNotFoundError | 404                                | application/json                   |
-| errors.RateLimitedError2           | 429                                | application/json                   |
-| errors.LapymeDefaultError          | 4XX, 5XX                           | \*/\*                              |
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| errors.ApiErrorEnvelope   | 400, 401, 403, 404        | application/json          |
+| errors.ApiErrorEnvelope   | 429                       | application/json          |
+| errors.ApiErrorEnvelope   | 500                       | application/json          |
+| errors.LapymeDefaultError | 4XX, 5XX                  | \*/\*                     |
 
 ## update
 
-Actualiza los datos de un producto específico usando su ID único. Requiere nombre, SKU, costo, precio y tasa de impuesto.
+Actualiza un producto y devuelve el detalle persistido.
+
+Required scopes: `products:write`.
 
 ### Example Usage
 
-<!-- UsageSnippet language="typescript" operationID="updateProductById" method="put" path="/api/v1/products/{id}" -->
+<!-- UsageSnippet language="typescript" operationID="updateApiProduct" method="put" path="/api/v1/products/{product_id}" example="default" -->
 ```typescript
 import { Lapyme } from "lapyme";
 
@@ -266,14 +266,8 @@ const lapyme = new Lapyme({
 
 async function run() {
   const result = await lapyme.products.update({
-    id: "prod-123e4567",
-    body: {
-      name: "<value>",
-      sku: "<value>",
-      cost: 5691.56,
-      price: 9210.97,
-      taxRateId: 307489,
-    },
+    productId: "74c5622b-6bc0-45c8-802e-577e76a3b0d0",
+    body: {},
   });
 
   console.log(result);
@@ -298,14 +292,8 @@ const lapyme = new LapymeCore({
 
 async function run() {
   const res = await productsUpdate(lapyme, {
-    id: "prod-123e4567",
-    body: {
-      name: "<value>",
-      sku: "<value>",
-      cost: 5691.56,
-      price: 9210.97,
-      taxRateId: 307489,
-    },
+    productId: "74c5622b-6bc0-45c8-802e-577e76a3b0d0",
+    body: {},
   });
   if (res.ok) {
     const { value: result } = res;
@@ -322,19 +310,110 @@ run();
 
 | Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `request`                                                                                                                                                                      | [operations.UpdateProductByIdRequest](../../models/operations/update-product-by-id-request.md)                                                                                 | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `request`                                                                                                                                                                      | [operations.UpdateApiProductRequest](../../models/operations/update-api-product-request.md)                                                                                    | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
 | `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
 | `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 | `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
 
 ### Response
 
-**Promise\<[operations.UpdateProductByIdResponse](../../models/operations/update-product-by-id-response.md)\>**
+**Promise\<[operations.UpdateApiProductResponse](../../models/operations/update-api-product-response.md)\>**
 
 ### Errors
 
-| Error Type                         | Status Code                        | Content Type                       |
-| ---------------------------------- | ---------------------------------- | ---------------------------------- |
-| errors.GetProductByIdNotFoundError | 404                                | application/json                   |
-| errors.RateLimitedError2           | 429                                | application/json                   |
-| errors.LapymeDefaultError          | 4XX, 5XX                           | \*/\*                              |
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| errors.ApiErrorEnvelope   | 400, 401, 403, 404, 409   | application/json          |
+| errors.ApiErrorEnvelope   | 429                       | application/json          |
+| errors.ApiErrorEnvelope   | 500                       | application/json          |
+| errors.LapymeDefaultError | 4XX, 5XX                  | \*/\*                     |
+
+## applyProductTags
+
+Agrega y/o remueve etiquetas de scope `product` en un lote de productos.
+
+Required scopes: `products:write`.
+
+### Example Usage
+
+<!-- UsageSnippet language="typescript" operationID="applyApiProductTags" method="post" path="/api/v1/products/tags/apply" example="default" -->
+```typescript
+import { Lapyme } from "lapyme";
+
+const lapyme = new Lapyme({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const result = await lapyme.products.applyProductTags({
+    body: {
+      entityIds: [
+        "62cea257-6439-4d9e-be86-2acfea6fb4bf",
+      ],
+      addTagIds: [],
+      removeTagIds: [],
+    },
+  });
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { LapymeCore } from "lapyme/core.js";
+import { productsApplyProductTags } from "lapyme/funcs/products-apply-product-tags.js";
+
+// Use `LapymeCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const lapyme = new LapymeCore({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const res = await productsApplyProductTags(lapyme, {
+    body: {
+      entityIds: [
+        "62cea257-6439-4d9e-be86-2acfea6fb4bf",
+      ],
+      addTagIds: [],
+      removeTagIds: [],
+    },
+  });
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("productsApplyProductTags failed:", res.error);
+  }
+}
+
+run();
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `request`                                                                                                                                                                      | [operations.ApplyApiProductTagsRequest](../../models/operations/apply-api-product-tags-request.md)                                                                             | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
+| `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
+
+### Response
+
+**Promise\<[operations.ApplyApiProductTagsResponse](../../models/operations/apply-api-product-tags-response.md)\>**
+
+### Errors
+
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| errors.ApiErrorEnvelope   | 400, 401, 403             | application/json          |
+| errors.ApiErrorEnvelope   | 429                       | application/json          |
+| errors.ApiErrorEnvelope   | 500                       | application/json          |
+| errors.LapymeDefaultError | 4XX, 5XX                  | \*/\*                     |

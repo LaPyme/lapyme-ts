@@ -1,0 +1,16 @@
+# ApiErrorEnvelope
+
+## Example Usage
+
+```typescript
+import { ApiErrorEnvelope } from "lapyme/models/errors";
+
+// No examples available for this model
+```
+
+## Fields
+
+| Field                                    | Type                                     | Required                                 | Description                              |
+| ---------------------------------------- | ---------------------------------------- | ---------------------------------------- | ---------------------------------------- |
+| `requestId`                              | *string*                                 | :heavy_check_mark:                       | N/A                                      |
+| `error`                                  | [models.ErrorT](../../models/error-t.md) | :heavy_check_mark:                       | N/A                                      |
