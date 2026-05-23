@@ -1,20 +1,20 @@
-# V2
+# Sales
 
 ## Overview
 
 ### Available Operations
 
-* [retrieveProducts](#retrieveproducts) - Listar productos (v2)
-* [retrieveWarehouses](#retrievewarehouses) - Listar ubicaciones (v2)
-* [retrievePurchases](#retrievepurchases) - Listar compras (v2)
+* [list](#list) - Obtener lista de ventas
+* [create](#create) - Crear nueva venta
+* [getById](#getbyid) - Obtener venta por ID
 
-## retrieveProducts
+## list
 
-Lista los productos de la organización con precios. Soporta búsqueda y filtros por categoría, tipo y estado.
+Devuelve una lista paginada de ventas de la organización. Podés filtrar por nombre de cliente, número de factura o rango de fechas usando los parámetros correspondientes.
 
 ### Example Usage
 
-<!-- UsageSnippet language="typescript" operationID="listV2Products" method="get" path="/api/v2/products" -->
+<!-- UsageSnippet language="typescript" operationID="getSales" method="get" path="/api/v1/sales" -->
 ```typescript
 import { Lapyme } from "lapyme";
 
@@ -23,7 +23,11 @@ const lapyme = new Lapyme({
 });
 
 async function run() {
-  const result = await lapyme.v2.retrieveProducts({});
+  const result = await lapyme.sales.list({
+    search: "Juan Pérez",
+    dateFrom: new Date("2025-01-01"),
+    dateTo: new Date("2025-12-31"),
+  });
 
   console.log(result);
 }
@@ -37,7 +41,7 @@ The standalone function version of this method:
 
 ```typescript
 import { LapymeCore } from "lapyme/core.js";
-import { v2RetrieveProducts } from "lapyme/funcs/v2-retrieve-products.js";
+import { salesList } from "lapyme/funcs/sales-list.js";
 
 // Use `LapymeCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -46,12 +50,16 @@ const lapyme = new LapymeCore({
 });
 
 async function run() {
-  const res = await v2RetrieveProducts(lapyme, {});
+  const res = await salesList(lapyme, {
+    search: "Juan Pérez",
+    dateFrom: new Date("2025-01-01"),
+    dateTo: new Date("2025-12-31"),
+  });
   if (res.ok) {
     const { value: result } = res;
     console.log(result);
   } else {
-    console.log("v2RetrieveProducts failed:", res.error);
+    console.log("salesList failed:", res.error);
   }
 }
 
@@ -62,31 +70,29 @@ run();
 
 | Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `request`                                                                                                                                                                      | [operations.ListV2ProductsRequest](../../models/operations/list-v2-products-request.md)                                                                                        | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `request`                                                                                                                                                                      | [operations.GetSalesRequest](../../models/operations/get-sales-request.md)                                                                                                     | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
 | `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
 | `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 | `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
 
 ### Response
 
-**Promise\<[operations.ListV2ProductsResponse](../../models/operations/list-v2-products-response.md)\>**
+**Promise\<[operations.GetSalesResponse](../../models/operations/get-sales-response.md)\>**
 
 ### Errors
 
 | Error Type                | Status Code               | Content Type              |
 | ------------------------- | ------------------------- | ------------------------- |
-| errors.V2ErrorEnvelope2   | 400, 401, 403             | application/json          |
-| errors.V2ErrorEnvelope2   | 429                       | application/json          |
-| errors.V2ErrorEnvelope2   | 500                       | application/json          |
+| errors.RateLimitedError2  | 429                       | application/json          |
 | errors.LapymeDefaultError | 4XX, 5XX                  | \*/\*                     |
 
-## retrieveWarehouses
+## create
 
-Lista las ubicaciones activas de la organización.
+Crea una nueva venta sin facturación AFIP. La venta se crea con estado de factura 'pendiente' para comprobantes fiscales o 'no requerida' para comprobantes no fiscales. Requiere punto de venta, fecha, items y totales. Opcionalmente podés incluir métodos de pago.
 
 ### Example Usage
 
-<!-- UsageSnippet language="typescript" operationID="listV2Warehouses" method="get" path="/api/v2/warehouses" -->
+<!-- UsageSnippet language="typescript" operationID="createSale" method="post" path="/api/v1/sales" -->
 ```typescript
 import { Lapyme } from "lapyme";
 
@@ -95,7 +101,15 @@ const lapyme = new Lapyme({
 });
 
 async function run() {
-  const result = await lapyme.v2.retrieveWarehouses({});
+  const result = await lapyme.sales.create({
+    voucherType: 636812,
+    pointOfSaleId: "7ec7282d-47a7-4c8f-a263-0d178a451fa0",
+    invoiceDate: new Date("2025-02-12"),
+    items: [],
+    subtotal: 590700,
+    taxAmount: 220672,
+    total: 151734,
+  });
 
   console.log(result);
 }
@@ -109,7 +123,7 @@ The standalone function version of this method:
 
 ```typescript
 import { LapymeCore } from "lapyme/core.js";
-import { v2RetrieveWarehouses } from "lapyme/funcs/v2-retrieve-warehouses.js";
+import { salesCreate } from "lapyme/funcs/sales-create.js";
 
 // Use `LapymeCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -118,12 +132,20 @@ const lapyme = new LapymeCore({
 });
 
 async function run() {
-  const res = await v2RetrieveWarehouses(lapyme, {});
+  const res = await salesCreate(lapyme, {
+    voucherType: 636812,
+    pointOfSaleId: "7ec7282d-47a7-4c8f-a263-0d178a451fa0",
+    invoiceDate: new Date("2025-02-12"),
+    items: [],
+    subtotal: 590700,
+    taxAmount: 220672,
+    total: 151734,
+  });
   if (res.ok) {
     const { value: result } = res;
     console.log(result);
   } else {
-    console.log("v2RetrieveWarehouses failed:", res.error);
+    console.log("salesCreate failed:", res.error);
   }
 }
 
@@ -134,31 +156,31 @@ run();
 
 | Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `request`                                                                                                                                                                      | [operations.ListV2WarehousesRequest](../../models/operations/list-v2-warehouses-request.md)                                                                                    | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `request`                                                                                                                                                                      | [models.CreateSaleRequest](../../models/create-sale-request.md)                                                                                                                | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
 | `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
 | `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 | `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
 
 ### Response
 
-**Promise\<[operations.ListV2WarehousesResponse](../../models/operations/list-v2-warehouses-response.md)\>**
+**Promise\<[operations.CreateSaleResponse](../../models/operations/create-sale-response.md)\>**
 
 ### Errors
 
-| Error Type                | Status Code               | Content Type              |
-| ------------------------- | ------------------------- | ------------------------- |
-| errors.V2ErrorEnvelope2   | 400, 401, 403             | application/json          |
-| errors.V2ErrorEnvelope2   | 429                       | application/json          |
-| errors.V2ErrorEnvelope2   | 500                       | application/json          |
-| errors.LapymeDefaultError | 4XX, 5XX                  | \*/\*                     |
+| Error Type                       | Status Code                      | Content Type                     |
+| -------------------------------- | -------------------------------- | -------------------------------- |
+| errors.CreateSaleBadRequestError | 400                              | application/json                 |
+| errors.CreateSaleNotFoundError   | 404                              | application/json                 |
+| errors.RateLimitedError2         | 429                              | application/json                 |
+| errors.LapymeDefaultError        | 4XX, 5XX                         | \*/\*                            |
 
-## retrievePurchases
+## getById
 
-Lista las compras de la organización. Soporta filtros por fecha, monto y búsqueda por proveedor.
+Devuelve los datos de una venta específica usando su ID único, incluyendo detalles de items, pagos y cliente.
 
 ### Example Usage
 
-<!-- UsageSnippet language="typescript" operationID="listV2Purchases" method="get" path="/api/v2/purchases" -->
+<!-- UsageSnippet language="typescript" operationID="getSaleById" method="get" path="/api/v1/sales/{id}" -->
 ```typescript
 import { Lapyme } from "lapyme";
 
@@ -167,7 +189,9 @@ const lapyme = new Lapyme({
 });
 
 async function run() {
-  const result = await lapyme.v2.retrievePurchases({});
+  const result = await lapyme.sales.getById({
+    id: "sale-123e4567",
+  });
 
   console.log(result);
 }
@@ -181,7 +205,7 @@ The standalone function version of this method:
 
 ```typescript
 import { LapymeCore } from "lapyme/core.js";
-import { v2RetrievePurchases } from "lapyme/funcs/v2-retrieve-purchases.js";
+import { salesGetById } from "lapyme/funcs/sales-get-by-id.js";
 
 // Use `LapymeCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -190,12 +214,14 @@ const lapyme = new LapymeCore({
 });
 
 async function run() {
-  const res = await v2RetrievePurchases(lapyme, {});
+  const res = await salesGetById(lapyme, {
+    id: "sale-123e4567",
+  });
   if (res.ok) {
     const { value: result } = res;
     console.log(result);
   } else {
-    console.log("v2RetrievePurchases failed:", res.error);
+    console.log("salesGetById failed:", res.error);
   }
 }
 
@@ -206,20 +232,19 @@ run();
 
 | Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `request`                                                                                                                                                                      | [operations.ListV2PurchasesRequest](../../models/operations/list-v2-purchases-request.md)                                                                                      | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `request`                                                                                                                                                                      | [operations.GetSaleByIdRequest](../../models/operations/get-sale-by-id-request.md)                                                                                             | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
 | `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
 | `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 | `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
 
 ### Response
 
-**Promise\<[operations.ListV2PurchasesResponse](../../models/operations/list-v2-purchases-response.md)\>**
+**Promise\<[operations.GetSaleByIdResponse](../../models/operations/get-sale-by-id-response.md)\>**
 
 ### Errors
 
-| Error Type                | Status Code               | Content Type              |
-| ------------------------- | ------------------------- | ------------------------- |
-| errors.V2ErrorEnvelope2   | 400, 401, 403             | application/json          |
-| errors.V2ErrorEnvelope2   | 429                       | application/json          |
-| errors.V2ErrorEnvelope2   | 500                       | application/json          |
-| errors.LapymeDefaultError | 4XX, 5XX                  | \*/\*                     |
+| Error Type                      | Status Code                     | Content Type                    |
+| ------------------------------- | ------------------------------- | ------------------------------- |
+| errors.GetSaleByIdNotFoundError | 404                             | application/json                |
+| errors.RateLimitedError2        | 429                             | application/json                |
+| errors.LapymeDefaultError       | 4XX, 5XX                        | \*/\*                           |

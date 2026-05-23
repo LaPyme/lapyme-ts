@@ -1,6 +1,6 @@
 {
   "name": "lapyme",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "author": "Speakeasy",
   "type": "module",
   "main": "./esm/index.js",

@@ -5,7 +5,7 @@ import { Lapyme } from "lapyme";
 const lapyme = new Lapyme();
 
 async function run() {
-  const result = await lapyme.healthCheck();
+  const result = await lapyme.health.check();
 
   console.log(result);
 }
