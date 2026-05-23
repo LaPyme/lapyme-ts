@@ -4,6 +4,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { remap as remap$ } from "../lib/primitives.js";
 import { safeParse } from "../lib/schemas.js";
 import * as openEnums from "../types/enums.js";
 import { OpenEnum } from "../types/enums.js";
@@ -21,6 +22,7 @@ export type Row = {
 export const SourceEnum = {
   Sales: "sales",
   Purchases: "purchases",
+  Payments: "payments",
   Inventory: "inventory",
 } as const;
 export type SourceEnum = OpenEnum<typeof SourceEnum>;
@@ -49,7 +51,7 @@ export type Metadata = {
 export type ReportQueryResponseData = {
   rows: Array<Row>;
   /**
-   * Totales agregados de todas las filas. Presente solo cuando se envía `includeTotals: true`.
+   * Aggregated totals for all rows. Present only when `includeTotals: true` is sent.
    */
   totals: { [k: string]: number } | null;
   metadata: Metadata;
@@ -57,7 +59,6 @@ export type ReportQueryResponseData = {
 
 export type ReportQueryResponse = {
   requestId: string;
-  success: true;
   data: ReportQueryResponseData;
 };
 
@@ -87,10 +88,18 @@ export const SourceEnum$inboundSchema: z.ZodMiniType<SourceEnum, unknown> =
 export const ReportQueryResponsePeriod$inboundSchema: z.ZodMiniType<
   ReportQueryResponsePeriod,
   unknown
-> = z.object({
-  startDate: types.string(),
-  endDate: types.string(),
-});
+> = z.pipe(
+  z.object({
+    start_date: types.string(),
+    end_date: types.string(),
+  }),
+  z.transform((v) => {
+    return remap$(v, {
+      "start_date": "startDate",
+      "end_date": "endDate",
+    });
+  }),
+);
 
 export function reportQueryResponsePeriodFromJSON(
   jsonString: string,
@@ -109,16 +118,22 @@ export const ReportQueryResponseDateBasis$inboundSchema: z.ZodMiniType<
 > = openEnums.inboundSchema(ReportQueryResponseDateBasis);
 
 /** @internal */
-export const Metadata$inboundSchema: z.ZodMiniType<Metadata, unknown> = z
-  .object({
+export const Metadata$inboundSchema: z.ZodMiniType<Metadata, unknown> = z.pipe(
+  z.object({
     source: SourceEnum$inboundSchema,
     dimensions: z.array(types.string()),
     measures: z.array(types.string()),
     period: types.optional(
       z.lazy(() => ReportQueryResponsePeriod$inboundSchema),
     ),
-    dateBasis: types.optional(ReportQueryResponseDateBasis$inboundSchema),
-  });
+    date_basis: types.optional(ReportQueryResponseDateBasis$inboundSchema),
+  }),
+  z.transform((v) => {
+    return remap$(v, {
+      "date_basis": "dateBasis",
+    });
+  }),
+);
 
 export function metadataFromJSON(
   jsonString: string,
@@ -154,11 +169,17 @@ export function reportQueryResponseDataFromJSON(
 export const ReportQueryResponse$inboundSchema: z.ZodMiniType<
   ReportQueryResponse,
   unknown
-> = z.object({
-  requestId: types.string(),
-  success: types.literal(true),
-  data: z.lazy(() => ReportQueryResponseData$inboundSchema),
-});
+> = z.pipe(
+  z.object({
+    request_id: types.string(),
+    data: z.lazy(() => ReportQueryResponseData$inboundSchema),
+  }),
+  z.transform((v) => {
+    return remap$(v, {
+      "request_id": "requestId",
+    });
+  }),
+);
 
 export function reportQueryResponseFromJSON(
   jsonString: string,

@@ -29,19 +29,21 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * Obtener lista de depósitos
+ * Listar depósitos
  *
  * @remarks
- * Devuelve una lista paginada de depósitos de la organización. Podés filtrar por nombre usando el parámetro de búsqueda.
+ * Lista los depósitos activos de la organización.
+ *
+ * Required scopes: `warehouses:read`.
  */
 export function warehousesList(
   client: LapymeCore,
-  request?: operations.GetWarehousesRequest | undefined,
+  request?: operations.ListApiWarehousesRequest | undefined,
   options?: RequestOptions,
 ): APIPromise<
   Result<
-    operations.GetWarehousesResponse,
-    | errors.RateLimitedError2
+    operations.ListApiWarehousesResponse,
+    | errors.ApiErrorEnvelope
     | LapymeError
     | ResponseValidationError
     | ConnectionError
@@ -61,13 +63,13 @@ export function warehousesList(
 
 async function $do(
   client: LapymeCore,
-  request?: operations.GetWarehousesRequest | undefined,
+  request?: operations.ListApiWarehousesRequest | undefined,
   options?: RequestOptions,
 ): Promise<
   [
     Result<
-      operations.GetWarehousesResponse,
-      | errors.RateLimitedError2
+      operations.ListApiWarehousesResponse,
+      | errors.ApiErrorEnvelope
       | LapymeError
       | ResponseValidationError
       | ConnectionError
@@ -84,7 +86,7 @@ async function $do(
     request,
     (value) =>
       z.parse(
-        z.optional(operations.GetWarehousesRequest$outboundSchema),
+        z.optional(operations.ListApiWarehousesRequest$outboundSchema),
         value,
       ),
     "Input validation failed",
@@ -98,8 +100,9 @@ async function $do(
   const path = pathToFunc("/api/v1/warehouses")();
 
   const query = encodeFormQuery({
+    "cursor": payload?.cursor,
     "limit": payload?.limit,
-    "page": payload?.page,
+    "query": payload?.query,
     "search": payload?.search,
   });
 
@@ -114,7 +117,7 @@ async function $do(
   const context = {
     options: client._options,
     baseURL: options?.serverURL ?? client._baseURL ?? "",
-    operationID: "getWarehouses",
+    operationID: "listApiWarehouses",
     oAuth2Scopes: null,
 
     resolvedSecurity: requestSecurity,
@@ -159,8 +162,8 @@ async function $do(
   };
 
   const [result] = await M.match<
-    operations.GetWarehousesResponse,
-    | errors.RateLimitedError2
+    operations.ListApiWarehousesResponse,
+    | errors.ApiErrorEnvelope
     | LapymeError
     | ResponseValidationError
     | ConnectionError
@@ -170,10 +173,12 @@ async function $do(
     | UnexpectedClientError
     | SDKValidationError
   >(
-    M.json(200, operations.GetWarehousesResponse$inboundSchema, {
+    M.json(200, operations.ListApiWarehousesResponse$inboundSchema, {
       key: "Result",
     }),
-    M.jsonErr(429, errors.RateLimitedError2$inboundSchema, { hdrs: true }),
+    M.jsonErr([400, 401, 403], errors.ApiErrorEnvelope$inboundSchema),
+    M.jsonErr(429, errors.ApiErrorEnvelope$inboundSchema, { hdrs: true }),
+    M.jsonErr(500, errors.ApiErrorEnvelope$inboundSchema),
     M.fail("4XX"),
     M.fail("5XX"),
   )(response, req, { extraFields: responseFields });

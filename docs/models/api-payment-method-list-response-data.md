@@ -1,0 +1,44 @@
+# ApiPaymentMethodListResponseData
+
+## Example Usage
+
+```typescript
+import { ApiPaymentMethodListResponseData } from "lapyme/models";
+
+let value: ApiPaymentMethodListResponseData = {
+  object: "payment_method",
+  id: "adb03462-6403-4c60-94a1-eaf49f2bdbcd",
+  name: "<value>",
+  icon: "<value>",
+  type: "cash",
+  bankAccountId: null,
+  feePercentage: "<value>",
+  feeFixed: 186888,
+  requiresReference: false,
+  visibility: "sales",
+  isActive: true,
+  isDefault: false,
+  createdAt: new Date("2026-12-03T05:32:25.859Z"),
+  updatedAt: new Date("2026-11-08T18:55:33.711Z"),
+};
+```
+
+## Fields
+
+| Field                                                                                                                  | Type                                                                                                                   | Required                                                                                                               | Description                                                                                                            |
+| ---------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `object`                                                                                                               | *"payment_method"*                                                                                                     | :heavy_check_mark:                                                                                                     | N/A                                                                                                                    |
+| `id`                                                                                                                   | *string*                                                                                                               | :heavy_check_mark:                                                                                                     | N/A                                                                                                                    |
+| `name`                                                                                                                 | *string*                                                                                                               | :heavy_check_mark:                                                                                                     | N/A                                                                                                                    |
+| `icon`                                                                                                                 | *string*                                                                                                               | :heavy_check_mark:                                                                                                     | N/A                                                                                                                    |
+| `type`                                                                                                                 | [models.ApiPaymentMethodListResponseType](../models/api-payment-method-list-response-type.md)                          | :heavy_check_mark:                                                                                                     | N/A                                                                                                                    |
+| `bankAccountId`                                                                                                        | *string*                                                                                                               | :heavy_check_mark:                                                                                                     | N/A                                                                                                                    |
+| `feePercentage`                                                                                                        | *string*                                                                                                               | :heavy_check_mark:                                                                                                     | N/A                                                                                                                    |
+| `feeFixed`                                                                                                             | *number*                                                                                                               | :heavy_check_mark:                                                                                                     | N/A                                                                                                                    |
+| `requiresReference`                                                                                                    | *boolean*                                                                                                              | :heavy_check_mark:                                                                                                     | N/A                                                                                                                    |
+| `visibility`                                                                                                           | [models.ApiPaymentMethodListResponseVisibility](../models/api-payment-method-list-response-visibility.md)              | :heavy_check_mark:                                                                                                     | N/A                                                                                                                    |
+| `isActive`                                                                                                             | *boolean*                                                                                                              | :heavy_check_mark:                                                                                                     | N/A                                                                                                                    |
+| `isDefault`                                                                                                            | *boolean*                                                                                                              | :heavy_check_mark:                                                                                                     | N/A                                                                                                                    |
+| `createdAt`                                                                                                            | [Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)                          | :heavy_check_mark:                                                                                                     | N/A                                                                                                                    |
+| `updatedAt`                                                                                                            | [Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)                          | :heavy_check_mark:                                                                                                     | N/A                                                                                                                    |
+| `installmentPlans`                                                                                                     | [models.ApiPaymentMethodListResponseInstallmentPlan](../models/api-payment-method-list-response-installment-plan.md)[] | :heavy_minus_sign:                                                                                                     | N/A                                                                                                                    |

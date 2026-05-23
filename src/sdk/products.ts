@@ -4,25 +4,24 @@
  */
 
 import { productsCreate } from "../funcs/products-create.js";
-import { productsGetById } from "../funcs/products-get-by-id.js";
 import { productsList } from "../funcs/products-list.js";
-import { productsUpdate } from "../funcs/products-update.js";
 import { ClientSDK, RequestOptions } from "../lib/sdks.js";
-import * as models from "../models/index.js";
 import * as operations from "../models/operations/index.js";
 import { unwrapAsync } from "../types/fp.js";
 
 export class Products extends ClientSDK {
   /**
-   * Obtener lista de productos
+   * Listar productos
    *
    * @remarks
-   * Devuelve una lista paginada de productos de la organización. Podés filtrar por categoría, tipo de producto, estado activo o buscar por nombre/SKU.
+   * Lista los productos de la organización con precios. Soporta búsqueda y filtros por categoría, tipo y estado.
+   *
+   * Required scopes: `products:read`.
    */
   async list(
-    request?: operations.GetProductsRequest | undefined,
+    request?: operations.ListApiProductsRequest | undefined,
     options?: RequestOptions,
-  ): Promise<operations.GetProductsResponse> {
+  ): Promise<operations.ListApiProductsResponse> {
     return unwrapAsync(productsList(
       this,
       request,
@@ -31,50 +30,18 @@ export class Products extends ClientSDK {
   }
 
   /**
-   * Crear nuevo producto
+   * Crear producto
    *
    * @remarks
-   * Crea un nuevo producto en la organización. Requiere nombre, SKU, costo, precio y tasa de impuesto.
+   * Crea un producto, servicio, combo o kit con su información comercial y de inventario.
+   *
+   * Required scopes: `products:write`.
    */
   async create(
-    request: models.CreateProductRequest,
+    request: operations.CreateApiProductRequest,
     options?: RequestOptions,
-  ): Promise<operations.CreateProductResponse> {
+  ): Promise<operations.CreateApiProductResponse> {
     return unwrapAsync(productsCreate(
-      this,
-      request,
-      options,
-    ));
-  }
-
-  /**
-   * Obtener producto por ID
-   *
-   * @remarks
-   * Devuelve los datos de un producto específico usando su ID único.
-   */
-  async getById(
-    request: operations.GetProductByIdRequest,
-    options?: RequestOptions,
-  ): Promise<operations.GetProductByIdResponse> {
-    return unwrapAsync(productsGetById(
-      this,
-      request,
-      options,
-    ));
-  }
-
-  /**
-   * Actualizar producto
-   *
-   * @remarks
-   * Actualiza los datos de un producto específico usando su ID único. Requiere nombre, SKU, costo, precio y tasa de impuesto.
-   */
-  async update(
-    request: operations.UpdateProductByIdRequest,
-    options?: RequestOptions,
-  ): Promise<operations.UpdateProductByIdResponse> {
-    return unwrapAsync(productsUpdate(
       this,
       request,
       options,

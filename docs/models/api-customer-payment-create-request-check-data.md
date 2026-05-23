@@ -1,0 +1,28 @@
+# ApiCustomerPaymentCreateRequestCheckData
+
+## Example Usage
+
+```typescript
+import { ApiCustomerPaymentCreateRequestCheckData } from "lapyme/models";
+
+let value: ApiCustomerPaymentCreateRequestCheckData = {
+  origin: "third_party",
+  number: "<value>",
+  amount: 978656,
+  issueDate: "<value>",
+};
+```
+
+## Fields
+
+| Field                                                                                                              | Type                                                                                                               | Required                                                                                                           | Description                                                                                                        |
+| ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ |
+| `origin`                                                                                                           | [models.ApiCustomerPaymentCreateRequestOrigin](../models/api-customer-payment-create-request-origin.md)            | :heavy_check_mark:                                                                                                 | N/A                                                                                                                |
+| `checkFormat`                                                                                                      | [models.ApiCustomerPaymentCreateRequestCheckFormat](../models/api-customer-payment-create-request-check-format.md) | :heavy_minus_sign:                                                                                                 | N/A                                                                                                                |
+| `number`                                                                                                           | *string*                                                                                                           | :heavy_check_mark:                                                                                                 | N/A                                                                                                                |
+| `bankName`                                                                                                         | *string*                                                                                                           | :heavy_minus_sign:                                                                                                 | N/A                                                                                                                |
+| `issuingBankAccountId`                                                                                             | *string*                                                                                                           | :heavy_minus_sign:                                                                                                 | N/A                                                                                                                |
+| `amount`                                                                                                           | *number*                                                                                                           | :heavy_check_mark:                                                                                                 | N/A                                                                                                                |
+| `issueDate`                                                                                                        | *string*                                                                                                           | :heavy_check_mark:                                                                                                 | N/A                                                                                                                |
+| `dueDate`                                                                                                          | *string*                                                                                                           | :heavy_minus_sign:                                                                                                 | N/A                                                                                                                |
+| `issuerName`                                                                                                       | *string*                                                                                                           | :heavy_minus_sign:                                                                                                 | N/A                                                                                                                |

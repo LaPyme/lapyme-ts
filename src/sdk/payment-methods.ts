@@ -4,25 +4,24 @@
  */
 
 import { paymentMethodsCreate } from "../funcs/payment-methods-create.js";
-import { paymentMethodsGetById } from "../funcs/payment-methods-get-by-id.js";
 import { paymentMethodsList } from "../funcs/payment-methods-list.js";
-import { paymentMethodsUpdate } from "../funcs/payment-methods-update.js";
 import { ClientSDK, RequestOptions } from "../lib/sdks.js";
-import * as models from "../models/index.js";
 import * as operations from "../models/operations/index.js";
 import { unwrapAsync } from "../types/fp.js";
 
 export class PaymentMethods extends ClientSDK {
   /**
-   * Obtener lista de métodos de pago
+   * Listar métodos de pago
    *
    * @remarks
-   * Devuelve una lista paginada de métodos de pago de la organización. Podés filtrar por nombre usando el parámetro de búsqueda y ordenar por diferentes campos.
+   * Lista los métodos de pago operativos para ventas. Devuelve solo métodos activos por defecto.
+   *
+   * Required scopes: `payment_methods:read`.
    */
   async list(
-    request?: operations.GetPaymentMethodsRequest | undefined,
+    request?: operations.ListApiPaymentMethodsRequest | undefined,
     options?: RequestOptions,
-  ): Promise<operations.GetPaymentMethodsResponse> {
+  ): Promise<operations.ListApiPaymentMethodsResponse> {
     return unwrapAsync(paymentMethodsList(
       this,
       request,
@@ -31,50 +30,18 @@ export class PaymentMethods extends ClientSDK {
   }
 
   /**
-   * Crear nuevo método de pago
+   * Crear método de pago
    *
    * @remarks
-   * Crea un nuevo método de pago en la organización. El nombre es requerido, los demás campos son opcionales.
+   * Crea un método de pago para registrar cobros y pagos.
+   *
+   * Required scopes: `payment_methods:write`.
    */
   async create(
-    request: models.CreatePaymentMethodRequest,
+    request: operations.CreateApiPaymentMethodRequest,
     options?: RequestOptions,
-  ): Promise<operations.CreatePaymentMethodResponse> {
+  ): Promise<operations.CreateApiPaymentMethodResponse> {
     return unwrapAsync(paymentMethodsCreate(
-      this,
-      request,
-      options,
-    ));
-  }
-
-  /**
-   * Obtener método de pago por ID
-   *
-   * @remarks
-   * Devuelve los datos de un método de pago específico usando su ID único.
-   */
-  async getById(
-    request: operations.GetPaymentMethodByIdRequest,
-    options?: RequestOptions,
-  ): Promise<operations.GetPaymentMethodByIdResponse> {
-    return unwrapAsync(paymentMethodsGetById(
-      this,
-      request,
-      options,
-    ));
-  }
-
-  /**
-   * Actualizar método de pago
-   *
-   * @remarks
-   * Actualiza los datos de un método de pago específico usando su ID único. El nombre es requerido, los demás campos son opcionales.
-   */
-  async update(
-    request: operations.UpdatePaymentMethodByIdRequest,
-    options?: RequestOptions,
-  ): Promise<operations.UpdatePaymentMethodByIdResponse> {
-    return unwrapAsync(paymentMethodsUpdate(
       this,
       request,
       options,

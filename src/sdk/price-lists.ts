@@ -3,7 +3,6 @@
  * @generated-id: c6c05538dd4a
  */
 
-import { priceListsGetById } from "../funcs/price-lists-get-by-id.js";
 import { priceListsGet } from "../funcs/price-lists-get.js";
 import { ClientSDK, RequestOptions } from "../lib/sdks.js";
 import * as operations from "../models/operations/index.js";
@@ -11,33 +10,18 @@ import { unwrapAsync } from "../types/fp.js";
 
 export class PriceLists extends ClientSDK {
   /**
-   * Obtener lista de listas de precios
+   * Listar listas de precios
    *
    * @remarks
-   * Devuelve una lista paginada de listas de precios de la organización. Podés filtrar por nombre usando el parámetro de búsqueda.
+   * Lista las listas de precios de la organización.
+   *
+   * Required scopes: `price_lists:read`.
    */
   async get(
-    request?: operations.GetPriceListsRequest | undefined,
+    request?: operations.ListApiPriceListsRequest | undefined,
     options?: RequestOptions,
-  ): Promise<operations.GetPriceListsResponse> {
+  ): Promise<operations.ListApiPriceListsResponse> {
     return unwrapAsync(priceListsGet(
-      this,
-      request,
-      options,
-    ));
-  }
-
-  /**
-   * Obtener lista de precios por ID
-   *
-   * @remarks
-   * Devuelve los datos de una lista de precios específica usando su ID único.
-   */
-  async getById(
-    request: operations.GetPriceListByIdRequest,
-    options?: RequestOptions,
-  ): Promise<operations.GetPriceListByIdResponse> {
-    return unwrapAsync(priceListsGetById(
       this,
       request,
       options,

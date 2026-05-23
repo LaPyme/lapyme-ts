@@ -10,6 +10,11 @@ import {
   InventoryReportRequest$outboundSchema,
 } from "./inventory-report-request.js";
 import {
+  PaymentsReportRequest,
+  PaymentsReportRequest$Outbound,
+  PaymentsReportRequest$outboundSchema,
+} from "./payments-report-request.js";
+import {
   PurchasesReportRequest,
   PurchasesReportRequest$Outbound,
   PurchasesReportRequest$outboundSchema,
@@ -23,12 +28,14 @@ import {
 export type ReportRequest =
   | SalesReportRequest
   | PurchasesReportRequest
+  | PaymentsReportRequest
   | InventoryReportRequest;
 
 /** @internal */
 export type ReportRequest$Outbound =
   | SalesReportRequest$Outbound
   | PurchasesReportRequest$Outbound
+  | PaymentsReportRequest$Outbound
   | InventoryReportRequest$Outbound;
 
 /** @internal */
@@ -38,6 +45,7 @@ export const ReportRequest$outboundSchema: z.ZodMiniType<
 > = z.union([
   SalesReportRequest$outboundSchema,
   PurchasesReportRequest$outboundSchema,
+  PaymentsReportRequest$outboundSchema,
   InventoryReportRequest$outboundSchema,
 ]);
 

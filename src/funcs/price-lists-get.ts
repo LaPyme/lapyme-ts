@@ -29,19 +29,21 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * Obtener lista de listas de precios
+ * Listar listas de precios
  *
  * @remarks
- * Devuelve una lista paginada de listas de precios de la organización. Podés filtrar por nombre usando el parámetro de búsqueda.
+ * Lista las listas de precios de la organización.
+ *
+ * Required scopes: `price_lists:read`.
  */
 export function priceListsGet(
   client: LapymeCore,
-  request?: operations.GetPriceListsRequest | undefined,
+  request?: operations.ListApiPriceListsRequest | undefined,
   options?: RequestOptions,
 ): APIPromise<
   Result<
-    operations.GetPriceListsResponse,
-    | errors.RateLimitedError2
+    operations.ListApiPriceListsResponse,
+    | errors.ApiErrorEnvelope
     | LapymeError
     | ResponseValidationError
     | ConnectionError
@@ -61,13 +63,13 @@ export function priceListsGet(
 
 async function $do(
   client: LapymeCore,
-  request?: operations.GetPriceListsRequest | undefined,
+  request?: operations.ListApiPriceListsRequest | undefined,
   options?: RequestOptions,
 ): Promise<
   [
     Result<
-      operations.GetPriceListsResponse,
-      | errors.RateLimitedError2
+      operations.ListApiPriceListsResponse,
+      | errors.ApiErrorEnvelope
       | LapymeError
       | ResponseValidationError
       | ConnectionError
@@ -84,7 +86,7 @@ async function $do(
     request,
     (value) =>
       z.parse(
-        z.optional(operations.GetPriceListsRequest$outboundSchema),
+        z.optional(operations.ListApiPriceListsRequest$outboundSchema),
         value,
       ),
     "Input validation failed",
@@ -98,8 +100,9 @@ async function $do(
   const path = pathToFunc("/api/v1/price-lists")();
 
   const query = encodeFormQuery({
+    "cursor": payload?.cursor,
     "limit": payload?.limit,
-    "page": payload?.page,
+    "query": payload?.query,
     "search": payload?.search,
   });
 
@@ -114,7 +117,7 @@ async function $do(
   const context = {
     options: client._options,
     baseURL: options?.serverURL ?? client._baseURL ?? "",
-    operationID: "getPriceLists",
+    operationID: "listApiPriceLists",
     oAuth2Scopes: null,
 
     resolvedSecurity: requestSecurity,
@@ -159,8 +162,8 @@ async function $do(
   };
 
   const [result] = await M.match<
-    operations.GetPriceListsResponse,
-    | errors.RateLimitedError2
+    operations.ListApiPriceListsResponse,
+    | errors.ApiErrorEnvelope
     | LapymeError
     | ResponseValidationError
     | ConnectionError
@@ -170,10 +173,12 @@ async function $do(
     | UnexpectedClientError
     | SDKValidationError
   >(
-    M.json(200, operations.GetPriceListsResponse$inboundSchema, {
+    M.json(200, operations.ListApiPriceListsResponse$inboundSchema, {
       key: "Result",
     }),
-    M.jsonErr(429, errors.RateLimitedError2$inboundSchema, { hdrs: true }),
+    M.jsonErr([400, 401, 403], errors.ApiErrorEnvelope$inboundSchema),
+    M.jsonErr(429, errors.ApiErrorEnvelope$inboundSchema, { hdrs: true }),
+    M.jsonErr(500, errors.ApiErrorEnvelope$inboundSchema),
     M.fail("4XX"),
     M.fail("5XX"),
   )(response, req, { extraFields: responseFields });

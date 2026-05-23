@@ -1,0 +1,48 @@
+# ApiSupplierUpdateResponse
+
+## Example Usage
+
+```typescript
+import { ApiSupplierUpdateResponse } from "lapyme/models";
+
+let value: ApiSupplierUpdateResponse = {
+  requestId: "<id>",
+  data: {
+    supplier: {
+      object: "supplier",
+      id: "598684ef-7199-4331-9bc8-08614bcd189b",
+      name: "<value>",
+      companyName: "Yost - Prosacco",
+      description: null,
+      email: null,
+      phone: "1-259-825-2158",
+      taxId: "<id>",
+      taxIdType: "<value>",
+      taxCategory: "<value>",
+      paymentTermId: "<id>",
+      isActive: false,
+      country: "Cameroon",
+      provinceId: "<id>",
+      city: "New Maurice",
+      address: "829 Ernser Street",
+      apartment: "<value>",
+      postalCode: "34318",
+      createdAt: new Date("2024-09-21T13:42:49.548Z"),
+      updatedAt: new Date("2024-09-06T05:50:24.199Z"),
+    },
+  },
+  warnings: [
+    "<value 1>",
+    "<value 2>",
+    "<value 3>",
+  ],
+};
+```
+
+## Fields
+
+| Field                                                                                  | Type                                                                                   | Required                                                                               | Description                                                                            |
+| -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| `requestId`                                                                            | *string*                                                                               | :heavy_check_mark:                                                                     | N/A                                                                                    |
+| `data`                                                                                 | [models.ApiSupplierUpdateResponseData](../models/api-supplier-update-response-data.md) | :heavy_check_mark:                                                                     | N/A                                                                                    |
+| `warnings`                                                                             | *any*[]                                                                                | :heavy_check_mark:                                                                     | N/A                                                                                    |

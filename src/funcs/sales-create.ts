@@ -5,7 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { LapymeCore } from "../core.js";
-import { encodeJSON } from "../lib/encodings.js";
+import { encodeJSON, encodeSimple } from "../lib/encodings.js";
 import { matchStatusCode } from "../lib/http.js";
 import * as M from "../lib/matchers.js";
 import { compactMap } from "../lib/primitives.js";
@@ -24,27 +24,26 @@ import * as errors from "../models/errors/index.js";
 import { LapymeError } from "../models/errors/lapyme-error.js";
 import { ResponseValidationError } from "../models/errors/response-validation-error.js";
 import { SDKValidationError } from "../models/errors/sdk-validation-error.js";
-import * as models from "../models/index.js";
 import * as operations from "../models/operations/index.js";
 import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * Crear nueva venta
+ * Crear venta
  *
  * @remarks
- * Crea una nueva venta sin facturación AFIP. La venta se crea con estado de factura 'pendiente' para comprobantes fiscales o 'no requerida' para comprobantes no fiscales. Requiere punto de venta, fecha, items y totales. Opcionalmente podés incluir métodos de pago.
+ * Registra una venta y devuelve la operación creada junto con sus efectos fiscales, de stock, pagos y contabilidad.
+ *
+ * Required scopes: `sales:write`.
  */
 export function salesCreate(
   client: LapymeCore,
-  request: models.CreateSaleRequest,
+  request: operations.CreateApiSaleRequest,
   options?: RequestOptions,
 ): APIPromise<
   Result<
-    operations.CreateSaleResponse,
-    | errors.CreateSaleBadRequestError
-    | errors.CreateSaleNotFoundError
-    | errors.RateLimitedError2
+    operations.CreateApiSaleResponse,
+    | errors.ApiErrorEnvelope
     | LapymeError
     | ResponseValidationError
     | ConnectionError
@@ -64,15 +63,13 @@ export function salesCreate(
 
 async function $do(
   client: LapymeCore,
-  request: models.CreateSaleRequest,
+  request: operations.CreateApiSaleRequest,
   options?: RequestOptions,
 ): Promise<
   [
     Result<
-      operations.CreateSaleResponse,
-      | errors.CreateSaleBadRequestError
-      | errors.CreateSaleNotFoundError
-      | errors.RateLimitedError2
+      operations.CreateApiSaleResponse,
+      | errors.ApiErrorEnvelope
       | LapymeError
       | ResponseValidationError
       | ConnectionError
@@ -87,20 +84,29 @@ async function $do(
 > {
   const parsed = safeParse(
     request,
-    (value) => z.parse(models.CreateSaleRequest$outboundSchema, value),
+    (value) => z.parse(operations.CreateApiSaleRequest$outboundSchema, value),
     "Input validation failed",
   );
   if (!parsed.ok) {
     return [parsed, { status: "invalid" }];
   }
   const payload = parsed.value;
-  const body = encodeJSON("body", payload, { explode: true });
+  const body = encodeJSON("body", payload.body, { explode: true });
 
   const path = pathToFunc("/api/v1/sales")();
 
   const headers = new Headers(compactMap({
     "Content-Type": "application/json",
     Accept: "application/json",
+    "Idempotency-Key": encodeSimple(
+      "Idempotency-Key",
+      payload["Idempotency-Key"],
+      { explode: false, charEncoding: "none" },
+    ),
+    "X-Request-Id": encodeSimple("X-Request-Id", payload["X-Request-Id"], {
+      explode: false,
+      charEncoding: "none",
+    }),
   }));
 
   const secConfig = await extractSecurity(client._options.bearerAuth);
@@ -110,7 +116,7 @@ async function $do(
   const context = {
     options: client._options,
     baseURL: options?.serverURL ?? client._baseURL ?? "",
-    operationID: "createSale",
+    operationID: "createApiSale",
     oAuth2Scopes: null,
 
     resolvedSecurity: requestSecurity,
@@ -154,10 +160,8 @@ async function $do(
   };
 
   const [result] = await M.match<
-    operations.CreateSaleResponse,
-    | errors.CreateSaleBadRequestError
-    | errors.CreateSaleNotFoundError
-    | errors.RateLimitedError2
+    operations.CreateApiSaleResponse,
+    | errors.ApiErrorEnvelope
     | LapymeError
     | ResponseValidationError
     | ConnectionError
@@ -167,10 +171,12 @@ async function $do(
     | UnexpectedClientError
     | SDKValidationError
   >(
-    M.json(201, operations.CreateSaleResponse$inboundSchema, { key: "Result" }),
-    M.jsonErr(400, errors.CreateSaleBadRequestError$inboundSchema),
-    M.jsonErr(404, errors.CreateSaleNotFoundError$inboundSchema),
-    M.jsonErr(429, errors.RateLimitedError2$inboundSchema, { hdrs: true }),
+    M.json(200, operations.CreateApiSaleResponse$inboundSchema, {
+      key: "Result",
+    }),
+    M.jsonErr([400, 401, 403, 409, 412], errors.ApiErrorEnvelope$inboundSchema),
+    M.jsonErr(429, errors.ApiErrorEnvelope$inboundSchema, { hdrs: true }),
+    M.jsonErr(500, errors.ApiErrorEnvelope$inboundSchema),
     M.fail("4XX"),
     M.fail("5XX"),
   )(response, req, { extraFields: responseFields });

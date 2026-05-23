@@ -4,25 +4,24 @@
  */
 
 import { categoriesCreate } from "../funcs/categories-create.js";
-import { categoriesGetById } from "../funcs/categories-get-by-id.js";
 import { categoriesGet } from "../funcs/categories-get.js";
-import { categoriesUpdateById } from "../funcs/categories-update-by-id.js";
 import { ClientSDK, RequestOptions } from "../lib/sdks.js";
-import * as models from "../models/index.js";
 import * as operations from "../models/operations/index.js";
 import { unwrapAsync } from "../types/fp.js";
 
 export class Categories extends ClientSDK {
   /**
-   * Obtener lista de categorías
+   * Listar categorías
    *
    * @remarks
-   * Devuelve una lista paginada de categorías de productos de la organización. Podés filtrar por nombre usando el parámetro de búsqueda y ordenar por diferentes campos.
+   * Devuelve las categorías de productos de la organización.
+   *
+   * Required scopes: `categories:read`.
    */
   async get(
-    request?: operations.GetCategoriesRequest | undefined,
+    request?: operations.ListApiCategoriesRequest | undefined,
     options?: RequestOptions,
-  ): Promise<operations.GetCategoriesResponse> {
+  ): Promise<operations.ListApiCategoriesResponse> {
     return unwrapAsync(categoriesGet(
       this,
       request,
@@ -31,50 +30,18 @@ export class Categories extends ClientSDK {
   }
 
   /**
-   * Crear nueva categoría
+   * Crear categoría
    *
    * @remarks
-   * Crea una nueva categoría de productos en la organización. El nombre es requerido, la categoría padre es opcional.
+   * Crea una categoría para organizar productos y asociar actividad económica predeterminada.
+   *
+   * Required scopes: `categories:write`.
    */
   async create(
-    request: models.CreateCategoryRequest,
+    request: operations.CreateApiCategoryRequest,
     options?: RequestOptions,
-  ): Promise<operations.CreateCategoryResponse> {
+  ): Promise<operations.CreateApiCategoryResponse> {
     return unwrapAsync(categoriesCreate(
-      this,
-      request,
-      options,
-    ));
-  }
-
-  /**
-   * Obtener categoría por ID
-   *
-   * @remarks
-   * Devuelve los datos de una categoría específica usando su ID único.
-   */
-  async getById(
-    request: operations.GetCategoryByIdRequest,
-    options?: RequestOptions,
-  ): Promise<operations.GetCategoryByIdResponse> {
-    return unwrapAsync(categoriesGetById(
-      this,
-      request,
-      options,
-    ));
-  }
-
-  /**
-   * Actualizar categoría
-   *
-   * @remarks
-   * Actualiza los datos de una categoría específica usando su ID único. El nombre es requerido, la categoría padre es opcional.
-   */
-  async updateById(
-    request: operations.UpdateCategoryByIdRequest,
-    options?: RequestOptions,
-  ): Promise<operations.UpdateCategoryByIdResponse> {
-    return unwrapAsync(categoriesUpdateById(
       this,
       request,
       options,

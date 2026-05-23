@@ -5,7 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { LapymeCore } from "../core.js";
-import { encodeFormQuery } from "../lib/encodings.js";
+import { encodeFormQuery, queryJoin } from "../lib/encodings.js";
 import { matchStatusCode } from "../lib/http.js";
 import * as M from "../lib/matchers.js";
 import { compactMap } from "../lib/primitives.js";
@@ -29,19 +29,21 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * Obtener lista de ventas
+ * Listar ventas
  *
  * @remarks
- * Devuelve una lista paginada de ventas de la organización. Podés filtrar por nombre de cliente, número de factura o rango de fechas usando los parámetros correspondientes.
+ * Lista las ventas de la organización. Soporta filtros por cliente, fecha, estado, punto de venta, vendedor e integración.
+ *
+ * Required scopes: `sales:read`.
  */
 export function salesList(
   client: LapymeCore,
-  request?: operations.GetSalesRequest | undefined,
+  request?: operations.ListApiSalesRequest | undefined,
   options?: RequestOptions,
 ): APIPromise<
   Result<
-    operations.GetSalesResponse,
-    | errors.RateLimitedError2
+    operations.ListApiSalesResponse,
+    | errors.ApiErrorEnvelope
     | LapymeError
     | ResponseValidationError
     | ConnectionError
@@ -61,13 +63,13 @@ export function salesList(
 
 async function $do(
   client: LapymeCore,
-  request?: operations.GetSalesRequest | undefined,
+  request?: operations.ListApiSalesRequest | undefined,
   options?: RequestOptions,
 ): Promise<
   [
     Result<
-      operations.GetSalesResponse,
-      | errors.RateLimitedError2
+      operations.ListApiSalesResponse,
+      | errors.ApiErrorEnvelope
       | LapymeError
       | ResponseValidationError
       | ConnectionError
@@ -83,7 +85,7 @@ async function $do(
   const parsed = safeParse(
     request,
     (value) =>
-      z.parse(z.optional(operations.GetSalesRequest$outboundSchema), value),
+      z.parse(z.optional(operations.ListApiSalesRequest$outboundSchema), value),
     "Input validation failed",
   );
   if (!parsed.ok) {
@@ -94,13 +96,31 @@ async function $do(
 
   const path = pathToFunc("/api/v1/sales")();
 
-  const query = encodeFormQuery({
-    "dateFrom": payload?.dateFrom,
-    "dateTo": payload?.dateTo,
-    "limit": payload?.limit,
-    "page": payload?.page,
-    "search": payload?.search,
-  });
+  const query = queryJoin(
+    encodeFormQuery({
+      "fields": payload?.fields,
+    }, { explode: false }),
+    encodeFormQuery({
+      "amount_attribute": payload?.amount_attribute,
+      "cursor": payload?.cursor,
+      "customer_id": payload?.customer_id,
+      "date_attribute": payload?.date_attribute,
+      "date_from": payload?.date_from,
+      "date_to": payload?.date_to,
+      "integration_sources": payload?.integration_sources,
+      "invoice_statuses": payload?.invoice_statuses,
+      "limit": payload?.limit,
+      "max_amount": payload?.max_amount,
+      "min_amount": payload?.min_amount,
+      "payment_statuses": payload?.payment_statuses,
+      "point_of_sale_ids": payload?.point_of_sale_ids,
+      "query": payload?.query,
+      "register_ids": payload?.register_ids,
+      "search": payload?.search,
+      "seller_ids": payload?.seller_ids,
+      "voucher_types": payload?.voucher_types,
+    }),
+  );
 
   const headers = new Headers(compactMap({
     Accept: "application/json",
@@ -113,7 +133,7 @@ async function $do(
   const context = {
     options: client._options,
     baseURL: options?.serverURL ?? client._baseURL ?? "",
-    operationID: "getSales",
+    operationID: "listApiSales",
     oAuth2Scopes: null,
 
     resolvedSecurity: requestSecurity,
@@ -158,8 +178,8 @@ async function $do(
   };
 
   const [result] = await M.match<
-    operations.GetSalesResponse,
-    | errors.RateLimitedError2
+    operations.ListApiSalesResponse,
+    | errors.ApiErrorEnvelope
     | LapymeError
     | ResponseValidationError
     | ConnectionError
@@ -169,8 +189,12 @@ async function $do(
     | UnexpectedClientError
     | SDKValidationError
   >(
-    M.json(200, operations.GetSalesResponse$inboundSchema, { key: "Result" }),
-    M.jsonErr(429, errors.RateLimitedError2$inboundSchema, { hdrs: true }),
+    M.json(200, operations.ListApiSalesResponse$inboundSchema, {
+      key: "Result",
+    }),
+    M.jsonErr([400, 401, 403], errors.ApiErrorEnvelope$inboundSchema),
+    M.jsonErr(429, errors.ApiErrorEnvelope$inboundSchema, { hdrs: true }),
+    M.jsonErr(500, errors.ApiErrorEnvelope$inboundSchema),
     M.fail("4XX"),
     M.fail("5XX"),
   )(response, req, { extraFields: responseFields });

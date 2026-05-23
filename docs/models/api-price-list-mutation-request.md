@@ -1,0 +1,22 @@
+# ApiPriceListMutationRequest
+
+## Example Usage
+
+```typescript
+import { ApiPriceListMutationRequest } from "lapyme/models";
+
+let value: ApiPriceListMutationRequest = {
+  name: "<value>",
+};
+```
+
+## Fields
+
+| Field                                                                                                                         | Type                                                                                                                          | Required                                                                                                                      | Description                                                                                                                   |
+| ----------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| `name`                                                                                                                        | *string*                                                                                                                      | :heavy_check_mark:                                                                                                            | N/A                                                                                                                           |
+| `isAutomatic`                                                                                                                 | *boolean*                                                                                                                     | :heavy_minus_sign:                                                                                                            | N/A                                                                                                                           |
+| `automaticPricingMode`                                                                                                        | [models.ApiPriceListMutationRequestAutomaticPricingMode](../models/api-price-list-mutation-request-automatic-pricing-mode.md) | :heavy_minus_sign:                                                                                                            | N/A                                                                                                                           |
+| `adjustmentPercentage`                                                                                                        | *number*                                                                                                                      | :heavy_minus_sign:                                                                                                            | N/A                                                                                                                           |
+| `defaultEconomicActivity`                                                                                                     | *string*                                                                                                                      | :heavy_minus_sign:                                                                                                            | N/A                                                                                                                           |
+| `taxInclusive`                                                                                                                | *boolean*                                                                                                                     | :heavy_minus_sign:                                                                                                            | N/A                                                                                                                           |

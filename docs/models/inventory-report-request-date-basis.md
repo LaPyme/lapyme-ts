@@ -1,6 +1,6 @@
 # InventoryReportRequestDateBasis
 
-Solo aplica cuando se usan medidas derivadas de ventas. `commercial` usa la fecha de la venta; `fiscal` usa la fecha contable.
+Aplica solo cuando se usan métricas derivadas de ventas. `commercial` usa la fecha de venta; `fiscal` usa la fecha contable.
 
 ## Example Usage
 

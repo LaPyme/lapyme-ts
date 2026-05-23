@@ -29,19 +29,21 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * Obtener lista de productos
+ * Listar productos
  *
  * @remarks
- * Devuelve una lista paginada de productos de la organización. Podés filtrar por categoría, tipo de producto, estado activo o buscar por nombre/SKU.
+ * Lista los productos de la organización con precios. Soporta búsqueda y filtros por categoría, tipo y estado.
+ *
+ * Required scopes: `products:read`.
  */
 export function productsList(
   client: LapymeCore,
-  request?: operations.GetProductsRequest | undefined,
+  request?: operations.ListApiProductsRequest | undefined,
   options?: RequestOptions,
 ): APIPromise<
   Result<
-    operations.GetProductsResponse,
-    | errors.RateLimitedError2
+    operations.ListApiProductsResponse,
+    | errors.ApiErrorEnvelope
     | LapymeError
     | ResponseValidationError
     | ConnectionError
@@ -61,13 +63,13 @@ export function productsList(
 
 async function $do(
   client: LapymeCore,
-  request?: operations.GetProductsRequest | undefined,
+  request?: operations.ListApiProductsRequest | undefined,
   options?: RequestOptions,
 ): Promise<
   [
     Result<
-      operations.GetProductsResponse,
-      | errors.RateLimitedError2
+      operations.ListApiProductsResponse,
+      | errors.ApiErrorEnvelope
       | LapymeError
       | ResponseValidationError
       | ConnectionError
@@ -83,7 +85,10 @@ async function $do(
   const parsed = safeParse(
     request,
     (value) =>
-      z.parse(z.optional(operations.GetProductsRequest$outboundSchema), value),
+      z.parse(
+        z.optional(operations.ListApiProductsRequest$outboundSchema),
+        value,
+      ),
     "Input validation failed",
   );
   if (!parsed.ok) {
@@ -95,12 +100,12 @@ async function $do(
   const path = pathToFunc("/api/v1/products")();
 
   const query = encodeFormQuery({
-    "categoryId": payload?.categoryId,
-    "isActive": payload?.isActive,
+    "category_id": payload?.category_id,
+    "cursor": payload?.cursor,
+    "is_active": payload?.is_active,
     "limit": payload?.limit,
-    "page": payload?.page,
-    "priceListId": payload?.priceListId,
-    "productType": payload?.productType,
+    "product_type": payload?.product_type,
+    "query": payload?.query,
     "search": payload?.search,
   });
 
@@ -115,7 +120,7 @@ async function $do(
   const context = {
     options: client._options,
     baseURL: options?.serverURL ?? client._baseURL ?? "",
-    operationID: "getProducts",
+    operationID: "listApiProducts",
     oAuth2Scopes: null,
 
     resolvedSecurity: requestSecurity,
@@ -160,8 +165,8 @@ async function $do(
   };
 
   const [result] = await M.match<
-    operations.GetProductsResponse,
-    | errors.RateLimitedError2
+    operations.ListApiProductsResponse,
+    | errors.ApiErrorEnvelope
     | LapymeError
     | ResponseValidationError
     | ConnectionError
@@ -171,10 +176,12 @@ async function $do(
     | UnexpectedClientError
     | SDKValidationError
   >(
-    M.json(200, operations.GetProductsResponse$inboundSchema, {
+    M.json(200, operations.ListApiProductsResponse$inboundSchema, {
       key: "Result",
     }),
-    M.jsonErr(429, errors.RateLimitedError2$inboundSchema, { hdrs: true }),
+    M.jsonErr([400, 401, 403], errors.ApiErrorEnvelope$inboundSchema),
+    M.jsonErr(429, errors.ApiErrorEnvelope$inboundSchema, { hdrs: true }),
+    M.jsonErr(500, errors.ApiErrorEnvelope$inboundSchema),
     M.fail("4XX"),
     M.fail("5XX"),
   )(response, req, { extraFields: responseFields });

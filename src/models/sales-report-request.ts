@@ -4,6 +4,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { remap as remap$ } from "../lib/primitives.js";
 import { ClosedEnum } from "../types/enums.js";
 import {
   ReportPeriod,
@@ -23,12 +24,12 @@ export const SalesReportRequestDimension = {
   HourOfDay: "hourOfDay",
   Customer: "customer",
   CustomerTaxCategory: "customerTaxCategory",
-  PersonType: "personType",
   Province: "province",
   City: "city",
   Product: "product",
   Variant: "variant",
   Category: "category",
+  Subcategory: "subcategory",
   ProductType: "productType",
   Salesperson: "salesperson",
   PointOfSale: "pointOfSale",
@@ -66,16 +67,16 @@ export type SalesReportRequestMeasure = ClosedEnum<
 >;
 
 /**
- * Filtros por dimensión. Cada clave debe ser una dimensión filterable del source. El valor es un array de IDs o valores a incluir.
+ * Filtros por dimensión. Cada clave debe ser una dimensión filtrable para la fuente. El valor es un array de IDs o valores a incluir.
  */
 export type SalesReportRequestDimensionFilters = {
   customer?: Array<string> | undefined;
   customerTaxCategory?: Array<string> | undefined;
-  personType?: Array<string> | undefined;
   province?: Array<string> | undefined;
   city?: Array<string> | undefined;
   product?: Array<string> | undefined;
   category?: Array<string> | undefined;
+  subcategory?: Array<string> | undefined;
   productType?: Array<string> | undefined;
   salesperson?: Array<string> | undefined;
   pointOfSale?: Array<string> | undefined;
@@ -91,14 +92,14 @@ export type SalesReportRequestDimensionFilters = {
 };
 
 /**
- * `commercial` usa la fecha de la venta. `fiscal` usa la fecha contable del comprobante.
+ * `commercial` usa la fecha de venta. `fiscal` usa la fecha contable del comprobante.
  */
 export const SalesReportRequestDateBasis = {
   Commercial: "commercial",
   Fiscal: "fiscal",
 } as const;
 /**
- * `commercial` usa la fecha de la venta. `fiscal` usa la fecha contable del comprobante.
+ * `commercial` usa la fecha de venta. `fiscal` usa la fecha contable del comprobante.
  */
 export type SalesReportRequestDateBasis = ClosedEnum<
   typeof SalesReportRequestDateBasis
@@ -108,7 +109,7 @@ export type SalesReportRequest = {
   source: "sales";
   period: ReportPeriod;
   /**
-   * Dimensiones de agrupamiento. Máximo 4.
+   * Dimensiones de agrupación. Máximo 4.
    */
   dimensions?: Array<SalesReportRequestDimension> | undefined;
   /**
@@ -116,7 +117,7 @@ export type SalesReportRequest = {
    */
   measures: Array<SalesReportRequestMeasure>;
   /**
-   * Filtros por dimensión. Cada clave debe ser una dimensión filterable del source. El valor es un array de IDs o valores a incluir.
+   * Filtros por dimensión. Cada clave debe ser una dimensión filtrable para la fuente. El valor es un array de IDs o valores a incluir.
    */
   dimensionFilters?: SalesReportRequestDimensionFilters | undefined;
   /**
@@ -124,7 +125,7 @@ export type SalesReportRequest = {
    */
   includeTotals?: boolean | undefined;
   /**
-   * `commercial` usa la fecha de la venta. `fiscal` usa la fecha contable del comprobante.
+   * `commercial` usa la fecha de venta. `fiscal` usa la fecha contable del comprobante.
    */
   dateBasis?: SalesReportRequestDateBasis | undefined;
 };
@@ -142,51 +143,66 @@ export const SalesReportRequestMeasure$outboundSchema: z.ZodMiniEnum<
 /** @internal */
 export type SalesReportRequestDimensionFilters$Outbound = {
   customer?: Array<string> | undefined;
-  customerTaxCategory?: Array<string> | undefined;
-  personType?: Array<string> | undefined;
+  customer_tax_category?: Array<string> | undefined;
   province?: Array<string> | undefined;
   city?: Array<string> | undefined;
   product?: Array<string> | undefined;
   category?: Array<string> | undefined;
-  productType?: Array<string> | undefined;
+  subcategory?: Array<string> | undefined;
+  product_type?: Array<string> | undefined;
   salesperson?: Array<string> | undefined;
-  pointOfSale?: Array<string> | undefined;
+  point_of_sale?: Array<string> | undefined;
   warehouse?: Array<string> | undefined;
   register?: Array<string> | undefined;
-  integrationSource?: Array<string> | undefined;
-  voucherType?: Array<string> | undefined;
+  integration_source?: Array<string> | undefined;
+  voucher_type?: Array<string> | undefined;
   currency?: Array<string> | undefined;
-  paymentStatus?: Array<string> | undefined;
-  caeStatus?: Array<string> | undefined;
-  paymentMethod?: Array<string> | undefined;
-  taxRate?: Array<string> | undefined;
+  payment_status?: Array<string> | undefined;
+  cae_status?: Array<string> | undefined;
+  payment_method?: Array<string> | undefined;
+  tax_rate?: Array<string> | undefined;
 };
 
 /** @internal */
 export const SalesReportRequestDimensionFilters$outboundSchema: z.ZodMiniType<
   SalesReportRequestDimensionFilters$Outbound,
   SalesReportRequestDimensionFilters
-> = z.object({
-  customer: z.optional(z.array(z.string())),
-  customerTaxCategory: z.optional(z.array(z.string())),
-  personType: z.optional(z.array(z.string())),
-  province: z.optional(z.array(z.string())),
-  city: z.optional(z.array(z.string())),
-  product: z.optional(z.array(z.string())),
-  category: z.optional(z.array(z.string())),
-  productType: z.optional(z.array(z.string())),
-  salesperson: z.optional(z.array(z.string())),
-  pointOfSale: z.optional(z.array(z.string())),
-  warehouse: z.optional(z.array(z.string())),
-  register: z.optional(z.array(z.string())),
-  integrationSource: z.optional(z.array(z.string())),
-  voucherType: z.optional(z.array(z.string())),
-  currency: z.optional(z.array(z.string())),
-  paymentStatus: z.optional(z.array(z.string())),
-  caeStatus: z.optional(z.array(z.string())),
-  paymentMethod: z.optional(z.array(z.string())),
-  taxRate: z.optional(z.array(z.string())),
-});
+> = z.pipe(
+  z.object({
+    customer: z.optional(z.array(z.string())),
+    customerTaxCategory: z.optional(z.array(z.string())),
+    province: z.optional(z.array(z.string())),
+    city: z.optional(z.array(z.string())),
+    product: z.optional(z.array(z.string())),
+    category: z.optional(z.array(z.string())),
+    subcategory: z.optional(z.array(z.string())),
+    productType: z.optional(z.array(z.string())),
+    salesperson: z.optional(z.array(z.string())),
+    pointOfSale: z.optional(z.array(z.string())),
+    warehouse: z.optional(z.array(z.string())),
+    register: z.optional(z.array(z.string())),
+    integrationSource: z.optional(z.array(z.string())),
+    voucherType: z.optional(z.array(z.string())),
+    currency: z.optional(z.array(z.string())),
+    paymentStatus: z.optional(z.array(z.string())),
+    caeStatus: z.optional(z.array(z.string())),
+    paymentMethod: z.optional(z.array(z.string())),
+    taxRate: z.optional(z.array(z.string())),
+  }),
+  z.transform((v) => {
+    return remap$(v, {
+      customerTaxCategory: "customer_tax_category",
+      productType: "product_type",
+      pointOfSale: "point_of_sale",
+      integrationSource: "integration_source",
+      voucherType: "voucher_type",
+      paymentStatus: "payment_status",
+      caeStatus: "cae_status",
+      paymentMethod: "payment_method",
+      taxRate: "tax_rate",
+    });
+  }),
+);
 
 export function salesReportRequestDimensionFiltersToJSON(
   salesReportRequestDimensionFilters: SalesReportRequestDimensionFilters,
@@ -209,29 +225,38 @@ export type SalesReportRequest$Outbound = {
   period: ReportPeriod$Outbound;
   dimensions?: Array<string> | undefined;
   measures: Array<string>;
-  dimensionFilters?: SalesReportRequestDimensionFilters$Outbound | undefined;
-  includeTotals?: boolean | undefined;
-  dateBasis: string;
+  dimension_filters?: SalesReportRequestDimensionFilters$Outbound | undefined;
+  include_totals?: boolean | undefined;
+  date_basis: string;
 };
 
 /** @internal */
 export const SalesReportRequest$outboundSchema: z.ZodMiniType<
   SalesReportRequest$Outbound,
   SalesReportRequest
-> = z.object({
-  source: z.literal("sales"),
-  period: ReportPeriod$outboundSchema,
-  dimensions: z.optional(z.array(SalesReportRequestDimension$outboundSchema)),
-  measures: z.array(SalesReportRequestMeasure$outboundSchema),
-  dimensionFilters: z.optional(
-    z.lazy(() => SalesReportRequestDimensionFilters$outboundSchema),
-  ),
-  includeTotals: z.optional(z.boolean()),
-  dateBasis: z._default(
-    SalesReportRequestDateBasis$outboundSchema,
-    "commercial",
-  ),
-});
+> = z.pipe(
+  z.object({
+    source: z.literal("sales"),
+    period: ReportPeriod$outboundSchema,
+    dimensions: z.optional(z.array(SalesReportRequestDimension$outboundSchema)),
+    measures: z.array(SalesReportRequestMeasure$outboundSchema),
+    dimensionFilters: z.optional(
+      z.lazy(() => SalesReportRequestDimensionFilters$outboundSchema),
+    ),
+    includeTotals: z.optional(z.boolean()),
+    dateBasis: z._default(
+      SalesReportRequestDateBasis$outboundSchema,
+      "commercial",
+    ),
+  }),
+  z.transform((v) => {
+    return remap$(v, {
+      dimensionFilters: "dimension_filters",
+      includeTotals: "include_totals",
+      dateBasis: "date_basis",
+    });
+  }),
+);
 
 export function salesReportRequestToJSON(
   salesReportRequest: SalesReportRequest,

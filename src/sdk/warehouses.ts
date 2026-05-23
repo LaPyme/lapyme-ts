@@ -4,25 +4,24 @@
  */
 
 import { warehousesCreate } from "../funcs/warehouses-create.js";
-import { warehousesGetById } from "../funcs/warehouses-get-by-id.js";
 import { warehousesList } from "../funcs/warehouses-list.js";
-import { warehousesUpdateById } from "../funcs/warehouses-update-by-id.js";
 import { ClientSDK, RequestOptions } from "../lib/sdks.js";
-import * as models from "../models/index.js";
 import * as operations from "../models/operations/index.js";
 import { unwrapAsync } from "../types/fp.js";
 
 export class Warehouses extends ClientSDK {
   /**
-   * Obtener lista de depósitos
+   * Listar depósitos
    *
    * @remarks
-   * Devuelve una lista paginada de depósitos de la organización. Podés filtrar por nombre usando el parámetro de búsqueda.
+   * Lista los depósitos activos de la organización.
+   *
+   * Required scopes: `warehouses:read`.
    */
   async list(
-    request?: operations.GetWarehousesRequest | undefined,
+    request?: operations.ListApiWarehousesRequest | undefined,
     options?: RequestOptions,
-  ): Promise<operations.GetWarehousesResponse> {
+  ): Promise<operations.ListApiWarehousesResponse> {
     return unwrapAsync(warehousesList(
       this,
       request,
@@ -31,50 +30,18 @@ export class Warehouses extends ClientSDK {
   }
 
   /**
-   * Crear nueva ubicación
+   * Crear depósito
    *
    * @remarks
-   * Crea un nueva ubicación en la organización. El nombre es requerido, la dirección es opcional.
+   * Crea un depósito para operar stock, puntos de venta y disponibilidad.
+   *
+   * Required scopes: `warehouses:write`.
    */
   async create(
-    request: models.CreateWarehouseRequest,
+    request: operations.CreateApiWarehouseRequest,
     options?: RequestOptions,
-  ): Promise<operations.CreateWarehouseResponse> {
+  ): Promise<operations.CreateApiWarehouseResponse> {
     return unwrapAsync(warehousesCreate(
-      this,
-      request,
-      options,
-    ));
-  }
-
-  /**
-   * Obtener ubicación por ID
-   *
-   * @remarks
-   * Devuelve los datos de una ubicación específico usando su ID único.
-   */
-  async getById(
-    request: operations.GetWarehouseByIdRequest,
-    options?: RequestOptions,
-  ): Promise<operations.GetWarehouseByIdResponse> {
-    return unwrapAsync(warehousesGetById(
-      this,
-      request,
-      options,
-    ));
-  }
-
-  /**
-   * Actualizar ubicación
-   *
-   * @remarks
-   * Actualiza los datos de una ubicación específico usando su ID único. El nombre es requerido, la dirección es opcional.
-   */
-  async updateById(
-    request: operations.UpdateWarehouseByIdRequest,
-    options?: RequestOptions,
-  ): Promise<operations.UpdateWarehouseByIdResponse> {
-    return unwrapAsync(warehousesUpdateById(
       this,
       request,
       options,

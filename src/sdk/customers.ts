@@ -4,25 +4,24 @@
  */
 
 import { customersCreate } from "../funcs/customers-create.js";
-import { customersGetById } from "../funcs/customers-get-by-id.js";
 import { customersGet } from "../funcs/customers-get.js";
-import { customersUpdate } from "../funcs/customers-update.js";
 import { ClientSDK, RequestOptions } from "../lib/sdks.js";
-import * as models from "../models/index.js";
 import * as operations from "../models/operations/index.js";
 import { unwrapAsync } from "../types/fp.js";
 
 export class Customers extends ClientSDK {
   /**
-   * Obtener lista de clientes
+   * Listar clientes
    *
    * @remarks
-   * Devuelve una lista paginada de clientes de la organización. Podés filtrar por nombre o razón social usando el parámetro de búsqueda.
+   * Devuelve clientes de la organización. Permite buscar por nombre, CUIT o email.
+   *
+   * Required scopes: `customers:read`.
    */
   async get(
-    request?: operations.GetCustomersRequest | undefined,
+    request?: operations.ListApiCustomersRequest | undefined,
     options?: RequestOptions,
-  ): Promise<operations.GetCustomersResponse> {
+  ): Promise<operations.ListApiCustomersResponse> {
     return unwrapAsync(customersGet(
       this,
       request,
@@ -31,50 +30,18 @@ export class Customers extends ClientSDK {
   }
 
   /**
-   * Crear nuevo cliente
+   * Crear cliente
    *
    * @remarks
-   * Crea un nuevo cliente en la organización. Todos los campos son opcionales excepto el nombre.
+   * Crea un cliente para ventas, cuentas corrientes, etiquetas y reportes.
+   *
+   * Required scopes: `customers:write`.
    */
   async create(
-    request: models.CreateCustomerRequest,
+    request: operations.CreateApiCustomerRequest,
     options?: RequestOptions,
-  ): Promise<operations.CreateCustomerResponse> {
+  ): Promise<operations.CreateApiCustomerResponse> {
     return unwrapAsync(customersCreate(
-      this,
-      request,
-      options,
-    ));
-  }
-
-  /**
-   * Obtener cliente por ID
-   *
-   * @remarks
-   * Devuelve los datos de un cliente específico usando su ID único.
-   */
-  async getById(
-    request: operations.GetCustomerByIdRequest,
-    options?: RequestOptions,
-  ): Promise<operations.GetCustomerByIdResponse> {
-    return unwrapAsync(customersGetById(
-      this,
-      request,
-      options,
-    ));
-  }
-
-  /**
-   * Actualizar cliente
-   *
-   * @remarks
-   * Actualiza los datos de un cliente específico usando su ID único. Todos los campos son opcionales excepto el nombre.
-   */
-  async update(
-    request: operations.UpdateCustomerByIdRequest,
-    options?: RequestOptions,
-  ): Promise<operations.UpdateCustomerByIdResponse> {
-    return unwrapAsync(customersUpdate(
       this,
       request,
       options,

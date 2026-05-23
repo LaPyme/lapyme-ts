@@ -4,60 +4,34 @@
  */
 
 import { ClientSDK } from "../lib/sdks.js";
+import { Api } from "./api.js";
 import { Categories } from "./categories.js";
 import { Customers } from "./customers.js";
-import { Health } from "./health.js";
 import { PaymentMethods } from "./payment-methods.js";
 import { PriceLists } from "./price-lists.js";
 import { Products } from "./products.js";
-import { Purchases } from "./purchases.js";
-import { Reports } from "./reports.js";
 import { Sales } from "./sales.js";
-import { StockPerWarehouse } from "./stock-per-warehouse.js";
-import { Suppliers } from "./suppliers.js";
-import { Transfers } from "./transfers.js";
-import { V2 } from "./v2.js";
 import { Warehouses } from "./warehouses.js";
 
 export class Lapyme extends ClientSDK {
-  private _health?: Health;
-  get health(): Health {
-    return (this._health ??= new Health(this._options));
+  private _api?: Api;
+  get api(): Api {
+    return (this._api ??= new Api(this._options));
   }
 
-  private _transfers?: Transfers;
-  get transfers(): Transfers {
-    return (this._transfers ??= new Transfers(this._options));
-  }
-
-  private _customers?: Customers;
-  get customers(): Customers {
-    return (this._customers ??= new Customers(this._options));
-  }
-
-  private _suppliers?: Suppliers;
-  get suppliers(): Suppliers {
-    return (this._suppliers ??= new Suppliers(this._options));
-  }
-
-  private _v2?: V2;
-  get v2(): V2 {
-    return (this._v2 ??= new V2(this._options));
-  }
-
-  private _purchases?: Purchases;
-  get purchases(): Purchases {
-    return (this._purchases ??= new Purchases(this._options));
-  }
-
-  private _reports?: Reports;
-  get reports(): Reports {
-    return (this._reports ??= new Reports(this._options));
+  private _categories?: Categories;
+  get categories(): Categories {
+    return (this._categories ??= new Categories(this._options));
   }
 
   private _products?: Products;
   get products(): Products {
     return (this._products ??= new Products(this._options));
+  }
+
+  private _warehouses?: Warehouses;
+  get warehouses(): Warehouses {
+    return (this._warehouses ??= new Warehouses(this._options));
   }
 
   private _priceLists?: PriceLists;
@@ -70,23 +44,13 @@ export class Lapyme extends ClientSDK {
     return (this._sales ??= new Sales(this._options));
   }
 
-  private _stockPerWarehouse?: StockPerWarehouse;
-  get stockPerWarehouse(): StockPerWarehouse {
-    return (this._stockPerWarehouse ??= new StockPerWarehouse(this._options));
-  }
-
-  private _categories?: Categories;
-  get categories(): Categories {
-    return (this._categories ??= new Categories(this._options));
+  private _customers?: Customers;
+  get customers(): Customers {
+    return (this._customers ??= new Customers(this._options));
   }
 
   private _paymentMethods?: PaymentMethods;
   get paymentMethods(): PaymentMethods {
     return (this._paymentMethods ??= new PaymentMethods(this._options));
-  }
-
-  private _warehouses?: Warehouses;
-  get warehouses(): Warehouses {
-    return (this._warehouses ??= new Warehouses(this._options));
   }
 }

@@ -4,24 +4,24 @@
  */
 
 import { salesCreate } from "../funcs/sales-create.js";
-import { salesGetById } from "../funcs/sales-get-by-id.js";
 import { salesList } from "../funcs/sales-list.js";
 import { ClientSDK, RequestOptions } from "../lib/sdks.js";
-import * as models from "../models/index.js";
 import * as operations from "../models/operations/index.js";
 import { unwrapAsync } from "../types/fp.js";
 
 export class Sales extends ClientSDK {
   /**
-   * Obtener lista de ventas
+   * Listar ventas
    *
    * @remarks
-   * Devuelve una lista paginada de ventas de la organización. Podés filtrar por nombre de cliente, número de factura o rango de fechas usando los parámetros correspondientes.
+   * Lista las ventas de la organización. Soporta filtros por cliente, fecha, estado, punto de venta, vendedor e integración.
+   *
+   * Required scopes: `sales:read`.
    */
   async list(
-    request?: operations.GetSalesRequest | undefined,
+    request?: operations.ListApiSalesRequest | undefined,
     options?: RequestOptions,
-  ): Promise<operations.GetSalesResponse> {
+  ): Promise<operations.ListApiSalesResponse> {
     return unwrapAsync(salesList(
       this,
       request,
@@ -30,33 +30,18 @@ export class Sales extends ClientSDK {
   }
 
   /**
-   * Crear nueva venta
+   * Crear venta
    *
    * @remarks
-   * Crea una nueva venta sin facturación AFIP. La venta se crea con estado de factura 'pendiente' para comprobantes fiscales o 'no requerida' para comprobantes no fiscales. Requiere punto de venta, fecha, items y totales. Opcionalmente podés incluir métodos de pago.
+   * Registra una venta y devuelve la operación creada junto con sus efectos fiscales, de stock, pagos y contabilidad.
+   *
+   * Required scopes: `sales:write`.
    */
   async create(
-    request: models.CreateSaleRequest,
+    request: operations.CreateApiSaleRequest,
     options?: RequestOptions,
-  ): Promise<operations.CreateSaleResponse> {
+  ): Promise<operations.CreateApiSaleResponse> {
     return unwrapAsync(salesCreate(
-      this,
-      request,
-      options,
-    ));
-  }
-
-  /**
-   * Obtener venta por ID
-   *
-   * @remarks
-   * Devuelve los datos de una venta específica usando su ID único, incluyendo detalles de items, pagos y cliente.
-   */
-  async getById(
-    request: operations.GetSaleByIdRequest,
-    options?: RequestOptions,
-  ): Promise<operations.GetSaleByIdResponse> {
-    return unwrapAsync(salesGetById(
       this,
       request,
       options,

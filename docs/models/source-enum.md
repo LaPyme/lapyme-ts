@@ -13,5 +13,5 @@ let value: SourceEnum = "purchases";
 ## Values
 
 ```typescript
-"sales" | "purchases" | "inventory" | Unrecognized<string>
+"sales" | "purchases" | "payments" | "inventory" | Unrecognized<string>
 ```

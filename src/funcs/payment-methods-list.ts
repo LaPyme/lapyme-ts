@@ -29,19 +29,21 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * Obtener lista de métodos de pago
+ * Listar métodos de pago
  *
  * @remarks
- * Devuelve una lista paginada de métodos de pago de la organización. Podés filtrar por nombre usando el parámetro de búsqueda y ordenar por diferentes campos.
+ * Lista los métodos de pago operativos para ventas. Devuelve solo métodos activos por defecto.
+ *
+ * Required scopes: `payment_methods:read`.
  */
 export function paymentMethodsList(
   client: LapymeCore,
-  request?: operations.GetPaymentMethodsRequest | undefined,
+  request?: operations.ListApiPaymentMethodsRequest | undefined,
   options?: RequestOptions,
 ): APIPromise<
   Result<
-    operations.GetPaymentMethodsResponse,
-    | errors.RateLimitedError2
+    operations.ListApiPaymentMethodsResponse,
+    | errors.ApiErrorEnvelope
     | LapymeError
     | ResponseValidationError
     | ConnectionError
@@ -61,13 +63,13 @@ export function paymentMethodsList(
 
 async function $do(
   client: LapymeCore,
-  request?: operations.GetPaymentMethodsRequest | undefined,
+  request?: operations.ListApiPaymentMethodsRequest | undefined,
   options?: RequestOptions,
 ): Promise<
   [
     Result<
-      operations.GetPaymentMethodsResponse,
-      | errors.RateLimitedError2
+      operations.ListApiPaymentMethodsResponse,
+      | errors.ApiErrorEnvelope
       | LapymeError
       | ResponseValidationError
       | ConnectionError
@@ -84,7 +86,7 @@ async function $do(
     request,
     (value) =>
       z.parse(
-        z.optional(operations.GetPaymentMethodsRequest$outboundSchema),
+        z.optional(operations.ListApiPaymentMethodsRequest$outboundSchema),
         value,
       ),
     "Input validation failed",
@@ -98,11 +100,11 @@ async function $do(
   const path = pathToFunc("/api/v1/payment-methods")();
 
   const query = encodeFormQuery({
+    "cursor": payload?.cursor,
+    "is_active": payload?.is_active,
     "limit": payload?.limit,
-    "page": payload?.page,
+    "query": payload?.query,
     "search": payload?.search,
-    "sortBy": payload?.sortBy,
-    "sortOrder": payload?.sortOrder,
   });
 
   const headers = new Headers(compactMap({
@@ -116,7 +118,7 @@ async function $do(
   const context = {
     options: client._options,
     baseURL: options?.serverURL ?? client._baseURL ?? "",
-    operationID: "getPaymentMethods",
+    operationID: "listApiPaymentMethods",
     oAuth2Scopes: null,
 
     resolvedSecurity: requestSecurity,
@@ -161,8 +163,8 @@ async function $do(
   };
 
   const [result] = await M.match<
-    operations.GetPaymentMethodsResponse,
-    | errors.RateLimitedError2
+    operations.ListApiPaymentMethodsResponse,
+    | errors.ApiErrorEnvelope
     | LapymeError
     | ResponseValidationError
     | ConnectionError
@@ -172,10 +174,12 @@ async function $do(
     | UnexpectedClientError
     | SDKValidationError
   >(
-    M.json(200, operations.GetPaymentMethodsResponse$inboundSchema, {
+    M.json(200, operations.ListApiPaymentMethodsResponse$inboundSchema, {
       key: "Result",
     }),
-    M.jsonErr(429, errors.RateLimitedError2$inboundSchema, { hdrs: true }),
+    M.jsonErr([400, 401, 403], errors.ApiErrorEnvelope$inboundSchema),
+    M.jsonErr(429, errors.ApiErrorEnvelope$inboundSchema, { hdrs: true }),
+    M.jsonErr(500, errors.ApiErrorEnvelope$inboundSchema),
     M.fail("4XX"),
     M.fail("5XX"),
   )(response, req, { extraFields: responseFields });

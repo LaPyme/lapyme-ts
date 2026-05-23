@@ -5,7 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { LapymeCore } from "../core.js";
-import { encodeJSON } from "../lib/encodings.js";
+import { encodeJSON, encodeSimple } from "../lib/encodings.js";
 import { matchStatusCode } from "../lib/http.js";
 import * as M from "../lib/matchers.js";
 import { compactMap } from "../lib/primitives.js";
@@ -24,25 +24,26 @@ import * as errors from "../models/errors/index.js";
 import { LapymeError } from "../models/errors/lapyme-error.js";
 import { ResponseValidationError } from "../models/errors/response-validation-error.js";
 import { SDKValidationError } from "../models/errors/sdk-validation-error.js";
-import * as models from "../models/index.js";
 import * as operations from "../models/operations/index.js";
 import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * Crear nuevo método de pago
+ * Crear método de pago
  *
  * @remarks
- * Crea un nuevo método de pago en la organización. El nombre es requerido, los demás campos son opcionales.
+ * Crea un método de pago para registrar cobros y pagos.
+ *
+ * Required scopes: `payment_methods:write`.
  */
 export function paymentMethodsCreate(
   client: LapymeCore,
-  request: models.CreatePaymentMethodRequest,
+  request: operations.CreateApiPaymentMethodRequest,
   options?: RequestOptions,
 ): APIPromise<
   Result<
-    operations.CreatePaymentMethodResponse,
-    | errors.RateLimitedError2
+    operations.CreateApiPaymentMethodResponse,
+    | errors.ApiErrorEnvelope
     | LapymeError
     | ResponseValidationError
     | ConnectionError
@@ -62,13 +63,13 @@ export function paymentMethodsCreate(
 
 async function $do(
   client: LapymeCore,
-  request: models.CreatePaymentMethodRequest,
+  request: operations.CreateApiPaymentMethodRequest,
   options?: RequestOptions,
 ): Promise<
   [
     Result<
-      operations.CreatePaymentMethodResponse,
-      | errors.RateLimitedError2
+      operations.CreateApiPaymentMethodResponse,
+      | errors.ApiErrorEnvelope
       | LapymeError
       | ResponseValidationError
       | ConnectionError
@@ -83,20 +84,26 @@ async function $do(
 > {
   const parsed = safeParse(
     request,
-    (value) => z.parse(models.CreatePaymentMethodRequest$outboundSchema, value),
+    (value) =>
+      z.parse(operations.CreateApiPaymentMethodRequest$outboundSchema, value),
     "Input validation failed",
   );
   if (!parsed.ok) {
     return [parsed, { status: "invalid" }];
   }
   const payload = parsed.value;
-  const body = encodeJSON("body", payload, { explode: true });
+  const body = encodeJSON("body", payload.body, { explode: true });
 
   const path = pathToFunc("/api/v1/payment-methods")();
 
   const headers = new Headers(compactMap({
     "Content-Type": "application/json",
     Accept: "application/json",
+    "Idempotency-Key": encodeSimple(
+      "Idempotency-Key",
+      payload["Idempotency-Key"],
+      { explode: false, charEncoding: "none" },
+    ),
   }));
 
   const secConfig = await extractSecurity(client._options.bearerAuth);
@@ -106,7 +113,7 @@ async function $do(
   const context = {
     options: client._options,
     baseURL: options?.serverURL ?? client._baseURL ?? "",
-    operationID: "createPaymentMethod",
+    operationID: "createApiPaymentMethod",
     oAuth2Scopes: null,
 
     resolvedSecurity: requestSecurity,
@@ -150,8 +157,8 @@ async function $do(
   };
 
   const [result] = await M.match<
-    operations.CreatePaymentMethodResponse,
-    | errors.RateLimitedError2
+    operations.CreateApiPaymentMethodResponse,
+    | errors.ApiErrorEnvelope
     | LapymeError
     | ResponseValidationError
     | ConnectionError
@@ -161,10 +168,12 @@ async function $do(
     | UnexpectedClientError
     | SDKValidationError
   >(
-    M.json(201, operations.CreatePaymentMethodResponse$inboundSchema, {
+    M.json(200, operations.CreateApiPaymentMethodResponse$inboundSchema, {
       key: "Result",
     }),
-    M.jsonErr(429, errors.RateLimitedError2$inboundSchema, { hdrs: true }),
+    M.jsonErr([400, 401, 403], errors.ApiErrorEnvelope$inboundSchema),
+    M.jsonErr(429, errors.ApiErrorEnvelope$inboundSchema, { hdrs: true }),
+    M.jsonErr(500, errors.ApiErrorEnvelope$inboundSchema),
     M.fail("4XX"),
     M.fail("5XX"),
   )(response, req, { extraFields: responseFields });

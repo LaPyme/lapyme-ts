@@ -29,19 +29,21 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * Obtener lista de categorías
+ * Listar categorías
  *
  * @remarks
- * Devuelve una lista paginada de categorías de productos de la organización. Podés filtrar por nombre usando el parámetro de búsqueda y ordenar por diferentes campos.
+ * Devuelve las categorías de productos de la organización.
+ *
+ * Required scopes: `categories:read`.
  */
 export function categoriesGet(
   client: LapymeCore,
-  request?: operations.GetCategoriesRequest | undefined,
+  request?: operations.ListApiCategoriesRequest | undefined,
   options?: RequestOptions,
 ): APIPromise<
   Result<
-    operations.GetCategoriesResponse,
-    | errors.RateLimitedError2
+    operations.ListApiCategoriesResponse,
+    | errors.ApiErrorEnvelope
     | LapymeError
     | ResponseValidationError
     | ConnectionError
@@ -61,13 +63,13 @@ export function categoriesGet(
 
 async function $do(
   client: LapymeCore,
-  request?: operations.GetCategoriesRequest | undefined,
+  request?: operations.ListApiCategoriesRequest | undefined,
   options?: RequestOptions,
 ): Promise<
   [
     Result<
-      operations.GetCategoriesResponse,
-      | errors.RateLimitedError2
+      operations.ListApiCategoriesResponse,
+      | errors.ApiErrorEnvelope
       | LapymeError
       | ResponseValidationError
       | ConnectionError
@@ -84,7 +86,7 @@ async function $do(
     request,
     (value) =>
       z.parse(
-        z.optional(operations.GetCategoriesRequest$outboundSchema),
+        z.optional(operations.ListApiCategoriesRequest$outboundSchema),
         value,
       ),
     "Input validation failed",
@@ -98,11 +100,9 @@ async function $do(
   const path = pathToFunc("/api/v1/categories")();
 
   const query = encodeFormQuery({
+    "cursor": payload?.cursor,
     "limit": payload?.limit,
-    "page": payload?.page,
-    "search": payload?.search,
-    "sortBy": payload?.sortBy,
-    "sortOrder": payload?.sortOrder,
+    "query": payload?.query,
   });
 
   const headers = new Headers(compactMap({
@@ -116,7 +116,7 @@ async function $do(
   const context = {
     options: client._options,
     baseURL: options?.serverURL ?? client._baseURL ?? "",
-    operationID: "getCategories",
+    operationID: "listApiCategories",
     oAuth2Scopes: null,
 
     resolvedSecurity: requestSecurity,
@@ -161,8 +161,8 @@ async function $do(
   };
 
   const [result] = await M.match<
-    operations.GetCategoriesResponse,
-    | errors.RateLimitedError2
+    operations.ListApiCategoriesResponse,
+    | errors.ApiErrorEnvelope
     | LapymeError
     | ResponseValidationError
     | ConnectionError
@@ -172,10 +172,12 @@ async function $do(
     | UnexpectedClientError
     | SDKValidationError
   >(
-    M.json(200, operations.GetCategoriesResponse$inboundSchema, {
+    M.json(200, operations.ListApiCategoriesResponse$inboundSchema, {
       key: "Result",
     }),
-    M.jsonErr(429, errors.RateLimitedError2$inboundSchema, { hdrs: true }),
+    M.jsonErr([400, 401, 403], errors.ApiErrorEnvelope$inboundSchema),
+    M.jsonErr(429, errors.ApiErrorEnvelope$inboundSchema, { hdrs: true }),
+    M.jsonErr(500, errors.ApiErrorEnvelope$inboundSchema),
     M.fail("4XX"),
     M.fail("5XX"),
   )(response, req, { extraFields: responseFields });
