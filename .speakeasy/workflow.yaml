@@ -13,6 +13,9 @@ targets:
     lapyme:
         target: typescript
         source: La Pyme API
+        publish:
+            npm:
+                token: $npm_token
         codeSamples:
             registry:
                 location: registry.speakeasyapi.dev/lapyme/la-pyme/la-pyme-api-typescript-code-samples
