@@ -4,7 +4,9 @@
  */
 
 import { warehousesCreate } from "../funcs/warehouses-create.js";
+import { warehousesGetWarehouseById } from "../funcs/warehouses-get-warehouse-by-id.js";
 import { warehousesList } from "../funcs/warehouses-list.js";
+import { warehousesUpdateWarehouse } from "../funcs/warehouses-update-warehouse.js";
 import { ClientSDK, RequestOptions } from "../lib/sdks.js";
 import * as operations from "../models/operations/index.js";
 import { unwrapAsync } from "../types/fp.js";
@@ -42,6 +44,44 @@ export class Warehouses extends ClientSDK {
     options?: RequestOptions,
   ): Promise<operations.CreateApiWarehouseResponse> {
     return unwrapAsync(warehousesCreate(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Obtener depósito por ID
+   *
+   * @remarks
+   * Devuelve el detalle del depósito.
+   *
+   * Required scopes: `warehouses:read`.
+   */
+  async getWarehouseById(
+    request: operations.GetApiWarehouseByIdRequest,
+    options?: RequestOptions,
+  ): Promise<operations.GetApiWarehouseByIdResponse> {
+    return unwrapAsync(warehousesGetWarehouseById(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Actualizar depósito
+   *
+   * @remarks
+   * Actualiza un depósito y devuelve el detalle persistido.
+   *
+   * Required scopes: `warehouses:write`.
+   */
+  async updateWarehouse(
+    request: operations.UpdateApiWarehouseRequest,
+    options?: RequestOptions,
+  ): Promise<operations.UpdateApiWarehouseResponse> {
+    return unwrapAsync(warehousesUpdateWarehouse(
       this,
       request,
       options,

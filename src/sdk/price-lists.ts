@@ -3,7 +3,10 @@
  * @generated-id: c6c05538dd4a
  */
 
+import { priceListsCreatePriceList } from "../funcs/price-lists-create-price-list.js";
+import { priceListsGetPriceListById } from "../funcs/price-lists-get-price-list-by-id.js";
 import { priceListsGet } from "../funcs/price-lists-get.js";
+import { priceListsUpdatePriceList } from "../funcs/price-lists-update-price-list.js";
 import { ClientSDK, RequestOptions } from "../lib/sdks.js";
 import * as operations from "../models/operations/index.js";
 import { unwrapAsync } from "../types/fp.js";
@@ -22,6 +25,63 @@ export class PriceLists extends ClientSDK {
     options?: RequestOptions,
   ): Promise<operations.ListApiPriceListsResponse> {
     return unwrapAsync(priceListsGet(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Crear lista de precios
+   *
+   * @remarks
+   * Crea una lista de precios para vender con reglas y valores comerciales diferenciados.
+   *
+   * Required scopes: `price_lists:write`.
+   */
+  async createPriceList(
+    request: operations.CreateApiPriceListRequest,
+    options?: RequestOptions,
+  ): Promise<operations.CreateApiPriceListResponse> {
+    return unwrapAsync(priceListsCreatePriceList(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Obtener lista de precios por ID
+   *
+   * @remarks
+   * Devuelve el detalle de la lista de precios.
+   *
+   * Required scopes: `price_lists:read`.
+   */
+  async getPriceListById(
+    request: operations.GetApiPriceListByIdRequest,
+    options?: RequestOptions,
+  ): Promise<operations.GetApiPriceListByIdResponse> {
+    return unwrapAsync(priceListsGetPriceListById(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Actualizar lista de precios
+   *
+   * @remarks
+   * Actualiza una lista de precios y devuelve el detalle persistido, incluyendo si se disparó la sincronización de precios.
+   *
+   * Required scopes: `price_lists:write`.
+   */
+  async updatePriceList(
+    request: operations.UpdateApiPriceListRequest,
+    options?: RequestOptions,
+  ): Promise<operations.UpdateApiPriceListResponse> {
+    return unwrapAsync(priceListsUpdatePriceList(
       this,
       request,
       options,

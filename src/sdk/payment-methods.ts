@@ -4,7 +4,9 @@
  */
 
 import { paymentMethodsCreate } from "../funcs/payment-methods-create.js";
+import { paymentMethodsGet } from "../funcs/payment-methods-get.js";
 import { paymentMethodsList } from "../funcs/payment-methods-list.js";
+import { paymentMethodsUpdatePaymentMethod } from "../funcs/payment-methods-update-payment-method.js";
 import { ClientSDK, RequestOptions } from "../lib/sdks.js";
 import * as operations from "../models/operations/index.js";
 import { unwrapAsync } from "../types/fp.js";
@@ -42,6 +44,44 @@ export class PaymentMethods extends ClientSDK {
     options?: RequestOptions,
   ): Promise<operations.CreateApiPaymentMethodResponse> {
     return unwrapAsync(paymentMethodsCreate(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Obtener método de pago
+   *
+   * @remarks
+   * Obtiene un método de pago por ID.
+   *
+   * Required scopes: `payment_methods:read`.
+   */
+  async get(
+    request: operations.GetApiPaymentMethodRequest,
+    options?: RequestOptions,
+  ): Promise<operations.GetApiPaymentMethodResponse> {
+    return unwrapAsync(paymentMethodsGet(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Actualizar método de pago
+   *
+   * @remarks
+   * Actualiza el nombre, estado o configuración contable de un método de pago.
+   *
+   * Required scopes: `payment_methods:write`.
+   */
+  async updatePaymentMethod(
+    request: operations.UpdateApiPaymentMethodRequest,
+    options?: RequestOptions,
+  ): Promise<operations.UpdateApiPaymentMethodResponse> {
+    return unwrapAsync(paymentMethodsUpdatePaymentMethod(
       this,
       request,
       options,

@@ -4,19 +4,34 @@
  */
 
 import { ClientSDK } from "../lib/sdks.js";
-import { Api } from "./api.js";
 import { Categories } from "./categories.js";
+import { CustomerPayments } from "./customer-payments.js";
 import { Customers } from "./customers.js";
+import { FulfillmentOrders } from "./fulfillment-orders.js";
+import { Fulfillments } from "./fulfillments.js";
+import { Inventory } from "./inventory.js";
+import { Orders } from "./orders.js";
 import { PaymentMethods } from "./payment-methods.js";
+import { PointsOfSale } from "./points-of-sale.js";
 import { PriceLists } from "./price-lists.js";
+import { ProductBulkAdjustments } from "./product-bulk-adjustments.js";
 import { Products } from "./products.js";
+import { PurchaseOrders } from "./purchase-orders.js";
+import { Purchases } from "./purchases.js";
+import { Reports } from "./reports.js";
+import { SaleTags } from "./sale-tags.js";
 import { Sales } from "./sales.js";
+import { StockMovements } from "./stock-movements.js";
+import { StockTransfers } from "./stock-transfers.js";
+import { SupplierPayments } from "./supplier-payments.js";
+import { Suppliers } from "./suppliers.js";
+import { Tags } from "./tags.js";
 import { Warehouses } from "./warehouses.js";
 
 export class Lapyme extends ClientSDK {
-  private _api?: Api;
-  get api(): Api {
-    return (this._api ??= new Api(this._options));
+  private _suppliers?: Suppliers;
+  get suppliers(): Suppliers {
+    return (this._suppliers ??= new Suppliers(this._options));
   }
 
   private _categories?: Categories;
@@ -29,6 +44,13 @@ export class Lapyme extends ClientSDK {
     return (this._products ??= new Products(this._options));
   }
 
+  private _productBulkAdjustments?: ProductBulkAdjustments;
+  get productBulkAdjustments(): ProductBulkAdjustments {
+    return (this._productBulkAdjustments ??= new ProductBulkAdjustments(
+      this._options,
+    ));
+  }
+
   private _warehouses?: Warehouses;
   get warehouses(): Warehouses {
     return (this._warehouses ??= new Warehouses(this._options));
@@ -39,9 +61,49 @@ export class Lapyme extends ClientSDK {
     return (this._priceLists ??= new PriceLists(this._options));
   }
 
+  private _purchases?: Purchases;
+  get purchases(): Purchases {
+    return (this._purchases ??= new Purchases(this._options));
+  }
+
   private _sales?: Sales;
   get sales(): Sales {
     return (this._sales ??= new Sales(this._options));
+  }
+
+  private _stockTransfers?: StockTransfers;
+  get stockTransfers(): StockTransfers {
+    return (this._stockTransfers ??= new StockTransfers(this._options));
+  }
+
+  private _reports?: Reports;
+  get reports(): Reports {
+    return (this._reports ??= new Reports(this._options));
+  }
+
+  private _purchaseOrders?: PurchaseOrders;
+  get purchaseOrders(): PurchaseOrders {
+    return (this._purchaseOrders ??= new PurchaseOrders(this._options));
+  }
+
+  private _orders?: Orders;
+  get orders(): Orders {
+    return (this._orders ??= new Orders(this._options));
+  }
+
+  private _fulfillmentOrders?: FulfillmentOrders;
+  get fulfillmentOrders(): FulfillmentOrders {
+    return (this._fulfillmentOrders ??= new FulfillmentOrders(this._options));
+  }
+
+  private _fulfillments?: Fulfillments;
+  get fulfillments(): Fulfillments {
+    return (this._fulfillments ??= new Fulfillments(this._options));
+  }
+
+  private _stockMovements?: StockMovements;
+  get stockMovements(): StockMovements {
+    return (this._stockMovements ??= new StockMovements(this._options));
   }
 
   private _customers?: Customers;
@@ -49,8 +111,38 @@ export class Lapyme extends ClientSDK {
     return (this._customers ??= new Customers(this._options));
   }
 
+  private _tags?: Tags;
+  get tags(): Tags {
+    return (this._tags ??= new Tags(this._options));
+  }
+
+  private _saleTags?: SaleTags;
+  get saleTags(): SaleTags {
+    return (this._saleTags ??= new SaleTags(this._options));
+  }
+
+  private _customerPayments?: CustomerPayments;
+  get customerPayments(): CustomerPayments {
+    return (this._customerPayments ??= new CustomerPayments(this._options));
+  }
+
+  private _supplierPayments?: SupplierPayments;
+  get supplierPayments(): SupplierPayments {
+    return (this._supplierPayments ??= new SupplierPayments(this._options));
+  }
+
   private _paymentMethods?: PaymentMethods;
   get paymentMethods(): PaymentMethods {
     return (this._paymentMethods ??= new PaymentMethods(this._options));
+  }
+
+  private _pointsOfSale?: PointsOfSale;
+  get pointsOfSale(): PointsOfSale {
+    return (this._pointsOfSale ??= new PointsOfSale(this._options));
+  }
+
+  private _inventory?: Inventory;
+  get inventory(): Inventory {
+    return (this._inventory ??= new Inventory(this._options));
   }
 }

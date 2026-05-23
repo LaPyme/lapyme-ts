@@ -6,22 +6,23 @@
 import { ApplyApiPurchaseTagsResponse } from "lapyme/models/operations";
 
 let value: ApplyApiPurchaseTagsResponse = {
-  headers: {},
+  headers: {
+    "key": [
+      "<value 1>",
+    ],
+  },
   result: {
     requestId: "<id>",
     data: {
       entityIds: [
-        "6d60a80c-a95f-4c92-a1e1-1cb3ae90feb3",
+        "a38736f4-eead-4006-8cdc-4e0322b97587",
+        "2c4c12cd-f8b7-4910-8f57-1709f92c89d9",
       ],
-      added: 346281,
-      removed: 419813,
-      total: 283326,
+      added: 413229,
+      removed: 252572,
+      total: 514930,
     },
-    warnings: [
-      "<value 1>",
-      "<value 2>",
-      "<value 3>",
-    ],
+    warnings: [],
   },
 };
 ```

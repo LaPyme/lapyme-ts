@@ -3,8 +3,11 @@
  * @generated-id: b199702e5352
  */
 
+import { productsApplyProductTags } from "../funcs/products-apply-product-tags.js";
 import { productsCreate } from "../funcs/products-create.js";
+import { productsGetProductById } from "../funcs/products-get-product-by-id.js";
 import { productsList } from "../funcs/products-list.js";
+import { productsUpdate } from "../funcs/products-update.js";
 import { ClientSDK, RequestOptions } from "../lib/sdks.js";
 import * as operations from "../models/operations/index.js";
 import { unwrapAsync } from "../types/fp.js";
@@ -42,6 +45,63 @@ export class Products extends ClientSDK {
     options?: RequestOptions,
   ): Promise<operations.CreateApiProductResponse> {
     return unwrapAsync(productsCreate(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Obtener producto por ID
+   *
+   * @remarks
+   * Devuelve el detalle persistido del producto.
+   *
+   * Required scopes: `products:read`.
+   */
+  async getProductById(
+    request: operations.GetApiProductByIdRequest,
+    options?: RequestOptions,
+  ): Promise<operations.GetApiProductByIdResponse> {
+    return unwrapAsync(productsGetProductById(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Actualizar producto
+   *
+   * @remarks
+   * Actualiza un producto y devuelve el detalle persistido.
+   *
+   * Required scopes: `products:write`.
+   */
+  async update(
+    request: operations.UpdateApiProductRequest,
+    options?: RequestOptions,
+  ): Promise<operations.UpdateApiProductResponse> {
+    return unwrapAsync(productsUpdate(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Aplicar etiquetas a productos
+   *
+   * @remarks
+   * Agrega y/o remueve etiquetas de scope `product` en un lote de productos.
+   *
+   * Required scopes: `products:write`.
+   */
+  async applyProductTags(
+    request: operations.ApplyApiProductTagsRequest,
+    options?: RequestOptions,
+  ): Promise<operations.ApplyApiProductTagsResponse> {
+    return unwrapAsync(productsApplyProductTags(
       this,
       request,
       options,

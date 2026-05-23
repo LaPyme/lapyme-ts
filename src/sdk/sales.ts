@@ -4,6 +4,7 @@
  */
 
 import { salesCreate } from "../funcs/sales-create.js";
+import { salesGetSaleById } from "../funcs/sales-get-sale-by-id.js";
 import { salesList } from "../funcs/sales-list.js";
 import { ClientSDK, RequestOptions } from "../lib/sdks.js";
 import * as operations from "../models/operations/index.js";
@@ -42,6 +43,25 @@ export class Sales extends ClientSDK {
     options?: RequestOptions,
   ): Promise<operations.CreateApiSaleResponse> {
     return unwrapAsync(salesCreate(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Obtener venta por ID
+   *
+   * @remarks
+   * Devuelve el detalle de la venta.
+   *
+   * Required scopes: `sales:read`.
+   */
+  async getSaleById(
+    request: operations.GetApiSaleByIdRequest,
+    options?: RequestOptions,
+  ): Promise<operations.GetApiSaleByIdResponse> {
+    return unwrapAsync(salesGetSaleById(
       this,
       request,
       options,

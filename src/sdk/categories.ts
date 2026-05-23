@@ -4,7 +4,9 @@
  */
 
 import { categoriesCreate } from "../funcs/categories-create.js";
+import { categoriesGetById } from "../funcs/categories-get-by-id.js";
 import { categoriesGet } from "../funcs/categories-get.js";
+import { categoriesUpdateCategory } from "../funcs/categories-update-category.js";
 import { ClientSDK, RequestOptions } from "../lib/sdks.js";
 import * as operations from "../models/operations/index.js";
 import { unwrapAsync } from "../types/fp.js";
@@ -42,6 +44,44 @@ export class Categories extends ClientSDK {
     options?: RequestOptions,
   ): Promise<operations.CreateApiCategoryResponse> {
     return unwrapAsync(categoriesCreate(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Obtener categoría
+   *
+   * @remarks
+   * Devuelve una categoría por ID.
+   *
+   * Required scopes: `categories:read`.
+   */
+  async getById(
+    request: operations.GetApiCategoryRequest,
+    options?: RequestOptions,
+  ): Promise<operations.GetApiCategoryResponse> {
+    return unwrapAsync(categoriesGetById(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Actualizar categoría
+   *
+   * @remarks
+   * Actualiza el nombre, la categoría padre o la actividad económica de una categoría.
+   *
+   * Required scopes: `categories:write`.
+   */
+  async updateCategory(
+    request: operations.UpdateApiCategoryRequest,
+    options?: RequestOptions,
+  ): Promise<operations.UpdateApiCategoryResponse> {
+    return unwrapAsync(categoriesUpdateCategory(
       this,
       request,
       options,

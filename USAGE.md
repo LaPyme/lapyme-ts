@@ -7,7 +7,7 @@ const lapyme = new Lapyme({
 });
 
 async function run() {
-  const result = await lapyme.api.listApiSuppliers({});
+  const result = await lapyme.suppliers.list({});
 
   console.log(result);
 }

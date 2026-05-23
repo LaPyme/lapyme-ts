@@ -3,8 +3,11 @@
  * @generated-id: d33e193e0c00
  */
 
+import { customersApplyTags } from "../funcs/customers-apply-tags.js";
 import { customersCreate } from "../funcs/customers-create.js";
+import { customersGetCustomerById } from "../funcs/customers-get-customer-by-id.js";
 import { customersGet } from "../funcs/customers-get.js";
+import { customersUpdateCustomer } from "../funcs/customers-update-customer.js";
 import { ClientSDK, RequestOptions } from "../lib/sdks.js";
 import * as operations from "../models/operations/index.js";
 import { unwrapAsync } from "../types/fp.js";
@@ -42,6 +45,63 @@ export class Customers extends ClientSDK {
     options?: RequestOptions,
   ): Promise<operations.CreateApiCustomerResponse> {
     return unwrapAsync(customersCreate(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Obtener cliente por ID
+   *
+   * @remarks
+   * Devuelve los datos del cliente.
+   *
+   * Required scopes: `customers:read`.
+   */
+  async getCustomerById(
+    request: operations.GetApiCustomerByIdRequest,
+    options?: RequestOptions,
+  ): Promise<operations.GetApiCustomerByIdResponse> {
+    return unwrapAsync(customersGetCustomerById(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Actualizar cliente
+   *
+   * @remarks
+   * Actualiza un cliente y devuelve los datos persistidos.
+   *
+   * Required scopes: `customers:write`.
+   */
+  async updateCustomer(
+    request: operations.UpdateApiCustomerRequest,
+    options?: RequestOptions,
+  ): Promise<operations.UpdateApiCustomerResponse> {
+    return unwrapAsync(customersUpdateCustomer(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Aplicar etiquetas a clientes
+   *
+   * @remarks
+   * Agrega y/o remueve etiquetas de scope `customer` en un lote de clientes.
+   *
+   * Required scopes: `customers:write`.
+   */
+  async applyTags(
+    request: operations.ApplyApiCustomerTagsRequest,
+    options?: RequestOptions,
+  ): Promise<operations.ApplyApiCustomerTagsResponse> {
+    return unwrapAsync(customersApplyTags(
       this,
       request,
       options,
