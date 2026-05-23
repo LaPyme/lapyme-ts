@@ -6,77 +6,18 @@
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
 import { safeParse } from "../lib/schemas.js";
-import * as openEnums from "../types/enums.js";
-import { OpenEnum } from "../types/enums.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
+import {
+  ApiSharedObject16ba66a421,
+  ApiSharedObject16ba66a421$inboundSchema,
+} from "./api-shared-object16ba66a421.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
-
-export const ApiPriceListDetailResponseAutomaticPricingMode = {
-  BasePriceAdjustment: "base_price_adjustment",
-  CostMarkup: "cost_markup",
-} as const;
-export type ApiPriceListDetailResponseAutomaticPricingMode = OpenEnum<
-  typeof ApiPriceListDetailResponseAutomaticPricingMode
->;
-
-export type ApiPriceListDetailResponseData = {
-  id: string;
-  name: string;
-  isAutomatic: boolean;
-  automaticPricingMode: ApiPriceListDetailResponseAutomaticPricingMode;
-  adjustmentPercentage: number | null;
-  taxInclusive: boolean;
-  createdAt: Date;
-  object: "price_list";
-};
 
 export type ApiPriceListDetailResponse = {
   requestId: string;
-  data: ApiPriceListDetailResponseData;
+  data: ApiSharedObject16ba66a421;
 };
-
-/** @internal */
-export const ApiPriceListDetailResponseAutomaticPricingMode$inboundSchema:
-  z.ZodMiniType<ApiPriceListDetailResponseAutomaticPricingMode, unknown> =
-    openEnums.inboundSchema(ApiPriceListDetailResponseAutomaticPricingMode);
-
-/** @internal */
-export const ApiPriceListDetailResponseData$inboundSchema: z.ZodMiniType<
-  ApiPriceListDetailResponseData,
-  unknown
-> = z.pipe(
-  z.object({
-    id: types.string(),
-    name: types.string(),
-    is_automatic: types.boolean(),
-    automatic_pricing_mode:
-      ApiPriceListDetailResponseAutomaticPricingMode$inboundSchema,
-    adjustment_percentage: types.nullable(types.number()),
-    tax_inclusive: types.boolean(),
-    created_at: types.date(),
-    object: types.literal("price_list"),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "is_automatic": "isAutomatic",
-      "automatic_pricing_mode": "automaticPricingMode",
-      "adjustment_percentage": "adjustmentPercentage",
-      "tax_inclusive": "taxInclusive",
-      "created_at": "createdAt",
-    });
-  }),
-);
-
-export function apiPriceListDetailResponseDataFromJSON(
-  jsonString: string,
-): SafeParseResult<ApiPriceListDetailResponseData, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) => ApiPriceListDetailResponseData$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'ApiPriceListDetailResponseData' from JSON`,
-  );
-}
 
 /** @internal */
 export const ApiPriceListDetailResponse$inboundSchema: z.ZodMiniType<
@@ -85,7 +26,7 @@ export const ApiPriceListDetailResponse$inboundSchema: z.ZodMiniType<
 > = z.pipe(
   z.object({
     request_id: types.string(),
-    data: z.lazy(() => ApiPriceListDetailResponseData$inboundSchema),
+    data: ApiSharedObject16ba66a421$inboundSchema,
   }),
   z.transform((v) => {
     return remap$(v, {

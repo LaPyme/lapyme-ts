@@ -6,17 +6,17 @@
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
 import { safeParse } from "../lib/schemas.js";
-import * as openEnums from "../types/enums.js";
-import { ClosedEnum, OpenEnum } from "../types/enums.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
+import {
+  ApiSharedEnum8d46e1ec20,
+  ApiSharedEnum8d46e1ec20$inboundSchema,
+} from "./api-shared-enum8d46e1ec20.js";
+import {
+  ApiSharedEnumed1129741e,
+  ApiSharedEnumed1129741e$inboundSchema,
+} from "./api-shared-enumed1129741e.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
-
-export const ReferenceType = {
-  Sale: "sale",
-  Purchase: "purchase",
-} as const;
-export type ReferenceType = OpenEnum<typeof ReferenceType>;
 
 export type ApiInventoryMovementListResponseData = {
   object: "inventory_movement";
@@ -33,23 +33,10 @@ export type ApiInventoryMovementListResponseData = {
   createdByName: string | null;
   warehouseName: string | null;
   targetWarehouseName: string | null;
-  referenceType: ReferenceType | null;
+  referenceType: ApiSharedEnumed1129741e | null;
   referenceId: string | null;
   referenceLabel: string | null;
 };
-
-/**
- * List-envelope discriminator.
- */
-export const ApiInventoryMovementListResponseObject = {
-  List: "list",
-} as const;
-/**
- * List-envelope discriminator.
- */
-export type ApiInventoryMovementListResponseObject = ClosedEnum<
-  typeof ApiInventoryMovementListResponseObject
->;
 
 export type ApiInventoryMovementListResponse = {
   requestId: string;
@@ -59,18 +46,12 @@ export type ApiInventoryMovementListResponse = {
   /**
    * List-envelope discriminator.
    */
-  object: ApiInventoryMovementListResponseObject;
+  object: ApiSharedEnum8d46e1ec20;
   /**
    * Requested list path.
    */
   url: string;
 };
-
-/** @internal */
-export const ReferenceType$inboundSchema: z.ZodMiniType<
-  ReferenceType,
-  unknown
-> = openEnums.inboundSchema(ReferenceType);
 
 /** @internal */
 export const ApiInventoryMovementListResponseData$inboundSchema: z.ZodMiniType<
@@ -92,7 +73,7 @@ export const ApiInventoryMovementListResponseData$inboundSchema: z.ZodMiniType<
     created_by_name: types.nullable(types.string()),
     warehouse_name: types.nullable(types.string()),
     target_warehouse_name: types.nullable(types.string()),
-    reference_type: types.nullable(ReferenceType$inboundSchema),
+    reference_type: types.nullable(ApiSharedEnumed1129741e$inboundSchema),
     reference_id: types.nullable(types.string()),
     reference_label: types.nullable(types.string()),
   }),
@@ -125,12 +106,6 @@ export function apiInventoryMovementListResponseDataFromJSON(
 }
 
 /** @internal */
-export const ApiInventoryMovementListResponseObject$inboundSchema:
-  z.ZodMiniEnum<typeof ApiInventoryMovementListResponseObject> = z.enum(
-    ApiInventoryMovementListResponseObject,
-  );
-
-/** @internal */
 export const ApiInventoryMovementListResponse$inboundSchema: z.ZodMiniType<
   ApiInventoryMovementListResponse,
   unknown
@@ -142,7 +117,7 @@ export const ApiInventoryMovementListResponse$inboundSchema: z.ZodMiniType<
     ),
     has_more: types.boolean(),
     next_cursor: types.nullable(types.string()),
-    object: ApiInventoryMovementListResponseObject$inboundSchema,
+    object: ApiSharedEnum8d46e1ec20$inboundSchema,
     url: types.string(),
   }),
   z.transform((v) => {

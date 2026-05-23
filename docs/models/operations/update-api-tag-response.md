@@ -7,34 +7,29 @@ import { UpdateApiTagResponse } from "lapyme/models/operations";
 
 let value: UpdateApiTagResponse = {
   headers: {
-    "key": [],
-    "key1": [
+    "key": [
       "<value 1>",
       "<value 2>",
-      "<value 3>",
     ],
+    "key1": [],
   },
   result: {
     requestId: "<id>",
     data: {
       tag: {
         object: "tag",
-        id: "0b804377-a96e-4bed-b5ae-43dfdb66f751",
-        scope: "customer",
+        id: "cb30a291-3737-40d0-a7c8-d2fc3523a4b7",
+        scope: "product",
         name: "<value>",
         slug: "<value>",
-        color: "amber",
+        color: "blue",
         description: null,
-        archivedAt: new Date("2024-08-05T18:16:05.940Z"),
-        createdAt: new Date("2026-01-26T13:22:24.979Z"),
-        updatedAt: new Date("2026-10-08T10:46:42.087Z"),
+        archivedAt: new Date("2024-02-12T02:06:27.621Z"),
+        createdAt: new Date("2025-01-27T15:37:24.175Z"),
+        updatedAt: new Date("2024-01-16T01:02:41.753Z"),
       },
     },
-    warnings: [
-      "<value 1>",
-      "<value 2>",
-      "<value 3>",
-    ],
+    warnings: [],
   },
 };
 ```

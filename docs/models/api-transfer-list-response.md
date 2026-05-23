@@ -22,51 +22,44 @@ let value: ApiTransferListResponse = {
       createdBy: "7601cd56-ba46-49fb-92a8-5de7f983d252",
       updatedBy: "25709a4f-ace4-4291-958d-05c67aad8dbb",
       sourceWarehouse: {
-        id: "6381413f-6f41-4e9a-8dbc-3f1856b67913",
+        id: "bea67aa9-4cab-4290-aa26-8749e7435e10",
         name: "<value>",
       },
       targetWarehouse: {
-        id: "569fee8b-8b9c-4815-b077-7e8f357a94fa",
+        id: "38d07e33-fb22-4193-8a9b-253b14e9cce9",
         name: "<value>",
       },
       items: [
         {
-          id: "abc8a7b4-6d44-4cb3-89d1-e20f77e90b78",
-          productId: "f46423c9-47a3-4775-aa2b-8c34742abc4d",
-          quantity: 6040.71,
-          receivedQuantity: 1059.41,
+          id: "bc6c0f00-5d57-4482-a2b5-ef8c76fc95d0",
+          productId: "71d87c70-d6e4-4d8d-bd30-8229d33c08a6",
+          quantity: 658.07,
+          receivedQuantity: 3113.64,
           product: {
-            id: "74003054-b345-4b67-8fba-42669b438013",
+            id: "951a1e5d-31df-484a-a5b8-d026b7a1fe6c",
             name: "<value>",
             sku: "<value>",
-            variantOptions: {
-              "key": "<value>",
-              "key1": "<value>",
-            },
-            optionNames: [
-              "<value 1>",
-              "<value 2>",
-              "<value 3>",
-            ],
+            variantOptions: {},
+            optionNames: [],
           },
         },
       ],
     },
   ],
-  hasMore: false,
+  hasMore: true,
   nextCursor: "<value>",
   object: "list",
-  url: "https://sleepy-airman.org/",
+  url: "https://alarmed-shipper.name",
 };
 ```
 
 ## Fields
 
-| Field                                                                                  | Type                                                                                   | Required                                                                               | Description                                                                            |
-| -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
-| `requestId`                                                                            | *string*                                                                               | :heavy_check_mark:                                                                     | N/A                                                                                    |
-| `data`                                                                                 | [models.ApiTransferListResponseData](../models/api-transfer-list-response-data.md)[]   | :heavy_check_mark:                                                                     | N/A                                                                                    |
-| `hasMore`                                                                              | *boolean*                                                                              | :heavy_check_mark:                                                                     | N/A                                                                                    |
-| `nextCursor`                                                                           | *string*                                                                               | :heavy_check_mark:                                                                     | N/A                                                                                    |
-| `object`                                                                               | [models.ApiTransferListResponseObject](../models/api-transfer-list-response-object.md) | :heavy_check_mark:                                                                     | List-envelope discriminator.                                                           |
-| `url`                                                                                  | *string*                                                                               | :heavy_check_mark:                                                                     | Requested list path.                                                                   |
+| Field                                                                          | Type                                                                           | Required                                                                       | Description                                                                    |
+| ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
+| `requestId`                                                                    | *string*                                                                       | :heavy_check_mark:                                                             | N/A                                                                            |
+| `data`                                                                         | [models.ApiSharedObject4b29ca9c27](../models/api-shared-object4b29ca9c27.md)[] | :heavy_check_mark:                                                             | N/A                                                                            |
+| `hasMore`                                                                      | *boolean*                                                                      | :heavy_check_mark:                                                             | N/A                                                                            |
+| `nextCursor`                                                                   | *string*                                                                       | :heavy_check_mark:                                                             | N/A                                                                            |
+| `object`                                                                       | [models.ApiSharedEnum8d46e1ec20](../models/api-shared-enum8d46e1ec20.md)       | :heavy_check_mark:                                                             | List-envelope discriminator.                                                   |
+| `url`                                                                          | *string*                                                                       | :heavy_check_mark:                                                             | Requested list path.                                                           |

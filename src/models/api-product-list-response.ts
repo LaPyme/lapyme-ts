@@ -6,99 +6,56 @@
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
 import { safeParse } from "../lib/schemas.js";
-import * as openEnums from "../types/enums.js";
-import { ClosedEnum, OpenEnum } from "../types/enums.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
+import {
+  ApiSharedEnum8d46e1ec20,
+  ApiSharedEnum8d46e1ec20$inboundSchema,
+} from "./api-shared-enum8d46e1ec20.js";
+import {
+  ApiSharedEnumfe93f70a59,
+  ApiSharedEnumfe93f70a59$inboundSchema,
+} from "./api-shared-enumfe93f70a59.js";
+import {
+  ApiSharedEnumff49232140,
+  ApiSharedEnumff49232140$inboundSchema,
+} from "./api-shared-enumff49232140.js";
+import {
+  ApiSharedObject8aeeceaf0f,
+  ApiSharedObject8aeeceaf0f$inboundSchema,
+} from "./api-shared-object8aeeceaf0f.js";
+import {
+  ApiSharedObjectee5eae48b0,
+  ApiSharedObjectee5eae48b0$inboundSchema,
+} from "./api-shared-objectee5eae48b0.js";
+import {
+  ApiSharedObjectfc277c542a,
+  ApiSharedObjectfc277c542a$inboundSchema,
+} from "./api-shared-objectfc277c542a.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
-
-export type ApiProductListResponseCategory = {
-  id: string;
-  name: string;
-};
-
-export type ApiProductListResponseTaxRate = {
-  id: number;
-  value: number;
-};
-
-export type ApiProductListResponseDefaultSupplier = {
-  id: string;
-  name: string;
-};
-
-export const ApiProductListResponseProductType = {
-  Product: "product",
-  Service: "service",
-  Combo: "combo",
-  Kit: "kit",
-} as const;
-export type ApiProductListResponseProductType = OpenEnum<
-  typeof ApiProductListResponseProductType
->;
-
-export const ApiProductListResponsePriceSource = {
-  Automatic: "automatic",
-  ManualOverride: "manual_override",
-  ManualFallback: "manual_fallback",
-  Base: "base",
-} as const;
-export type ApiProductListResponsePriceSource = OpenEnum<
-  typeof ApiProductListResponsePriceSource
->;
-
-export const ApiProductListResponseAutomaticPricingMode = {
-  BasePriceAdjustment: "base_price_adjustment",
-  CostMarkup: "cost_markup",
-} as const;
-export type ApiProductListResponseAutomaticPricingMode = OpenEnum<
-  typeof ApiProductListResponseAutomaticPricingMode
->;
-
-export type ApiProductListResponseAppliedPriceList = {
-  id: string;
-  name: string;
-  isAutomatic: boolean;
-  automaticPricingMode: ApiProductListResponseAutomaticPricingMode;
-  adjustmentPercentage: number | null;
-  taxInclusive: boolean;
-};
 
 export type ApiProductListResponseData = {
   id: string;
   name: string;
   description: string | null;
-  category: ApiProductListResponseCategory | null;
+  category: ApiSharedObject8aeeceaf0f | null;
   sku: string;
   barcode: string | null;
   currency: string;
   cost: number;
   price: number;
-  taxRate: ApiProductListResponseTaxRate;
-  defaultSupplier: ApiProductListResponseDefaultSupplier | null;
-  productType: ApiProductListResponseProductType;
+  taxRate: ApiSharedObjectee5eae48b0;
+  defaultSupplier: ApiSharedObject8aeeceaf0f | null;
+  productType: ApiSharedEnumff49232140;
   isActive: boolean;
   organizationSlug: string;
   createdAt: Date;
   updatedAt: Date;
   effectivePrice?: number | undefined;
-  priceSource?: ApiProductListResponsePriceSource | undefined;
-  appliedPriceList?: ApiProductListResponseAppliedPriceList | undefined;
+  priceSource?: ApiSharedEnumfe93f70a59 | undefined;
+  appliedPriceList?: ApiSharedObjectfc277c542a | undefined;
   object: "product";
 };
-
-/**
- * List-envelope discriminator.
- */
-export const ApiProductListResponseObject = {
-  List: "list",
-} as const;
-/**
- * List-envelope discriminator.
- */
-export type ApiProductListResponseObject = ClosedEnum<
-  typeof ApiProductListResponseObject
->;
 
 export type ApiProductListResponse = {
   requestId: string;
@@ -108,120 +65,12 @@ export type ApiProductListResponse = {
   /**
    * List-envelope discriminator.
    */
-  object: ApiProductListResponseObject;
+  object: ApiSharedEnum8d46e1ec20;
   /**
    * Requested list path.
    */
   url: string;
 };
-
-/** @internal */
-export const ApiProductListResponseCategory$inboundSchema: z.ZodMiniType<
-  ApiProductListResponseCategory,
-  unknown
-> = z.object({
-  id: types.string(),
-  name: types.string(),
-});
-
-export function apiProductListResponseCategoryFromJSON(
-  jsonString: string,
-): SafeParseResult<ApiProductListResponseCategory, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) => ApiProductListResponseCategory$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'ApiProductListResponseCategory' from JSON`,
-  );
-}
-
-/** @internal */
-export const ApiProductListResponseTaxRate$inboundSchema: z.ZodMiniType<
-  ApiProductListResponseTaxRate,
-  unknown
-> = z.object({
-  id: types.number(),
-  value: types.number(),
-});
-
-export function apiProductListResponseTaxRateFromJSON(
-  jsonString: string,
-): SafeParseResult<ApiProductListResponseTaxRate, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) => ApiProductListResponseTaxRate$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'ApiProductListResponseTaxRate' from JSON`,
-  );
-}
-
-/** @internal */
-export const ApiProductListResponseDefaultSupplier$inboundSchema: z.ZodMiniType<
-  ApiProductListResponseDefaultSupplier,
-  unknown
-> = z.object({
-  id: types.string(),
-  name: types.string(),
-});
-
-export function apiProductListResponseDefaultSupplierFromJSON(
-  jsonString: string,
-): SafeParseResult<ApiProductListResponseDefaultSupplier, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) =>
-      ApiProductListResponseDefaultSupplier$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'ApiProductListResponseDefaultSupplier' from JSON`,
-  );
-}
-
-/** @internal */
-export const ApiProductListResponseProductType$inboundSchema: z.ZodMiniType<
-  ApiProductListResponseProductType,
-  unknown
-> = openEnums.inboundSchema(ApiProductListResponseProductType);
-
-/** @internal */
-export const ApiProductListResponsePriceSource$inboundSchema: z.ZodMiniType<
-  ApiProductListResponsePriceSource,
-  unknown
-> = openEnums.inboundSchema(ApiProductListResponsePriceSource);
-
-/** @internal */
-export const ApiProductListResponseAutomaticPricingMode$inboundSchema:
-  z.ZodMiniType<ApiProductListResponseAutomaticPricingMode, unknown> = openEnums
-    .inboundSchema(ApiProductListResponseAutomaticPricingMode);
-
-/** @internal */
-export const ApiProductListResponseAppliedPriceList$inboundSchema:
-  z.ZodMiniType<ApiProductListResponseAppliedPriceList, unknown> = z.pipe(
-    z.object({
-      id: types.string(),
-      name: types.string(),
-      is_automatic: types.boolean(),
-      automatic_pricing_mode:
-        ApiProductListResponseAutomaticPricingMode$inboundSchema,
-      adjustment_percentage: types.nullable(types.number()),
-      tax_inclusive: types.boolean(),
-    }),
-    z.transform((v) => {
-      return remap$(v, {
-        "is_automatic": "isAutomatic",
-        "automatic_pricing_mode": "automaticPricingMode",
-        "adjustment_percentage": "adjustmentPercentage",
-        "tax_inclusive": "taxInclusive",
-      });
-    }),
-  );
-
-export function apiProductListResponseAppliedPriceListFromJSON(
-  jsonString: string,
-): SafeParseResult<ApiProductListResponseAppliedPriceList, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) =>
-      ApiProductListResponseAppliedPriceList$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'ApiProductListResponseAppliedPriceList' from JSON`,
-  );
-}
 
 /** @internal */
 export const ApiProductListResponseData$inboundSchema: z.ZodMiniType<
@@ -232,30 +81,22 @@ export const ApiProductListResponseData$inboundSchema: z.ZodMiniType<
     id: types.string(),
     name: types.string(),
     description: types.nullable(types.string()),
-    category: types.nullable(
-      z.lazy(() => ApiProductListResponseCategory$inboundSchema),
-    ),
+    category: types.nullable(ApiSharedObject8aeeceaf0f$inboundSchema),
     sku: types.string(),
     barcode: types.nullable(types.string()),
     currency: types.string(),
     cost: types.number(),
     price: types.number(),
-    tax_rate: z.lazy(() => ApiProductListResponseTaxRate$inboundSchema),
-    default_supplier: types.nullable(
-      z.lazy(() => ApiProductListResponseDefaultSupplier$inboundSchema),
-    ),
-    product_type: ApiProductListResponseProductType$inboundSchema,
+    tax_rate: ApiSharedObjectee5eae48b0$inboundSchema,
+    default_supplier: types.nullable(ApiSharedObject8aeeceaf0f$inboundSchema),
+    product_type: ApiSharedEnumff49232140$inboundSchema,
     is_active: types.boolean(),
     organization_slug: types.string(),
     created_at: types.date(),
     updated_at: types.date(),
     effective_price: types.optional(types.number()),
-    price_source: types.optional(
-      ApiProductListResponsePriceSource$inboundSchema,
-    ),
-    applied_price_list: types.optional(
-      z.lazy(() => ApiProductListResponseAppliedPriceList$inboundSchema),
-    ),
+    price_source: types.optional(ApiSharedEnumfe93f70a59$inboundSchema),
+    applied_price_list: types.optional(ApiSharedObjectfc277c542a$inboundSchema),
     object: types.literal("product"),
   }),
   z.transform((v) => {
@@ -285,11 +126,6 @@ export function apiProductListResponseDataFromJSON(
 }
 
 /** @internal */
-export const ApiProductListResponseObject$inboundSchema: z.ZodMiniEnum<
-  typeof ApiProductListResponseObject
-> = z.enum(ApiProductListResponseObject);
-
-/** @internal */
 export const ApiProductListResponse$inboundSchema: z.ZodMiniType<
   ApiProductListResponse,
   unknown
@@ -299,7 +135,7 @@ export const ApiProductListResponse$inboundSchema: z.ZodMiniType<
     data: z.array(z.lazy(() => ApiProductListResponseData$inboundSchema)),
     has_more: types.boolean(),
     next_cursor: types.nullable(types.string()),
-    object: ApiProductListResponseObject$inboundSchema,
+    object: ApiSharedEnum8d46e1ec20$inboundSchema,
     url: types.string(),
   }),
   z.transform((v) => {

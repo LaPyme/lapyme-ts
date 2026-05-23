@@ -6,33 +6,16 @@
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
 import { safeParse } from "../lib/schemas.js";
-import * as openEnums from "../types/enums.js";
-import { OpenEnum } from "../types/enums.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
+import {
+  ApiSharedObject16ba66a421,
+  ApiSharedObject16ba66a421$inboundSchema,
+} from "./api-shared-object16ba66a421.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
-export const ApiPriceListUpdateResponseAutomaticPricingMode = {
-  BasePriceAdjustment: "base_price_adjustment",
-  CostMarkup: "cost_markup",
-} as const;
-export type ApiPriceListUpdateResponseAutomaticPricingMode = OpenEnum<
-  typeof ApiPriceListUpdateResponseAutomaticPricingMode
->;
-
-export type ApiPriceListUpdateResponsePriceList = {
-  id: string;
-  name: string;
-  isAutomatic: boolean;
-  automaticPricingMode: ApiPriceListUpdateResponseAutomaticPricingMode;
-  adjustmentPercentage: number | null;
-  taxInclusive: boolean;
-  createdAt: Date;
-  object: "price_list";
-};
-
 export type ApiPriceListUpdateResponseData = {
-  priceList: ApiPriceListUpdateResponsePriceList;
+  priceList: ApiSharedObject16ba66a421;
   shouldSyncPrices: boolean;
 };
 
@@ -43,55 +26,12 @@ export type ApiPriceListUpdateResponse = {
 };
 
 /** @internal */
-export const ApiPriceListUpdateResponseAutomaticPricingMode$inboundSchema:
-  z.ZodMiniType<ApiPriceListUpdateResponseAutomaticPricingMode, unknown> =
-    openEnums.inboundSchema(ApiPriceListUpdateResponseAutomaticPricingMode);
-
-/** @internal */
-export const ApiPriceListUpdateResponsePriceList$inboundSchema: z.ZodMiniType<
-  ApiPriceListUpdateResponsePriceList,
-  unknown
-> = z.pipe(
-  z.object({
-    id: types.string(),
-    name: types.string(),
-    is_automatic: types.boolean(),
-    automatic_pricing_mode:
-      ApiPriceListUpdateResponseAutomaticPricingMode$inboundSchema,
-    adjustment_percentage: types.nullable(types.number()),
-    tax_inclusive: types.boolean(),
-    created_at: types.date(),
-    object: types.literal("price_list"),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "is_automatic": "isAutomatic",
-      "automatic_pricing_mode": "automaticPricingMode",
-      "adjustment_percentage": "adjustmentPercentage",
-      "tax_inclusive": "taxInclusive",
-      "created_at": "createdAt",
-    });
-  }),
-);
-
-export function apiPriceListUpdateResponsePriceListFromJSON(
-  jsonString: string,
-): SafeParseResult<ApiPriceListUpdateResponsePriceList, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) =>
-      ApiPriceListUpdateResponsePriceList$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'ApiPriceListUpdateResponsePriceList' from JSON`,
-  );
-}
-
-/** @internal */
 export const ApiPriceListUpdateResponseData$inboundSchema: z.ZodMiniType<
   ApiPriceListUpdateResponseData,
   unknown
 > = z.pipe(
   z.object({
-    price_list: z.lazy(() => ApiPriceListUpdateResponsePriceList$inboundSchema),
+    price_list: ApiSharedObject16ba66a421$inboundSchema,
     should_sync_prices: types.boolean(),
   }),
   z.transform((v) => {

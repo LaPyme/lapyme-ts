@@ -9,9 +9,13 @@ import * as openEnums from "../types/enums.js";
 import { OpenEnum } from "../types/enums.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
+import {
+  ApiSharedObjectc671832641,
+  ApiSharedObjectc671832641$inboundSchema,
+} from "./api-shared-objectc671832641.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
-export const ApiErrorEnvelopeType = {
+export const Type = {
   ApiError: "api_error",
   AuthenticationError: "authentication_error",
   AuthorizationError: "authorization_error",
@@ -21,52 +25,27 @@ export const ApiErrorEnvelopeType = {
   InvalidRequestError: "invalid_request_error",
   RateLimitError: "rate_limit_error",
 } as const;
-export type ApiErrorEnvelopeType = OpenEnum<typeof ApiErrorEnvelopeType>;
-
-export type Detail = {
-  field?: string | undefined;
-  code: string;
-  message: string;
-};
+export type Type = OpenEnum<typeof Type>;
 
 export type ErrorT = {
-  type: ApiErrorEnvelopeType;
+  type: Type;
   code: string;
   message: string;
   retryable: boolean;
-  details: Array<Detail>;
+  details: Array<ApiSharedObjectc671832641>;
 };
 
 /** @internal */
-export const ApiErrorEnvelopeType$inboundSchema: z.ZodMiniType<
-  ApiErrorEnvelopeType,
-  unknown
-> = openEnums.inboundSchema(ApiErrorEnvelopeType);
-
-/** @internal */
-export const Detail$inboundSchema: z.ZodMiniType<Detail, unknown> = z.object({
-  field: types.optional(types.string()),
-  code: types.string(),
-  message: types.string(),
-});
-
-export function detailFromJSON(
-  jsonString: string,
-): SafeParseResult<Detail, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) => Detail$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'Detail' from JSON`,
-  );
-}
+export const Type$inboundSchema: z.ZodMiniType<Type, unknown> = openEnums
+  .inboundSchema(Type);
 
 /** @internal */
 export const ErrorT$inboundSchema: z.ZodMiniType<ErrorT, unknown> = z.object({
-  type: ApiErrorEnvelopeType$inboundSchema,
+  type: Type$inboundSchema,
   code: types.string(),
   message: types.string(),
   retryable: types.boolean(),
-  details: z.array(z.lazy(() => Detail$inboundSchema)),
+  details: z.array(ApiSharedObjectc671832641$inboundSchema),
 });
 
 export function errorFromJSON(

@@ -6,47 +6,25 @@
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
 import { safeParse } from "../lib/schemas.js";
-import * as openEnums from "../types/enums.js";
-import { OpenEnum } from "../types/enums.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
+import {
+  ApiSharedEnumc66b046f05,
+  ApiSharedEnumc66b046f05$inboundSchema,
+} from "./api-shared-enumc66b046f05.js";
+import {
+  ApiSharedObject13f8ed82da,
+  ApiSharedObject13f8ed82da$inboundSchema,
+} from "./api-shared-object13f8ed82da.js";
+import {
+  ApiSharedObject8aeeceaf0f,
+  ApiSharedObject8aeeceaf0f$inboundSchema,
+} from "./api-shared-object8aeeceaf0f.js";
+import {
+  ApiSharedObjectc671832641,
+  ApiSharedObjectc671832641$inboundSchema,
+} from "./api-shared-objectc671832641.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
-
-export const ApiStockTransferSuccessResponseStatus = {
-  Draft: "draft",
-  InTransit: "in_transit",
-  Completed: "completed",
-  Cancelled: "cancelled",
-} as const;
-export type ApiStockTransferSuccessResponseStatus = OpenEnum<
-  typeof ApiStockTransferSuccessResponseStatus
->;
-
-export type ApiStockTransferSuccessResponseSourceWarehouse = {
-  id: string;
-  name: string;
-};
-
-export type ApiStockTransferSuccessResponseTargetWarehouse = {
-  id: string;
-  name: string;
-};
-
-export type ApiStockTransferSuccessResponseProduct = {
-  id: string;
-  name: string;
-  sku: string;
-  variantOptions: { [k: string]: string } | null;
-  optionNames: Array<string> | null;
-};
-
-export type ApiStockTransferSuccessResponseItem = {
-  id: string;
-  productId: string;
-  quantity: number;
-  receivedQuantity: number;
-  product: ApiStockTransferSuccessResponseProduct;
-};
 
 export type Transfer = {
   id: string;
@@ -57,14 +35,14 @@ export type Transfer = {
   formattedTransferNumber: string | null;
   transferDate: Date;
   notes: string | null;
-  status: ApiStockTransferSuccessResponseStatus;
+  status: ApiSharedEnumc66b046f05;
   createdAt: Date;
   updatedAt: Date;
   createdBy: string;
   updatedBy: string | null;
-  sourceWarehouse: ApiStockTransferSuccessResponseSourceWarehouse;
-  targetWarehouse: ApiStockTransferSuccessResponseTargetWarehouse;
-  items: Array<ApiStockTransferSuccessResponseItem>;
+  sourceWarehouse: ApiSharedObject8aeeceaf0f;
+  targetWarehouse: ApiSharedObject8aeeceaf0f;
+  items: Array<ApiSharedObject13f8ed82da>;
 };
 
 export type ApiStockTransferSuccessResponseData = {
@@ -72,131 +50,11 @@ export type ApiStockTransferSuccessResponseData = {
   idempotentReplay: boolean;
 };
 
-export type ApiStockTransferSuccessResponseWarning = {
-  code: string;
-  message: string;
-  field?: string | undefined;
-};
-
 export type ApiStockTransferSuccessResponse = {
   requestId: string;
   data: ApiStockTransferSuccessResponseData;
-  warnings: Array<ApiStockTransferSuccessResponseWarning>;
+  warnings: Array<ApiSharedObjectc671832641>;
 };
-
-/** @internal */
-export const ApiStockTransferSuccessResponseStatus$inboundSchema: z.ZodMiniType<
-  ApiStockTransferSuccessResponseStatus,
-  unknown
-> = openEnums.inboundSchema(ApiStockTransferSuccessResponseStatus);
-
-/** @internal */
-export const ApiStockTransferSuccessResponseSourceWarehouse$inboundSchema:
-  z.ZodMiniType<ApiStockTransferSuccessResponseSourceWarehouse, unknown> = z
-    .object({
-      id: types.string(),
-      name: types.string(),
-    });
-
-export function apiStockTransferSuccessResponseSourceWarehouseFromJSON(
-  jsonString: string,
-): SafeParseResult<
-  ApiStockTransferSuccessResponseSourceWarehouse,
-  SDKValidationError
-> {
-  return safeParse(
-    jsonString,
-    (x) =>
-      ApiStockTransferSuccessResponseSourceWarehouse$inboundSchema.parse(
-        JSON.parse(x),
-      ),
-    `Failed to parse 'ApiStockTransferSuccessResponseSourceWarehouse' from JSON`,
-  );
-}
-
-/** @internal */
-export const ApiStockTransferSuccessResponseTargetWarehouse$inboundSchema:
-  z.ZodMiniType<ApiStockTransferSuccessResponseTargetWarehouse, unknown> = z
-    .object({
-      id: types.string(),
-      name: types.string(),
-    });
-
-export function apiStockTransferSuccessResponseTargetWarehouseFromJSON(
-  jsonString: string,
-): SafeParseResult<
-  ApiStockTransferSuccessResponseTargetWarehouse,
-  SDKValidationError
-> {
-  return safeParse(
-    jsonString,
-    (x) =>
-      ApiStockTransferSuccessResponseTargetWarehouse$inboundSchema.parse(
-        JSON.parse(x),
-      ),
-    `Failed to parse 'ApiStockTransferSuccessResponseTargetWarehouse' from JSON`,
-  );
-}
-
-/** @internal */
-export const ApiStockTransferSuccessResponseProduct$inboundSchema:
-  z.ZodMiniType<ApiStockTransferSuccessResponseProduct, unknown> = z.pipe(
-    z.object({
-      id: types.string(),
-      name: types.string(),
-      sku: types.string(),
-      variant_options: types.nullable(z.record(z.string(), types.string())),
-      option_names: types.nullable(z.array(types.string())),
-    }),
-    z.transform((v) => {
-      return remap$(v, {
-        "variant_options": "variantOptions",
-        "option_names": "optionNames",
-      });
-    }),
-  );
-
-export function apiStockTransferSuccessResponseProductFromJSON(
-  jsonString: string,
-): SafeParseResult<ApiStockTransferSuccessResponseProduct, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) =>
-      ApiStockTransferSuccessResponseProduct$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'ApiStockTransferSuccessResponseProduct' from JSON`,
-  );
-}
-
-/** @internal */
-export const ApiStockTransferSuccessResponseItem$inboundSchema: z.ZodMiniType<
-  ApiStockTransferSuccessResponseItem,
-  unknown
-> = z.pipe(
-  z.object({
-    id: types.string(),
-    product_id: types.string(),
-    quantity: types.number(),
-    received_quantity: types.number(),
-    product: z.lazy(() => ApiStockTransferSuccessResponseProduct$inboundSchema),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "product_id": "productId",
-      "received_quantity": "receivedQuantity",
-    });
-  }),
-);
-
-export function apiStockTransferSuccessResponseItemFromJSON(
-  jsonString: string,
-): SafeParseResult<ApiStockTransferSuccessResponseItem, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) =>
-      ApiStockTransferSuccessResponseItem$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'ApiStockTransferSuccessResponseItem' from JSON`,
-  );
-}
 
 /** @internal */
 export const Transfer$inboundSchema: z.ZodMiniType<Transfer, unknown> = z.pipe(
@@ -209,20 +67,14 @@ export const Transfer$inboundSchema: z.ZodMiniType<Transfer, unknown> = z.pipe(
     formatted_transfer_number: types.nullable(types.string()),
     transfer_date: types.date(),
     notes: types.nullable(types.string()),
-    status: ApiStockTransferSuccessResponseStatus$inboundSchema,
+    status: ApiSharedEnumc66b046f05$inboundSchema,
     created_at: types.date(),
     updated_at: types.date(),
     created_by: types.string(),
     updated_by: types.nullable(types.string()),
-    source_warehouse: z.lazy(() =>
-      ApiStockTransferSuccessResponseSourceWarehouse$inboundSchema
-    ),
-    target_warehouse: z.lazy(() =>
-      ApiStockTransferSuccessResponseTargetWarehouse$inboundSchema
-    ),
-    items: z.array(z.lazy(() =>
-      ApiStockTransferSuccessResponseItem$inboundSchema
-    )),
+    source_warehouse: ApiSharedObject8aeeceaf0f$inboundSchema,
+    target_warehouse: ApiSharedObject8aeeceaf0f$inboundSchema,
+    items: z.array(ApiSharedObject13f8ed82da$inboundSchema),
   }),
   z.transform((v) => {
     return remap$(v, {
@@ -280,25 +132,6 @@ export function apiStockTransferSuccessResponseDataFromJSON(
 }
 
 /** @internal */
-export const ApiStockTransferSuccessResponseWarning$inboundSchema:
-  z.ZodMiniType<ApiStockTransferSuccessResponseWarning, unknown> = z.object({
-    code: types.string(),
-    message: types.string(),
-    field: types.optional(types.string()),
-  });
-
-export function apiStockTransferSuccessResponseWarningFromJSON(
-  jsonString: string,
-): SafeParseResult<ApiStockTransferSuccessResponseWarning, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) =>
-      ApiStockTransferSuccessResponseWarning$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'ApiStockTransferSuccessResponseWarning' from JSON`,
-  );
-}
-
-/** @internal */
 export const ApiStockTransferSuccessResponse$inboundSchema: z.ZodMiniType<
   ApiStockTransferSuccessResponse,
   unknown
@@ -306,9 +139,7 @@ export const ApiStockTransferSuccessResponse$inboundSchema: z.ZodMiniType<
   z.object({
     request_id: types.string(),
     data: z.lazy(() => ApiStockTransferSuccessResponseData$inboundSchema),
-    warnings: z.array(
-      z.lazy(() => ApiStockTransferSuccessResponseWarning$inboundSchema),
-    ),
+    warnings: z.array(ApiSharedObjectc671832641$inboundSchema),
   }),
   z.transform((v) => {
     return remap$(v, {

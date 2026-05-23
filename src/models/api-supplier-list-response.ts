@@ -6,9 +6,12 @@
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
 import { safeParse } from "../lib/schemas.js";
-import { ClosedEnum } from "../types/enums.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
+import {
+  ApiSharedEnum8d46e1ec20,
+  ApiSharedEnum8d46e1ec20$inboundSchema,
+} from "./api-shared-enum8d46e1ec20.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type ApiSupplierListResponseData = {
@@ -26,19 +29,6 @@ export type ApiSupplierListResponseData = {
   isActive: boolean | null;
 };
 
-/**
- * List-envelope discriminator.
- */
-export const ApiSupplierListResponseObject = {
-  List: "list",
-} as const;
-/**
- * List-envelope discriminator.
- */
-export type ApiSupplierListResponseObject = ClosedEnum<
-  typeof ApiSupplierListResponseObject
->;
-
 export type ApiSupplierListResponse = {
   requestId: string;
   data: Array<ApiSupplierListResponseData>;
@@ -47,7 +37,7 @@ export type ApiSupplierListResponse = {
   /**
    * List-envelope discriminator.
    */
-  object: ApiSupplierListResponseObject;
+  object: ApiSharedEnum8d46e1ec20;
   /**
    * Requested list path.
    */
@@ -96,11 +86,6 @@ export function apiSupplierListResponseDataFromJSON(
 }
 
 /** @internal */
-export const ApiSupplierListResponseObject$inboundSchema: z.ZodMiniEnum<
-  typeof ApiSupplierListResponseObject
-> = z.enum(ApiSupplierListResponseObject);
-
-/** @internal */
 export const ApiSupplierListResponse$inboundSchema: z.ZodMiniType<
   ApiSupplierListResponse,
   unknown
@@ -110,7 +95,7 @@ export const ApiSupplierListResponse$inboundSchema: z.ZodMiniType<
     data: z.array(z.lazy(() => ApiSupplierListResponseData$inboundSchema)),
     has_more: types.boolean(),
     next_cursor: types.nullable(types.string()),
-    object: ApiSupplierListResponseObject$inboundSchema,
+    object: ApiSharedEnum8d46e1ec20$inboundSchema,
     url: types.string(),
   }),
   z.transform((v) => {

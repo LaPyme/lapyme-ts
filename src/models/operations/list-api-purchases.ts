@@ -12,20 +12,6 @@ import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import * as models from "../index.js";
 
 /**
- * Campo de fecha a usar para el filtro
- */
-export const ListApiPurchasesDateAttribute = {
-  InvoiceDate: "invoiceDate",
-  DueDate: "dueDate",
-} as const;
-/**
- * Campo de fecha a usar para el filtro
- */
-export type ListApiPurchasesDateAttribute = ClosedEnum<
-  typeof ListApiPurchasesDateAttribute
->;
-
-/**
  * Campo monetario a usar para min/max
  */
 export const ListApiPurchasesAmountAttribute = {
@@ -67,7 +53,7 @@ export type ListApiPurchasesRequest = {
   /**
    * Campo de fecha a usar para el filtro
    */
-  dateAttribute?: ListApiPurchasesDateAttribute | undefined;
+  dateAttribute?: models.ApiSharedEnume975a7c122 | undefined;
   /**
    * Campo monetario a usar para min/max
    */
@@ -86,11 +72,6 @@ export type ListApiPurchasesResponse = {
   headers: { [k: string]: Array<string> };
   result: models.ApiPurchaseListResponse;
 };
-
-/** @internal */
-export const ListApiPurchasesDateAttribute$outboundSchema: z.ZodMiniEnum<
-  typeof ListApiPurchasesDateAttribute
-> = z.enum(ListApiPurchasesDateAttribute);
 
 /** @internal */
 export const ListApiPurchasesAmountAttribute$outboundSchema: z.ZodMiniEnum<
@@ -130,7 +111,7 @@ export const ListApiPurchasesRequest$outboundSchema: z.ZodMiniType<
       z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
     )),
     dateAttribute: z._default(
-      ListApiPurchasesDateAttribute$outboundSchema,
+      models.ApiSharedEnume975a7c122$outboundSchema,
       "invoiceDate",
     ),
     amountAttribute: z._default(

@@ -249,6 +249,7 @@ run();
 * [list](docs/sdks/sales/README.md#list) - Listar ventas
 * [create](docs/sdks/sales/README.md#create) - Crear venta
 * [getSaleById](docs/sdks/sales/README.md#getsalebyid) - Obtener venta por ID
+* [patchMetadata](docs/sdks/sales/README.md#patchmetadata) - Actualizar metadatos de venta
 
 ### [SaleTags](docs/sdks/saletags/README.md)
 
@@ -373,6 +374,7 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`salesCreate`](docs/sdks/sales/README.md#create) - Crear venta
 - [`salesGetSaleById`](docs/sdks/sales/README.md#getsalebyid) - Obtener venta por ID
 - [`salesList`](docs/sdks/sales/README.md#list) - Listar ventas
+- [`salesPatchMetadata`](docs/sdks/sales/README.md#patchmetadata) - Actualizar metadatos de venta
 - [`saleTagsApply`](docs/sdks/saletags/README.md#apply) - Aplicar etiquetas a ventas
 - [`stockMovementsCreateStockMovement`](docs/sdks/stockmovements/README.md#createstockmovement) - Crear movimiento de stock
 - [`stockTransfersCreateStockTransfer`](docs/sdks/stocktransfers/README.md#createstocktransfer) - Crear transferencia de stock

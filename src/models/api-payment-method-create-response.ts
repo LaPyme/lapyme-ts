@@ -6,63 +6,16 @@
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
 import { safeParse } from "../lib/schemas.js";
-import * as openEnums from "../types/enums.js";
-import { OpenEnum } from "../types/enums.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
+import {
+  ApiSharedObjectbea6e6be70,
+  ApiSharedObjectbea6e6be70$inboundSchema,
+} from "./api-shared-objectbea6e6be70.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
-export const ApiPaymentMethodCreateResponseType = {
-  Cash: "cash",
-  Check: "check",
-  Card: "card",
-  BankTransfer: "bank_transfer",
-  Other: "other",
-} as const;
-export type ApiPaymentMethodCreateResponseType = OpenEnum<
-  typeof ApiPaymentMethodCreateResponseType
->;
-
-export const ApiPaymentMethodCreateResponseVisibility = {
-  Sales: "sales",
-  Purchases: "purchases",
-  Both: "both",
-  System: "system",
-} as const;
-export type ApiPaymentMethodCreateResponseVisibility = OpenEnum<
-  typeof ApiPaymentMethodCreateResponseVisibility
->;
-
-export type ApiPaymentMethodCreateResponseInstallmentPlan = {
-  id: string;
-  code: string;
-  label: string;
-  sortOrder: number;
-  isActive: boolean;
-};
-
-export type ApiPaymentMethodCreateResponsePaymentMethod = {
-  object: "payment_method";
-  id: string;
-  name: string;
-  icon: string | null;
-  type: ApiPaymentMethodCreateResponseType;
-  bankAccountId: string | null;
-  feePercentage: string | null;
-  feeFixed: number | null;
-  requiresReference: boolean;
-  visibility: ApiPaymentMethodCreateResponseVisibility;
-  isActive: boolean;
-  isDefault: boolean;
-  createdAt: Date;
-  updatedAt: Date;
-  installmentPlans?:
-    | Array<ApiPaymentMethodCreateResponseInstallmentPlan>
-    | undefined;
-};
-
 export type ApiPaymentMethodCreateResponseData = {
-  paymentMethod: ApiPaymentMethodCreateResponsePaymentMethod;
+  paymentMethod: ApiSharedObjectbea6e6be70;
   idempotentReplay: boolean;
 };
 
@@ -73,113 +26,12 @@ export type ApiPaymentMethodCreateResponse = {
 };
 
 /** @internal */
-export const ApiPaymentMethodCreateResponseType$inboundSchema: z.ZodMiniType<
-  ApiPaymentMethodCreateResponseType,
-  unknown
-> = openEnums.inboundSchema(ApiPaymentMethodCreateResponseType);
-
-/** @internal */
-export const ApiPaymentMethodCreateResponseVisibility$inboundSchema:
-  z.ZodMiniType<ApiPaymentMethodCreateResponseVisibility, unknown> = openEnums
-    .inboundSchema(ApiPaymentMethodCreateResponseVisibility);
-
-/** @internal */
-export const ApiPaymentMethodCreateResponseInstallmentPlan$inboundSchema:
-  z.ZodMiniType<ApiPaymentMethodCreateResponseInstallmentPlan, unknown> = z
-    .pipe(
-      z.object({
-        id: types.string(),
-        code: types.string(),
-        label: types.string(),
-        sort_order: types.number(),
-        is_active: types.boolean(),
-      }),
-      z.transform((v) => {
-        return remap$(v, {
-          "sort_order": "sortOrder",
-          "is_active": "isActive",
-        });
-      }),
-    );
-
-export function apiPaymentMethodCreateResponseInstallmentPlanFromJSON(
-  jsonString: string,
-): SafeParseResult<
-  ApiPaymentMethodCreateResponseInstallmentPlan,
-  SDKValidationError
-> {
-  return safeParse(
-    jsonString,
-    (x) =>
-      ApiPaymentMethodCreateResponseInstallmentPlan$inboundSchema.parse(
-        JSON.parse(x),
-      ),
-    `Failed to parse 'ApiPaymentMethodCreateResponseInstallmentPlan' from JSON`,
-  );
-}
-
-/** @internal */
-export const ApiPaymentMethodCreateResponsePaymentMethod$inboundSchema:
-  z.ZodMiniType<ApiPaymentMethodCreateResponsePaymentMethod, unknown> = z.pipe(
-    z.object({
-      object: types.literal("payment_method"),
-      id: types.string(),
-      name: types.string(),
-      icon: types.nullable(types.string()),
-      type: ApiPaymentMethodCreateResponseType$inboundSchema,
-      bank_account_id: types.nullable(types.string()),
-      fee_percentage: types.nullable(types.string()),
-      fee_fixed: types.nullable(types.number()),
-      requires_reference: types.boolean(),
-      visibility: ApiPaymentMethodCreateResponseVisibility$inboundSchema,
-      is_active: types.boolean(),
-      is_default: types.boolean(),
-      created_at: types.date(),
-      updated_at: types.date(),
-      installment_plans: types.optional(z.array(z.lazy(() =>
-        ApiPaymentMethodCreateResponseInstallmentPlan$inboundSchema
-      ))),
-    }),
-    z.transform((v) => {
-      return remap$(v, {
-        "bank_account_id": "bankAccountId",
-        "fee_percentage": "feePercentage",
-        "fee_fixed": "feeFixed",
-        "requires_reference": "requiresReference",
-        "is_active": "isActive",
-        "is_default": "isDefault",
-        "created_at": "createdAt",
-        "updated_at": "updatedAt",
-        "installment_plans": "installmentPlans",
-      });
-    }),
-  );
-
-export function apiPaymentMethodCreateResponsePaymentMethodFromJSON(
-  jsonString: string,
-): SafeParseResult<
-  ApiPaymentMethodCreateResponsePaymentMethod,
-  SDKValidationError
-> {
-  return safeParse(
-    jsonString,
-    (x) =>
-      ApiPaymentMethodCreateResponsePaymentMethod$inboundSchema.parse(
-        JSON.parse(x),
-      ),
-    `Failed to parse 'ApiPaymentMethodCreateResponsePaymentMethod' from JSON`,
-  );
-}
-
-/** @internal */
 export const ApiPaymentMethodCreateResponseData$inboundSchema: z.ZodMiniType<
   ApiPaymentMethodCreateResponseData,
   unknown
 > = z.pipe(
   z.object({
-    payment_method: z.lazy(() =>
-      ApiPaymentMethodCreateResponsePaymentMethod$inboundSchema
-    ),
+    payment_method: ApiSharedObjectbea6e6be70$inboundSchema,
     idempotent_replay: types.boolean(),
   }),
   z.transform((v) => {

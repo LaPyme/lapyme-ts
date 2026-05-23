@@ -6,26 +6,9 @@
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
 import { safeParse } from "../../lib/schemas.js";
-import { ClosedEnum } from "../../types/enums.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import * as models from "../index.js";
-
-/**
- * Filtra por tipo de producto
- */
-export const ListApiProductsProductType = {
-  Product: "product",
-  Service: "service",
-  Combo: "combo",
-  Kit: "kit",
-} as const;
-/**
- * Filtra por tipo de producto
- */
-export type ListApiProductsProductType = ClosedEnum<
-  typeof ListApiProductsProductType
->;
 
 export type ListApiProductsRequest = {
   /**
@@ -55,18 +38,13 @@ export type ListApiProductsRequest = {
   /**
    * Filtra por tipo de producto
    */
-  productType?: ListApiProductsProductType | undefined;
+  productType?: models.ApiSharedEnumff49232140 | undefined;
 };
 
 export type ListApiProductsResponse = {
   headers: { [k: string]: Array<string> };
   result: models.ApiProductListResponse;
 };
-
-/** @internal */
-export const ListApiProductsProductType$outboundSchema: z.ZodMiniEnum<
-  typeof ListApiProductsProductType
-> = z.enum(ListApiProductsProductType);
 
 /** @internal */
 export type ListApiProductsRequest$Outbound = {
@@ -91,7 +69,7 @@ export const ListApiProductsRequest$outboundSchema: z.ZodMiniType<
     search: z.optional(z.string()),
     categoryId: z.optional(z.string()),
     isActive: z.optional(z.boolean()),
-    productType: z.optional(ListApiProductsProductType$outboundSchema),
+    productType: z.optional(models.ApiSharedEnumff49232140$outboundSchema),
   }),
   z.transform((v) => {
     return remap$(v, {

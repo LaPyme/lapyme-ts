@@ -33,30 +33,18 @@ let value: ApiCustomerDetailResponse = {
     assignedSalespersonId: "494130bc-711a-4301-993c-cf06dda22818",
     defaultGananciasRegimen: "<value>",
     assignedSalesperson: {
-      id: "d2007c51-7ea8-4384-9e36-7cf524bda882",
-      fullName: "Edmund Towne",
+      id: "b6535c1f-d498-47d7-8820-878768de14f0",
+      fullName: "Austin Ernser",
     },
     defaultPriceList: {
-      id: "e9b3f479-e534-4826-8ccb-2a8d5b30157d",
+      id: "7b92c076-15c8-462c-a45d-c1c88870aac3",
       name: "<value>",
     },
     salesOverview: {
-      pendingBalance: 5498.06,
-      salesCount: 841118,
-      totalSales: 5356.42,
-      recentSales: [
-        {
-          id: "941b99e5-80a4-43f2-9fda-c8e182b5e37d",
-          voucherType: "<value>",
-          invoiceStatus: "<value>",
-          invoiceDate: "<value>",
-          currency: "South Sudanese pound",
-          total: 1271.6,
-          formattedInvoiceNumber: "<value>",
-          originalSaleId: "<id>",
-          createdAt: new Date("2025-06-17T18:06:40.591Z"),
-        },
-      ],
+      pendingBalance: 6093.53,
+      salesCount: 16507,
+      totalSales: 1995.84,
+      recentSales: [],
     },
   },
 };
@@ -64,7 +52,7 @@ let value: ApiCustomerDetailResponse = {
 
 ## Fields
 
-| Field                                                                                  | Type                                                                                   | Required                                                                               | Description                                                                            |
-| -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
-| `requestId`                                                                            | *string*                                                                               | :heavy_check_mark:                                                                     | N/A                                                                                    |
-| `data`                                                                                 | [models.ApiCustomerDetailResponseData](../models/api-customer-detail-response-data.md) | :heavy_check_mark:                                                                     | N/A                                                                                    |
+| Field                                                                        | Type                                                                         | Required                                                                     | Description                                                                  |
+| ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| `requestId`                                                                  | *string*                                                                     | :heavy_check_mark:                                                           | N/A                                                                          |
+| `data`                                                                       | [models.ApiSharedObject5bccea1792](../models/api-shared-object5bccea1792.md) | :heavy_check_mark:                                                           | N/A                                                                          |

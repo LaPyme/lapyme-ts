@@ -8,56 +8,16 @@ import { remap as remap$ } from "../lib/primitives.js";
 import { safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
+import {
+  ApiSharedObjectd8582ce697,
+  ApiSharedObjectd8582ce697$inboundSchema,
+} from "./api-shared-objectd8582ce697.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
-
-export type ApiCategoryDetailResponseData = {
-  object: "category";
-  id: string;
-  name: string;
-  parentId: string | null;
-  defaultEconomicActivity: string | null;
-  createdAt: Date;
-  updatedAt: Date;
-};
 
 export type ApiCategoryDetailResponse = {
   requestId: string;
-  data: ApiCategoryDetailResponseData;
+  data: ApiSharedObjectd8582ce697;
 };
-
-/** @internal */
-export const ApiCategoryDetailResponseData$inboundSchema: z.ZodMiniType<
-  ApiCategoryDetailResponseData,
-  unknown
-> = z.pipe(
-  z.object({
-    object: types.literal("category"),
-    id: types.string(),
-    name: types.string(),
-    parent_id: types.nullable(types.string()),
-    default_economic_activity: types.nullable(types.string()),
-    created_at: types.date(),
-    updated_at: types.date(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "parent_id": "parentId",
-      "default_economic_activity": "defaultEconomicActivity",
-      "created_at": "createdAt",
-      "updated_at": "updatedAt",
-    });
-  }),
-);
-
-export function apiCategoryDetailResponseDataFromJSON(
-  jsonString: string,
-): SafeParseResult<ApiCategoryDetailResponseData, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) => ApiCategoryDetailResponseData$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'ApiCategoryDetailResponseData' from JSON`,
-  );
-}
 
 /** @internal */
 export const ApiCategoryDetailResponse$inboundSchema: z.ZodMiniType<
@@ -66,7 +26,7 @@ export const ApiCategoryDetailResponse$inboundSchema: z.ZodMiniType<
 > = z.pipe(
   z.object({
     request_id: types.string(),
-    data: z.lazy(() => ApiCategoryDetailResponseData$inboundSchema),
+    data: ApiSharedObjectd8582ce697$inboundSchema,
   }),
   z.transform((v) => {
     return remap$(v, {

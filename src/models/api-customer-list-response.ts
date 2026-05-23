@@ -6,9 +6,12 @@
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
 import { safeParse } from "../lib/schemas.js";
-import { ClosedEnum } from "../types/enums.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
+import {
+  ApiSharedEnum8d46e1ec20,
+  ApiSharedEnum8d46e1ec20$inboundSchema,
+} from "./api-shared-enum8d46e1ec20.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type ApiCustomerListResponseData = {
@@ -34,19 +37,6 @@ export type ApiCustomerListResponseData = {
   updatedAt: Date;
 };
 
-/**
- * List-envelope discriminator.
- */
-export const ApiCustomerListResponseObject = {
-  List: "list",
-} as const;
-/**
- * List-envelope discriminator.
- */
-export type ApiCustomerListResponseObject = ClosedEnum<
-  typeof ApiCustomerListResponseObject
->;
-
 export type ApiCustomerListResponse = {
   requestId: string;
   data: Array<ApiCustomerListResponseData>;
@@ -55,7 +45,7 @@ export type ApiCustomerListResponse = {
   /**
    * List-envelope discriminator.
    */
-  object: ApiCustomerListResponseObject;
+  object: ApiSharedEnum8d46e1ec20;
   /**
    * Requested list path.
    */
@@ -117,11 +107,6 @@ export function apiCustomerListResponseDataFromJSON(
 }
 
 /** @internal */
-export const ApiCustomerListResponseObject$inboundSchema: z.ZodMiniEnum<
-  typeof ApiCustomerListResponseObject
-> = z.enum(ApiCustomerListResponseObject);
-
-/** @internal */
 export const ApiCustomerListResponse$inboundSchema: z.ZodMiniType<
   ApiCustomerListResponse,
   unknown
@@ -131,7 +116,7 @@ export const ApiCustomerListResponse$inboundSchema: z.ZodMiniType<
     data: z.array(z.lazy(() => ApiCustomerListResponseData$inboundSchema)),
     has_more: types.boolean(),
     next_cursor: types.nullable(types.string()),
-    object: ApiCustomerListResponseObject$inboundSchema,
+    object: ApiSharedEnum8d46e1ec20$inboundSchema,
     url: types.string(),
   }),
   z.transform((v) => {

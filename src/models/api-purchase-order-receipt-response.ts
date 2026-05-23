@@ -6,10 +6,12 @@
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
 import { safeParse } from "../lib/schemas.js";
-import * as openEnums from "../types/enums.js";
-import { OpenEnum } from "../types/enums.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
+import {
+  ApiSharedObjecta6cd4a0a4e,
+  ApiSharedObjecta6cd4a0a4e$inboundSchema,
+} from "./api-shared-objecta6cd4a0a4e.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type AffectedProduct = {
@@ -24,87 +26,9 @@ export type Receipt = {
   affectedProducts: Array<AffectedProduct>;
 };
 
-export const ApiPurchaseOrderReceiptResponseStatus = {
-  Draft: "draft",
-  Sent: "sent",
-  PartiallyReceived: "partially_received",
-  Received: "received",
-  Closed: "closed",
-  Cancelled: "cancelled",
-} as const;
-export type ApiPurchaseOrderReceiptResponseStatus = OpenEnum<
-  typeof ApiPurchaseOrderReceiptResponseStatus
->;
-
-export type ApiPurchaseOrderReceiptResponseSupplier = {
-  id: string;
-  name: string;
-  description: string | null;
-  email: string | null;
-  phone: string | null;
-  taxIdType: string | null;
-  taxId: string | null;
-  taxCategory: string | null;
-  paymentTermId: string | null;
-  address: string | null;
-  apartment: string | null;
-  city: string | null;
-  province: string | null;
-  postalCode: string | null;
-};
-
-export type ApiPurchaseOrderReceiptResponseWarehouse = {
-  id: string;
-  name: string;
-};
-
-export const ApiPurchaseOrderReceiptResponseProductType = {
-  Product: "product",
-  Service: "service",
-  Combo: "combo",
-  Kit: "kit",
-} as const;
-export type ApiPurchaseOrderReceiptResponseProductType = OpenEnum<
-  typeof ApiPurchaseOrderReceiptResponseProductType
->;
-
-export type ApiPurchaseOrderReceiptResponseProduct = {
-  id: string;
-  name: string;
-  sku: string | null;
-  productType: ApiPurchaseOrderReceiptResponseProductType | null;
-  variantOptions: { [k: string]: string } | null;
-  optionNames: Array<string> | null;
-};
-
-export type ApiPurchaseOrderReceiptResponseItem = {
-  id: string;
-  orderedQuantity: number;
-  receivedQuantity: number;
-  expectedUnitCost: number | null;
-  product: ApiPurchaseOrderReceiptResponseProduct;
-};
-
-export type ApiPurchaseOrderReceiptResponsePurchaseOrder = {
-  object: "purchase_order";
-  id: string;
-  orderNumber: number;
-  formattedOrderNumber: string | null;
-  status: ApiPurchaseOrderReceiptResponseStatus;
-  orderDate: Date;
-  expectedDate: Date | null;
-  currency: string;
-  supplier: ApiPurchaseOrderReceiptResponseSupplier | null;
-  warehouse: ApiPurchaseOrderReceiptResponseWarehouse | null;
-  createdAt: Date;
-  warehouseId: string;
-  notes: string | null;
-  items: Array<ApiPurchaseOrderReceiptResponseItem>;
-};
-
 export type ApiPurchaseOrderReceiptResponseData = {
   receipt: Receipt;
-  purchaseOrder: ApiPurchaseOrderReceiptResponsePurchaseOrder;
+  purchaseOrder: ApiSharedObjecta6cd4a0a4e;
   idempotentReplay: boolean;
 };
 
@@ -167,213 +91,13 @@ export function receiptFromJSON(
 }
 
 /** @internal */
-export const ApiPurchaseOrderReceiptResponseStatus$inboundSchema: z.ZodMiniType<
-  ApiPurchaseOrderReceiptResponseStatus,
-  unknown
-> = openEnums.inboundSchema(ApiPurchaseOrderReceiptResponseStatus);
-
-/** @internal */
-export const ApiPurchaseOrderReceiptResponseSupplier$inboundSchema:
-  z.ZodMiniType<ApiPurchaseOrderReceiptResponseSupplier, unknown> = z.pipe(
-    z.object({
-      id: types.string(),
-      name: types.string(),
-      description: types.nullable(types.string()),
-      email: types.nullable(types.string()),
-      phone: types.nullable(types.string()),
-      tax_id_type: types.nullable(types.string()),
-      tax_id: types.nullable(types.string()),
-      tax_category: types.nullable(types.string()),
-      payment_term_id: types.nullable(types.string()),
-      address: types.nullable(types.string()),
-      apartment: types.nullable(types.string()),
-      city: types.nullable(types.string()),
-      province: types.nullable(types.string()),
-      postal_code: types.nullable(types.string()),
-    }),
-    z.transform((v) => {
-      return remap$(v, {
-        "tax_id_type": "taxIdType",
-        "tax_id": "taxId",
-        "tax_category": "taxCategory",
-        "payment_term_id": "paymentTermId",
-        "postal_code": "postalCode",
-      });
-    }),
-  );
-
-export function apiPurchaseOrderReceiptResponseSupplierFromJSON(
-  jsonString: string,
-): SafeParseResult<
-  ApiPurchaseOrderReceiptResponseSupplier,
-  SDKValidationError
-> {
-  return safeParse(
-    jsonString,
-    (x) =>
-      ApiPurchaseOrderReceiptResponseSupplier$inboundSchema.parse(
-        JSON.parse(x),
-      ),
-    `Failed to parse 'ApiPurchaseOrderReceiptResponseSupplier' from JSON`,
-  );
-}
-
-/** @internal */
-export const ApiPurchaseOrderReceiptResponseWarehouse$inboundSchema:
-  z.ZodMiniType<ApiPurchaseOrderReceiptResponseWarehouse, unknown> = z.object({
-    id: types.string(),
-    name: types.string(),
-  });
-
-export function apiPurchaseOrderReceiptResponseWarehouseFromJSON(
-  jsonString: string,
-): SafeParseResult<
-  ApiPurchaseOrderReceiptResponseWarehouse,
-  SDKValidationError
-> {
-  return safeParse(
-    jsonString,
-    (x) =>
-      ApiPurchaseOrderReceiptResponseWarehouse$inboundSchema.parse(
-        JSON.parse(x),
-      ),
-    `Failed to parse 'ApiPurchaseOrderReceiptResponseWarehouse' from JSON`,
-  );
-}
-
-/** @internal */
-export const ApiPurchaseOrderReceiptResponseProductType$inboundSchema:
-  z.ZodMiniType<ApiPurchaseOrderReceiptResponseProductType, unknown> = openEnums
-    .inboundSchema(ApiPurchaseOrderReceiptResponseProductType);
-
-/** @internal */
-export const ApiPurchaseOrderReceiptResponseProduct$inboundSchema:
-  z.ZodMiniType<ApiPurchaseOrderReceiptResponseProduct, unknown> = z.pipe(
-    z.object({
-      id: types.string(),
-      name: types.string(),
-      sku: types.nullable(types.string()),
-      product_type: types.nullable(
-        ApiPurchaseOrderReceiptResponseProductType$inboundSchema,
-      ),
-      variant_options: types.nullable(z.record(z.string(), types.string())),
-      option_names: types.nullable(z.array(types.string())),
-    }),
-    z.transform((v) => {
-      return remap$(v, {
-        "product_type": "productType",
-        "variant_options": "variantOptions",
-        "option_names": "optionNames",
-      });
-    }),
-  );
-
-export function apiPurchaseOrderReceiptResponseProductFromJSON(
-  jsonString: string,
-): SafeParseResult<ApiPurchaseOrderReceiptResponseProduct, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) =>
-      ApiPurchaseOrderReceiptResponseProduct$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'ApiPurchaseOrderReceiptResponseProduct' from JSON`,
-  );
-}
-
-/** @internal */
-export const ApiPurchaseOrderReceiptResponseItem$inboundSchema: z.ZodMiniType<
-  ApiPurchaseOrderReceiptResponseItem,
-  unknown
-> = z.pipe(
-  z.object({
-    id: types.string(),
-    ordered_quantity: types.number(),
-    received_quantity: types.number(),
-    expected_unit_cost: types.nullable(types.number()),
-    product: z.lazy(() => ApiPurchaseOrderReceiptResponseProduct$inboundSchema),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "ordered_quantity": "orderedQuantity",
-      "received_quantity": "receivedQuantity",
-      "expected_unit_cost": "expectedUnitCost",
-    });
-  }),
-);
-
-export function apiPurchaseOrderReceiptResponseItemFromJSON(
-  jsonString: string,
-): SafeParseResult<ApiPurchaseOrderReceiptResponseItem, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) =>
-      ApiPurchaseOrderReceiptResponseItem$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'ApiPurchaseOrderReceiptResponseItem' from JSON`,
-  );
-}
-
-/** @internal */
-export const ApiPurchaseOrderReceiptResponsePurchaseOrder$inboundSchema:
-  z.ZodMiniType<ApiPurchaseOrderReceiptResponsePurchaseOrder, unknown> = z.pipe(
-    z.object({
-      object: types.literal("purchase_order"),
-      id: types.string(),
-      order_number: types.number(),
-      formatted_order_number: types.nullable(types.string()),
-      status: ApiPurchaseOrderReceiptResponseStatus$inboundSchema,
-      order_date: types.date(),
-      expected_date: types.nullable(types.date()),
-      currency: types.string(),
-      supplier: types.nullable(z.lazy(() =>
-        ApiPurchaseOrderReceiptResponseSupplier$inboundSchema
-      )),
-      warehouse: types.nullable(z.lazy(() =>
-        ApiPurchaseOrderReceiptResponseWarehouse$inboundSchema
-      )),
-      created_at: types.date(),
-      warehouse_id: types.string(),
-      notes: types.nullable(types.string()),
-      items: z.array(z.lazy(() =>
-        ApiPurchaseOrderReceiptResponseItem$inboundSchema
-      )),
-    }),
-    z.transform((v) => {
-      return remap$(v, {
-        "order_number": "orderNumber",
-        "formatted_order_number": "formattedOrderNumber",
-        "order_date": "orderDate",
-        "expected_date": "expectedDate",
-        "created_at": "createdAt",
-        "warehouse_id": "warehouseId",
-      });
-    }),
-  );
-
-export function apiPurchaseOrderReceiptResponsePurchaseOrderFromJSON(
-  jsonString: string,
-): SafeParseResult<
-  ApiPurchaseOrderReceiptResponsePurchaseOrder,
-  SDKValidationError
-> {
-  return safeParse(
-    jsonString,
-    (x) =>
-      ApiPurchaseOrderReceiptResponsePurchaseOrder$inboundSchema.parse(
-        JSON.parse(x),
-      ),
-    `Failed to parse 'ApiPurchaseOrderReceiptResponsePurchaseOrder' from JSON`,
-  );
-}
-
-/** @internal */
 export const ApiPurchaseOrderReceiptResponseData$inboundSchema: z.ZodMiniType<
   ApiPurchaseOrderReceiptResponseData,
   unknown
 > = z.pipe(
   z.object({
     receipt: z.lazy(() => Receipt$inboundSchema),
-    purchase_order: z.lazy(() =>
-      ApiPurchaseOrderReceiptResponsePurchaseOrder$inboundSchema
-    ),
+    purchase_order: ApiSharedObjecta6cd4a0a4e$inboundSchema,
     idempotent_replay: types.boolean(),
   }),
   z.transform((v) => {

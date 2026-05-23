@@ -6,105 +6,32 @@
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
 import { safeParse } from "../lib/schemas.js";
-import * as openEnums from "../types/enums.js";
-import { ClosedEnum, OpenEnum } from "../types/enums.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
+import {
+  ApiSharedEnum8d46e1ec20,
+  ApiSharedEnum8d46e1ec20$inboundSchema,
+} from "./api-shared-enum8d46e1ec20.js";
+import {
+  ApiSharedObject16ba66a421,
+  ApiSharedObject16ba66a421$inboundSchema,
+} from "./api-shared-object16ba66a421.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
-
-export const ApiPriceListListResponseAutomaticPricingMode = {
-  BasePriceAdjustment: "base_price_adjustment",
-  CostMarkup: "cost_markup",
-} as const;
-export type ApiPriceListListResponseAutomaticPricingMode = OpenEnum<
-  typeof ApiPriceListListResponseAutomaticPricingMode
->;
-
-export type ApiPriceListListResponseData = {
-  id: string;
-  name: string;
-  isAutomatic: boolean;
-  automaticPricingMode: ApiPriceListListResponseAutomaticPricingMode;
-  adjustmentPercentage: number | null;
-  taxInclusive: boolean;
-  createdAt: Date;
-  object: "price_list";
-};
-
-/**
- * List-envelope discriminator.
- */
-export const ApiPriceListListResponseObject = {
-  List: "list",
-} as const;
-/**
- * List-envelope discriminator.
- */
-export type ApiPriceListListResponseObject = ClosedEnum<
-  typeof ApiPriceListListResponseObject
->;
 
 export type ApiPriceListListResponse = {
   requestId: string;
-  data: Array<ApiPriceListListResponseData>;
+  data: Array<ApiSharedObject16ba66a421>;
   hasMore: boolean;
   nextCursor: string | null;
   /**
    * List-envelope discriminator.
    */
-  object: ApiPriceListListResponseObject;
+  object: ApiSharedEnum8d46e1ec20;
   /**
    * Requested list path.
    */
   url: string;
 };
-
-/** @internal */
-export const ApiPriceListListResponseAutomaticPricingMode$inboundSchema:
-  z.ZodMiniType<ApiPriceListListResponseAutomaticPricingMode, unknown> =
-    openEnums.inboundSchema(ApiPriceListListResponseAutomaticPricingMode);
-
-/** @internal */
-export const ApiPriceListListResponseData$inboundSchema: z.ZodMiniType<
-  ApiPriceListListResponseData,
-  unknown
-> = z.pipe(
-  z.object({
-    id: types.string(),
-    name: types.string(),
-    is_automatic: types.boolean(),
-    automatic_pricing_mode:
-      ApiPriceListListResponseAutomaticPricingMode$inboundSchema,
-    adjustment_percentage: types.nullable(types.number()),
-    tax_inclusive: types.boolean(),
-    created_at: types.date(),
-    object: types.literal("price_list"),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "is_automatic": "isAutomatic",
-      "automatic_pricing_mode": "automaticPricingMode",
-      "adjustment_percentage": "adjustmentPercentage",
-      "tax_inclusive": "taxInclusive",
-      "created_at": "createdAt",
-    });
-  }),
-);
-
-export function apiPriceListListResponseDataFromJSON(
-  jsonString: string,
-): SafeParseResult<ApiPriceListListResponseData, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) => ApiPriceListListResponseData$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'ApiPriceListListResponseData' from JSON`,
-  );
-}
-
-/** @internal */
-export const ApiPriceListListResponseObject$inboundSchema: z.ZodMiniEnum<
-  typeof ApiPriceListListResponseObject
-> = z.enum(ApiPriceListListResponseObject);
 
 /** @internal */
 export const ApiPriceListListResponse$inboundSchema: z.ZodMiniType<
@@ -113,10 +40,10 @@ export const ApiPriceListListResponse$inboundSchema: z.ZodMiniType<
 > = z.pipe(
   z.object({
     request_id: types.string(),
-    data: z.array(z.lazy(() => ApiPriceListListResponseData$inboundSchema)),
+    data: z.array(ApiSharedObject16ba66a421$inboundSchema),
     has_more: types.boolean(),
     next_cursor: types.nullable(types.string()),
-    object: ApiPriceListListResponseObject$inboundSchema,
+    object: ApiSharedEnum8d46e1ec20$inboundSchema,
     url: types.string(),
   }),
   z.transform((v) => {

@@ -6,57 +6,16 @@
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
 import { safeParse } from "../lib/schemas.js";
-import * as openEnums from "../types/enums.js";
-import { OpenEnum } from "../types/enums.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
+import {
+  ApiSharedObject0c53a4e5c2,
+  ApiSharedObject0c53a4e5c2$inboundSchema,
+} from "./api-shared-object0c53a4e5c2.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
-export const ApiTagUpdateResponseScope = {
-  Customer: "customer",
-  Supplier: "supplier",
-  Product: "product",
-  Sale: "sale",
-  Purchase: "purchase",
-} as const;
-export type ApiTagUpdateResponseScope = OpenEnum<
-  typeof ApiTagUpdateResponseScope
->;
-
-export const ApiTagUpdateResponseColor = {
-  Slate: "slate",
-  Red: "red",
-  Orange: "orange",
-  Amber: "amber",
-  Yellow: "yellow",
-  Lime: "lime",
-  Green: "green",
-  Teal: "teal",
-  Cyan: "cyan",
-  Blue: "blue",
-  Indigo: "indigo",
-  Violet: "violet",
-  Pink: "pink",
-} as const;
-export type ApiTagUpdateResponseColor = OpenEnum<
-  typeof ApiTagUpdateResponseColor
->;
-
-export type ApiTagUpdateResponseTag = {
-  object: "tag";
-  id: string;
-  scope: ApiTagUpdateResponseScope;
-  name: string;
-  slug: string;
-  color: ApiTagUpdateResponseColor | null;
-  description: string | null;
-  archivedAt: Date | null;
-  createdAt: Date;
-  updatedAt: Date;
-};
-
 export type ApiTagUpdateResponseData = {
-  tag: ApiTagUpdateResponseTag;
+  tag: ApiSharedObject0c53a4e5c2;
 };
 
 export type ApiTagUpdateResponse = {
@@ -66,59 +25,11 @@ export type ApiTagUpdateResponse = {
 };
 
 /** @internal */
-export const ApiTagUpdateResponseScope$inboundSchema: z.ZodMiniType<
-  ApiTagUpdateResponseScope,
-  unknown
-> = openEnums.inboundSchema(ApiTagUpdateResponseScope);
-
-/** @internal */
-export const ApiTagUpdateResponseColor$inboundSchema: z.ZodMiniType<
-  ApiTagUpdateResponseColor,
-  unknown
-> = openEnums.inboundSchema(ApiTagUpdateResponseColor);
-
-/** @internal */
-export const ApiTagUpdateResponseTag$inboundSchema: z.ZodMiniType<
-  ApiTagUpdateResponseTag,
-  unknown
-> = z.pipe(
-  z.object({
-    object: types.literal("tag"),
-    id: types.string(),
-    scope: ApiTagUpdateResponseScope$inboundSchema,
-    name: types.string(),
-    slug: types.string(),
-    color: types.nullable(ApiTagUpdateResponseColor$inboundSchema),
-    description: types.nullable(types.string()),
-    archived_at: types.nullable(types.date()),
-    created_at: types.date(),
-    updated_at: types.date(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "archived_at": "archivedAt",
-      "created_at": "createdAt",
-      "updated_at": "updatedAt",
-    });
-  }),
-);
-
-export function apiTagUpdateResponseTagFromJSON(
-  jsonString: string,
-): SafeParseResult<ApiTagUpdateResponseTag, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) => ApiTagUpdateResponseTag$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'ApiTagUpdateResponseTag' from JSON`,
-  );
-}
-
-/** @internal */
 export const ApiTagUpdateResponseData$inboundSchema: z.ZodMiniType<
   ApiTagUpdateResponseData,
   unknown
 > = z.object({
-  tag: z.lazy(() => ApiTagUpdateResponseTag$inboundSchema),
+  tag: ApiSharedObject0c53a4e5c2$inboundSchema,
 });
 
 export function apiTagUpdateResponseDataFromJSON(

@@ -17,27 +17,24 @@ let value: ApiPurchaseOrderWriteResponseData = {
     currency: "Quetzal",
     supplier: null,
     warehouse: {
-      id: "cf9b148b-a551-4922-a341-01eeac0aecd5",
+      id: "1d81895d-9d7f-44ea-9636-e0e6181dee4f",
       name: "<value>",
     },
-    createdAt: new Date("2024-03-21T22:00:55.985Z"),
-    warehouseId: "daea2bdd-f0b5-410b-bbbd-72f7ddd3f88a",
+    createdAt: new Date("2026-05-20T18:33:59.558Z"),
+    warehouseId: "f9b148ba-5519-4223-8410-1eeac0aecd58",
     notes: "<value>",
     items: [
       {
-        id: "49bdd461-c768-4a69-a014-452a3d8d4113",
-        orderedQuantity: 4007.4,
-        receivedQuantity: 7550.27,
-        expectedUnitCost: 443787,
+        id: "ea2bddf0-b510-4bbb-bd72-f7ddd3f88af5",
+        orderedQuantity: 2920.87,
+        receivedQuantity: 6196.14,
+        expectedUnitCost: 863252,
         product: {
-          id: "9e733944-f785-4ec8-95a8-abcc0d5ddc1d",
+          id: "d461c768-a690-4144-952a-3d8d4113b6cb",
           name: "<value>",
           sku: "<value>",
-          productType: "kit",
-          variantOptions: {
-            "key": "<value>",
-            "key1": "<value>",
-          },
+          productType: "service",
+          variantOptions: {},
           optionNames: [
             "<value 1>",
           ],
@@ -51,7 +48,7 @@ let value: ApiPurchaseOrderWriteResponseData = {
 
 ## Fields
 
-| Field                                                                                                              | Type                                                                                                               | Required                                                                                                           | Description                                                                                                        |
-| ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ |
-| `purchaseOrder`                                                                                                    | [models.ApiPurchaseOrderWriteResponsePurchaseOrder](../models/api-purchase-order-write-response-purchase-order.md) | :heavy_check_mark:                                                                                                 | N/A                                                                                                                |
-| `idempotentReplay`                                                                                                 | *boolean*                                                                                                          | :heavy_check_mark:                                                                                                 | N/A                                                                                                                |
+| Field                                                                        | Type                                                                         | Required                                                                     | Description                                                                  |
+| ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| `purchaseOrder`                                                              | [models.ApiSharedObjecta6cd4a0a4e](../models/api-shared-objecta6cd4a0a4e.md) | :heavy_check_mark:                                                           | N/A                                                                          |
+| `idempotentReplay`                                                           | *boolean*                                                                    | :heavy_check_mark:                                                           | N/A                                                                          |

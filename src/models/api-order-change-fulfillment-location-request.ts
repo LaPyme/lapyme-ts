@@ -5,55 +5,21 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
-
-export type ApiOrderChangeFulfillmentLocationRequestItem = {
-  orderLineId: string;
-  quantity: number;
-};
+import {
+  ApiSharedObject1dbe66a4f8,
+  ApiSharedObject1dbe66a4f8$Outbound,
+  ApiSharedObject1dbe66a4f8$outboundSchema,
+} from "./api-shared-object1dbe66a4f8.js";
 
 export type ApiOrderChangeFulfillmentLocationRequest = {
   warehouseId: string;
-  items: Array<ApiOrderChangeFulfillmentLocationRequestItem>;
+  items: Array<ApiSharedObject1dbe66a4f8>;
 };
-
-/** @internal */
-export type ApiOrderChangeFulfillmentLocationRequestItem$Outbound = {
-  order_line_id: string;
-  quantity: number;
-};
-
-/** @internal */
-export const ApiOrderChangeFulfillmentLocationRequestItem$outboundSchema:
-  z.ZodMiniType<
-    ApiOrderChangeFulfillmentLocationRequestItem$Outbound,
-    ApiOrderChangeFulfillmentLocationRequestItem
-  > = z.pipe(
-    z.object({
-      orderLineId: z.string(),
-      quantity: z.int(),
-    }),
-    z.transform((v) => {
-      return remap$(v, {
-        orderLineId: "order_line_id",
-      });
-    }),
-  );
-
-export function apiOrderChangeFulfillmentLocationRequestItemToJSON(
-  apiOrderChangeFulfillmentLocationRequestItem:
-    ApiOrderChangeFulfillmentLocationRequestItem,
-): string {
-  return JSON.stringify(
-    ApiOrderChangeFulfillmentLocationRequestItem$outboundSchema.parse(
-      apiOrderChangeFulfillmentLocationRequestItem,
-    ),
-  );
-}
 
 /** @internal */
 export type ApiOrderChangeFulfillmentLocationRequest$Outbound = {
   warehouse_id: string;
-  items: Array<ApiOrderChangeFulfillmentLocationRequestItem$Outbound>;
+  items: Array<ApiSharedObject1dbe66a4f8$Outbound>;
 };
 
 /** @internal */
@@ -64,11 +30,7 @@ export const ApiOrderChangeFulfillmentLocationRequest$outboundSchema:
   > = z.pipe(
     z.object({
       warehouseId: z.string(),
-      items: z.array(
-        z.lazy(() =>
-          ApiOrderChangeFulfillmentLocationRequestItem$outboundSchema
-        ),
-      ),
+      items: z.array(ApiSharedObject1dbe66a4f8$outboundSchema),
     }),
     z.transform((v) => {
       return remap$(v, {

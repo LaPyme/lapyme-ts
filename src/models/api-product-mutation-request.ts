@@ -6,6 +6,11 @@
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
 import { ClosedEnum } from "../types/enums.js";
+import {
+  ApiSharedObject6dbe49c4ef,
+  ApiSharedObject6dbe49c4ef$Outbound,
+  ApiSharedObject6dbe49c4ef$outboundSchema,
+} from "./api-shared-object6dbe49c4ef.js";
 
 export const ApiProductMutationRequestVisibility = {
   Both: "both",
@@ -86,18 +91,11 @@ export type ApiProductMutationRequestUnitOfMeasure = ClosedEnum<
   typeof ApiProductMutationRequestUnitOfMeasure
 >;
 
-export const ApiProductMutationRequestCurrency = {
+export const Currency = {
   Pes: "PES",
   Dol: "DOL",
 } as const;
-export type ApiProductMutationRequestCurrency = ClosedEnum<
-  typeof ApiProductMutationRequestCurrency
->;
-
-export type ApiProductMutationRequestWarehouseStock = {
-  warehouseId: string;
-  quantity: number;
-};
+export type Currency = ClosedEnum<typeof Currency>;
 
 export type ApiProductMutationRequest = {
   name: string;
@@ -109,7 +107,7 @@ export type ApiProductMutationRequest = {
   sku: string;
   barcode?: string | null | undefined;
   unitOfMeasure?: ApiProductMutationRequestUnitOfMeasure | undefined;
-  currency?: ApiProductMutationRequestCurrency | undefined;
+  currency?: Currency | undefined;
   cost?: number | undefined;
   price?: number | undefined;
   promotionalPrice?: number | null | undefined;
@@ -119,7 +117,7 @@ export type ApiProductMutationRequest = {
   defaultSupplierId?: string | null | undefined;
   defaultSalesAccountId?: string | null | undefined;
   defaultPurchaseAccountId?: string | null | undefined;
-  warehouseStocks?: Array<ApiProductMutationRequestWarehouseStock> | undefined;
+  warehouseStocks?: Array<ApiSharedObject6dbe49c4ef> | undefined;
   isActive?: boolean | undefined;
 };
 
@@ -140,43 +138,9 @@ export const ApiProductMutationRequestUnitOfMeasure$outboundSchema:
   );
 
 /** @internal */
-export const ApiProductMutationRequestCurrency$outboundSchema: z.ZodMiniEnum<
-  typeof ApiProductMutationRequestCurrency
-> = z.enum(ApiProductMutationRequestCurrency);
-
-/** @internal */
-export type ApiProductMutationRequestWarehouseStock$Outbound = {
-  warehouse_id: string;
-  quantity: number;
-};
-
-/** @internal */
-export const ApiProductMutationRequestWarehouseStock$outboundSchema:
-  z.ZodMiniType<
-    ApiProductMutationRequestWarehouseStock$Outbound,
-    ApiProductMutationRequestWarehouseStock
-  > = z.pipe(
-    z.object({
-      warehouseId: z.string(),
-      quantity: z.number(),
-    }),
-    z.transform((v) => {
-      return remap$(v, {
-        warehouseId: "warehouse_id",
-      });
-    }),
-  );
-
-export function apiProductMutationRequestWarehouseStockToJSON(
-  apiProductMutationRequestWarehouseStock:
-    ApiProductMutationRequestWarehouseStock,
-): string {
-  return JSON.stringify(
-    ApiProductMutationRequestWarehouseStock$outboundSchema.parse(
-      apiProductMutationRequestWarehouseStock,
-    ),
-  );
-}
+export const Currency$outboundSchema: z.ZodMiniEnum<typeof Currency> = z.enum(
+  Currency,
+);
 
 /** @internal */
 export type ApiProductMutationRequest$Outbound = {
@@ -199,9 +163,7 @@ export type ApiProductMutationRequest$Outbound = {
   default_supplier_id?: string | null | undefined;
   default_sales_account_id?: string | null | undefined;
   default_purchase_account_id?: string | null | undefined;
-  warehouse_stocks?:
-    | Array<ApiProductMutationRequestWarehouseStock$Outbound>
-    | undefined;
+  warehouse_stocks?: Array<ApiSharedObject6dbe49c4ef$Outbound> | undefined;
   is_active: boolean;
 };
 
@@ -229,10 +191,7 @@ export const ApiProductMutationRequest$outboundSchema: z.ZodMiniType<
       ApiProductMutationRequestUnitOfMeasure$outboundSchema,
       "07",
     ),
-    currency: z._default(
-      ApiProductMutationRequestCurrency$outboundSchema,
-      "PES",
-    ),
+    currency: z._default(Currency$outboundSchema, "PES"),
     cost: z._default(z.int(), 0),
     price: z.optional(z.int()),
     promotionalPrice: z.optional(z.nullable(z.int())),
@@ -243,9 +202,7 @@ export const ApiProductMutationRequest$outboundSchema: z.ZodMiniType<
     defaultSalesAccountId: z.optional(z.nullable(z.string())),
     defaultPurchaseAccountId: z.optional(z.nullable(z.string())),
     warehouseStocks: z.optional(
-      z.array(z.lazy(() =>
-        ApiProductMutationRequestWarehouseStock$outboundSchema
-      )),
+      z.array(ApiSharedObject6dbe49c4ef$outboundSchema),
     ),
     isActive: z._default(z.boolean(), true),
   }),

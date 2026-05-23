@@ -6,15 +6,17 @@
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
 import { safeParse } from "../lib/schemas.js";
-import { ClosedEnum } from "../types/enums.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
+import {
+  ApiSharedEnum8d46e1ec20,
+  ApiSharedEnum8d46e1ec20$inboundSchema,
+} from "./api-shared-enum8d46e1ec20.js";
+import {
+  ApiSharedObjectf28d5cf256,
+  ApiSharedObjectf28d5cf256$inboundSchema,
+} from "./api-shared-objectf28d5cf256.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
-
-export type ApiPurchaseListResponseSupplier = {
-  id: string | null;
-  name: string | null;
-};
 
 export type ApiPurchaseListResponseData = {
   object: "purchase";
@@ -42,21 +44,8 @@ export type ApiPurchaseListResponseData = {
    */
   supplierInvoiceNumber: string | null;
   createdAt: Date;
-  supplier: ApiPurchaseListResponseSupplier | null;
+  supplier: ApiSharedObjectf28d5cf256 | null;
 };
-
-/**
- * List-envelope discriminator.
- */
-export const ApiPurchaseListResponseObject = {
-  List: "list",
-} as const;
-/**
- * List-envelope discriminator.
- */
-export type ApiPurchaseListResponseObject = ClosedEnum<
-  typeof ApiPurchaseListResponseObject
->;
 
 export type ApiPurchaseListResponse = {
   requestId: string;
@@ -66,31 +55,12 @@ export type ApiPurchaseListResponse = {
   /**
    * List-envelope discriminator.
    */
-  object: ApiPurchaseListResponseObject;
+  object: ApiSharedEnum8d46e1ec20;
   /**
    * Requested list path.
    */
   url: string;
 };
-
-/** @internal */
-export const ApiPurchaseListResponseSupplier$inboundSchema: z.ZodMiniType<
-  ApiPurchaseListResponseSupplier,
-  unknown
-> = z.object({
-  id: types.nullable(types.string()),
-  name: types.nullable(types.string()),
-});
-
-export function apiPurchaseListResponseSupplierFromJSON(
-  jsonString: string,
-): SafeParseResult<ApiPurchaseListResponseSupplier, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) => ApiPurchaseListResponseSupplier$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'ApiPurchaseListResponseSupplier' from JSON`,
-  );
-}
 
 /** @internal */
 export const ApiPurchaseListResponseData$inboundSchema: z.ZodMiniType<
@@ -111,9 +81,7 @@ export const ApiPurchaseListResponseData$inboundSchema: z.ZodMiniType<
     exchange_rate: types.string(),
     supplier_invoice_number: types.nullable(types.string()),
     created_at: types.date(),
-    supplier: types.nullable(
-      z.lazy(() => ApiPurchaseListResponseSupplier$inboundSchema),
-    ),
+    supplier: types.nullable(ApiSharedObjectf28d5cf256$inboundSchema),
   }),
   z.transform((v) => {
     return remap$(v, {
@@ -140,11 +108,6 @@ export function apiPurchaseListResponseDataFromJSON(
 }
 
 /** @internal */
-export const ApiPurchaseListResponseObject$inboundSchema: z.ZodMiniEnum<
-  typeof ApiPurchaseListResponseObject
-> = z.enum(ApiPurchaseListResponseObject);
-
-/** @internal */
 export const ApiPurchaseListResponse$inboundSchema: z.ZodMiniType<
   ApiPurchaseListResponse,
   unknown
@@ -154,7 +117,7 @@ export const ApiPurchaseListResponse$inboundSchema: z.ZodMiniType<
     data: z.array(z.lazy(() => ApiPurchaseListResponseData$inboundSchema)),
     has_more: types.boolean(),
     next_cursor: types.nullable(types.string()),
-    object: ApiPurchaseListResponseObject$inboundSchema,
+    object: ApiSharedEnum8d46e1ec20$inboundSchema,
     url: types.string(),
   }),
   z.transform((v) => {

@@ -107,7 +107,7 @@ Anular fulfillment
 
 ### Example Usage
 
-<!-- UsageSnippet language="typescript" operationID="voidApiFulfillment" method="post" path="/api/v1/fulfillments/{fulfillment_id}/void" -->
+<!-- UsageSnippet language="typescript" operationID="voidApiFulfillment" method="post" path="/api/v1/fulfillments/{fulfillment_id}/void" example="default" -->
 ```typescript
 import { Lapyme } from "lapyme";
 
@@ -118,6 +118,7 @@ const lapyme = new Lapyme({
 async function run() {
   const result = await lapyme.fulfillments.voidFulfillment({
     fulfillmentId: "8bb50a3d-1712-420b-a8b8-a89196f0a47e",
+    body: {},
   });
 
   console.log(result);
@@ -143,6 +144,7 @@ const lapyme = new LapymeCore({
 async function run() {
   const res = await fulfillmentsVoidFulfillment(lapyme, {
     fulfillmentId: "8bb50a3d-1712-420b-a8b8-a89196f0a47e",
+    body: {},
   });
   if (res.ok) {
     const { value: result } = res;

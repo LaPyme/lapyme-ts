@@ -12,46 +12,46 @@ let value: ApiProductDetailResponse = {
     name: "<value>",
     description: "fruitful fervently ramp meh",
     category: {
-      id: "2d8f757f-880c-44ea-a2a2-181f028ad2c8",
+      id: "266530ce-75cf-40a4-81e8-226c43eeb6d9",
       name: "<value>",
     },
     sku: "<value>",
     barcode: "<value>",
-    currency: "Mauritius Rupee",
-    cost: 1384.34,
-    price: 5095.01,
+    currency: "Trinidad and Tobago Dollar",
+    cost: 5023.57,
+    price: 9776.7,
     taxRate: {
-      id: 9015.92,
-      value: 9361.09,
+      id: 9545.45,
+      value: 8570.91,
     },
     defaultSupplier: {
-      id: "fbfd2b18-6778-4eb9-af05-34fde5aab2c7",
+      id: "e2939b22-6734-418f-802e-69ca6e74fd88",
       name: "<value>",
     },
     productType: "service",
     isActive: true,
     organizationSlug: "<value>",
-    createdAt: new Date("2024-11-10T02:26:01.304Z"),
-    updatedAt: new Date("2025-07-17T05:28:12.124Z"),
+    createdAt: new Date("2026-12-14T18:31:18.269Z"),
+    updatedAt: new Date("2025-07-12T03:29:39.613Z"),
     object: "product",
-    variantGroupId: "1a8278ee-ad26-43a9-9a9a-39d8c19b5b48",
+    variantGroupId: "80c4ea2a-2181-4f02-a8ad-2c884928ee3f",
     variantOptions: {
       "key": "<value>",
       "key1": "<value>",
       "key2": "<value>",
     },
-    isExempt: false,
+    isExempt: true,
     stockSummary: {
-      totalQuantity: 6199.54,
-      warehouseCount: 410838,
+      totalQuantity: 3450.16,
+      warehouseCount: 107596,
       byWarehouse: [
         {
-          warehouseId: "13d87d45-dfff-448a-9ff6-b1ad1dc6f687",
+          warehouseId: "8355b424-e8f1-4b19-a424-22b1798decfe",
           warehouseName: "<value>",
-          quantity: 1282.39,
-          onHand: 989.19,
-          reservedQuantity: 7955.85,
-          incomingQuantity: 6243.26,
+          quantity: 1678.21,
+          onHand: 2292.22,
+          reservedQuantity: 4791.26,
+          incomingQuantity: 4053.93,
         },
       ],
     },
@@ -61,7 +61,7 @@ let value: ApiProductDetailResponse = {
 
 ## Fields
 
-| Field                                                                                | Type                                                                                 | Required                                                                             | Description                                                                          |
-| ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ |
-| `requestId`                                                                          | *string*                                                                             | :heavy_check_mark:                                                                   | N/A                                                                                  |
-| `data`                                                                               | [models.ApiProductDetailResponseData](../models/api-product-detail-response-data.md) | :heavy_check_mark:                                                                   | N/A                                                                                  |
+| Field                                                                        | Type                                                                         | Required                                                                     | Description                                                                  |
+| ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| `requestId`                                                                  | *string*                                                                     | :heavy_check_mark:                                                           | N/A                                                                          |
+| `data`                                                                       | [models.ApiSharedObjectd371740910](../models/api-shared-objectd371740910.md) | :heavy_check_mark:                                                           | N/A                                                                          |

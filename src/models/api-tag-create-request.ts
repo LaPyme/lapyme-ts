@@ -4,54 +4,21 @@
  */
 
 import * as z from "zod/v4-mini";
-import { ClosedEnum } from "../types/enums.js";
-
-export const ApiTagCreateRequestScope = {
-  Customer: "customer",
-  Supplier: "supplier",
-  Product: "product",
-  Sale: "sale",
-  Purchase: "purchase",
-} as const;
-export type ApiTagCreateRequestScope = ClosedEnum<
-  typeof ApiTagCreateRequestScope
->;
-
-export const ApiTagCreateRequestColor = {
-  Slate: "slate",
-  Red: "red",
-  Orange: "orange",
-  Amber: "amber",
-  Yellow: "yellow",
-  Lime: "lime",
-  Green: "green",
-  Teal: "teal",
-  Cyan: "cyan",
-  Blue: "blue",
-  Indigo: "indigo",
-  Violet: "violet",
-  Pink: "pink",
-} as const;
-export type ApiTagCreateRequestColor = ClosedEnum<
-  typeof ApiTagCreateRequestColor
->;
+import {
+  ApiSharedEnum599647cb76,
+  ApiSharedEnum599647cb76$outboundSchema,
+} from "./api-shared-enum599647cb76.js";
+import {
+  ApiSharedEnuma1951b6358,
+  ApiSharedEnuma1951b6358$outboundSchema,
+} from "./api-shared-enuma1951b6358.js";
 
 export type ApiTagCreateRequest = {
-  scope: ApiTagCreateRequestScope;
+  scope: ApiSharedEnuma1951b6358;
   name: string;
-  color?: ApiTagCreateRequestColor | null | undefined;
+  color?: ApiSharedEnum599647cb76 | null | undefined;
   description?: string | null | undefined;
 };
-
-/** @internal */
-export const ApiTagCreateRequestScope$outboundSchema: z.ZodMiniEnum<
-  typeof ApiTagCreateRequestScope
-> = z.enum(ApiTagCreateRequestScope);
-
-/** @internal */
-export const ApiTagCreateRequestColor$outboundSchema: z.ZodMiniEnum<
-  typeof ApiTagCreateRequestColor
-> = z.enum(ApiTagCreateRequestColor);
 
 /** @internal */
 export type ApiTagCreateRequest$Outbound = {
@@ -66,9 +33,9 @@ export const ApiTagCreateRequest$outboundSchema: z.ZodMiniType<
   ApiTagCreateRequest$Outbound,
   ApiTagCreateRequest
 > = z.object({
-  scope: ApiTagCreateRequestScope$outboundSchema,
+  scope: ApiSharedEnuma1951b6358$outboundSchema,
   name: z.string(),
-  color: z.optional(z.nullable(ApiTagCreateRequestColor$outboundSchema)),
+  color: z.optional(z.nullable(ApiSharedEnum599647cb76$outboundSchema)),
   description: z.optional(z.nullable(z.string())),
 });
 

@@ -8,88 +8,16 @@ import { remap as remap$ } from "../lib/primitives.js";
 import { safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
+import {
+  ApiSharedObjectac822ca2fd,
+  ApiSharedObjectac822ca2fd$inboundSchema,
+} from "./api-shared-objectac822ca2fd.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
-
-export type ApiSupplierDetailResponseData = {
-  object: "supplier";
-  id: string;
-  name: string;
-  companyName: string | null;
-  description: string | null;
-  email: string | null;
-  phone: string | null;
-  taxId: string | null;
-  taxIdType: string | null;
-  taxCategory: string | null;
-  paymentTermId: string | null;
-  isActive: boolean | null;
-  country: string | null;
-  provinceId: string | null;
-  city: string | null;
-  address: string | null;
-  apartment: string | null;
-  postalCode: string | null;
-  createdAt: Date;
-  updatedAt: Date;
-};
 
 export type ApiSupplierDetailResponse = {
   requestId: string;
-  data: ApiSupplierDetailResponseData;
+  data: ApiSharedObjectac822ca2fd;
 };
-
-/** @internal */
-export const ApiSupplierDetailResponseData$inboundSchema: z.ZodMiniType<
-  ApiSupplierDetailResponseData,
-  unknown
-> = z.pipe(
-  z.object({
-    object: types.literal("supplier"),
-    id: types.string(),
-    name: types.string(),
-    company_name: types.nullable(types.string()),
-    description: types.nullable(types.string()),
-    email: types.nullable(types.string()),
-    phone: types.nullable(types.string()),
-    tax_id: types.nullable(types.string()),
-    tax_id_type: types.nullable(types.string()),
-    tax_category: types.nullable(types.string()),
-    payment_term_id: types.nullable(types.string()),
-    is_active: types.nullable(types.boolean()),
-    country: types.nullable(types.string()),
-    province_id: types.nullable(types.string()),
-    city: types.nullable(types.string()),
-    address: types.nullable(types.string()),
-    apartment: types.nullable(types.string()),
-    postal_code: types.nullable(types.string()),
-    created_at: types.date(),
-    updated_at: types.date(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "company_name": "companyName",
-      "tax_id": "taxId",
-      "tax_id_type": "taxIdType",
-      "tax_category": "taxCategory",
-      "payment_term_id": "paymentTermId",
-      "is_active": "isActive",
-      "province_id": "provinceId",
-      "postal_code": "postalCode",
-      "created_at": "createdAt",
-      "updated_at": "updatedAt",
-    });
-  }),
-);
-
-export function apiSupplierDetailResponseDataFromJSON(
-  jsonString: string,
-): SafeParseResult<ApiSupplierDetailResponseData, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) => ApiSupplierDetailResponseData$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'ApiSupplierDetailResponseData' from JSON`,
-  );
-}
 
 /** @internal */
 export const ApiSupplierDetailResponse$inboundSchema: z.ZodMiniType<
@@ -98,7 +26,7 @@ export const ApiSupplierDetailResponse$inboundSchema: z.ZodMiniType<
 > = z.pipe(
   z.object({
     request_id: types.string(),
-    data: z.lazy(() => ApiSupplierDetailResponseData$inboundSchema),
+    data: ApiSharedObjectac822ca2fd$inboundSchema,
   }),
   z.transform((v) => {
     return remap$(v, {

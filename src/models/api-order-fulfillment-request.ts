@@ -5,16 +5,10 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
-import { ClosedEnum } from "../types/enums.js";
-
-export const ApiOrderFulfillmentRequestDeliveryMethod = {
-  Shipping: "shipping",
-  LocalDelivery: "local_delivery",
-  Pickup: "pickup",
-} as const;
-export type ApiOrderFulfillmentRequestDeliveryMethod = ClosedEnum<
-  typeof ApiOrderFulfillmentRequestDeliveryMethod
->;
+import {
+  ApiSharedEnumcc76b6d63a,
+  ApiSharedEnumcc76b6d63a$outboundSchema,
+} from "./api-shared-enumcc76b6d63a.js";
 
 export type ApiOrderFulfillmentRequestLine = {
   fulfillmentOrderLineId: string;
@@ -23,18 +17,12 @@ export type ApiOrderFulfillmentRequestLine = {
 
 export type ApiOrderFulfillmentRequest = {
   fulfillmentOrderId: string;
-  deliveryMethod?: ApiOrderFulfillmentRequestDeliveryMethod | undefined;
+  deliveryMethod?: ApiSharedEnumcc76b6d63a | undefined;
   fulfilledAt?: Date | undefined;
   transportName?: string | undefined;
   notes?: string | undefined;
   lines: Array<ApiOrderFulfillmentRequestLine>;
 };
-
-/** @internal */
-export const ApiOrderFulfillmentRequestDeliveryMethod$outboundSchema:
-  z.ZodMiniEnum<typeof ApiOrderFulfillmentRequestDeliveryMethod> = z.enum(
-    ApiOrderFulfillmentRequestDeliveryMethod,
-  );
 
 /** @internal */
 export type ApiOrderFulfillmentRequestLine$Outbound = {
@@ -85,9 +73,7 @@ export const ApiOrderFulfillmentRequest$outboundSchema: z.ZodMiniType<
 > = z.pipe(
   z.object({
     fulfillmentOrderId: z.string(),
-    deliveryMethod: z.optional(
-      ApiOrderFulfillmentRequestDeliveryMethod$outboundSchema,
-    ),
+    deliveryMethod: z.optional(ApiSharedEnumcc76b6d63a$outboundSchema),
     fulfilledAt: z.optional(
       z.pipe(z.date(), z.transform(v => v.toISOString())),
     ),

@@ -6,15 +6,7 @@
 import { ListApiPurchaseOrdersResponse } from "lapyme/models/operations";
 
 let value: ListApiPurchaseOrdersResponse = {
-  headers: {
-    "key": [
-      "<value 1>",
-    ],
-    "key1": [
-      "<value 1>",
-      "<value 2>",
-    ],
-  },
+  headers: {},
   result: {
     requestId: "<id>",
     data: [
@@ -32,10 +24,10 @@ let value: ListApiPurchaseOrdersResponse = {
           name: "<value>",
         },
         warehouse: {
-          id: "73701df9-cc25-4f39-89d3-0ecc1c8cf71d",
+          id: "1d81895d-9d7f-44ea-9636-e0e6181dee4f",
           name: "<value>",
         },
-        createdAt: new Date("2024-11-30T09:48:04.263Z"),
+        createdAt: new Date("2025-06-11T02:30:36.517Z"),
       },
     ],
   },

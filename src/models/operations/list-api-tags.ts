@@ -6,31 +6,15 @@
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
 import { safeParse } from "../../lib/schemas.js";
-import { ClosedEnum } from "../../types/enums.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import * as models from "../index.js";
-
-/**
- * Scope del catálogo de etiquetas
- */
-export const Scope = {
-  Customer: "customer",
-  Supplier: "supplier",
-  Product: "product",
-  Sale: "sale",
-  Purchase: "purchase",
-} as const;
-/**
- * Scope del catálogo de etiquetas
- */
-export type Scope = ClosedEnum<typeof Scope>;
 
 export type ListApiTagsRequest = {
   /**
    * Scope del catálogo de etiquetas
    */
-  scope: Scope;
+  scope: models.ApiSharedEnuma1951b6358;
   /**
    * Incluye etiquetas archivadas en la respuesta
    */
@@ -41,9 +25,6 @@ export type ListApiTagsResponse = {
   headers: { [k: string]: Array<string> };
   result: models.ApiTagsListResponse;
 };
-
-/** @internal */
-export const Scope$outboundSchema: z.ZodMiniEnum<typeof Scope> = z.enum(Scope);
 
 /** @internal */
 export type ListApiTagsRequest$Outbound = {
@@ -57,7 +38,7 @@ export const ListApiTagsRequest$outboundSchema: z.ZodMiniType<
   ListApiTagsRequest
 > = z.pipe(
   z.object({
-    scope: Scope$outboundSchema,
+    scope: models.ApiSharedEnuma1951b6358$outboundSchema,
     includeArchived: z._default(z.boolean(), false),
   }),
   z.transform((v) => {

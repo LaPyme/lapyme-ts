@@ -6,31 +6,23 @@
 import { GetApiSupplierPaymentResponse } from "lapyme/models/operations";
 
 let value: GetApiSupplierPaymentResponse = {
-  headers: {
-    "key": [
-      "<value 1>",
-      "<value 2>",
-    ],
-    "key1": [
-      "<value 1>",
-    ],
-  },
+  headers: {},
   result: {
     requestId: "<id>",
     data: {
       supplierPayment: {
-        id: "3ecc553f-f5c6-493e-bfa6-0b4cee2998f7",
+        id: "c0f7cbd9-3523-45b2-986a-d3df2cb86b1a",
         type: "supplier",
         status: "active",
-        contactId: "d4dfd493-7046-43fe-9cce-3175c9ab669b",
+        contactId: "77d392a7-1168-43de-9c41-fa1ad75d01f4",
         contactName: "<value>",
-        paymentNumber: 349810,
-        formattedPaymentNumber: "<value>",
+        paymentNumber: 694729,
+        formattedPaymentNumber: null,
         paymentDate: "<value>",
         currency: "PES",
-        totalAmount: 617675,
-        balance: 513258,
-        createdAt: new Date("2026-02-15T06:10:17.413Z"),
+        totalAmount: 163801,
+        balance: 471858,
+        createdAt: new Date("2026-03-29T02:04:46.450Z"),
         createdByName: "<value>",
       },
     },

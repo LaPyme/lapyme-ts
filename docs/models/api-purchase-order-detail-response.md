@@ -34,11 +34,11 @@ let value: ApiPurchaseOrderDetailResponse = {
       postalCode: "46341",
     },
     warehouse: {
-      id: "c26f4300-69db-4b03-9333-2b7eb47bae62",
+      id: "1d81895d-9d7f-44ea-9636-e0e6181dee4f",
       name: "<value>",
     },
-    createdAt: new Date("2024-01-22T20:23:19.284Z"),
-    warehouseId: "5290f174-4f02-4c9a-8ca4-bbc78fe3c210",
+    createdAt: new Date("2026-05-06T11:30:52.684Z"),
+    warehouseId: "26f43006-9dbb-4033-8332-b7eb47bae627",
     notes: "<value>",
     items: [],
   },
@@ -47,7 +47,7 @@ let value: ApiPurchaseOrderDetailResponse = {
 
 ## Fields
 
-| Field                                                                                             | Type                                                                                              | Required                                                                                          | Description                                                                                       |
-| ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| `requestId`                                                                                       | *string*                                                                                          | :heavy_check_mark:                                                                                | N/A                                                                                               |
-| `data`                                                                                            | [models.ApiPurchaseOrderDetailResponseData](../models/api-purchase-order-detail-response-data.md) | :heavy_check_mark:                                                                                | N/A                                                                                               |
+| Field                                                                        | Type                                                                         | Required                                                                     | Description                                                                  |
+| ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| `requestId`                                                                  | *string*                                                                     | :heavy_check_mark:                                                           | N/A                                                                          |
+| `data`                                                                       | [models.ApiSharedObjecta6cd4a0a4e](../models/api-shared-objecta6cd4a0a4e.md) | :heavy_check_mark:                                                           | N/A                                                                          |

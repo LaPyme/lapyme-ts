@@ -6,9 +6,12 @@
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
 import { safeParse } from "../lib/schemas.js";
-import { ClosedEnum } from "../types/enums.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
+import {
+  ApiSharedEnum8d46e1ec20,
+  ApiSharedEnum8d46e1ec20$inboundSchema,
+} from "./api-shared-enum8d46e1ec20.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type ApiPointOfSaleListResponseData = {
@@ -24,19 +27,6 @@ export type ApiPointOfSaleListResponseData = {
   isActive: boolean;
 };
 
-/**
- * List-envelope discriminator.
- */
-export const ApiPointOfSaleListResponseObject = {
-  List: "list",
-} as const;
-/**
- * List-envelope discriminator.
- */
-export type ApiPointOfSaleListResponseObject = ClosedEnum<
-  typeof ApiPointOfSaleListResponseObject
->;
-
 export type ApiPointOfSaleListResponse = {
   requestId: string;
   data: Array<ApiPointOfSaleListResponseData>;
@@ -45,7 +35,7 @@ export type ApiPointOfSaleListResponse = {
   /**
    * List-envelope discriminator.
    */
-  object: ApiPointOfSaleListResponseObject;
+  object: ApiSharedEnum8d46e1ec20;
   /**
    * Requested list path.
    */
@@ -90,11 +80,6 @@ export function apiPointOfSaleListResponseDataFromJSON(
 }
 
 /** @internal */
-export const ApiPointOfSaleListResponseObject$inboundSchema: z.ZodMiniEnum<
-  typeof ApiPointOfSaleListResponseObject
-> = z.enum(ApiPointOfSaleListResponseObject);
-
-/** @internal */
 export const ApiPointOfSaleListResponse$inboundSchema: z.ZodMiniType<
   ApiPointOfSaleListResponse,
   unknown
@@ -104,7 +89,7 @@ export const ApiPointOfSaleListResponse$inboundSchema: z.ZodMiniType<
     data: z.array(z.lazy(() => ApiPointOfSaleListResponseData$inboundSchema)),
     has_more: types.boolean(),
     next_cursor: types.nullable(types.string()),
-    object: ApiPointOfSaleListResponseObject$inboundSchema,
+    object: ApiSharedEnum8d46e1ec20$inboundSchema,
     url: types.string(),
   }),
   z.transform((v) => {

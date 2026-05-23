@@ -8,20 +8,14 @@ import { remap as remap$ } from "../lib/primitives.js";
 import { safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
+import {
+  ApiSharedObjectd8582ce697,
+  ApiSharedObjectd8582ce697$inboundSchema,
+} from "./api-shared-objectd8582ce697.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
-export type ApiCategoryCreateResponseCategory = {
-  object: "category";
-  id: string;
-  name: string;
-  parentId: string | null;
-  defaultEconomicActivity: string | null;
-  createdAt: Date;
-  updatedAt: Date;
-};
-
 export type ApiCategoryCreateResponseData = {
-  category: ApiCategoryCreateResponseCategory;
+  category: ApiSharedObjectd8582ce697;
   idempotentReplay: boolean;
 };
 
@@ -32,46 +26,12 @@ export type ApiCategoryCreateResponse = {
 };
 
 /** @internal */
-export const ApiCategoryCreateResponseCategory$inboundSchema: z.ZodMiniType<
-  ApiCategoryCreateResponseCategory,
-  unknown
-> = z.pipe(
-  z.object({
-    object: types.literal("category"),
-    id: types.string(),
-    name: types.string(),
-    parent_id: types.nullable(types.string()),
-    default_economic_activity: types.nullable(types.string()),
-    created_at: types.date(),
-    updated_at: types.date(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "parent_id": "parentId",
-      "default_economic_activity": "defaultEconomicActivity",
-      "created_at": "createdAt",
-      "updated_at": "updatedAt",
-    });
-  }),
-);
-
-export function apiCategoryCreateResponseCategoryFromJSON(
-  jsonString: string,
-): SafeParseResult<ApiCategoryCreateResponseCategory, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) => ApiCategoryCreateResponseCategory$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'ApiCategoryCreateResponseCategory' from JSON`,
-  );
-}
-
-/** @internal */
 export const ApiCategoryCreateResponseData$inboundSchema: z.ZodMiniType<
   ApiCategoryCreateResponseData,
   unknown
 > = z.pipe(
   z.object({
-    category: z.lazy(() => ApiCategoryCreateResponseCategory$inboundSchema),
+    category: ApiSharedObjectd8582ce697$inboundSchema,
     idempotent_replay: types.boolean(),
   }),
   z.transform((v) => {

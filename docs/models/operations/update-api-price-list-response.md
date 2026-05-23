@@ -6,23 +6,31 @@
 import { UpdateApiPriceListResponse } from "lapyme/models/operations";
 
 let value: UpdateApiPriceListResponse = {
-  headers: {},
+  headers: {
+    "key": [
+      "<value 1>",
+      "<value 2>",
+      "<value 3>",
+    ],
+  },
   result: {
     requestId: "<id>",
     data: {
       priceList: {
-        id: "565db26a-0ab8-480f-bacd-0ff122627f63",
+        id: "2958ecfc-7b78-4e54-a06d-c7f62f8663b7",
         name: "<value>",
-        isAutomatic: true,
+        isAutomatic: false,
         automaticPricingMode: "base_price_adjustment",
-        adjustmentPercentage: 7658.96,
-        taxInclusive: false,
-        createdAt: new Date("2024-05-16T10:02:35.387Z"),
+        adjustmentPercentage: 2396.83,
+        taxInclusive: true,
+        createdAt: new Date("2025-04-30T20:16:20.962Z"),
         object: "price_list",
       },
       shouldSyncPrices: true,
     },
-    warnings: [],
+    warnings: [
+      "<value 1>",
+    ],
   },
 };
 ```

@@ -10,6 +10,10 @@ import * as openEnums from "../types/enums.js";
 import { OpenEnum } from "../types/enums.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
+import {
+  ApiSharedEnum07ee8fd91e,
+  ApiSharedEnum07ee8fd91e$inboundSchema,
+} from "./api-shared-enum07ee8fd91e.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type Row = {
@@ -18,14 +22,6 @@ export type Row = {
   labels: Array<string>;
   measures: { [k: string]: number };
 };
-
-export const SourceEnum = {
-  Sales: "sales",
-  Purchases: "purchases",
-  Payments: "payments",
-  Inventory: "inventory",
-} as const;
-export type SourceEnum = OpenEnum<typeof SourceEnum>;
 
 export type ReportQueryResponsePeriod = {
   startDate: string;
@@ -41,7 +37,7 @@ export type ReportQueryResponseDateBasis = OpenEnum<
 >;
 
 export type Metadata = {
-  source: SourceEnum;
+  source: ApiSharedEnum07ee8fd91e;
   dimensions: Array<string>;
   measures: Array<string>;
   period?: ReportQueryResponsePeriod | undefined;
@@ -81,10 +77,6 @@ export function rowFromJSON(
 }
 
 /** @internal */
-export const SourceEnum$inboundSchema: z.ZodMiniType<SourceEnum, unknown> =
-  openEnums.inboundSchema(SourceEnum);
-
-/** @internal */
 export const ReportQueryResponsePeriod$inboundSchema: z.ZodMiniType<
   ReportQueryResponsePeriod,
   unknown
@@ -120,7 +112,7 @@ export const ReportQueryResponseDateBasis$inboundSchema: z.ZodMiniType<
 /** @internal */
 export const Metadata$inboundSchema: z.ZodMiniType<Metadata, unknown> = z.pipe(
   z.object({
-    source: SourceEnum$inboundSchema,
+    source: ApiSharedEnum07ee8fd91e$inboundSchema,
     dimensions: z.array(types.string()),
     measures: z.array(types.string()),
     period: types.optional(

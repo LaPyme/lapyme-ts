@@ -7,15 +7,16 @@ import { ApiSaleTransactionSuccessResponseProjectedEffects } from "lapyme/models
 
 let value: ApiSaleTransactionSuccessResponseProjectedEffects = {
   inventory: {
-    willAffectStock: true,
+    willAffectStock: false,
     warehouseIds: [
-      "2178e60d-4f5d-4f42-a283-3304bcec3a01",
+      "e006673b-6b7a-40d8-8190-6929677cdaf6",
+      "77c813f1-7bc9-4a75-af6c-6672dd64813d",
     ],
-    productLineCount: 250522,
-    totalQuantity: 1606.33,
+    productLineCount: 68286,
+    totalQuantity: 3190.65,
   },
   accounting: {
-    willCreateSaleEntry: true,
+    willCreateSaleEntry: false,
     willCreatePaymentEntry: true,
   },
   fiscal: {
@@ -23,18 +24,18 @@ let value: ApiSaleTransactionSuccessResponseProjectedEffects = {
   },
   payments: {
     willCreatePayments: false,
-    paymentMethodCount: 664715,
-    totalAmount: 1494.96,
-    pendingAmount: 7808.37,
+    paymentMethodCount: 631396,
+    totalAmount: 3899.13,
+    pendingAmount: 5394.58,
   },
 };
 ```
 
 ## Fields
 
-| Field                                                                                                               | Type                                                                                                                | Required                                                                                                            | Description                                                                                                         |
-| ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
-| `inventory`                                                                                                         | [models.ApiSaleTransactionSuccessResponseInventory](../models/api-sale-transaction-success-response-inventory.md)   | :heavy_check_mark:                                                                                                  | N/A                                                                                                                 |
-| `accounting`                                                                                                        | [models.ApiSaleTransactionSuccessResponseAccounting](../models/api-sale-transaction-success-response-accounting.md) | :heavy_check_mark:                                                                                                  | N/A                                                                                                                 |
-| `fiscal`                                                                                                            | [models.Fiscal](../models/fiscal.md)                                                                                | :heavy_check_mark:                                                                                                  | N/A                                                                                                                 |
-| `payments`                                                                                                          | [models.Payments](../models/payments.md)                                                                            | :heavy_check_mark:                                                                                                  | N/A                                                                                                                 |
+| Field                                                                        | Type                                                                         | Required                                                                     | Description                                                                  |
+| ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| `inventory`                                                                  | [models.ApiSharedObject6a71e7888b](../models/api-shared-object6a71e7888b.md) | :heavy_check_mark:                                                           | N/A                                                                          |
+| `accounting`                                                                 | [models.ApiSharedObject9428e7100c](../models/api-shared-object9428e7100c.md) | :heavy_check_mark:                                                           | N/A                                                                          |
+| `fiscal`                                                                     | [models.ApiSharedObject3563932f8e](../models/api-shared-object3563932f8e.md) | :heavy_check_mark:                                                           | N/A                                                                          |
+| `payments`                                                                   | [models.ApiSharedObject8e516a9b19](../models/api-shared-object8e516a9b19.md) | :heavy_check_mark:                                                           | N/A                                                                          |

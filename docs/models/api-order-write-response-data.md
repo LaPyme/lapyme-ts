@@ -59,8 +59,8 @@ let value: ApiOrderWriteResponseData = {
 
 ## Fields
 
-| Field                              | Type                               | Required                           | Description                        |
-| ---------------------------------- | ---------------------------------- | ---------------------------------- | ---------------------------------- |
-| `order`                            | [models.Order](../models/order.md) | :heavy_check_mark:                 | N/A                                |
-| `idempotentReplay`                 | *boolean*                          | :heavy_minus_sign:                 | N/A                                |
-| `result`                           | *any*                              | :heavy_minus_sign:                 | N/A                                |
+| Field                                                                        | Type                                                                         | Required                                                                     | Description                                                                  |
+| ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| `order`                                                                      | [models.ApiSharedObject9223e6f740](../models/api-shared-object9223e6f740.md) | :heavy_check_mark:                                                           | N/A                                                                          |
+| `idempotentReplay`                                                           | *boolean*                                                                    | :heavy_minus_sign:                                                           | N/A                                                                          |
+| `result`                                                                     | *any*                                                                        | :heavy_minus_sign:                                                           | N/A                                                                          |

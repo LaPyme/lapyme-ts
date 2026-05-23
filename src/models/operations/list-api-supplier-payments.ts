@@ -6,25 +6,9 @@
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
 import { safeParse } from "../../lib/schemas.js";
-import { ClosedEnum } from "../../types/enums.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import * as models from "../index.js";
-
-/**
- * Estado del pago
- */
-export const ListApiSupplierPaymentsStatus = {
-  Active: "active",
-  Voided: "voided",
-  All: "all",
-} as const;
-/**
- * Estado del pago
- */
-export type ListApiSupplierPaymentsStatus = ClosedEnum<
-  typeof ListApiSupplierPaymentsStatus
->;
 
 export type ListApiSupplierPaymentsRequest = {
   /**
@@ -42,7 +26,7 @@ export type ListApiSupplierPaymentsRequest = {
   /**
    * Estado del pago
    */
-  status?: ListApiSupplierPaymentsStatus | undefined;
+  status?: models.ApiSharedEnum8ef2575a44 | undefined;
   /**
    * Fecha inicial en formato YYYY-MM-DD
    */
@@ -57,11 +41,6 @@ export type ListApiSupplierPaymentsResponse = {
   headers: { [k: string]: Array<string> };
   result: models.ApiSupplierPaymentListResponse;
 };
-
-/** @internal */
-export const ListApiSupplierPaymentsStatus$outboundSchema: z.ZodMiniEnum<
-  typeof ListApiSupplierPaymentsStatus
-> = z.enum(ListApiSupplierPaymentsStatus);
 
 /** @internal */
 export type ListApiSupplierPaymentsRequest$Outbound = {
@@ -82,7 +61,7 @@ export const ListApiSupplierPaymentsRequest$outboundSchema: z.ZodMiniType<
     cursor: z.optional(z.string()),
     limit: z._default(z.int(), 50),
     query: z.optional(z.string()),
-    status: z._default(ListApiSupplierPaymentsStatus$outboundSchema, "active"),
+    status: z._default(models.ApiSharedEnum8ef2575a44$outboundSchema, "active"),
     dateFrom: z.optional(z.pipe(
       z.date(),
       z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),

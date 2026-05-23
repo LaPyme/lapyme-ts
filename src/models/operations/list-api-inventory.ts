@@ -11,63 +11,13 @@ import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import * as models from "../index.js";
 
-export const ListApiInventoryProductType = {
+export const ProductType = {
   Product: "product",
   Combo: "combo",
   Kit: "kit",
   Service: "service",
 } as const;
-export type ListApiInventoryProductType = ClosedEnum<
-  typeof ListApiInventoryProductType
->;
-
-/**
- * Regla para el filtro de stock disponible
- */
-export const AvailableRule = {
-  Equal: "equal",
-  Between: "between",
-} as const;
-/**
- * Regla para el filtro de stock disponible
- */
-export type AvailableRule = ClosedEnum<typeof AvailableRule>;
-
-/**
- * Regla para el filtro de stock físico
- */
-export const OnHandRule = {
-  Equal: "equal",
-  Between: "between",
-} as const;
-/**
- * Regla para el filtro de stock físico
- */
-export type OnHandRule = ClosedEnum<typeof OnHandRule>;
-
-/**
- * Regla para el filtro de stock reservado
- */
-export const ReservedRule = {
-  Equal: "equal",
-  Between: "between",
-} as const;
-/**
- * Regla para el filtro de stock reservado
- */
-export type ReservedRule = ClosedEnum<typeof ReservedRule>;
-
-/**
- * Regla para el filtro de stock entrante
- */
-export const IncomingRule = {
-  Equal: "equal",
-  Between: "between",
-} as const;
-/**
- * Regla para el filtro de stock entrante
- */
-export type IncomingRule = ClosedEnum<typeof IncomingRule>;
+export type ProductType = ClosedEnum<typeof ProductType>;
 
 export type ListApiInventoryRequest = {
   /**
@@ -97,11 +47,11 @@ export type ListApiInventoryRequest = {
   /**
    * Tipos de producto. Puede repetirse o enviarse separada por comas.
    */
-  productTypes?: Array<ListApiInventoryProductType> | undefined;
+  productTypes?: Array<ProductType> | undefined;
   /**
    * Regla para el filtro de stock disponible
    */
-  availableRule?: AvailableRule | undefined;
+  availableRule?: models.ApiSharedEnuma4e4082638 | undefined;
   /**
    * Cantidad exacta cuando availableRule=equal
    */
@@ -117,7 +67,7 @@ export type ListApiInventoryRequest = {
   /**
    * Regla para el filtro de stock físico
    */
-  onHandRule?: OnHandRule | undefined;
+  onHandRule?: models.ApiSharedEnuma4e4082638 | undefined;
   /**
    * Cantidad exacta cuando onHandRule=equal
    */
@@ -133,7 +83,7 @@ export type ListApiInventoryRequest = {
   /**
    * Regla para el filtro de stock reservado
    */
-  reservedRule?: ReservedRule | undefined;
+  reservedRule?: models.ApiSharedEnuma4e4082638 | undefined;
   /**
    * Cantidad exacta cuando reservedRule=equal
    */
@@ -149,7 +99,7 @@ export type ListApiInventoryRequest = {
   /**
    * Regla para el filtro de stock entrante
    */
-  incomingRule?: IncomingRule | undefined;
+  incomingRule?: models.ApiSharedEnuma4e4082638 | undefined;
   /**
    * Cantidad exacta cuando incomingRule=equal
    */
@@ -170,25 +120,8 @@ export type ListApiInventoryResponse = {
 };
 
 /** @internal */
-export const ListApiInventoryProductType$outboundSchema: z.ZodMiniEnum<
-  typeof ListApiInventoryProductType
-> = z.enum(ListApiInventoryProductType);
-
-/** @internal */
-export const AvailableRule$outboundSchema: z.ZodMiniEnum<typeof AvailableRule> =
-  z.enum(AvailableRule);
-
-/** @internal */
-export const OnHandRule$outboundSchema: z.ZodMiniEnum<typeof OnHandRule> = z
-  .enum(OnHandRule);
-
-/** @internal */
-export const ReservedRule$outboundSchema: z.ZodMiniEnum<typeof ReservedRule> = z
-  .enum(ReservedRule);
-
-/** @internal */
-export const IncomingRule$outboundSchema: z.ZodMiniEnum<typeof IncomingRule> = z
-  .enum(IncomingRule);
+export const ProductType$outboundSchema: z.ZodMiniEnum<typeof ProductType> = z
+  .enum(ProductType);
 
 /** @internal */
 export type ListApiInventoryRequest$Outbound = {
@@ -229,22 +162,20 @@ export const ListApiInventoryRequest$outboundSchema: z.ZodMiniType<
     query: z.optional(z.string()),
     search: z.optional(z.string()),
     categoryIds: z.optional(z.array(z.string())),
-    productTypes: z.optional(
-      z.array(ListApiInventoryProductType$outboundSchema),
-    ),
-    availableRule: z.optional(AvailableRule$outboundSchema),
+    productTypes: z.optional(z.array(ProductType$outboundSchema)),
+    availableRule: z.optional(models.ApiSharedEnuma4e4082638$outboundSchema),
     availableAmount: z.optional(z.number()),
     availableMin: z.optional(z.number()),
     availableMax: z.optional(z.number()),
-    onHandRule: z.optional(OnHandRule$outboundSchema),
+    onHandRule: z.optional(models.ApiSharedEnuma4e4082638$outboundSchema),
     onHandAmount: z.optional(z.number()),
     onHandMin: z.optional(z.number()),
     onHandMax: z.optional(z.number()),
-    reservedRule: z.optional(ReservedRule$outboundSchema),
+    reservedRule: z.optional(models.ApiSharedEnuma4e4082638$outboundSchema),
     reservedAmount: z.optional(z.number()),
     reservedMin: z.optional(z.number()),
     reservedMax: z.optional(z.number()),
-    incomingRule: z.optional(IncomingRule$outboundSchema),
+    incomingRule: z.optional(models.ApiSharedEnuma4e4082638$outboundSchema),
     incomingAmount: z.optional(z.number()),
     incomingMin: z.optional(z.number()),
     incomingMax: z.optional(z.number()),
