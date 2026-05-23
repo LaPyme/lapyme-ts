@@ -14,7 +14,7 @@ targets:
         sourceRevisionDigest: sha256:b84b589e3d2dd2761fde1c8f4a990d8c4c2aedaa8bcb124cf893d3e11c6e8fc1
         sourceBlobDigest: sha256:4f01aa54b05304bd6c917f52fc56c460787dbcf7535df3ec037751b485a09c37
         codeSamplesNamespace: la-pyme-api-typescript-code-samples
-        codeSamplesRevisionDigest: sha256:6aa8177db87c18610e5d037a2df7a6812f8e4835c6b5c1f90b82f99e64bd17be
+        codeSamplesRevisionDigest: sha256:9ac742c6c8dbb97b257ff3cbbf9391b87c4ad04ff251a49c42f8e9a51c877ecc
 workflow:
     workflowVersion: 1.0.0
     speakeasyVersion: latest
@@ -31,6 +31,9 @@ workflow:
         lapyme:
             target: typescript
             source: La Pyme API
+            publish:
+                npm:
+                    token: $npm_token
             codeSamples:
                 registry:
                     location: registry.speakeasyapi.dev/lapyme/la-pyme/la-pyme-api-typescript-code-samples

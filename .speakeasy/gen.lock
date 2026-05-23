@@ -5,14 +5,13 @@ management:
   docVersion: 1.0.0
   speakeasyVersion: 1.764.1
   generationVersion: 2.885.1
-  releaseVersion: 0.1.1
-  configChecksum: 47a2c0b65cf24cd14f8bae6486d64db4
-  repoURL: https://github.com/LaPyme/lapyme-ts.git
-  installationURL: https://github.com/LaPyme/lapyme-ts
+  releaseVersion: 0.1.3
+  configChecksum: ab8876eeacf0546a0da34c549f83d969
+  published: true
 persistentEdits:
-  generation_id: 6aab10d1-3c21-4998-b9a4-67f9368cac94
-  pristine_commit_hash: 1b589376274029e361f995d83b6f66bd4d7181ee
-  pristine_tree_hash: 8cda43aafba02e95b33a1c87729f2e340f1f0a43
+  generation_id: f3e588bc-7300-4b3a-b172-22514d99d319
+  pristine_commit_hash: 05e08480d4ffcc3ffdc8006fc5d848f2a94b9fe5
+  pristine_tree_hash: 3254e045497f0f561657a2cf188efe3304669077
 features:
   typescript:
     additionalDependencies: 0.1.0
@@ -37,8 +36,8 @@ features:
 trackedFiles:
   .devcontainer/README.md:
     id: b170c0f184ac
-    last_write_checksum: sha1:4683be9242b5beed51ff18cb4d0acf7b8c6c94db
-    pristine_git_object: 7ed728b6c88a514d44ec51b9e98c23f3f26ddcca
+    last_write_checksum: sha1:b6564d2a7c8ae764fff6d1b4666dcd787210a000
+    pristine_git_object: cdef18c30e383534a868742e1b9148f2670606f9
   .devcontainer/devcontainer.json:
     id: b34062a34eb1
     last_write_checksum: sha1:d0b15193202c961e7d1875864ddb15f9d17c84dd
@@ -1377,12 +1376,12 @@ trackedFiles:
     pristine_git_object: 777860cc852bc87dd57918810d7645d361b1e3a7
   jsr.json:
     id: 7f6ab7767282
-    last_write_checksum: sha1:2cacc2d21428642bc325383626ac6e54aec03886
-    pristine_git_object: 6c2dc48a72fc2a36646aef66ffeae448c095ff54
+    last_write_checksum: sha1:7d1442f823dedc5b4fa5a4d34edf791c27bcb3c2
+    pristine_git_object: ef34510eb42bb0cb1ddc1381eeb2b7c55f184d5f
   package.json:
     id: 7030d0b2f71b
-    last_write_checksum: sha1:4919cc578f9963e7b31458a2f5ee2a96907a690b
-    pristine_git_object: d3b2d58ce42e06b690242626d98ff5bb1323c8df
+    last_write_checksum: sha1:8b271fc63197736c876ae2c41641aa28b7d3e359
+    pristine_git_object: 0a4e54cba938ff6ac73f2b0d01608ea369b71404
   src/core.ts:
     id: f431fdbcd144
     last_write_checksum: sha1:cb4e1596981cf475abb10800a6590d9e1b698bb7
@@ -1549,8 +1548,8 @@ trackedFiles:
     pristine_git_object: 44be0eae8246521b230e8e711a88eff738fc015d
   src/lib/config.ts:
     id: 320761608fb3
-    last_write_checksum: sha1:246f25598888b530ed705ba331eed95a9908d7f9
-    pristine_git_object: 5873f1f2183622c315cf22739b7638b2052ae39a
+    last_write_checksum: sha1:bc5bac04bd4c0b3a9ccc2a99f561828e0347b45b
+    pristine_git_object: a99d88fbcb99d4cb0218897034e3c38b465af52c
   src/lib/dlv.ts:
     id: b1988214835a
     last_write_checksum: sha1:1dd3e3fbb4550c4bf31f5ef997faff355d6f3250
@@ -2709,75 +2708,3 @@ examples:
         "500":
           application/json: {"requestId": "<id>", "success": false, "error": {"code": "<value>", "message": "<value>", "retryable": true}}
 examplesVersion: 1.0.2
-releaseNotes: |
-  ## Typescript SDK Changes:
-  * `lapyme.health.check()`: **Added**
-  * `lapyme.transfers.create()`: **Added**
-  * `lapyme.customers.get()`: **Added**
-  * `lapyme.customers.create()`: **Added**
-  * `lapyme.customers.getById()`: **Added**
-  * `lapyme.customers.update()`: **Added**
-  * `lapyme.suppliers.list()`: **Added**
-  * `lapyme.v2.retrieveProducts()`: **Added**
-  * `lapyme.v2.retrieveWarehouses()`: **Added**
-  * `lapyme.v2.retrievePurchases()`: **Added**
-  * `lapyme.v2.purchases.getById()`: **Added**
-  * `lapyme.purchases.create()`: **Added**
-  * `lapyme.reports.query()`: **Added**
-  * `lapyme.products.list()`: **Added**
-  * `lapyme.products.create()`: **Added**
-  * `lapyme.products.getById()`: **Added**
-  * `lapyme.products.update()`: **Added**
-  * `lapyme.priceLists.get()`: **Added**
-  * `lapyme.priceLists.getById()`: **Added**
-  * `lapyme.sales.list()`: **Added**
-  * `lapyme.sales.create()`: **Added**
-  * `lapyme.sales.getById()`: **Added**
-  * `lapyme.stockPerWarehouse.list()`: **Added**
-  * `lapyme.categories.get()`: **Added**
-  * `lapyme.categories.create()`: **Added**
-  * `lapyme.categories.getById()`: **Added**
-  * `lapyme.categories.updateById()`: **Added**
-  * `lapyme.paymentMethods.list()`: **Added**
-  * `lapyme.paymentMethods.create()`: **Added**
-  * `lapyme.paymentMethods.getById()`: **Added**
-  * `lapyme.paymentMethods.update()`: **Added**
-  * `lapyme.warehouses.list()`: **Added**
-  * `lapyme.warehouses.create()`: **Added**
-  * `lapyme.warehouses.getById()`: **Added**
-  * `lapyme.warehouses.updateById()`: **Added**
-  * `lapyme.healthCheck()`: **Removed** (Breaking ⚠️)
-  * `lapyme.createTransfer()`: **Removed** (Breaking ⚠️)
-  * `lapyme.getCustomers()`: **Removed** (Breaking ⚠️)
-  * `lapyme.createCustomer()`: **Removed** (Breaking ⚠️)
-  * `lapyme.getProducts()`: **Removed** (Breaking ⚠️)
-  * `lapyme.createProduct()`: **Removed** (Breaking ⚠️)
-  * `lapyme.getPriceLists()`: **Removed** (Breaking ⚠️)
-  * `lapyme.getPriceListById()`: **Removed** (Breaking ⚠️)
-  * `lapyme.getSales()`: **Removed** (Breaking ⚠️)
-  * `lapyme.createSale()`: **Removed** (Breaking ⚠️)
-  * `lapyme.getStockPerWarehouse()`: **Removed** (Breaking ⚠️)
-  * `lapyme.getCategories()`: **Removed** (Breaking ⚠️)
-  * `lapyme.createCategory()`: **Removed** (Breaking ⚠️)
-  * `lapyme.getCategoryById()`: **Removed** (Breaking ⚠️)
-  * `lapyme.updateCategoryById()`: **Removed** (Breaking ⚠️)
-  * `lapyme.getPaymentMethods()`: **Removed** (Breaking ⚠️)
-  * `lapyme.createPaymentMethod()`: **Removed** (Breaking ⚠️)
-  * `lapyme.getPaymentMethodById()`: **Removed** (Breaking ⚠️)
-  * `lapyme.updatePaymentMethodById()`: **Removed** (Breaking ⚠️)
-  * `lapyme.getWarehouses()`: **Removed** (Breaking ⚠️)
-  * `lapyme.createWarehouse()`: **Removed** (Breaking ⚠️)
-  * `lapyme.getWarehouseById()`: **Removed** (Breaking ⚠️)
-  * `lapyme.updateWarehouseById()`: **Removed** (Breaking ⚠️)
-  * `lapyme.getCustomerById()`: **Removed** (Breaking ⚠️)
-  * `lapyme.updateCustomerById()`: **Removed** (Breaking ⚠️)
-  * `lapyme.getProductById()`: **Removed** (Breaking ⚠️)
-  * `lapyme.updateProductById()`: **Removed** (Breaking ⚠️)
-  * `lapyme.getSaleById()`: **Removed** (Breaking ⚠️)
-  * `lapyme.v2.listV2Suppliers()`: **Removed** (Breaking ⚠️)
-  * `lapyme.v2.listV2Products()`: **Removed** (Breaking ⚠️)
-  * `lapyme.v2.listV2Warehouses()`: **Removed** (Breaking ⚠️)
-  * `lapyme.v2.listV2Purchases()`: **Removed** (Breaking ⚠️)
-  * `lapyme.v2.createV2Purchase()`: **Removed** (Breaking ⚠️)
-  * `lapyme.v2.queryV2Report()`: **Removed** (Breaking ⚠️)
-  * `lapyme.v2.getV2PurchaseById()`: **Removed** (Breaking ⚠️)

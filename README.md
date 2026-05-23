@@ -40,39 +40,35 @@ La Pyme API: API externa para integrar con el sistema de gestión La Pyme. v1 cu
 <!-- Start SDK Installation [installation] -->
 ## SDK Installation
 
-> [!TIP]
-> To finish publishing your SDK to npm and others you must [run your first generation action](https://www.speakeasy.com/docs/github-setup#step-by-step-guide).
-
-
 The SDK can be installed with either [npm](https://www.npmjs.com/), [pnpm](https://pnpm.io/), [bun](https://bun.sh/) or [yarn](https://classic.yarnpkg.com/en/) package managers.
 
 ### NPM
 
 ```bash
-npm add https://github.com/LaPyme/lapyme-ts
+npm add lapyme
 ```
 
 ### PNPM
 
 ```bash
-pnpm add https://github.com/LaPyme/lapyme-ts
+pnpm add lapyme
 ```
 
 ### Bun
 
 ```bash
-bun add https://github.com/LaPyme/lapyme-ts
+bun add lapyme
 ```
 
 ### Yarn
 
 ```bash
-yarn add https://github.com/LaPyme/lapyme-ts
+yarn add lapyme
 ```
 
 > [!NOTE]
 > This package is published as an ES Module (ESM) only. For applications using
-> CommonJS, use `await import()` to import and use this package.
+> CommonJS, use `await import("lapyme")` to import and use this package.
 <!-- End SDK Installation [installation] -->
 
 <!-- Start Requirements [requirements] -->
