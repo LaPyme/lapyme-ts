@@ -6,26 +6,9 @@
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
 import { safeParse } from "../../lib/schemas.js";
-import { ClosedEnum } from "../../types/enums.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import * as models from "../index.js";
-
-export const ListApiOrdersStatus = {
-  Open: "open",
-  Completed: "completed",
-  Cancelled: "cancelled",
-} as const;
-export type ListApiOrdersStatus = ClosedEnum<typeof ListApiOrdersStatus>;
-
-export const FulfillmentStatus = {
-  Unfulfilled: "unfulfilled",
-  InProgress: "in_progress",
-  PartiallyFulfilled: "partially_fulfilled",
-  Fulfilled: "fulfilled",
-  Cancelled: "cancelled",
-} as const;
-export type FulfillmentStatus = ClosedEnum<typeof FulfillmentStatus>;
 
 export type ListApiOrdersRequest = {
   query?: string | undefined;
@@ -33,24 +16,14 @@ export type ListApiOrdersRequest = {
   limit?: number | undefined;
   dateFrom?: Date | undefined;
   dateTo?: Date | undefined;
-  status?: ListApiOrdersStatus | undefined;
-  fulfillmentStatus?: FulfillmentStatus | undefined;
+  status?: models.ApiSharedEnum4ac9200c4a | undefined;
+  fulfillmentStatus?: models.ApiSharedEnumb49e56b125 | undefined;
 };
 
 export type ListApiOrdersResponse = {
   headers: { [k: string]: Array<string> };
   result: models.ApiOrderListResponse;
 };
-
-/** @internal */
-export const ListApiOrdersStatus$outboundSchema: z.ZodMiniEnum<
-  typeof ListApiOrdersStatus
-> = z.enum(ListApiOrdersStatus);
-
-/** @internal */
-export const FulfillmentStatus$outboundSchema: z.ZodMiniEnum<
-  typeof FulfillmentStatus
-> = z.enum(FulfillmentStatus);
 
 /** @internal */
 export type ListApiOrdersRequest$Outbound = {
@@ -80,8 +53,10 @@ export const ListApiOrdersRequest$outboundSchema: z.ZodMiniType<
       z.date(),
       z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
     )),
-    status: z.optional(ListApiOrdersStatus$outboundSchema),
-    fulfillmentStatus: z.optional(FulfillmentStatus$outboundSchema),
+    status: z.optional(models.ApiSharedEnum4ac9200c4a$outboundSchema),
+    fulfillmentStatus: z.optional(
+      models.ApiSharedEnumb49e56b125$outboundSchema,
+    ),
   }),
   z.transform((v) => {
     return remap$(v, {

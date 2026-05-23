@@ -5,24 +5,14 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
-import { ClosedEnum } from "../types/enums.js";
-
-export const ApiOrderCreateRequestDeliveryMethod = {
-  Shipping: "shipping",
-  LocalDelivery: "local_delivery",
-  Pickup: "pickup",
-} as const;
-export type ApiOrderCreateRequestDeliveryMethod = ClosedEnum<
-  typeof ApiOrderCreateRequestDeliveryMethod
->;
-
-export const ApiOrderCreateRequestCurrency = {
-  Pes: "PES",
-  Dol: "DOL",
-} as const;
-export type ApiOrderCreateRequestCurrency = ClosedEnum<
-  typeof ApiOrderCreateRequestCurrency
->;
+import {
+  ApiSharedEnum6cfb146157,
+  ApiSharedEnum6cfb146157$outboundSchema,
+} from "./api-shared-enum6cfb146157.js";
+import {
+  ApiSharedEnumcc76b6d63a,
+  ApiSharedEnumcc76b6d63a$outboundSchema,
+} from "./api-shared-enumcc76b6d63a.js";
 
 export type Totals = {
   subtotal: number;
@@ -44,24 +34,14 @@ export type ApiOrderCreateRequestLine = {
 export type ApiOrderCreateRequest = {
   customerId: string;
   assignedWarehouseId: string;
-  deliveryMethod?: ApiOrderCreateRequestDeliveryMethod | undefined;
+  deliveryMethod?: ApiSharedEnumcc76b6d63a | undefined;
   orderDate?: Date | undefined;
-  currency?: ApiOrderCreateRequestCurrency | undefined;
+  currency?: ApiSharedEnum6cfb146157 | undefined;
   notes?: string | undefined;
   discountAmount?: number | undefined;
   totals: Totals;
   lines: Array<ApiOrderCreateRequestLine>;
 };
-
-/** @internal */
-export const ApiOrderCreateRequestDeliveryMethod$outboundSchema: z.ZodMiniEnum<
-  typeof ApiOrderCreateRequestDeliveryMethod
-> = z.enum(ApiOrderCreateRequestDeliveryMethod);
-
-/** @internal */
-export const ApiOrderCreateRequestCurrency$outboundSchema: z.ZodMiniEnum<
-  typeof ApiOrderCreateRequestCurrency
-> = z.enum(ApiOrderCreateRequestCurrency);
 
 /** @internal */
 export type Totals$Outbound = {
@@ -159,11 +139,9 @@ export const ApiOrderCreateRequest$outboundSchema: z.ZodMiniType<
   z.object({
     customerId: z.string(),
     assignedWarehouseId: z.string(),
-    deliveryMethod: z.optional(
-      ApiOrderCreateRequestDeliveryMethod$outboundSchema,
-    ),
+    deliveryMethod: z.optional(ApiSharedEnumcc76b6d63a$outboundSchema),
     orderDate: z.optional(z.pipe(z.date(), z.transform(v => v.toISOString()))),
-    currency: z.optional(ApiOrderCreateRequestCurrency$outboundSchema),
+    currency: z.optional(ApiSharedEnum6cfb146157$outboundSchema),
     notes: z.optional(z.string()),
     discountAmount: z.optional(z.int()),
     totals: z.lazy(() => Totals$outboundSchema),

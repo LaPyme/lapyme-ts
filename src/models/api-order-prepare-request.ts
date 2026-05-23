@@ -5,51 +5,21 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
-
-export type ApiOrderPrepareRequestItem = {
-  orderLineId: string;
-  quantity: number;
-};
+import {
+  ApiSharedObject1dbe66a4f8,
+  ApiSharedObject1dbe66a4f8$Outbound,
+  ApiSharedObject1dbe66a4f8$outboundSchema,
+} from "./api-shared-object1dbe66a4f8.js";
 
 export type ApiOrderPrepareRequest = {
   warehouseId?: string | undefined;
-  items: Array<ApiOrderPrepareRequestItem>;
+  items: Array<ApiSharedObject1dbe66a4f8>;
 };
-
-/** @internal */
-export type ApiOrderPrepareRequestItem$Outbound = {
-  order_line_id: string;
-  quantity: number;
-};
-
-/** @internal */
-export const ApiOrderPrepareRequestItem$outboundSchema: z.ZodMiniType<
-  ApiOrderPrepareRequestItem$Outbound,
-  ApiOrderPrepareRequestItem
-> = z.pipe(
-  z.object({
-    orderLineId: z.string(),
-    quantity: z.int(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      orderLineId: "order_line_id",
-    });
-  }),
-);
-
-export function apiOrderPrepareRequestItemToJSON(
-  apiOrderPrepareRequestItem: ApiOrderPrepareRequestItem,
-): string {
-  return JSON.stringify(
-    ApiOrderPrepareRequestItem$outboundSchema.parse(apiOrderPrepareRequestItem),
-  );
-}
 
 /** @internal */
 export type ApiOrderPrepareRequest$Outbound = {
   warehouse_id?: string | undefined;
-  items: Array<ApiOrderPrepareRequestItem$Outbound>;
+  items: Array<ApiSharedObject1dbe66a4f8$Outbound>;
 };
 
 /** @internal */
@@ -59,7 +29,7 @@ export const ApiOrderPrepareRequest$outboundSchema: z.ZodMiniType<
 > = z.pipe(
   z.object({
     warehouseId: z.optional(z.string()),
-    items: z.array(z.lazy(() => ApiOrderPrepareRequestItem$outboundSchema)),
+    items: z.array(ApiSharedObject1dbe66a4f8$outboundSchema),
   }),
   z.transform((v) => {
     return remap$(v, {

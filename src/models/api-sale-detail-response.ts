@@ -8,67 +8,16 @@ import { remap as remap$ } from "../lib/primitives.js";
 import { safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
+import {
+  ApiSharedObjectd05903f83e,
+  ApiSharedObjectd05903f83e$inboundSchema,
+} from "./api-shared-objectd05903f83e.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
-
-export type ApiSaleDetailResponseData = {
-  object?: "sale" | undefined;
-  id?: string | undefined;
-  document?: { [k: string]: any } | undefined;
-  customer?: { [k: string]: any } | null | undefined;
-  amounts?: { [k: string]: any } | undefined;
-  items?: Array<{ [k: string]: any }> | undefined;
-  payments?: { [k: string]: any } | undefined;
-  applications?: { [k: string]: any } | undefined;
-  fiscal?: { [k: string]: any } | undefined;
-  integration?: { [k: string]: any } | undefined;
-  reversesVoucher?: { [k: string]: any } | null | undefined;
-  audit?: { [k: string]: any } | undefined;
-  [additionalProperties: string]: unknown;
-};
 
 export type ApiSaleDetailResponse = {
   requestId: string;
-  data: ApiSaleDetailResponseData;
+  data: ApiSharedObjectd05903f83e;
 };
-
-/** @internal */
-export const ApiSaleDetailResponseData$inboundSchema: z.ZodMiniType<
-  ApiSaleDetailResponseData,
-  unknown
-> = z.pipe(
-  z.catchall(
-    z.object({
-      object: types.optional(types.literal("sale")),
-      id: types.optional(types.string()),
-      document: types.optional(z.record(z.string(), z.any())),
-      customer: z.optional(z.nullable(z.record(z.string(), z.any()))),
-      amounts: types.optional(z.record(z.string(), z.any())),
-      items: types.optional(z.array(z.record(z.string(), z.any()))),
-      payments: types.optional(z.record(z.string(), z.any())),
-      applications: types.optional(z.record(z.string(), z.any())),
-      fiscal: types.optional(z.record(z.string(), z.any())),
-      integration: types.optional(z.record(z.string(), z.any())),
-      reverses_voucher: z.optional(z.nullable(z.record(z.string(), z.any()))),
-      audit: types.optional(z.record(z.string(), z.any())),
-    }),
-    z.any(),
-  ),
-  z.transform((v) => {
-    return remap$(v, {
-      "reverses_voucher": "reversesVoucher",
-    });
-  }),
-);
-
-export function apiSaleDetailResponseDataFromJSON(
-  jsonString: string,
-): SafeParseResult<ApiSaleDetailResponseData, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) => ApiSaleDetailResponseData$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'ApiSaleDetailResponseData' from JSON`,
-  );
-}
 
 /** @internal */
 export const ApiSaleDetailResponse$inboundSchema: z.ZodMiniType<
@@ -77,7 +26,7 @@ export const ApiSaleDetailResponse$inboundSchema: z.ZodMiniType<
 > = z.pipe(
   z.object({
     request_id: types.string(),
-    data: z.lazy(() => ApiSaleDetailResponseData$inboundSchema),
+    data: ApiSharedObjectd05903f83e$inboundSchema,
   }),
   z.transform((v) => {
     return remap$(v, {

@@ -6,36 +6,29 @@
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
 import { safeParse } from "../lib/schemas.js";
-import * as openEnums from "../types/enums.js";
-import { ClosedEnum, OpenEnum } from "../types/enums.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
+import {
+  ApiSharedEnum6cfb146157,
+  ApiSharedEnum6cfb146157$inboundSchema,
+} from "./api-shared-enum6cfb146157.js";
+import {
+  ApiSharedEnum8d46e1ec20,
+  ApiSharedEnum8d46e1ec20$inboundSchema,
+} from "./api-shared-enum8d46e1ec20.js";
+import {
+  ApiSharedObject0fb80a7625,
+  ApiSharedObject0fb80a7625$inboundSchema,
+} from "./api-shared-object0fb80a7625.js";
+import {
+  ApiSharedObject2a73ed97c3,
+  ApiSharedObject2a73ed97c3$inboundSchema,
+} from "./api-shared-object2a73ed97c3.js";
+import {
+  ApiSharedObject78bf4093ef,
+  ApiSharedObject78bf4093ef$inboundSchema,
+} from "./api-shared-object78bf4093ef.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
-
-export const ApiSupplierPaymentListResponseCurrency = {
-  Pes: "PES",
-  Dol: "DOL",
-} as const;
-export type ApiSupplierPaymentListResponseCurrency = OpenEnum<
-  typeof ApiSupplierPaymentListResponseCurrency
->;
-
-export type ApiSupplierPaymentListResponsePaymentMethod = {
-  id: string;
-  name: string;
-  icon: string | null;
-};
-
-export type ApiSupplierPaymentListResponseRelatedEntity = {
-  id: string;
-  name: string | null;
-  number: string | null;
-};
-
-export type ApiSupplierPaymentListResponseCreatedBy = {
-  id: string;
-  name: string | null;
-};
 
 export type ApiSupplierPaymentListResponseData = {
   id: string;
@@ -43,29 +36,16 @@ export type ApiSupplierPaymentListResponseData = {
   amount: number;
   balance: number;
   formattedPaymentNumber: string | null;
-  currency: ApiSupplierPaymentListResponseCurrency;
-  paymentMethod: ApiSupplierPaymentListResponsePaymentMethod | null;
+  currency: ApiSharedEnum6cfb146157;
+  paymentMethod: ApiSharedObject78bf4093ef | null;
   paymentMethodCount: number;
-  relatedEntity: ApiSupplierPaymentListResponseRelatedEntity | null;
-  createdBy: ApiSupplierPaymentListResponseCreatedBy | null;
+  relatedEntity: ApiSharedObject2a73ed97c3 | null;
+  createdBy: ApiSharedObject0fb80a7625 | null;
   createdAt: Date;
   createdAtCursor: string;
   updatedAt: Date;
   purchaseCount?: number | undefined;
 };
-
-/**
- * List-envelope discriminator.
- */
-export const ApiSupplierPaymentListResponseObject = {
-  List: "list",
-} as const;
-/**
- * List-envelope discriminator.
- */
-export type ApiSupplierPaymentListResponseObject = ClosedEnum<
-  typeof ApiSupplierPaymentListResponseObject
->;
 
 export type ApiSupplierPaymentListResponse = {
   requestId: string;
@@ -75,90 +55,12 @@ export type ApiSupplierPaymentListResponse = {
   /**
    * List-envelope discriminator.
    */
-  object: ApiSupplierPaymentListResponseObject;
+  object: ApiSharedEnum8d46e1ec20;
   /**
    * Requested list path.
    */
   url: string;
 };
-
-/** @internal */
-export const ApiSupplierPaymentListResponseCurrency$inboundSchema:
-  z.ZodMiniType<ApiSupplierPaymentListResponseCurrency, unknown> = openEnums
-    .inboundSchema(ApiSupplierPaymentListResponseCurrency);
-
-/** @internal */
-export const ApiSupplierPaymentListResponsePaymentMethod$inboundSchema:
-  z.ZodMiniType<ApiSupplierPaymentListResponsePaymentMethod, unknown> = z
-    .object({
-      id: types.string(),
-      name: types.string(),
-      icon: types.nullable(types.string()),
-    });
-
-export function apiSupplierPaymentListResponsePaymentMethodFromJSON(
-  jsonString: string,
-): SafeParseResult<
-  ApiSupplierPaymentListResponsePaymentMethod,
-  SDKValidationError
-> {
-  return safeParse(
-    jsonString,
-    (x) =>
-      ApiSupplierPaymentListResponsePaymentMethod$inboundSchema.parse(
-        JSON.parse(x),
-      ),
-    `Failed to parse 'ApiSupplierPaymentListResponsePaymentMethod' from JSON`,
-  );
-}
-
-/** @internal */
-export const ApiSupplierPaymentListResponseRelatedEntity$inboundSchema:
-  z.ZodMiniType<ApiSupplierPaymentListResponseRelatedEntity, unknown> = z
-    .object({
-      id: types.string(),
-      name: types.nullable(types.string()),
-      number: types.nullable(types.string()),
-    });
-
-export function apiSupplierPaymentListResponseRelatedEntityFromJSON(
-  jsonString: string,
-): SafeParseResult<
-  ApiSupplierPaymentListResponseRelatedEntity,
-  SDKValidationError
-> {
-  return safeParse(
-    jsonString,
-    (x) =>
-      ApiSupplierPaymentListResponseRelatedEntity$inboundSchema.parse(
-        JSON.parse(x),
-      ),
-    `Failed to parse 'ApiSupplierPaymentListResponseRelatedEntity' from JSON`,
-  );
-}
-
-/** @internal */
-export const ApiSupplierPaymentListResponseCreatedBy$inboundSchema:
-  z.ZodMiniType<ApiSupplierPaymentListResponseCreatedBy, unknown> = z.object({
-    id: types.string(),
-    name: types.nullable(types.string()),
-  });
-
-export function apiSupplierPaymentListResponseCreatedByFromJSON(
-  jsonString: string,
-): SafeParseResult<
-  ApiSupplierPaymentListResponseCreatedBy,
-  SDKValidationError
-> {
-  return safeParse(
-    jsonString,
-    (x) =>
-      ApiSupplierPaymentListResponseCreatedBy$inboundSchema.parse(
-        JSON.parse(x),
-      ),
-    `Failed to parse 'ApiSupplierPaymentListResponseCreatedBy' from JSON`,
-  );
-}
 
 /** @internal */
 export const ApiSupplierPaymentListResponseData$inboundSchema: z.ZodMiniType<
@@ -171,17 +73,11 @@ export const ApiSupplierPaymentListResponseData$inboundSchema: z.ZodMiniType<
     amount: types.number(),
     balance: types.number(),
     formatted_payment_number: types.nullable(types.string()),
-    currency: ApiSupplierPaymentListResponseCurrency$inboundSchema,
-    payment_method: types.nullable(
-      z.lazy(() => ApiSupplierPaymentListResponsePaymentMethod$inboundSchema),
-    ),
+    currency: ApiSharedEnum6cfb146157$inboundSchema,
+    payment_method: types.nullable(ApiSharedObject78bf4093ef$inboundSchema),
     payment_method_count: types.number(),
-    related_entity: types.nullable(
-      z.lazy(() => ApiSupplierPaymentListResponseRelatedEntity$inboundSchema),
-    ),
-    created_by: types.nullable(
-      z.lazy(() => ApiSupplierPaymentListResponseCreatedBy$inboundSchema),
-    ),
+    related_entity: types.nullable(ApiSharedObject2a73ed97c3$inboundSchema),
+    created_by: types.nullable(ApiSharedObject0fb80a7625$inboundSchema),
     created_at: types.date(),
     created_at_cursor: types.string(),
     updated_at: types.date(),
@@ -215,11 +111,6 @@ export function apiSupplierPaymentListResponseDataFromJSON(
 }
 
 /** @internal */
-export const ApiSupplierPaymentListResponseObject$inboundSchema: z.ZodMiniEnum<
-  typeof ApiSupplierPaymentListResponseObject
-> = z.enum(ApiSupplierPaymentListResponseObject);
-
-/** @internal */
 export const ApiSupplierPaymentListResponse$inboundSchema: z.ZodMiniType<
   ApiSupplierPaymentListResponse,
   unknown
@@ -231,7 +122,7 @@ export const ApiSupplierPaymentListResponse$inboundSchema: z.ZodMiniType<
     ),
     has_more: types.boolean(),
     next_cursor: types.nullable(types.string()),
-    object: ApiSupplierPaymentListResponseObject$inboundSchema,
+    object: ApiSharedEnum8d46e1ec20$inboundSchema,
     url: types.string(),
   }),
   z.transform((v) => {

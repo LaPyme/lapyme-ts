@@ -4,38 +4,17 @@
  */
 
 import * as z from "zod/v4-mini";
-import { ClosedEnum } from "../types/enums.js";
-
-export const ApiTagUpdateRequestColor = {
-  Slate: "slate",
-  Red: "red",
-  Orange: "orange",
-  Amber: "amber",
-  Yellow: "yellow",
-  Lime: "lime",
-  Green: "green",
-  Teal: "teal",
-  Cyan: "cyan",
-  Blue: "blue",
-  Indigo: "indigo",
-  Violet: "violet",
-  Pink: "pink",
-} as const;
-export type ApiTagUpdateRequestColor = ClosedEnum<
-  typeof ApiTagUpdateRequestColor
->;
+import {
+  ApiSharedEnum599647cb76,
+  ApiSharedEnum599647cb76$outboundSchema,
+} from "./api-shared-enum599647cb76.js";
 
 export type ApiTagUpdateRequest = {
   name?: string | undefined;
-  color?: ApiTagUpdateRequestColor | null | undefined;
+  color?: ApiSharedEnum599647cb76 | null | undefined;
   description?: string | null | undefined;
   archived?: boolean | undefined;
 };
-
-/** @internal */
-export const ApiTagUpdateRequestColor$outboundSchema: z.ZodMiniEnum<
-  typeof ApiTagUpdateRequestColor
-> = z.enum(ApiTagUpdateRequestColor);
 
 /** @internal */
 export type ApiTagUpdateRequest$Outbound = {
@@ -51,7 +30,7 @@ export const ApiTagUpdateRequest$outboundSchema: z.ZodMiniType<
   ApiTagUpdateRequest
 > = z.object({
   name: z.optional(z.string()),
-  color: z.optional(z.nullable(ApiTagUpdateRequestColor$outboundSchema)),
+  color: z.optional(z.nullable(ApiSharedEnum599647cb76$outboundSchema)),
   description: z.optional(z.nullable(z.string())),
   archived: z.optional(z.boolean()),
 });

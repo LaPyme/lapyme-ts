@@ -8,52 +8,16 @@ import { remap as remap$ } from "../lib/primitives.js";
 import { safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
+import {
+  ApiSharedObjectadcf6da6ce,
+  ApiSharedObjectadcf6da6ce$inboundSchema,
+} from "./api-shared-objectadcf6da6ce.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
-
-export type ApiWarehouseDetailResponseData = {
-  object: "warehouse";
-  id: string;
-  name: string;
-  address: string | null;
-  isDefault: boolean;
-  isActive: boolean;
-};
 
 export type ApiWarehouseDetailResponse = {
   requestId: string;
-  data: ApiWarehouseDetailResponseData;
+  data: ApiSharedObjectadcf6da6ce;
 };
-
-/** @internal */
-export const ApiWarehouseDetailResponseData$inboundSchema: z.ZodMiniType<
-  ApiWarehouseDetailResponseData,
-  unknown
-> = z.pipe(
-  z.object({
-    object: types.literal("warehouse"),
-    id: types.string(),
-    name: types.string(),
-    address: types.nullable(types.string()),
-    is_default: types.boolean(),
-    is_active: types.boolean(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "is_default": "isDefault",
-      "is_active": "isActive",
-    });
-  }),
-);
-
-export function apiWarehouseDetailResponseDataFromJSON(
-  jsonString: string,
-): SafeParseResult<ApiWarehouseDetailResponseData, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) => ApiWarehouseDetailResponseData$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'ApiWarehouseDetailResponseData' from JSON`,
-  );
-}
 
 /** @internal */
 export const ApiWarehouseDetailResponse$inboundSchema: z.ZodMiniType<
@@ -62,7 +26,7 @@ export const ApiWarehouseDetailResponse$inboundSchema: z.ZodMiniType<
 > = z.pipe(
   z.object({
     request_id: types.string(),
-    data: z.lazy(() => ApiWarehouseDetailResponseData$inboundSchema),
+    data: ApiSharedObjectadcf6da6ce$inboundSchema,
   }),
   z.transform((v) => {
     return remap$(v, {

@@ -6,132 +6,45 @@
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
 import { safeParse } from "../lib/schemas.js";
-import * as openEnums from "../types/enums.js";
-import { OpenEnum } from "../types/enums.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
+import {
+  ApiSharedEnum822a963f55,
+  ApiSharedEnum822a963f55$inboundSchema,
+} from "./api-shared-enum822a963f55.js";
+import {
+  ApiSharedEnum9e7af09974,
+  ApiSharedEnum9e7af09974$inboundSchema,
+} from "./api-shared-enum9e7af09974.js";
+import {
+  ApiSharedEnumd34af90520,
+  ApiSharedEnumd34af90520$inboundSchema,
+} from "./api-shared-enumd34af90520.js";
+import {
+  ApiSharedEnumf0d69c3d87,
+  ApiSharedEnumf0d69c3d87$inboundSchema,
+} from "./api-shared-enumf0d69c3d87.js";
+import {
+  ApiSharedObject8aeeceaf0f,
+  ApiSharedObject8aeeceaf0f$inboundSchema,
+} from "./api-shared-object8aeeceaf0f.js";
+import {
+  ApiSharedObject95929ea589,
+  ApiSharedObject95929ea589$inboundSchema,
+} from "./api-shared-object95929ea589.js";
+import {
+  ApiSharedObjecta8ecbd0557,
+  ApiSharedObjecta8ecbd0557$inboundSchema,
+} from "./api-shared-objecta8ecbd0557.js";
+import {
+  ApiSharedObjecte048f871c2,
+  ApiSharedObjecte048f871c2$inboundSchema,
+} from "./api-shared-objecte048f871c2.js";
+import {
+  ApiSharedObjectfb7405a472,
+  ApiSharedObjectfb7405a472$inboundSchema,
+} from "./api-shared-objectfb7405a472.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
-
-export const ApiPurchaseDetailResponseImportDocumentRole = {
-  CommercialInvoice: "commercial_invoice",
-  CustomsDispatch: "customs_dispatch",
-  CustomsDispatchReversal: "customs_dispatch_reversal",
-} as const;
-export type ApiPurchaseDetailResponseImportDocumentRole = OpenEnum<
-  typeof ApiPurchaseDetailResponseImportDocumentRole
->;
-
-export const ApiPurchaseDetailResponseImportNationalizationStatus = {
-  PendingNationalization: "pending_nationalization",
-  PartiallyNationalized: "partially_nationalized",
-  FullyNationalized: "fully_nationalized",
-} as const;
-export type ApiPurchaseDetailResponseImportNationalizationStatus = OpenEnum<
-  typeof ApiPurchaseDetailResponseImportNationalizationStatus
->;
-
-export const ApiPurchaseDetailResponsePaymentTermId = {
-  Days7: "days_7",
-  Days15: "days_15",
-  Days30: "days_30",
-  Days45: "days_45",
-  Days60: "days_60",
-  Days90: "days_90",
-  Days3060: "days_30_60",
-  Days306090: "days_30_60_90",
-} as const;
-export type ApiPurchaseDetailResponsePaymentTermId = OpenEnum<
-  typeof ApiPurchaseDetailResponsePaymentTermId
->;
-
-export type ApiPurchaseDetailResponseGrossIncomeTaxBreakdown = {
-  provinceId: number;
-  amount: number;
-};
-
-export type ApiPurchaseDetailResponseVatBreakdown = {
-  taxRateId: number;
-  baseAmount: number;
-  taxAmount: number;
-};
-
-export const ApiPurchaseDetailResponseVatCategory = {
-  Goods: "goods",
-  FixedAssets: "fixed_assets",
-  Leases: "leases",
-  Services: "services",
-} as const;
-export type ApiPurchaseDetailResponseVatCategory = OpenEnum<
-  typeof ApiPurchaseDetailResponseVatCategory
->;
-
-export type ApiPurchaseDetailResponseSupplier = {
-  id: string | null;
-  name: string | null;
-  email: string | null;
-  phone: string | null;
-  taxId: string | null;
-  taxIdType: string | null;
-  taxCategory: string | null;
-  address: string | null;
-  city: string | null;
-  provinceId: string | null;
-  postalCode: string | null;
-  paymentTermId: string | null;
-};
-
-export type ApiPurchaseDetailResponseWarehouse = {
-  id: string;
-  name: string;
-};
-
-export const ApiPurchaseDetailResponseItemVatCategory = {
-  Goods: "goods",
-  FixedAssets: "fixed_assets",
-  Leases: "leases",
-  Services: "services",
-} as const;
-export type ApiPurchaseDetailResponseItemVatCategory = OpenEnum<
-  typeof ApiPurchaseDetailResponseItemVatCategory
->;
-
-export const ApiPurchaseDetailResponseProductType = {
-  Product: "product",
-  Service: "service",
-  Combo: "combo",
-  Kit: "kit",
-} as const;
-export type ApiPurchaseDetailResponseProductType = OpenEnum<
-  typeof ApiPurchaseDetailResponseProductType
->;
-
-export type ApiPurchaseDetailResponseProduct = {
-  id: string;
-  sku: string | null;
-  name: string | null;
-  productType: ApiPurchaseDetailResponseProductType | null;
-};
-
-export type ApiPurchaseDetailResponsePurchaseOrder = {
-  id: string;
-  formattedOrderNumber: string | null;
-};
-
-export type ApiPurchaseDetailResponseItem = {
-  id: string;
-  name: string | null;
-  quantity: number;
-  unitCost: number | null;
-  subtotal: number | null;
-  taxRateId: number | null;
-  isExempt: boolean | null;
-  total: number | null;
-  discountPercentage: number | null;
-  purchaseOrderItemId: string | null;
-  vatCategory: ApiPurchaseDetailResponseItemVatCategory | null;
-  product: ApiPurchaseDetailResponseProduct | null;
-  purchaseOrder: ApiPurchaseDetailResponsePurchaseOrder | null;
-};
 
 export type ApiPurchaseDetailResponseData = {
   object: "purchase";
@@ -140,7 +53,7 @@ export type ApiPurchaseDetailResponseData = {
   /**
    * Rol del comprobante dentro del flujo de importacion.
    */
-  importDocumentRole: ApiPurchaseDetailResponseImportDocumentRole | null;
+  importDocumentRole: ApiSharedEnum9e7af09974 | null;
   /**
    * ID de la factura comercial asociada al despacho aduanero.
    */
@@ -148,9 +61,7 @@ export type ApiPurchaseDetailResponseData = {
   /**
    * Estado de nacionalizacion de la factura comercial de importacion.
    */
-  importNationalizationStatus:
-    | ApiPurchaseDetailResponseImportNationalizationStatus
-    | null;
+  importNationalizationStatus: ApiSharedEnumf0d69c3d87 | null;
   /**
    * Numero de despacho aduanero informado por el proveedor. Hasta 32 caracteres.
    */
@@ -171,13 +82,11 @@ export type ApiPurchaseDetailResponseData = {
    * Fecha de vencimiento en formato YYYY-MM-DD.
    */
   dueDate: string | null;
-  paymentTermId: ApiPurchaseDetailResponsePaymentTermId | null;
+  paymentTermId: ApiSharedEnumd34af90520 | null;
   vatPerceptionAmount: number | null;
   nationalTaxAmount: number | null;
   grossIncomeTaxAmount: number | null;
-  grossIncomeTaxBreakdown: Array<
-    ApiPurchaseDetailResponseGrossIncomeTaxBreakdown
-  >;
+  grossIncomeTaxBreakdown: Array<ApiSharedObject95929ea589>;
   municipalTaxAmount: number | null;
   internalTaxAmount: number | null;
   otherTaxAmount: number | null;
@@ -187,282 +96,22 @@ export type ApiPurchaseDetailResponseData = {
   total: number | null;
   balance: number | null;
   discount: number | null;
-  vatBreakdown: Array<ApiPurchaseDetailResponseVatBreakdown>;
+  vatBreakdown: Array<ApiSharedObjectfb7405a472>;
   notes: string | null;
-  vatCategory: ApiPurchaseDetailResponseVatCategory | null;
+  vatCategory: ApiSharedEnum822a963f55 | null;
   currency: string;
   exchangeRate: string;
   pdfPath: string | null;
   createdAt: Date;
-  supplier: ApiPurchaseDetailResponseSupplier | null;
-  warehouse: ApiPurchaseDetailResponseWarehouse | null;
-  items: Array<ApiPurchaseDetailResponseItem>;
+  supplier: ApiSharedObjecta8ecbd0557 | null;
+  warehouse: ApiSharedObject8aeeceaf0f | null;
+  items: Array<ApiSharedObjecte048f871c2>;
 };
 
 export type ApiPurchaseDetailResponse = {
   requestId: string;
   data: ApiPurchaseDetailResponseData;
 };
-
-/** @internal */
-export const ApiPurchaseDetailResponseImportDocumentRole$inboundSchema:
-  z.ZodMiniType<ApiPurchaseDetailResponseImportDocumentRole, unknown> =
-    openEnums.inboundSchema(ApiPurchaseDetailResponseImportDocumentRole);
-
-/** @internal */
-export const ApiPurchaseDetailResponseImportNationalizationStatus$inboundSchema:
-  z.ZodMiniType<ApiPurchaseDetailResponseImportNationalizationStatus, unknown> =
-    openEnums.inboundSchema(
-      ApiPurchaseDetailResponseImportNationalizationStatus,
-    );
-
-/** @internal */
-export const ApiPurchaseDetailResponsePaymentTermId$inboundSchema:
-  z.ZodMiniType<ApiPurchaseDetailResponsePaymentTermId, unknown> = openEnums
-    .inboundSchema(ApiPurchaseDetailResponsePaymentTermId);
-
-/** @internal */
-export const ApiPurchaseDetailResponseGrossIncomeTaxBreakdown$inboundSchema:
-  z.ZodMiniType<ApiPurchaseDetailResponseGrossIncomeTaxBreakdown, unknown> = z
-    .pipe(
-      z.object({
-        province_id: types.number(),
-        amount: types.number(),
-      }),
-      z.transform((v) => {
-        return remap$(v, {
-          "province_id": "provinceId",
-        });
-      }),
-    );
-
-export function apiPurchaseDetailResponseGrossIncomeTaxBreakdownFromJSON(
-  jsonString: string,
-): SafeParseResult<
-  ApiPurchaseDetailResponseGrossIncomeTaxBreakdown,
-  SDKValidationError
-> {
-  return safeParse(
-    jsonString,
-    (x) =>
-      ApiPurchaseDetailResponseGrossIncomeTaxBreakdown$inboundSchema.parse(
-        JSON.parse(x),
-      ),
-    `Failed to parse 'ApiPurchaseDetailResponseGrossIncomeTaxBreakdown' from JSON`,
-  );
-}
-
-/** @internal */
-export const ApiPurchaseDetailResponseVatBreakdown$inboundSchema: z.ZodMiniType<
-  ApiPurchaseDetailResponseVatBreakdown,
-  unknown
-> = z.pipe(
-  z.object({
-    tax_rate_id: types.number(),
-    base_amount: types.number(),
-    tax_amount: types.number(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "tax_rate_id": "taxRateId",
-      "base_amount": "baseAmount",
-      "tax_amount": "taxAmount",
-    });
-  }),
-);
-
-export function apiPurchaseDetailResponseVatBreakdownFromJSON(
-  jsonString: string,
-): SafeParseResult<ApiPurchaseDetailResponseVatBreakdown, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) =>
-      ApiPurchaseDetailResponseVatBreakdown$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'ApiPurchaseDetailResponseVatBreakdown' from JSON`,
-  );
-}
-
-/** @internal */
-export const ApiPurchaseDetailResponseVatCategory$inboundSchema: z.ZodMiniType<
-  ApiPurchaseDetailResponseVatCategory,
-  unknown
-> = openEnums.inboundSchema(ApiPurchaseDetailResponseVatCategory);
-
-/** @internal */
-export const ApiPurchaseDetailResponseSupplier$inboundSchema: z.ZodMiniType<
-  ApiPurchaseDetailResponseSupplier,
-  unknown
-> = z.pipe(
-  z.object({
-    id: types.nullable(types.string()),
-    name: types.nullable(types.string()),
-    email: types.nullable(types.string()),
-    phone: types.nullable(types.string()),
-    tax_id: types.nullable(types.string()),
-    tax_id_type: types.nullable(types.string()),
-    tax_category: types.nullable(types.string()),
-    address: types.nullable(types.string()),
-    city: types.nullable(types.string()),
-    province_id: types.nullable(types.string()),
-    postal_code: types.nullable(types.string()),
-    payment_term_id: types.nullable(types.string()),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "tax_id": "taxId",
-      "tax_id_type": "taxIdType",
-      "tax_category": "taxCategory",
-      "province_id": "provinceId",
-      "postal_code": "postalCode",
-      "payment_term_id": "paymentTermId",
-    });
-  }),
-);
-
-export function apiPurchaseDetailResponseSupplierFromJSON(
-  jsonString: string,
-): SafeParseResult<ApiPurchaseDetailResponseSupplier, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) => ApiPurchaseDetailResponseSupplier$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'ApiPurchaseDetailResponseSupplier' from JSON`,
-  );
-}
-
-/** @internal */
-export const ApiPurchaseDetailResponseWarehouse$inboundSchema: z.ZodMiniType<
-  ApiPurchaseDetailResponseWarehouse,
-  unknown
-> = z.object({
-  id: types.string(),
-  name: types.string(),
-});
-
-export function apiPurchaseDetailResponseWarehouseFromJSON(
-  jsonString: string,
-): SafeParseResult<ApiPurchaseDetailResponseWarehouse, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) =>
-      ApiPurchaseDetailResponseWarehouse$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'ApiPurchaseDetailResponseWarehouse' from JSON`,
-  );
-}
-
-/** @internal */
-export const ApiPurchaseDetailResponseItemVatCategory$inboundSchema:
-  z.ZodMiniType<ApiPurchaseDetailResponseItemVatCategory, unknown> = openEnums
-    .inboundSchema(ApiPurchaseDetailResponseItemVatCategory);
-
-/** @internal */
-export const ApiPurchaseDetailResponseProductType$inboundSchema: z.ZodMiniType<
-  ApiPurchaseDetailResponseProductType,
-  unknown
-> = openEnums.inboundSchema(ApiPurchaseDetailResponseProductType);
-
-/** @internal */
-export const ApiPurchaseDetailResponseProduct$inboundSchema: z.ZodMiniType<
-  ApiPurchaseDetailResponseProduct,
-  unknown
-> = z.pipe(
-  z.object({
-    id: types.string(),
-    sku: types.nullable(types.string()),
-    name: types.nullable(types.string()),
-    product_type: types.nullable(
-      ApiPurchaseDetailResponseProductType$inboundSchema,
-    ),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "product_type": "productType",
-    });
-  }),
-);
-
-export function apiPurchaseDetailResponseProductFromJSON(
-  jsonString: string,
-): SafeParseResult<ApiPurchaseDetailResponseProduct, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) => ApiPurchaseDetailResponseProduct$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'ApiPurchaseDetailResponseProduct' from JSON`,
-  );
-}
-
-/** @internal */
-export const ApiPurchaseDetailResponsePurchaseOrder$inboundSchema:
-  z.ZodMiniType<ApiPurchaseDetailResponsePurchaseOrder, unknown> = z.pipe(
-    z.object({
-      id: types.string(),
-      formatted_order_number: types.nullable(types.string()),
-    }),
-    z.transform((v) => {
-      return remap$(v, {
-        "formatted_order_number": "formattedOrderNumber",
-      });
-    }),
-  );
-
-export function apiPurchaseDetailResponsePurchaseOrderFromJSON(
-  jsonString: string,
-): SafeParseResult<ApiPurchaseDetailResponsePurchaseOrder, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) =>
-      ApiPurchaseDetailResponsePurchaseOrder$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'ApiPurchaseDetailResponsePurchaseOrder' from JSON`,
-  );
-}
-
-/** @internal */
-export const ApiPurchaseDetailResponseItem$inboundSchema: z.ZodMiniType<
-  ApiPurchaseDetailResponseItem,
-  unknown
-> = z.pipe(
-  z.object({
-    id: types.string(),
-    name: types.nullable(types.string()),
-    quantity: types.number(),
-    unit_cost: types.nullable(types.number()),
-    subtotal: types.nullable(types.number()),
-    tax_rate_id: types.nullable(types.number()),
-    is_exempt: types.nullable(types.boolean()),
-    total: types.nullable(types.number()),
-    discount_percentage: types.nullable(types.number()),
-    purchase_order_item_id: types.nullable(types.string()),
-    vat_category: types.nullable(
-      ApiPurchaseDetailResponseItemVatCategory$inboundSchema,
-    ),
-    product: types.nullable(
-      z.lazy(() => ApiPurchaseDetailResponseProduct$inboundSchema),
-    ),
-    purchase_order: types.nullable(
-      z.lazy(() => ApiPurchaseDetailResponsePurchaseOrder$inboundSchema),
-    ),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "unit_cost": "unitCost",
-      "tax_rate_id": "taxRateId",
-      "is_exempt": "isExempt",
-      "discount_percentage": "discountPercentage",
-      "purchase_order_item_id": "purchaseOrderItemId",
-      "vat_category": "vatCategory",
-      "purchase_order": "purchaseOrder",
-    });
-  }),
-);
-
-export function apiPurchaseDetailResponseItemFromJSON(
-  jsonString: string,
-): SafeParseResult<ApiPurchaseDetailResponseItem, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) => ApiPurchaseDetailResponseItem$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'ApiPurchaseDetailResponseItem' from JSON`,
-  );
-}
 
 /** @internal */
 export const ApiPurchaseDetailResponseData$inboundSchema: z.ZodMiniType<
@@ -473,27 +122,23 @@ export const ApiPurchaseDetailResponseData$inboundSchema: z.ZodMiniType<
     object: types.literal("purchase"),
     id: types.string(),
     voucher_type: types.string(),
-    import_document_role: types.nullable(
-      ApiPurchaseDetailResponseImportDocumentRole$inboundSchema,
-    ),
+    import_document_role: types.nullable(ApiSharedEnum9e7af09974$inboundSchema),
     import_source_purchase_id: types.nullable(types.string()),
     import_nationalization_status: types.nullable(
-      ApiPurchaseDetailResponseImportNationalizationStatus$inboundSchema,
+      ApiSharedEnumf0d69c3d87$inboundSchema,
     ),
     customs_dispatch_number: types.nullable(types.string()),
     supplier_invoice_number: types.nullable(types.string()),
     invoice_date: types.nullable(types.string()),
     account_date: types.nullable(types.string()),
     due_date: types.nullable(types.string()),
-    payment_term_id: types.nullable(
-      ApiPurchaseDetailResponsePaymentTermId$inboundSchema,
-    ),
+    payment_term_id: types.nullable(ApiSharedEnumd34af90520$inboundSchema),
     vat_perception_amount: types.nullable(types.number()),
     national_tax_amount: types.nullable(types.number()),
     gross_income_tax_amount: types.nullable(types.number()),
-    gross_income_tax_breakdown: z.array(z.lazy(() =>
-      ApiPurchaseDetailResponseGrossIncomeTaxBreakdown$inboundSchema
-    )),
+    gross_income_tax_breakdown: z.array(
+      ApiSharedObject95929ea589$inboundSchema,
+    ),
     municipal_tax_amount: types.nullable(types.number()),
     internal_tax_amount: types.nullable(types.number()),
     other_tax_amount: types.nullable(types.number()),
@@ -503,26 +148,16 @@ export const ApiPurchaseDetailResponseData$inboundSchema: z.ZodMiniType<
     total: types.nullable(types.number()),
     balance: types.nullable(types.number()),
     discount: types.nullable(types.number()),
-    vat_breakdown: z.array(z.lazy(() =>
-      ApiPurchaseDetailResponseVatBreakdown$inboundSchema
-    )),
+    vat_breakdown: z.array(ApiSharedObjectfb7405a472$inboundSchema),
     notes: types.nullable(types.string()),
-    vat_category: types.nullable(
-      ApiPurchaseDetailResponseVatCategory$inboundSchema,
-    ),
+    vat_category: types.nullable(ApiSharedEnum822a963f55$inboundSchema),
     currency: types.string(),
     exchange_rate: types.string(),
     pdf_path: types.nullable(types.string()),
     created_at: types.date(),
-    supplier: types.nullable(z.lazy(() =>
-      ApiPurchaseDetailResponseSupplier$inboundSchema
-    )),
-    warehouse: types.nullable(z.lazy(() =>
-      ApiPurchaseDetailResponseWarehouse$inboundSchema
-    )),
-    items: z.array(z.lazy(() =>
-      ApiPurchaseDetailResponseItem$inboundSchema
-    )),
+    supplier: types.nullable(ApiSharedObjecta8ecbd0557$inboundSchema),
+    warehouse: types.nullable(ApiSharedObject8aeeceaf0f$inboundSchema),
+    items: z.array(ApiSharedObjecte048f871c2$inboundSchema),
   }),
   z.transform((v) => {
     return remap$(v, {

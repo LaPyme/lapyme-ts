@@ -5,40 +5,18 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
-import { ClosedEnum } from "../types/enums.js";
-
-export const ApiCustomerMutationRequestTaxIdType = {
-  CuilCuit: "CUIL/CUIT",
-  Dni: "DNI",
-} as const;
-export type ApiCustomerMutationRequestTaxIdType = ClosedEnum<
-  typeof ApiCustomerMutationRequestTaxIdType
->;
-
-export const ApiCustomerMutationRequestTaxCategory = {
-  RegisteredVatTaxpayer: "registered_vat_taxpayer",
-  FinalConsumer: "final_consumer",
-  MonotributoTaxpayer: "monotributo_taxpayer",
-  VatExempt: "vat_exempt",
-  VatNotApplicable: "vat_not_applicable",
-} as const;
-export type ApiCustomerMutationRequestTaxCategory = ClosedEnum<
-  typeof ApiCustomerMutationRequestTaxCategory
->;
-
-export const ApiCustomerMutationRequestPaymentTermId = {
-  Days7: "days_7",
-  Days15: "days_15",
-  Days30: "days_30",
-  Days45: "days_45",
-  Days60: "days_60",
-  Days90: "days_90",
-  Days3060: "days_30_60",
-  Days306090: "days_30_60_90",
-} as const;
-export type ApiCustomerMutationRequestPaymentTermId = ClosedEnum<
-  typeof ApiCustomerMutationRequestPaymentTermId
->;
+import {
+  ApiSharedEnum250b15b651,
+  ApiSharedEnum250b15b651$outboundSchema,
+} from "./api-shared-enum250b15b651.js";
+import {
+  ApiSharedEnumbb2864ecea,
+  ApiSharedEnumbb2864ecea$outboundSchema,
+} from "./api-shared-enumbb2864ecea.js";
+import {
+  ApiSharedEnumd34af90520,
+  ApiSharedEnumd34af90520$outboundSchema,
+} from "./api-shared-enumd34af90520.js";
 
 export type ApiCustomerMutationRequest = {
   name: string;
@@ -47,8 +25,8 @@ export type ApiCustomerMutationRequest = {
   email?: string | null | undefined;
   phone?: string | null | undefined;
   taxId?: string | null | undefined;
-  taxIdType?: ApiCustomerMutationRequestTaxIdType | null | undefined;
-  taxCategory?: ApiCustomerMutationRequestTaxCategory | null | undefined;
+  taxIdType?: ApiSharedEnum250b15b651 | null | undefined;
+  taxCategory?: ApiSharedEnumbb2864ecea | null | undefined;
   country?: string | null | undefined;
   province?: string | null | undefined;
   city?: string | null | undefined;
@@ -57,26 +35,9 @@ export type ApiCustomerMutationRequest = {
   postalCode?: string | null | undefined;
   assignedSalespersonId?: string | null | undefined;
   defaultPriceListId?: string | null | undefined;
-  paymentTermId?: ApiCustomerMutationRequestPaymentTermId | null | undefined;
+  paymentTermId?: ApiSharedEnumd34af90520 | null | undefined;
   isActive?: boolean | undefined;
 };
-
-/** @internal */
-export const ApiCustomerMutationRequestTaxIdType$outboundSchema: z.ZodMiniEnum<
-  typeof ApiCustomerMutationRequestTaxIdType
-> = z.enum(ApiCustomerMutationRequestTaxIdType);
-
-/** @internal */
-export const ApiCustomerMutationRequestTaxCategory$outboundSchema:
-  z.ZodMiniEnum<typeof ApiCustomerMutationRequestTaxCategory> = z.enum(
-    ApiCustomerMutationRequestTaxCategory,
-  );
-
-/** @internal */
-export const ApiCustomerMutationRequestPaymentTermId$outboundSchema:
-  z.ZodMiniEnum<typeof ApiCustomerMutationRequestPaymentTermId> = z.enum(
-    ApiCustomerMutationRequestPaymentTermId,
-  );
 
 /** @internal */
 export type ApiCustomerMutationRequest$Outbound = {
@@ -112,12 +73,8 @@ export const ApiCustomerMutationRequest$outboundSchema: z.ZodMiniType<
     email: z.optional(z.nullable(z.string())),
     phone: z.optional(z.nullable(z.string())),
     taxId: z.optional(z.nullable(z.string())),
-    taxIdType: z.optional(
-      z.nullable(ApiCustomerMutationRequestTaxIdType$outboundSchema),
-    ),
-    taxCategory: z.optional(
-      z.nullable(ApiCustomerMutationRequestTaxCategory$outboundSchema),
-    ),
+    taxIdType: z.optional(z.nullable(ApiSharedEnum250b15b651$outboundSchema)),
+    taxCategory: z.optional(z.nullable(ApiSharedEnumbb2864ecea$outboundSchema)),
     country: z.optional(z.nullable(z.string())),
     province: z.optional(z.nullable(z.string())),
     city: z.optional(z.nullable(z.string())),
@@ -127,7 +84,7 @@ export const ApiCustomerMutationRequest$outboundSchema: z.ZodMiniType<
     assignedSalespersonId: z.optional(z.nullable(z.string())),
     defaultPriceListId: z.optional(z.nullable(z.string())),
     paymentTermId: z.optional(
-      z.nullable(ApiCustomerMutationRequestPaymentTermId$outboundSchema),
+      z.nullable(ApiSharedEnumd34af90520$outboundSchema),
     ),
     isActive: z.optional(z.boolean()),
   }),

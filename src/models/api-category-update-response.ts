@@ -8,20 +8,14 @@ import { remap as remap$ } from "../lib/primitives.js";
 import { safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
+import {
+  ApiSharedObjectd8582ce697,
+  ApiSharedObjectd8582ce697$inboundSchema,
+} from "./api-shared-objectd8582ce697.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
-export type ApiCategoryUpdateResponseCategory = {
-  object: "category";
-  id: string;
-  name: string;
-  parentId: string | null;
-  defaultEconomicActivity: string | null;
-  createdAt: Date;
-  updatedAt: Date;
-};
-
 export type ApiCategoryUpdateResponseData = {
-  category: ApiCategoryUpdateResponseCategory;
+  category: ApiSharedObjectd8582ce697;
 };
 
 export type ApiCategoryUpdateResponse = {
@@ -31,45 +25,11 @@ export type ApiCategoryUpdateResponse = {
 };
 
 /** @internal */
-export const ApiCategoryUpdateResponseCategory$inboundSchema: z.ZodMiniType<
-  ApiCategoryUpdateResponseCategory,
-  unknown
-> = z.pipe(
-  z.object({
-    object: types.literal("category"),
-    id: types.string(),
-    name: types.string(),
-    parent_id: types.nullable(types.string()),
-    default_economic_activity: types.nullable(types.string()),
-    created_at: types.date(),
-    updated_at: types.date(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "parent_id": "parentId",
-      "default_economic_activity": "defaultEconomicActivity",
-      "created_at": "createdAt",
-      "updated_at": "updatedAt",
-    });
-  }),
-);
-
-export function apiCategoryUpdateResponseCategoryFromJSON(
-  jsonString: string,
-): SafeParseResult<ApiCategoryUpdateResponseCategory, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) => ApiCategoryUpdateResponseCategory$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'ApiCategoryUpdateResponseCategory' from JSON`,
-  );
-}
-
-/** @internal */
 export const ApiCategoryUpdateResponseData$inboundSchema: z.ZodMiniType<
   ApiCategoryUpdateResponseData,
   unknown
 > = z.object({
-  category: z.lazy(() => ApiCategoryUpdateResponseCategory$inboundSchema),
+  category: ApiSharedObjectd8582ce697$inboundSchema,
 });
 
 export function apiCategoryUpdateResponseDataFromJSON(

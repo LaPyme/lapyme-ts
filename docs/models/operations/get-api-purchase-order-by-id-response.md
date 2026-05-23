@@ -7,11 +7,7 @@ import { GetApiPurchaseOrderByIdResponse } from "lapyme/models/operations";
 
 let value: GetApiPurchaseOrderByIdResponse = {
   headers: {
-    "key": [
-      "<value 1>",
-      "<value 2>",
-      "<value 3>",
-    ],
+    "key": [],
     "key1": [
       "<value 1>",
       "<value 2>",
@@ -47,11 +43,11 @@ let value: GetApiPurchaseOrderByIdResponse = {
         postalCode: "46341",
       },
       warehouse: {
-        id: "c26f4300-69db-4b03-9333-2b7eb47bae62",
+        id: "1d81895d-9d7f-44ea-9636-e0e6181dee4f",
         name: "<value>",
       },
-      createdAt: new Date("2024-01-22T20:23:19.284Z"),
-      warehouseId: "5290f174-4f02-4c9a-8ca4-bbc78fe3c210",
+      createdAt: new Date("2026-05-06T11:30:52.684Z"),
+      warehouseId: "26f43006-9dbb-4033-8332-b7eb47bae627",
       notes: "<value>",
       items: [],
     },

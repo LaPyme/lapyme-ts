@@ -6,87 +6,32 @@
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
 import { safeParse } from "../lib/schemas.js";
-import { ClosedEnum } from "../types/enums.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
+import {
+  ApiSharedEnum8d46e1ec20,
+  ApiSharedEnum8d46e1ec20$inboundSchema,
+} from "./api-shared-enum8d46e1ec20.js";
+import {
+  ApiSharedObjectd8582ce697,
+  ApiSharedObjectd8582ce697$inboundSchema,
+} from "./api-shared-objectd8582ce697.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
-
-export type ApiCategoryListResponseData = {
-  object: "category";
-  id: string;
-  name: string;
-  parentId: string | null;
-  defaultEconomicActivity: string | null;
-  createdAt: Date;
-  updatedAt: Date;
-};
-
-/**
- * List-envelope discriminator.
- */
-export const ApiCategoryListResponseObject = {
-  List: "list",
-} as const;
-/**
- * List-envelope discriminator.
- */
-export type ApiCategoryListResponseObject = ClosedEnum<
-  typeof ApiCategoryListResponseObject
->;
 
 export type ApiCategoryListResponse = {
   requestId: string;
-  data: Array<ApiCategoryListResponseData>;
+  data: Array<ApiSharedObjectd8582ce697>;
   hasMore: boolean;
   nextCursor: string | null;
   /**
    * List-envelope discriminator.
    */
-  object: ApiCategoryListResponseObject;
+  object: ApiSharedEnum8d46e1ec20;
   /**
    * Requested list path.
    */
   url: string;
 };
-
-/** @internal */
-export const ApiCategoryListResponseData$inboundSchema: z.ZodMiniType<
-  ApiCategoryListResponseData,
-  unknown
-> = z.pipe(
-  z.object({
-    object: types.literal("category"),
-    id: types.string(),
-    name: types.string(),
-    parent_id: types.nullable(types.string()),
-    default_economic_activity: types.nullable(types.string()),
-    created_at: types.date(),
-    updated_at: types.date(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "parent_id": "parentId",
-      "default_economic_activity": "defaultEconomicActivity",
-      "created_at": "createdAt",
-      "updated_at": "updatedAt",
-    });
-  }),
-);
-
-export function apiCategoryListResponseDataFromJSON(
-  jsonString: string,
-): SafeParseResult<ApiCategoryListResponseData, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) => ApiCategoryListResponseData$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'ApiCategoryListResponseData' from JSON`,
-  );
-}
-
-/** @internal */
-export const ApiCategoryListResponseObject$inboundSchema: z.ZodMiniEnum<
-  typeof ApiCategoryListResponseObject
-> = z.enum(ApiCategoryListResponseObject);
 
 /** @internal */
 export const ApiCategoryListResponse$inboundSchema: z.ZodMiniType<
@@ -95,10 +40,10 @@ export const ApiCategoryListResponse$inboundSchema: z.ZodMiniType<
 > = z.pipe(
   z.object({
     request_id: types.string(),
-    data: z.array(z.lazy(() => ApiCategoryListResponseData$inboundSchema)),
+    data: z.array(ApiSharedObjectd8582ce697$inboundSchema),
     has_more: types.boolean(),
     next_cursor: types.nullable(types.string()),
-    object: ApiCategoryListResponseObject$inboundSchema,
+    object: ApiSharedEnum8d46e1ec20$inboundSchema,
     url: types.string(),
   }),
   z.transform((v) => {

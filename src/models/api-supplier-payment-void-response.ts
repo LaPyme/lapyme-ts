@@ -8,15 +8,14 @@ import { remap as remap$ } from "../lib/primitives.js";
 import { safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
+import {
+  ApiSharedObjectee9c57275f,
+  ApiSharedObjectee9c57275f$inboundSchema,
+} from "./api-shared-objectee9c57275f.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
-export type ApiSupplierPaymentVoidResponseSupplierPayment = {
-  id: string;
-  voided: boolean;
-};
-
 export type ApiSupplierPaymentVoidResponseData = {
-  supplierPayment: ApiSupplierPaymentVoidResponseSupplierPayment;
+  supplierPayment: ApiSharedObjectee9c57275f;
 };
 
 export type ApiSupplierPaymentVoidResponse = {
@@ -25,38 +24,12 @@ export type ApiSupplierPaymentVoidResponse = {
 };
 
 /** @internal */
-export const ApiSupplierPaymentVoidResponseSupplierPayment$inboundSchema:
-  z.ZodMiniType<ApiSupplierPaymentVoidResponseSupplierPayment, unknown> = z
-    .object({
-      id: types.string(),
-      voided: types.boolean(),
-    });
-
-export function apiSupplierPaymentVoidResponseSupplierPaymentFromJSON(
-  jsonString: string,
-): SafeParseResult<
-  ApiSupplierPaymentVoidResponseSupplierPayment,
-  SDKValidationError
-> {
-  return safeParse(
-    jsonString,
-    (x) =>
-      ApiSupplierPaymentVoidResponseSupplierPayment$inboundSchema.parse(
-        JSON.parse(x),
-      ),
-    `Failed to parse 'ApiSupplierPaymentVoidResponseSupplierPayment' from JSON`,
-  );
-}
-
-/** @internal */
 export const ApiSupplierPaymentVoidResponseData$inboundSchema: z.ZodMiniType<
   ApiSupplierPaymentVoidResponseData,
   unknown
 > = z.pipe(
   z.object({
-    supplier_payment: z.lazy(() =>
-      ApiSupplierPaymentVoidResponseSupplierPayment$inboundSchema
-    ),
+    supplier_payment: ApiSharedObjectee9c57275f$inboundSchema,
   }),
   z.transform((v) => {
     return remap$(v, {

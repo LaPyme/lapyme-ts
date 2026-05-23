@@ -8,19 +8,14 @@ import { remap as remap$ } from "../lib/primitives.js";
 import { safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
+import {
+  ApiSharedObjectadcf6da6ce,
+  ApiSharedObjectadcf6da6ce$inboundSchema,
+} from "./api-shared-objectadcf6da6ce.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
-export type ApiWarehouseUpdateResponseWarehouse = {
-  object: "warehouse";
-  id: string;
-  name: string;
-  address: string | null;
-  isDefault: boolean;
-  isActive: boolean;
-};
-
 export type ApiWarehouseUpdateResponseData = {
-  warehouse: ApiWarehouseUpdateResponseWarehouse;
+  warehouse: ApiSharedObjectadcf6da6ce;
 };
 
 export type ApiWarehouseUpdateResponse = {
@@ -30,43 +25,11 @@ export type ApiWarehouseUpdateResponse = {
 };
 
 /** @internal */
-export const ApiWarehouseUpdateResponseWarehouse$inboundSchema: z.ZodMiniType<
-  ApiWarehouseUpdateResponseWarehouse,
-  unknown
-> = z.pipe(
-  z.object({
-    object: types.literal("warehouse"),
-    id: types.string(),
-    name: types.string(),
-    address: types.nullable(types.string()),
-    is_default: types.boolean(),
-    is_active: types.boolean(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "is_default": "isDefault",
-      "is_active": "isActive",
-    });
-  }),
-);
-
-export function apiWarehouseUpdateResponseWarehouseFromJSON(
-  jsonString: string,
-): SafeParseResult<ApiWarehouseUpdateResponseWarehouse, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) =>
-      ApiWarehouseUpdateResponseWarehouse$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'ApiWarehouseUpdateResponseWarehouse' from JSON`,
-  );
-}
-
-/** @internal */
 export const ApiWarehouseUpdateResponseData$inboundSchema: z.ZodMiniType<
   ApiWarehouseUpdateResponseData,
   unknown
 > = z.object({
-  warehouse: z.lazy(() => ApiWarehouseUpdateResponseWarehouse$inboundSchema),
+  warehouse: ApiSharedObjectadcf6da6ce$inboundSchema,
 });
 
 export function apiWarehouseUpdateResponseDataFromJSON(

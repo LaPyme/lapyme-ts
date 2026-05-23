@@ -15,7 +15,7 @@ export type VoidApiFulfillmentRequest = {
    * ID del fulfillment
    */
   fulfillmentId: string;
-  body?: models.ApiOrderOptionalReasonRequest | undefined;
+  body: models.ApiOrderOptionalReasonRequest;
 };
 
 export type VoidApiFulfillmentResponse = {
@@ -26,7 +26,7 @@ export type VoidApiFulfillmentResponse = {
 /** @internal */
 export type VoidApiFulfillmentRequest$Outbound = {
   fulfillment_id: string;
-  body?: models.ApiOrderOptionalReasonRequest$Outbound | undefined;
+  body: models.ApiOrderOptionalReasonRequest$Outbound;
 };
 
 /** @internal */
@@ -36,7 +36,7 @@ export const VoidApiFulfillmentRequest$outboundSchema: z.ZodMiniType<
 > = z.pipe(
   z.object({
     fulfillmentId: z.string(),
-    body: z.optional(models.ApiOrderOptionalReasonRequest$outboundSchema),
+    body: models.ApiOrderOptionalReasonRequest$outboundSchema,
   }),
   z.transform((v) => {
     return remap$(v, {

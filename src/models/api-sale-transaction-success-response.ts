@@ -6,18 +6,53 @@
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
 import { safeParse } from "../lib/schemas.js";
-import * as openEnums from "../types/enums.js";
-import { OpenEnum } from "../types/enums.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
+import {
+  ApiSharedEnum539fdceccc,
+  ApiSharedEnum539fdceccc$inboundSchema,
+} from "./api-shared-enum539fdceccc.js";
+import {
+  ApiSharedEnum6cfb146157,
+  ApiSharedEnum6cfb146157$inboundSchema,
+} from "./api-shared-enum6cfb146157.js";
+import {
+  ApiSharedEnum9ac70a3316,
+  ApiSharedEnum9ac70a3316$inboundSchema,
+} from "./api-shared-enum9ac70a3316.js";
+import {
+  ApiSharedObject3563932f8e,
+  ApiSharedObject3563932f8e$inboundSchema,
+} from "./api-shared-object3563932f8e.js";
+import {
+  ApiSharedObject43ed7be04f,
+  ApiSharedObject43ed7be04f$inboundSchema,
+} from "./api-shared-object43ed7be04f.js";
+import {
+  ApiSharedObject6a71e7888b,
+  ApiSharedObject6a71e7888b$inboundSchema,
+} from "./api-shared-object6a71e7888b.js";
+import {
+  ApiSharedObject8e516a9b19,
+  ApiSharedObject8e516a9b19$inboundSchema,
+} from "./api-shared-object8e516a9b19.js";
+import {
+  ApiSharedObject9428e7100c,
+  ApiSharedObject9428e7100c$inboundSchema,
+} from "./api-shared-object9428e7100c.js";
+import {
+  ApiSharedObject95929ea589,
+  ApiSharedObject95929ea589$inboundSchema,
+} from "./api-shared-object95929ea589.js";
+import {
+  ApiSharedObjectc671832641,
+  ApiSharedObjectc671832641$inboundSchema,
+} from "./api-shared-objectc671832641.js";
+import {
+  ApiSharedObjecte9e792772e,
+  ApiSharedObjecte9e792772e$inboundSchema,
+} from "./api-shared-objecte9e792772e.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
-
-export const SaleInvoiceStatus = {
-  NotRequired: "not_required",
-  Pending: "pending",
-  Issued: "issued",
-} as const;
-export type SaleInvoiceStatus = OpenEnum<typeof SaleInvoiceStatus>;
 
 export type Sale = {
   saleId: string;
@@ -26,7 +61,7 @@ export type Sale = {
   pointOfSaleId: string;
   invoiceNumber: number | null;
   formattedInvoiceNumber: string | null;
-  invoiceStatus: SaleInvoiceStatus;
+  invoiceStatus: ApiSharedEnum9ac70a3316;
   invoiceDate: Date;
   dueDate: Date;
   currency: string;
@@ -42,83 +77,6 @@ export type Sale = {
   createdAt: Date;
 };
 
-export const ApiSaleTransactionSuccessResponseCurrency = {
-  Pes: "PES",
-  Dol: "DOL",
-} as const;
-export type ApiSaleTransactionSuccessResponseCurrency = OpenEnum<
-  typeof ApiSaleTransactionSuccessResponseCurrency
->;
-
-export type ApiSaleTransactionSuccessResponseGrossIncomeTaxBreakdown = {
-  provinceId: number;
-  amount: number;
-};
-
-export const ApiSaleTransactionSuccessResponseDiscountType = {
-  Percentage: "percentage",
-  Amount: "amount",
-} as const;
-export type ApiSaleTransactionSuccessResponseDiscountType = OpenEnum<
-  typeof ApiSaleTransactionSuccessResponseDiscountType
->;
-
-export const ApiSaleTransactionSuccessResponseProductType = {
-  Product: "product",
-  Service: "service",
-  Combo: "combo",
-  Kit: "kit",
-} as const;
-export type ApiSaleTransactionSuccessResponseProductType = OpenEnum<
-  typeof ApiSaleTransactionSuccessResponseProductType
->;
-
-export const ApiSaleTransactionSuccessResponseType = {
-  Percentage: "percentage",
-  Amount: "amount",
-} as const;
-export type ApiSaleTransactionSuccessResponseType = OpenEnum<
-  typeof ApiSaleTransactionSuccessResponseType
->;
-
-export type ApiSaleTransactionSuccessResponseDiscount = {
-  type: ApiSaleTransactionSuccessResponseType;
-  value: number;
-};
-
-export type ApiSaleTransactionSuccessResponseItem = {
-  productId: string | null;
-  productName: string | null;
-  sku: string | null;
-  warehouseId: string | null;
-  name: string | null;
-  productType: ApiSaleTransactionSuccessResponseProductType | null;
-  quantity: number;
-  unitPrice: number;
-  unitCost: number | null;
-  taxRateId: number | null;
-  isExempt: boolean;
-  discount: ApiSaleTransactionSuccessResponseDiscount | null;
-  notes: string | null;
-  accountId: string | null;
-  costCenter1Id: string | null;
-  costCenter2Id: string | null;
-  costCenter3Id: string | null;
-};
-
-export type ApiSaleTransactionSuccessResponsePaymentMethod = {
-  methodId: string;
-  amount: number;
-  description: string | null;
-  reference: string | null;
-  feeAmount: number | null;
-  terminalId: string | null;
-  cardBatchNumber: string | null;
-  cardCouponNumber: string | null;
-  cardInstallmentPlanCode: string | null;
-  cardBrand: string | null;
-};
-
 export type NormalizedSale = {
   customerId: string | null;
   customerTaxCategoryOverride: string | null;
@@ -130,7 +88,7 @@ export type NormalizedSale = {
   dueDate: Date;
   serviceFrom: Date | null;
   serviceTo: Date | null;
-  currency: ApiSaleTransactionSuccessResponseCurrency;
+  currency: ApiSharedEnum6cfb146157;
   exchangeRate: number | null;
   sameCurrencyPayment: boolean;
   notes: string | null;
@@ -142,57 +100,26 @@ export type NormalizedSale = {
   tributesAmount: number;
   nationalPerceptionAmount: number;
   grossIncomePerceptionAmount: number;
-  grossIncomeTaxBreakdown: Array<
-    ApiSaleTransactionSuccessResponseGrossIncomeTaxBreakdown
-  >;
+  grossIncomeTaxBreakdown: Array<ApiSharedObject95929ea589>;
   municipalPerceptionAmount: number;
   internalTributeAmount: number;
   uncategorizedVatPerceptionAmount: number;
   otherTributeAmount: number;
-  discountType: ApiSaleTransactionSuccessResponseDiscountType | null;
+  discountType: ApiSharedEnum539fdceccc | null;
   discountValue: number | null;
   discountAmount: number;
   roundingAdjustment: number;
   balance: number;
   isFullAmountPending: boolean;
-  items: Array<ApiSaleTransactionSuccessResponseItem>;
-  paymentMethods: Array<ApiSaleTransactionSuccessResponsePaymentMethod>;
-};
-
-export type ApiSaleTransactionSuccessResponseInventory = {
-  willAffectStock: boolean;
-  warehouseIds: Array<string>;
-  productLineCount: number;
-  totalQuantity: number;
-};
-
-export type ApiSaleTransactionSuccessResponseAccounting = {
-  willCreateSaleEntry: boolean;
-  willCreatePaymentEntry: boolean;
-};
-
-export const FiscalInvoiceStatus = {
-  NotRequired: "not_required",
-  Pending: "pending",
-} as const;
-export type FiscalInvoiceStatus = OpenEnum<typeof FiscalInvoiceStatus>;
-
-export type Fiscal = {
-  invoiceStatus: FiscalInvoiceStatus;
-};
-
-export type Payments = {
-  willCreatePayments: boolean;
-  paymentMethodCount: number;
-  totalAmount: number;
-  pendingAmount: number;
+  items: Array<ApiSharedObjecte9e792772e>;
+  paymentMethods: Array<ApiSharedObject43ed7be04f>;
 };
 
 export type ApiSaleTransactionSuccessResponseProjectedEffects = {
-  inventory: ApiSaleTransactionSuccessResponseInventory;
-  accounting: ApiSaleTransactionSuccessResponseAccounting;
-  fiscal: Fiscal;
-  payments: Payments;
+  inventory: ApiSharedObject6a71e7888b;
+  accounting: ApiSharedObject9428e7100c;
+  fiscal: ApiSharedObject3563932f8e;
+  payments: ApiSharedObject8e516a9b19;
 };
 
 export type ApiSaleTransactionSuccessResponseData = {
@@ -202,23 +129,11 @@ export type ApiSaleTransactionSuccessResponseData = {
   idempotentReplay: boolean;
 };
 
-export type ApiSaleTransactionSuccessResponseWarning = {
-  code: string;
-  message: string;
-  field?: string | undefined;
-};
-
 export type ApiSaleTransactionSuccessResponse = {
   requestId: string;
   data: ApiSaleTransactionSuccessResponseData;
-  warnings: Array<ApiSaleTransactionSuccessResponseWarning>;
+  warnings: Array<ApiSharedObjectc671832641>;
 };
-
-/** @internal */
-export const SaleInvoiceStatus$inboundSchema: z.ZodMiniType<
-  SaleInvoiceStatus,
-  unknown
-> = openEnums.inboundSchema(SaleInvoiceStatus);
 
 /** @internal */
 export const Sale$inboundSchema: z.ZodMiniType<Sale, unknown> = z.pipe(
@@ -229,7 +144,7 @@ export const Sale$inboundSchema: z.ZodMiniType<Sale, unknown> = z.pipe(
     point_of_sale_id: types.string(),
     invoice_number: types.nullable(types.number()),
     formatted_invoice_number: types.nullable(types.string()),
-    invoice_status: SaleInvoiceStatus$inboundSchema,
+    invoice_status: ApiSharedEnum9ac70a3316$inboundSchema,
     invoice_date: types.date(),
     due_date: types.date(),
     currency: types.string(),
@@ -277,184 +192,6 @@ export function saleFromJSON(
 }
 
 /** @internal */
-export const ApiSaleTransactionSuccessResponseCurrency$inboundSchema:
-  z.ZodMiniType<ApiSaleTransactionSuccessResponseCurrency, unknown> = openEnums
-    .inboundSchema(ApiSaleTransactionSuccessResponseCurrency);
-
-/** @internal */
-export const ApiSaleTransactionSuccessResponseGrossIncomeTaxBreakdown$inboundSchema:
-  z.ZodMiniType<
-    ApiSaleTransactionSuccessResponseGrossIncomeTaxBreakdown,
-    unknown
-  > = z.pipe(
-    z.object({
-      province_id: types.number(),
-      amount: types.number(),
-    }),
-    z.transform((v) => {
-      return remap$(v, {
-        "province_id": "provinceId",
-      });
-    }),
-  );
-
-export function apiSaleTransactionSuccessResponseGrossIncomeTaxBreakdownFromJSON(
-  jsonString: string,
-): SafeParseResult<
-  ApiSaleTransactionSuccessResponseGrossIncomeTaxBreakdown,
-  SDKValidationError
-> {
-  return safeParse(
-    jsonString,
-    (x) =>
-      ApiSaleTransactionSuccessResponseGrossIncomeTaxBreakdown$inboundSchema
-        .parse(JSON.parse(x)),
-    `Failed to parse 'ApiSaleTransactionSuccessResponseGrossIncomeTaxBreakdown' from JSON`,
-  );
-}
-
-/** @internal */
-export const ApiSaleTransactionSuccessResponseDiscountType$inboundSchema:
-  z.ZodMiniType<ApiSaleTransactionSuccessResponseDiscountType, unknown> =
-    openEnums.inboundSchema(ApiSaleTransactionSuccessResponseDiscountType);
-
-/** @internal */
-export const ApiSaleTransactionSuccessResponseProductType$inboundSchema:
-  z.ZodMiniType<ApiSaleTransactionSuccessResponseProductType, unknown> =
-    openEnums.inboundSchema(ApiSaleTransactionSuccessResponseProductType);
-
-/** @internal */
-export const ApiSaleTransactionSuccessResponseType$inboundSchema: z.ZodMiniType<
-  ApiSaleTransactionSuccessResponseType,
-  unknown
-> = openEnums.inboundSchema(ApiSaleTransactionSuccessResponseType);
-
-/** @internal */
-export const ApiSaleTransactionSuccessResponseDiscount$inboundSchema:
-  z.ZodMiniType<ApiSaleTransactionSuccessResponseDiscount, unknown> = z.object({
-    type: ApiSaleTransactionSuccessResponseType$inboundSchema,
-    value: types.number(),
-  });
-
-export function apiSaleTransactionSuccessResponseDiscountFromJSON(
-  jsonString: string,
-): SafeParseResult<
-  ApiSaleTransactionSuccessResponseDiscount,
-  SDKValidationError
-> {
-  return safeParse(
-    jsonString,
-    (x) =>
-      ApiSaleTransactionSuccessResponseDiscount$inboundSchema.parse(
-        JSON.parse(x),
-      ),
-    `Failed to parse 'ApiSaleTransactionSuccessResponseDiscount' from JSON`,
-  );
-}
-
-/** @internal */
-export const ApiSaleTransactionSuccessResponseItem$inboundSchema: z.ZodMiniType<
-  ApiSaleTransactionSuccessResponseItem,
-  unknown
-> = z.pipe(
-  z.object({
-    product_id: types.nullable(types.string()),
-    product_name: types.nullable(types.string()),
-    sku: types.nullable(types.string()),
-    warehouse_id: types.nullable(types.string()),
-    name: types.nullable(types.string()),
-    product_type: types.nullable(
-      ApiSaleTransactionSuccessResponseProductType$inboundSchema,
-    ),
-    quantity: types.number(),
-    unit_price: types.number(),
-    unit_cost: types.nullable(types.number()),
-    tax_rate_id: types.nullable(types.number()),
-    is_exempt: types.boolean(),
-    discount: types.nullable(
-      z.lazy(() => ApiSaleTransactionSuccessResponseDiscount$inboundSchema),
-    ),
-    notes: types.nullable(types.string()),
-    account_id: types.nullable(types.string()),
-    cost_center1_id: types.nullable(types.string()),
-    cost_center2_id: types.nullable(types.string()),
-    cost_center3_id: types.nullable(types.string()),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "product_id": "productId",
-      "product_name": "productName",
-      "warehouse_id": "warehouseId",
-      "product_type": "productType",
-      "unit_price": "unitPrice",
-      "unit_cost": "unitCost",
-      "tax_rate_id": "taxRateId",
-      "is_exempt": "isExempt",
-      "account_id": "accountId",
-      "cost_center1_id": "costCenter1Id",
-      "cost_center2_id": "costCenter2Id",
-      "cost_center3_id": "costCenter3Id",
-    });
-  }),
-);
-
-export function apiSaleTransactionSuccessResponseItemFromJSON(
-  jsonString: string,
-): SafeParseResult<ApiSaleTransactionSuccessResponseItem, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) =>
-      ApiSaleTransactionSuccessResponseItem$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'ApiSaleTransactionSuccessResponseItem' from JSON`,
-  );
-}
-
-/** @internal */
-export const ApiSaleTransactionSuccessResponsePaymentMethod$inboundSchema:
-  z.ZodMiniType<ApiSaleTransactionSuccessResponsePaymentMethod, unknown> = z
-    .pipe(
-      z.object({
-        method_id: types.string(),
-        amount: types.number(),
-        description: types.nullable(types.string()),
-        reference: types.nullable(types.string()),
-        fee_amount: types.nullable(types.number()),
-        terminal_id: types.nullable(types.string()),
-        card_batch_number: types.nullable(types.string()),
-        card_coupon_number: types.nullable(types.string()),
-        card_installment_plan_code: types.nullable(types.string()),
-        card_brand: types.nullable(types.string()),
-      }),
-      z.transform((v) => {
-        return remap$(v, {
-          "method_id": "methodId",
-          "fee_amount": "feeAmount",
-          "terminal_id": "terminalId",
-          "card_batch_number": "cardBatchNumber",
-          "card_coupon_number": "cardCouponNumber",
-          "card_installment_plan_code": "cardInstallmentPlanCode",
-          "card_brand": "cardBrand",
-        });
-      }),
-    );
-
-export function apiSaleTransactionSuccessResponsePaymentMethodFromJSON(
-  jsonString: string,
-): SafeParseResult<
-  ApiSaleTransactionSuccessResponsePaymentMethod,
-  SDKValidationError
-> {
-  return safeParse(
-    jsonString,
-    (x) =>
-      ApiSaleTransactionSuccessResponsePaymentMethod$inboundSchema.parse(
-        JSON.parse(x),
-      ),
-    `Failed to parse 'ApiSaleTransactionSuccessResponsePaymentMethod' from JSON`,
-  );
-}
-
-/** @internal */
 export const NormalizedSale$inboundSchema: z.ZodMiniType<
   NormalizedSale,
   unknown
@@ -470,7 +207,7 @@ export const NormalizedSale$inboundSchema: z.ZodMiniType<
     due_date: types.date(),
     service_from: types.nullable(types.date()),
     service_to: types.nullable(types.date()),
-    currency: ApiSaleTransactionSuccessResponseCurrency$inboundSchema,
+    currency: ApiSharedEnum6cfb146157$inboundSchema,
     exchange_rate: types.nullable(types.number()),
     same_currency_payment: types.boolean(),
     notes: types.nullable(types.string()),
@@ -482,27 +219,21 @@ export const NormalizedSale$inboundSchema: z.ZodMiniType<
     tributes_amount: types.number(),
     national_perception_amount: types.number(),
     gross_income_perception_amount: types.number(),
-    gross_income_tax_breakdown: z.array(z.lazy(() =>
-      ApiSaleTransactionSuccessResponseGrossIncomeTaxBreakdown$inboundSchema
-    )),
+    gross_income_tax_breakdown: z.array(
+      ApiSharedObject95929ea589$inboundSchema,
+    ),
     municipal_perception_amount: types.number(),
     internal_tribute_amount: types.number(),
     uncategorized_vat_perception_amount: types.number(),
     other_tribute_amount: types.number(),
-    discount_type: types.nullable(
-      ApiSaleTransactionSuccessResponseDiscountType$inboundSchema,
-    ),
+    discount_type: types.nullable(ApiSharedEnum539fdceccc$inboundSchema),
     discount_value: types.nullable(types.number()),
     discount_amount: types.number(),
     rounding_adjustment: types.number(),
     balance: types.number(),
     is_full_amount_pending: types.boolean(),
-    items: z.array(z.lazy(() =>
-      ApiSaleTransactionSuccessResponseItem$inboundSchema
-    )),
-    payment_methods: z.array(z.lazy(() =>
-      ApiSaleTransactionSuccessResponsePaymentMethod$inboundSchema
-    )),
+    items: z.array(ApiSharedObjecte9e792772e$inboundSchema),
+    payment_methods: z.array(ApiSharedObject43ed7be04f$inboundSchema),
   }),
   z.transform((v) => {
     return remap$(v, {
@@ -550,139 +281,13 @@ export function normalizedSaleFromJSON(
 }
 
 /** @internal */
-export const ApiSaleTransactionSuccessResponseInventory$inboundSchema:
-  z.ZodMiniType<ApiSaleTransactionSuccessResponseInventory, unknown> = z.pipe(
-    z.object({
-      will_affect_stock: types.boolean(),
-      warehouse_ids: z.array(types.string()),
-      product_line_count: types.number(),
-      total_quantity: types.number(),
-    }),
-    z.transform((v) => {
-      return remap$(v, {
-        "will_affect_stock": "willAffectStock",
-        "warehouse_ids": "warehouseIds",
-        "product_line_count": "productLineCount",
-        "total_quantity": "totalQuantity",
-      });
-    }),
-  );
-
-export function apiSaleTransactionSuccessResponseInventoryFromJSON(
-  jsonString: string,
-): SafeParseResult<
-  ApiSaleTransactionSuccessResponseInventory,
-  SDKValidationError
-> {
-  return safeParse(
-    jsonString,
-    (x) =>
-      ApiSaleTransactionSuccessResponseInventory$inboundSchema.parse(
-        JSON.parse(x),
-      ),
-    `Failed to parse 'ApiSaleTransactionSuccessResponseInventory' from JSON`,
-  );
-}
-
-/** @internal */
-export const ApiSaleTransactionSuccessResponseAccounting$inboundSchema:
-  z.ZodMiniType<ApiSaleTransactionSuccessResponseAccounting, unknown> = z.pipe(
-    z.object({
-      will_create_sale_entry: types.boolean(),
-      will_create_payment_entry: types.boolean(),
-    }),
-    z.transform((v) => {
-      return remap$(v, {
-        "will_create_sale_entry": "willCreateSaleEntry",
-        "will_create_payment_entry": "willCreatePaymentEntry",
-      });
-    }),
-  );
-
-export function apiSaleTransactionSuccessResponseAccountingFromJSON(
-  jsonString: string,
-): SafeParseResult<
-  ApiSaleTransactionSuccessResponseAccounting,
-  SDKValidationError
-> {
-  return safeParse(
-    jsonString,
-    (x) =>
-      ApiSaleTransactionSuccessResponseAccounting$inboundSchema.parse(
-        JSON.parse(x),
-      ),
-    `Failed to parse 'ApiSaleTransactionSuccessResponseAccounting' from JSON`,
-  );
-}
-
-/** @internal */
-export const FiscalInvoiceStatus$inboundSchema: z.ZodMiniType<
-  FiscalInvoiceStatus,
-  unknown
-> = openEnums.inboundSchema(FiscalInvoiceStatus);
-
-/** @internal */
-export const Fiscal$inboundSchema: z.ZodMiniType<Fiscal, unknown> = z.pipe(
-  z.object({
-    invoice_status: FiscalInvoiceStatus$inboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "invoice_status": "invoiceStatus",
-    });
-  }),
-);
-
-export function fiscalFromJSON(
-  jsonString: string,
-): SafeParseResult<Fiscal, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) => Fiscal$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'Fiscal' from JSON`,
-  );
-}
-
-/** @internal */
-export const Payments$inboundSchema: z.ZodMiniType<Payments, unknown> = z.pipe(
-  z.object({
-    will_create_payments: types.boolean(),
-    payment_method_count: types.number(),
-    total_amount: types.number(),
-    pending_amount: types.number(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "will_create_payments": "willCreatePayments",
-      "payment_method_count": "paymentMethodCount",
-      "total_amount": "totalAmount",
-      "pending_amount": "pendingAmount",
-    });
-  }),
-);
-
-export function paymentsFromJSON(
-  jsonString: string,
-): SafeParseResult<Payments, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) => Payments$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'Payments' from JSON`,
-  );
-}
-
-/** @internal */
 export const ApiSaleTransactionSuccessResponseProjectedEffects$inboundSchema:
   z.ZodMiniType<ApiSaleTransactionSuccessResponseProjectedEffects, unknown> = z
     .object({
-      inventory: z.lazy(() =>
-        ApiSaleTransactionSuccessResponseInventory$inboundSchema
-      ),
-      accounting: z.lazy(() =>
-        ApiSaleTransactionSuccessResponseAccounting$inboundSchema
-      ),
-      fiscal: z.lazy(() => Fiscal$inboundSchema),
-      payments: z.lazy(() => Payments$inboundSchema),
+      inventory: ApiSharedObject6a71e7888b$inboundSchema,
+      accounting: ApiSharedObject9428e7100c$inboundSchema,
+      fiscal: ApiSharedObject3563932f8e$inboundSchema,
+      payments: ApiSharedObject8e516a9b19$inboundSchema,
     });
 
 export function apiSaleTransactionSuccessResponseProjectedEffectsFromJSON(
@@ -735,30 +340,6 @@ export function apiSaleTransactionSuccessResponseDataFromJSON(
 }
 
 /** @internal */
-export const ApiSaleTransactionSuccessResponseWarning$inboundSchema:
-  z.ZodMiniType<ApiSaleTransactionSuccessResponseWarning, unknown> = z.object({
-    code: types.string(),
-    message: types.string(),
-    field: types.optional(types.string()),
-  });
-
-export function apiSaleTransactionSuccessResponseWarningFromJSON(
-  jsonString: string,
-): SafeParseResult<
-  ApiSaleTransactionSuccessResponseWarning,
-  SDKValidationError
-> {
-  return safeParse(
-    jsonString,
-    (x) =>
-      ApiSaleTransactionSuccessResponseWarning$inboundSchema.parse(
-        JSON.parse(x),
-      ),
-    `Failed to parse 'ApiSaleTransactionSuccessResponseWarning' from JSON`,
-  );
-}
-
-/** @internal */
 export const ApiSaleTransactionSuccessResponse$inboundSchema: z.ZodMiniType<
   ApiSaleTransactionSuccessResponse,
   unknown
@@ -766,9 +347,7 @@ export const ApiSaleTransactionSuccessResponse$inboundSchema: z.ZodMiniType<
   z.object({
     request_id: types.string(),
     data: z.lazy(() => ApiSaleTransactionSuccessResponseData$inboundSchema),
-    warnings: z.array(
-      z.lazy(() => ApiSaleTransactionSuccessResponseWarning$inboundSchema),
-    ),
+    warnings: z.array(ApiSharedObjectc671832641$inboundSchema),
   }),
   z.transform((v) => {
     return remap$(v, {

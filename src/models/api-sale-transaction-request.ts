@@ -6,14 +6,24 @@
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
 import { ClosedEnum } from "../types/enums.js";
-
-export const ApiSaleTransactionRequestCurrency = {
-  Pes: "PES",
-  Dol: "DOL",
-} as const;
-export type ApiSaleTransactionRequestCurrency = ClosedEnum<
-  typeof ApiSaleTransactionRequestCurrency
->;
+import {
+  ApiSharedEnum539fdceccc,
+  ApiSharedEnum539fdceccc$outboundSchema,
+} from "./api-shared-enum539fdceccc.js";
+import {
+  ApiSharedEnum6cfb146157,
+  ApiSharedEnum6cfb146157$outboundSchema,
+} from "./api-shared-enum6cfb146157.js";
+import {
+  ApiSharedObject16c3799d74,
+  ApiSharedObject16c3799d74$Outbound,
+  ApiSharedObject16c3799d74$outboundSchema,
+} from "./api-shared-object16c3799d74.js";
+import {
+  ApiSharedObject95929ea589,
+  ApiSharedObject95929ea589$Outbound,
+  ApiSharedObject95929ea589$outboundSchema,
+} from "./api-shared-object95929ea589.js";
 
 export const ApiSaleTransactionRequestProductType = {
   Product: "product",
@@ -22,19 +32,6 @@ export const ApiSaleTransactionRequestProductType = {
 export type ApiSaleTransactionRequestProductType = ClosedEnum<
   typeof ApiSaleTransactionRequestProductType
 >;
-
-export const ApiSaleTransactionRequestType = {
-  Percentage: "percentage",
-  Amount: "amount",
-} as const;
-export type ApiSaleTransactionRequestType = ClosedEnum<
-  typeof ApiSaleTransactionRequestType
->;
-
-export type ApiSaleTransactionRequestDiscount = {
-  type: ApiSaleTransactionRequestType;
-  value: number;
-};
 
 export type ApiSaleTransactionRequestItem = {
   productId?: string | undefined;
@@ -46,7 +43,7 @@ export type ApiSaleTransactionRequestItem = {
   isExempt?: boolean | undefined;
   quantity: number;
   unitPrice: number;
-  discount?: ApiSaleTransactionRequestDiscount | undefined;
+  discount?: ApiSharedObject16c3799d74 | undefined;
   notes?: string | undefined;
   accountId?: string | undefined;
   costCenter1Id?: string | undefined;
@@ -54,20 +51,7 @@ export type ApiSaleTransactionRequestItem = {
   costCenter3Id?: string | undefined;
 };
 
-export const ApiSaleTransactionRequestDiscountType = {
-  Percentage: "percentage",
-  Amount: "amount",
-} as const;
-export type ApiSaleTransactionRequestDiscountType = ClosedEnum<
-  typeof ApiSaleTransactionRequestDiscountType
->;
-
-export type ApiSaleTransactionRequestGrossIncomeTaxBreakdown = {
-  provinceId: number;
-  amount: number;
-};
-
-export type ApiSaleTransactionRequestPaymentMethod = {
+export type PaymentMethod = {
   methodId: string;
   amount: number;
   description?: string | undefined;
@@ -91,12 +75,12 @@ export type ApiSaleTransactionRequest = {
   dueDate?: Date | undefined;
   serviceFrom?: Date | undefined;
   serviceTo?: Date | undefined;
-  currency: ApiSaleTransactionRequestCurrency;
+  currency: ApiSharedEnum6cfb146157;
   exchangeRate?: number | undefined;
   sameCurrencyPayment?: boolean | undefined;
   notes?: string | undefined;
   items: Array<ApiSaleTransactionRequestItem>;
-  discountType?: ApiSaleTransactionRequestDiscountType | undefined;
+  discountType?: ApiSharedEnum539fdceccc | undefined;
   discountValue?: number | undefined;
   discountAmount?: number | undefined;
   subtotal?: number | undefined;
@@ -107,57 +91,20 @@ export type ApiSaleTransactionRequest = {
   tributesAmount?: number | undefined;
   nationalPerceptionAmount?: number | undefined;
   grossIncomePerceptionAmount?: number | undefined;
-  grossIncomeTaxBreakdown?:
-    | Array<ApiSaleTransactionRequestGrossIncomeTaxBreakdown>
-    | undefined;
+  grossIncomeTaxBreakdown?: Array<ApiSharedObject95929ea589> | undefined;
   municipalPerceptionAmount?: number | undefined;
   internalTributeAmount?: number | undefined;
   uncategorizedVatPerceptionAmount?: number | undefined;
   otherTributeAmount?: number | undefined;
   roundingAdjustment?: number | undefined;
-  paymentMethods?: Array<ApiSaleTransactionRequestPaymentMethod> | undefined;
+  paymentMethods?: Array<PaymentMethod> | undefined;
   isFullAmountPending?: boolean | undefined;
 };
-
-/** @internal */
-export const ApiSaleTransactionRequestCurrency$outboundSchema: z.ZodMiniEnum<
-  typeof ApiSaleTransactionRequestCurrency
-> = z.enum(ApiSaleTransactionRequestCurrency);
 
 /** @internal */
 export const ApiSaleTransactionRequestProductType$outboundSchema: z.ZodMiniEnum<
   typeof ApiSaleTransactionRequestProductType
 > = z.enum(ApiSaleTransactionRequestProductType);
-
-/** @internal */
-export const ApiSaleTransactionRequestType$outboundSchema: z.ZodMiniEnum<
-  typeof ApiSaleTransactionRequestType
-> = z.enum(ApiSaleTransactionRequestType);
-
-/** @internal */
-export type ApiSaleTransactionRequestDiscount$Outbound = {
-  type: string;
-  value: number;
-};
-
-/** @internal */
-export const ApiSaleTransactionRequestDiscount$outboundSchema: z.ZodMiniType<
-  ApiSaleTransactionRequestDiscount$Outbound,
-  ApiSaleTransactionRequestDiscount
-> = z.object({
-  type: ApiSaleTransactionRequestType$outboundSchema,
-  value: z.number(),
-});
-
-export function apiSaleTransactionRequestDiscountToJSON(
-  apiSaleTransactionRequestDiscount: ApiSaleTransactionRequestDiscount,
-): string {
-  return JSON.stringify(
-    ApiSaleTransactionRequestDiscount$outboundSchema.parse(
-      apiSaleTransactionRequestDiscount,
-    ),
-  );
-}
 
 /** @internal */
 export type ApiSaleTransactionRequestItem$Outbound = {
@@ -170,7 +117,7 @@ export type ApiSaleTransactionRequestItem$Outbound = {
   is_exempt?: boolean | undefined;
   quantity: number;
   unit_price: number;
-  discount?: ApiSaleTransactionRequestDiscount$Outbound | undefined;
+  discount?: ApiSharedObject16c3799d74$Outbound | undefined;
   notes?: string | undefined;
   account_id?: string | undefined;
   cost_center1_id?: string | undefined;
@@ -195,9 +142,7 @@ export const ApiSaleTransactionRequestItem$outboundSchema: z.ZodMiniType<
     isExempt: z.optional(z.boolean()),
     quantity: z.number(),
     unitPrice: z.int(),
-    discount: z.optional(
-      z.lazy(() => ApiSaleTransactionRequestDiscount$outboundSchema),
-    ),
+    discount: z.optional(ApiSharedObject16c3799d74$outboundSchema),
     notes: z.optional(z.string()),
     accountId: z.optional(z.string()),
     costCenter1Id: z.optional(z.string()),
@@ -232,47 +177,7 @@ export function apiSaleTransactionRequestItemToJSON(
 }
 
 /** @internal */
-export const ApiSaleTransactionRequestDiscountType$outboundSchema:
-  z.ZodMiniEnum<typeof ApiSaleTransactionRequestDiscountType> = z.enum(
-    ApiSaleTransactionRequestDiscountType,
-  );
-
-/** @internal */
-export type ApiSaleTransactionRequestGrossIncomeTaxBreakdown$Outbound = {
-  province_id: number;
-  amount: number;
-};
-
-/** @internal */
-export const ApiSaleTransactionRequestGrossIncomeTaxBreakdown$outboundSchema:
-  z.ZodMiniType<
-    ApiSaleTransactionRequestGrossIncomeTaxBreakdown$Outbound,
-    ApiSaleTransactionRequestGrossIncomeTaxBreakdown
-  > = z.pipe(
-    z.object({
-      provinceId: z.int(),
-      amount: z.int(),
-    }),
-    z.transform((v) => {
-      return remap$(v, {
-        provinceId: "province_id",
-      });
-    }),
-  );
-
-export function apiSaleTransactionRequestGrossIncomeTaxBreakdownToJSON(
-  apiSaleTransactionRequestGrossIncomeTaxBreakdown:
-    ApiSaleTransactionRequestGrossIncomeTaxBreakdown,
-): string {
-  return JSON.stringify(
-    ApiSaleTransactionRequestGrossIncomeTaxBreakdown$outboundSchema.parse(
-      apiSaleTransactionRequestGrossIncomeTaxBreakdown,
-    ),
-  );
-}
-
-/** @internal */
-export type ApiSaleTransactionRequestPaymentMethod$Outbound = {
+export type PaymentMethod$Outbound = {
   method_id: string;
   amount: number;
   description?: string | undefined;
@@ -286,45 +191,37 @@ export type ApiSaleTransactionRequestPaymentMethod$Outbound = {
 };
 
 /** @internal */
-export const ApiSaleTransactionRequestPaymentMethod$outboundSchema:
-  z.ZodMiniType<
-    ApiSaleTransactionRequestPaymentMethod$Outbound,
-    ApiSaleTransactionRequestPaymentMethod
-  > = z.pipe(
-    z.object({
-      methodId: z.string(),
-      amount: z.int(),
-      description: z.optional(z.string()),
-      reference: z.optional(z.string()),
-      feeAmount: z.optional(z.int()),
-      terminalId: z.optional(z.string()),
-      cardBatchNumber: z.optional(z.string()),
-      cardCouponNumber: z.optional(z.string()),
-      cardInstallmentPlanCode: z.optional(z.string()),
-      cardBrand: z.optional(z.string()),
-    }),
-    z.transform((v) => {
-      return remap$(v, {
-        methodId: "method_id",
-        feeAmount: "fee_amount",
-        terminalId: "terminal_id",
-        cardBatchNumber: "card_batch_number",
-        cardCouponNumber: "card_coupon_number",
-        cardInstallmentPlanCode: "card_installment_plan_code",
-        cardBrand: "card_brand",
-      });
-    }),
-  );
+export const PaymentMethod$outboundSchema: z.ZodMiniType<
+  PaymentMethod$Outbound,
+  PaymentMethod
+> = z.pipe(
+  z.object({
+    methodId: z.string(),
+    amount: z.int(),
+    description: z.optional(z.string()),
+    reference: z.optional(z.string()),
+    feeAmount: z.optional(z.int()),
+    terminalId: z.optional(z.string()),
+    cardBatchNumber: z.optional(z.string()),
+    cardCouponNumber: z.optional(z.string()),
+    cardInstallmentPlanCode: z.optional(z.string()),
+    cardBrand: z.optional(z.string()),
+  }),
+  z.transform((v) => {
+    return remap$(v, {
+      methodId: "method_id",
+      feeAmount: "fee_amount",
+      terminalId: "terminal_id",
+      cardBatchNumber: "card_batch_number",
+      cardCouponNumber: "card_coupon_number",
+      cardInstallmentPlanCode: "card_installment_plan_code",
+      cardBrand: "card_brand",
+    });
+  }),
+);
 
-export function apiSaleTransactionRequestPaymentMethodToJSON(
-  apiSaleTransactionRequestPaymentMethod:
-    ApiSaleTransactionRequestPaymentMethod,
-): string {
-  return JSON.stringify(
-    ApiSaleTransactionRequestPaymentMethod$outboundSchema.parse(
-      apiSaleTransactionRequestPaymentMethod,
-    ),
-  );
+export function paymentMethodToJSON(paymentMethod: PaymentMethod): string {
+  return JSON.stringify(PaymentMethod$outboundSchema.parse(paymentMethod));
 }
 
 /** @internal */
@@ -356,16 +253,14 @@ export type ApiSaleTransactionRequest$Outbound = {
   national_perception_amount?: number | undefined;
   gross_income_perception_amount?: number | undefined;
   gross_income_tax_breakdown?:
-    | Array<ApiSaleTransactionRequestGrossIncomeTaxBreakdown$Outbound>
+    | Array<ApiSharedObject95929ea589$Outbound>
     | undefined;
   municipal_perception_amount?: number | undefined;
   internal_tribute_amount?: number | undefined;
   uncategorized_vat_perception_amount?: number | undefined;
   other_tribute_amount?: number | undefined;
   rounding_adjustment?: number | undefined;
-  payment_methods?:
-    | Array<ApiSaleTransactionRequestPaymentMethod$Outbound>
-    | undefined;
+  payment_methods?: Array<PaymentMethod$Outbound> | undefined;
   is_full_amount_pending?: boolean | undefined;
 };
 
@@ -397,16 +292,14 @@ export const ApiSaleTransactionRequest$outboundSchema: z.ZodMiniType<
       z.date(),
       z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
     )),
-    currency: ApiSaleTransactionRequestCurrency$outboundSchema,
+    currency: ApiSharedEnum6cfb146157$outboundSchema,
     exchangeRate: z.optional(z.number()),
     sameCurrencyPayment: z.optional(z.boolean()),
     notes: z.optional(z.string()),
     items: z.array(z.lazy(() =>
       ApiSaleTransactionRequestItem$outboundSchema
     )),
-    discountType: z.optional(
-      ApiSaleTransactionRequestDiscountType$outboundSchema,
-    ),
+    discountType: z.optional(ApiSharedEnum539fdceccc$outboundSchema),
     discountValue: z.optional(z.number()),
     discountAmount: z.optional(z.int()),
     subtotal: z.optional(z.int()),
@@ -417,16 +310,16 @@ export const ApiSaleTransactionRequest$outboundSchema: z.ZodMiniType<
     tributesAmount: z.optional(z.int()),
     nationalPerceptionAmount: z.optional(z.int()),
     grossIncomePerceptionAmount: z.optional(z.int()),
-    grossIncomeTaxBreakdown: z.optional(z.array(z.lazy(() =>
-      ApiSaleTransactionRequestGrossIncomeTaxBreakdown$outboundSchema
-    ))),
+    grossIncomeTaxBreakdown: z.optional(
+      z.array(ApiSharedObject95929ea589$outboundSchema),
+    ),
     municipalPerceptionAmount: z.optional(z.int()),
     internalTributeAmount: z.optional(z.int()),
     uncategorizedVatPerceptionAmount: z.optional(z.int()),
     otherTributeAmount: z.optional(z.int()),
     roundingAdjustment: z.optional(z.int()),
     paymentMethods: z.optional(z.array(z.lazy(() =>
-      ApiSaleTransactionRequestPaymentMethod$outboundSchema
+      PaymentMethod$outboundSchema
     ))),
     isFullAmountPending: z.optional(z.boolean()),
   }),

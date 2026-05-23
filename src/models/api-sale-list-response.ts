@@ -6,98 +6,32 @@
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
 import { safeParse } from "../lib/schemas.js";
-import { ClosedEnum } from "../types/enums.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
+import {
+  ApiSharedEnum8d46e1ec20,
+  ApiSharedEnum8d46e1ec20$inboundSchema,
+} from "./api-shared-enum8d46e1ec20.js";
+import {
+  ApiSharedObjectd05903f83e,
+  ApiSharedObjectd05903f83e$inboundSchema,
+} from "./api-shared-objectd05903f83e.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
-
-export type ApiSaleListResponseData = {
-  object?: "sale" | undefined;
-  id?: string | undefined;
-  document?: { [k: string]: any } | undefined;
-  customer?: { [k: string]: any } | null | undefined;
-  amounts?: { [k: string]: any } | undefined;
-  items?: Array<{ [k: string]: any }> | undefined;
-  payments?: { [k: string]: any } | undefined;
-  applications?: { [k: string]: any } | undefined;
-  fiscal?: { [k: string]: any } | undefined;
-  integration?: { [k: string]: any } | undefined;
-  reversesVoucher?: { [k: string]: any } | null | undefined;
-  audit?: { [k: string]: any } | undefined;
-  [additionalProperties: string]: unknown;
-};
-
-/**
- * List-envelope discriminator.
- */
-export const ApiSaleListResponseObject = {
-  List: "list",
-} as const;
-/**
- * List-envelope discriminator.
- */
-export type ApiSaleListResponseObject = ClosedEnum<
-  typeof ApiSaleListResponseObject
->;
 
 export type ApiSaleListResponse = {
   requestId: string;
-  data: Array<ApiSaleListResponseData>;
+  data: Array<ApiSharedObjectd05903f83e>;
   hasMore: boolean;
   nextCursor: string | null;
   /**
    * List-envelope discriminator.
    */
-  object: ApiSaleListResponseObject;
+  object: ApiSharedEnum8d46e1ec20;
   /**
    * Requested list path.
    */
   url: string;
 };
-
-/** @internal */
-export const ApiSaleListResponseData$inboundSchema: z.ZodMiniType<
-  ApiSaleListResponseData,
-  unknown
-> = z.pipe(
-  z.catchall(
-    z.object({
-      object: types.optional(types.literal("sale")),
-      id: types.optional(types.string()),
-      document: types.optional(z.record(z.string(), z.any())),
-      customer: z.optional(z.nullable(z.record(z.string(), z.any()))),
-      amounts: types.optional(z.record(z.string(), z.any())),
-      items: types.optional(z.array(z.record(z.string(), z.any()))),
-      payments: types.optional(z.record(z.string(), z.any())),
-      applications: types.optional(z.record(z.string(), z.any())),
-      fiscal: types.optional(z.record(z.string(), z.any())),
-      integration: types.optional(z.record(z.string(), z.any())),
-      reverses_voucher: z.optional(z.nullable(z.record(z.string(), z.any()))),
-      audit: types.optional(z.record(z.string(), z.any())),
-    }),
-    z.any(),
-  ),
-  z.transform((v) => {
-    return remap$(v, {
-      "reverses_voucher": "reversesVoucher",
-    });
-  }),
-);
-
-export function apiSaleListResponseDataFromJSON(
-  jsonString: string,
-): SafeParseResult<ApiSaleListResponseData, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) => ApiSaleListResponseData$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'ApiSaleListResponseData' from JSON`,
-  );
-}
-
-/** @internal */
-export const ApiSaleListResponseObject$inboundSchema: z.ZodMiniEnum<
-  typeof ApiSaleListResponseObject
-> = z.enum(ApiSaleListResponseObject);
 
 /** @internal */
 export const ApiSaleListResponse$inboundSchema: z.ZodMiniType<
@@ -106,10 +40,10 @@ export const ApiSaleListResponse$inboundSchema: z.ZodMiniType<
 > = z.pipe(
   z.object({
     request_id: types.string(),
-    data: z.array(z.lazy(() => ApiSaleListResponseData$inboundSchema)),
+    data: z.array(ApiSharedObjectd05903f83e$inboundSchema),
     has_more: types.boolean(),
     next_cursor: types.nullable(types.string()),
-    object: ApiSaleListResponseObject$inboundSchema,
+    object: ApiSharedEnum8d46e1ec20$inboundSchema,
     url: types.string(),
   }),
   z.transform((v) => {

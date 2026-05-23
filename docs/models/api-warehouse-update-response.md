@@ -10,11 +10,11 @@ let value: ApiWarehouseUpdateResponse = {
   data: {
     warehouse: {
       object: "warehouse",
-      id: "8b31d3c8-a104-4dc7-905f-b9a297418750",
+      id: "63cc75df-5907-4b47-bba6-d9f1dcbe4467",
       name: "<value>",
-      address: "4235 S 9th Street",
-      isDefault: false,
-      isActive: true,
+      address: "490 Turcotte Manor",
+      isDefault: true,
+      isActive: false,
     },
   },
   warnings: [

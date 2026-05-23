@@ -5,26 +5,14 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
-import { ClosedEnum } from "../types/enums.js";
-
-export const ApiSupplierMutationRequestTaxIdType = {
-  CuilCuit: "CUIL/CUIT",
-  Dni: "DNI",
-} as const;
-export type ApiSupplierMutationRequestTaxIdType = ClosedEnum<
-  typeof ApiSupplierMutationRequestTaxIdType
->;
-
-export const ApiSupplierMutationRequestTaxCategory = {
-  RegisteredVatTaxpayer: "registered_vat_taxpayer",
-  FinalConsumer: "final_consumer",
-  MonotributoTaxpayer: "monotributo_taxpayer",
-  VatExempt: "vat_exempt",
-  VatNotApplicable: "vat_not_applicable",
-} as const;
-export type ApiSupplierMutationRequestTaxCategory = ClosedEnum<
-  typeof ApiSupplierMutationRequestTaxCategory
->;
+import {
+  ApiSharedEnum250b15b651,
+  ApiSharedEnum250b15b651$outboundSchema,
+} from "./api-shared-enum250b15b651.js";
+import {
+  ApiSharedEnumbb2864ecea,
+  ApiSharedEnumbb2864ecea$outboundSchema,
+} from "./api-shared-enumbb2864ecea.js";
 
 export type ApiSupplierMutationRequest = {
   name: string;
@@ -33,8 +21,8 @@ export type ApiSupplierMutationRequest = {
   email?: string | null | undefined;
   phone?: string | null | undefined;
   taxId?: string | null | undefined;
-  taxIdType?: ApiSupplierMutationRequestTaxIdType | null | undefined;
-  taxCategory?: ApiSupplierMutationRequestTaxCategory | undefined;
+  taxIdType?: ApiSharedEnum250b15b651 | null | undefined;
+  taxCategory?: ApiSharedEnumbb2864ecea | undefined;
   country?: string | undefined;
   province?: string | undefined;
   city?: string | null | undefined;
@@ -44,17 +32,6 @@ export type ApiSupplierMutationRequest = {
   paymentTermId?: string | null | undefined;
   isActive?: boolean | undefined;
 };
-
-/** @internal */
-export const ApiSupplierMutationRequestTaxIdType$outboundSchema: z.ZodMiniEnum<
-  typeof ApiSupplierMutationRequestTaxIdType
-> = z.enum(ApiSupplierMutationRequestTaxIdType);
-
-/** @internal */
-export const ApiSupplierMutationRequestTaxCategory$outboundSchema:
-  z.ZodMiniEnum<typeof ApiSupplierMutationRequestTaxCategory> = z.enum(
-    ApiSupplierMutationRequestTaxCategory,
-  );
 
 /** @internal */
 export type ApiSupplierMutationRequest$Outbound = {
@@ -88,12 +65,8 @@ export const ApiSupplierMutationRequest$outboundSchema: z.ZodMiniType<
     email: z.optional(z.nullable(z.string())),
     phone: z.optional(z.nullable(z.string())),
     taxId: z.optional(z.nullable(z.string())),
-    taxIdType: z.optional(
-      z.nullable(ApiSupplierMutationRequestTaxIdType$outboundSchema),
-    ),
-    taxCategory: z.optional(
-      ApiSupplierMutationRequestTaxCategory$outboundSchema,
-    ),
+    taxIdType: z.optional(z.nullable(ApiSharedEnum250b15b651$outboundSchema)),
+    taxCategory: z.optional(ApiSharedEnumbb2864ecea$outboundSchema),
     country: z.optional(z.string()),
     province: z.optional(z.string()),
     city: z.optional(z.nullable(z.string())),

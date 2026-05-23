@@ -6,9 +6,12 @@
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
 import { safeParse } from "../lib/schemas.js";
-import { ClosedEnum } from "../types/enums.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
+import {
+  ApiSharedEnum8d46e1ec20,
+  ApiSharedEnum8d46e1ec20$inboundSchema,
+} from "./api-shared-enum8d46e1ec20.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type ApiWarehouseListResponseData = {
@@ -23,19 +26,6 @@ export type ApiWarehouseListResponseData = {
   registerCount: number;
 };
 
-/**
- * List-envelope discriminator.
- */
-export const ApiWarehouseListResponseObject = {
-  List: "list",
-} as const;
-/**
- * List-envelope discriminator.
- */
-export type ApiWarehouseListResponseObject = ClosedEnum<
-  typeof ApiWarehouseListResponseObject
->;
-
 export type ApiWarehouseListResponse = {
   requestId: string;
   data: Array<ApiWarehouseListResponseData>;
@@ -44,7 +34,7 @@ export type ApiWarehouseListResponse = {
   /**
    * List-envelope discriminator.
    */
-  object: ApiWarehouseListResponseObject;
+  object: ApiSharedEnum8d46e1ec20;
   /**
    * Requested list path.
    */
@@ -89,11 +79,6 @@ export function apiWarehouseListResponseDataFromJSON(
 }
 
 /** @internal */
-export const ApiWarehouseListResponseObject$inboundSchema: z.ZodMiniEnum<
-  typeof ApiWarehouseListResponseObject
-> = z.enum(ApiWarehouseListResponseObject);
-
-/** @internal */
 export const ApiWarehouseListResponse$inboundSchema: z.ZodMiniType<
   ApiWarehouseListResponse,
   unknown
@@ -103,7 +88,7 @@ export const ApiWarehouseListResponse$inboundSchema: z.ZodMiniType<
     data: z.array(z.lazy(() => ApiWarehouseListResponseData$inboundSchema)),
     has_more: types.boolean(),
     next_cursor: types.nullable(types.string()),
-    object: ApiWarehouseListResponseObject$inboundSchema,
+    object: ApiSharedEnum8d46e1ec20$inboundSchema,
     url: types.string(),
   }),
   z.transform((v) => {

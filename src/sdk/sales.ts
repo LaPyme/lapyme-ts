@@ -6,6 +6,7 @@
 import { salesCreate } from "../funcs/sales-create.js";
 import { salesGetSaleById } from "../funcs/sales-get-sale-by-id.js";
 import { salesList } from "../funcs/sales-list.js";
+import { salesPatchMetadata } from "../funcs/sales-patch-metadata.js";
 import { ClientSDK, RequestOptions } from "../lib/sdks.js";
 import * as operations from "../models/operations/index.js";
 import { unwrapAsync } from "../types/fp.js";
@@ -62,6 +63,25 @@ export class Sales extends ClientSDK {
     options?: RequestOptions,
   ): Promise<operations.GetApiSaleByIdResponse> {
     return unwrapAsync(salesGetSaleById(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Actualizar metadatos de venta
+   *
+   * @remarks
+   * Actualiza solo metadatos operativos de una venta: notas, referencia de integracion externa y vendedor. No permite modificar items, importes, pagos ni datos fiscales.
+   *
+   * Required scopes: `sales:write`.
+   */
+  async patchMetadata(
+    request: operations.PatchApiSaleMetadataRequest,
+    options?: RequestOptions,
+  ): Promise<operations.PatchApiSaleMetadataResponse> {
+    return unwrapAsync(salesPatchMetadata(
       this,
       request,
       options,

@@ -15,8 +15,8 @@ let value: CreateApiSupplierPaymentRequest = {
     totalAmount: 839457,
     splits: [
       {
-        paymentMethodId: "011f1218-1a2c-466d-af1f-7e51dae20421",
-        amount: 625760,
+        paymentMethodId: "054e9f37-01f0-47c8-9a76-e799960b0187",
+        amount: 489271,
       },
     ],
   },

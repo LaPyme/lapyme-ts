@@ -6,6 +6,19 @@
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
 import { ClosedEnum } from "../types/enums.js";
+import {
+  ApiSharedEnum6cfb146157,
+  ApiSharedEnum6cfb146157$outboundSchema,
+} from "./api-shared-enum6cfb146157.js";
+import {
+  ApiSharedEnumff49232140,
+  ApiSharedEnumff49232140$outboundSchema,
+} from "./api-shared-enumff49232140.js";
+import {
+  ApiSharedObject6dbe49c4ef,
+  ApiSharedObject6dbe49c4ef$Outbound,
+  ApiSharedObject6dbe49c4ef$outboundSchema,
+} from "./api-shared-object6dbe49c4ef.js";
 
 export const ApiProductUpdateRequestVisibility = {
   Both: "both",
@@ -14,16 +27,6 @@ export const ApiProductUpdateRequestVisibility = {
 } as const;
 export type ApiProductUpdateRequestVisibility = ClosedEnum<
   typeof ApiProductUpdateRequestVisibility
->;
-
-export const ApiProductUpdateRequestProductType = {
-  Product: "product",
-  Service: "service",
-  Combo: "combo",
-  Kit: "kit",
-} as const;
-export type ApiProductUpdateRequestProductType = ClosedEnum<
-  typeof ApiProductUpdateRequestProductType
 >;
 
 export const ApiProductUpdateRequestUnitOfMeasure = {
@@ -86,30 +89,17 @@ export type ApiProductUpdateRequestUnitOfMeasure = ClosedEnum<
   typeof ApiProductUpdateRequestUnitOfMeasure
 >;
 
-export const ApiProductUpdateRequestCurrency = {
-  Pes: "PES",
-  Dol: "DOL",
-} as const;
-export type ApiProductUpdateRequestCurrency = ClosedEnum<
-  typeof ApiProductUpdateRequestCurrency
->;
-
-export type ApiProductUpdateRequestWarehouseStock = {
-  warehouseId: string;
-  quantity: number;
-};
-
 export type ApiProductUpdateRequest = {
   name?: string | undefined;
   description?: string | null | undefined;
   categoryId?: string | null | undefined;
   visibility?: ApiProductUpdateRequestVisibility | undefined;
   imageUrl?: string | null | undefined;
-  productType?: ApiProductUpdateRequestProductType | undefined;
+  productType?: ApiSharedEnumff49232140 | undefined;
   sku?: string | undefined;
   barcode?: string | null | undefined;
   unitOfMeasure?: ApiProductUpdateRequestUnitOfMeasure | undefined;
-  currency?: ApiProductUpdateRequestCurrency | undefined;
+  currency?: ApiSharedEnum6cfb146157 | undefined;
   cost?: number | undefined;
   price?: number | undefined;
   promotionalPrice?: number | null | undefined;
@@ -119,7 +109,7 @@ export type ApiProductUpdateRequest = {
   defaultSupplierId?: string | null | undefined;
   defaultSalesAccountId?: string | null | undefined;
   defaultPurchaseAccountId?: string | null | undefined;
-  warehouseStocks?: Array<ApiProductUpdateRequestWarehouseStock> | undefined;
+  warehouseStocks?: Array<ApiSharedObject6dbe49c4ef> | undefined;
   isActive?: boolean | undefined;
 };
 
@@ -129,52 +119,9 @@ export const ApiProductUpdateRequestVisibility$outboundSchema: z.ZodMiniEnum<
 > = z.enum(ApiProductUpdateRequestVisibility);
 
 /** @internal */
-export const ApiProductUpdateRequestProductType$outboundSchema: z.ZodMiniEnum<
-  typeof ApiProductUpdateRequestProductType
-> = z.enum(ApiProductUpdateRequestProductType);
-
-/** @internal */
 export const ApiProductUpdateRequestUnitOfMeasure$outboundSchema: z.ZodMiniEnum<
   typeof ApiProductUpdateRequestUnitOfMeasure
 > = z.enum(ApiProductUpdateRequestUnitOfMeasure);
-
-/** @internal */
-export const ApiProductUpdateRequestCurrency$outboundSchema: z.ZodMiniEnum<
-  typeof ApiProductUpdateRequestCurrency
-> = z.enum(ApiProductUpdateRequestCurrency);
-
-/** @internal */
-export type ApiProductUpdateRequestWarehouseStock$Outbound = {
-  warehouse_id: string;
-  quantity: number;
-};
-
-/** @internal */
-export const ApiProductUpdateRequestWarehouseStock$outboundSchema:
-  z.ZodMiniType<
-    ApiProductUpdateRequestWarehouseStock$Outbound,
-    ApiProductUpdateRequestWarehouseStock
-  > = z.pipe(
-    z.object({
-      warehouseId: z.string(),
-      quantity: z.number(),
-    }),
-    z.transform((v) => {
-      return remap$(v, {
-        warehouseId: "warehouse_id",
-      });
-    }),
-  );
-
-export function apiProductUpdateRequestWarehouseStockToJSON(
-  apiProductUpdateRequestWarehouseStock: ApiProductUpdateRequestWarehouseStock,
-): string {
-  return JSON.stringify(
-    ApiProductUpdateRequestWarehouseStock$outboundSchema.parse(
-      apiProductUpdateRequestWarehouseStock,
-    ),
-  );
-}
 
 /** @internal */
 export type ApiProductUpdateRequest$Outbound = {
@@ -197,9 +144,7 @@ export type ApiProductUpdateRequest$Outbound = {
   default_supplier_id?: string | null | undefined;
   default_sales_account_id?: string | null | undefined;
   default_purchase_account_id?: string | null | undefined;
-  warehouse_stocks?:
-    | Array<ApiProductUpdateRequestWarehouseStock$Outbound>
-    | undefined;
+  warehouse_stocks?: Array<ApiSharedObject6dbe49c4ef$Outbound> | undefined;
   is_active?: boolean | undefined;
 };
 
@@ -214,13 +159,13 @@ export const ApiProductUpdateRequest$outboundSchema: z.ZodMiniType<
     categoryId: z.optional(z.nullable(z.string())),
     visibility: z.optional(ApiProductUpdateRequestVisibility$outboundSchema),
     imageUrl: z.optional(z.nullable(z.string())),
-    productType: z.optional(ApiProductUpdateRequestProductType$outboundSchema),
+    productType: z.optional(ApiSharedEnumff49232140$outboundSchema),
     sku: z.optional(z.string()),
     barcode: z.optional(z.nullable(z.string())),
     unitOfMeasure: z.optional(
       ApiProductUpdateRequestUnitOfMeasure$outboundSchema,
     ),
-    currency: z.optional(ApiProductUpdateRequestCurrency$outboundSchema),
+    currency: z.optional(ApiSharedEnum6cfb146157$outboundSchema),
     cost: z.optional(z.int()),
     price: z.optional(z.int()),
     promotionalPrice: z.optional(z.nullable(z.int())),
@@ -231,9 +176,7 @@ export const ApiProductUpdateRequest$outboundSchema: z.ZodMiniType<
     defaultSalesAccountId: z.optional(z.nullable(z.string())),
     defaultPurchaseAccountId: z.optional(z.nullable(z.string())),
     warehouseStocks: z.optional(
-      z.array(
-        z.lazy(() => ApiProductUpdateRequestWarehouseStock$outboundSchema),
-      ),
+      z.array(ApiSharedObject6dbe49c4ef$outboundSchema),
     ),
     isActive: z.optional(z.boolean()),
   }),

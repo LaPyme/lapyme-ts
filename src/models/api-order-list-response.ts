@@ -6,48 +6,29 @@
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
 import { safeParse } from "../lib/schemas.js";
-import * as openEnums from "../types/enums.js";
-import { ClosedEnum, OpenEnum } from "../types/enums.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
+import {
+  ApiSharedEnum2f67ddf0e8,
+  ApiSharedEnum2f67ddf0e8$inboundSchema,
+} from "./api-shared-enum2f67ddf0e8.js";
+import {
+  ApiSharedEnum4ac9200c4a,
+  ApiSharedEnum4ac9200c4a$inboundSchema,
+} from "./api-shared-enum4ac9200c4a.js";
+import {
+  ApiSharedEnum6cfb146157,
+  ApiSharedEnum6cfb146157$inboundSchema,
+} from "./api-shared-enum6cfb146157.js";
+import {
+  ApiSharedEnum8d46e1ec20,
+  ApiSharedEnum8d46e1ec20$inboundSchema,
+} from "./api-shared-enum8d46e1ec20.js";
+import {
+  ApiSharedEnumb49e56b125,
+  ApiSharedEnumb49e56b125$inboundSchema,
+} from "./api-shared-enumb49e56b125.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
-
-export const ApiOrderListResponseCurrency = {
-  Pes: "PES",
-  Dol: "DOL",
-} as const;
-export type ApiOrderListResponseCurrency = OpenEnum<
-  typeof ApiOrderListResponseCurrency
->;
-
-export const ApiOrderListResponseOrderStatus = {
-  Open: "open",
-  Completed: "completed",
-  Cancelled: "cancelled",
-} as const;
-export type ApiOrderListResponseOrderStatus = OpenEnum<
-  typeof ApiOrderListResponseOrderStatus
->;
-
-export const ApiOrderListResponseFulfillmentStatus = {
-  Unfulfilled: "unfulfilled",
-  InProgress: "in_progress",
-  PartiallyFulfilled: "partially_fulfilled",
-  Fulfilled: "fulfilled",
-  Cancelled: "cancelled",
-} as const;
-export type ApiOrderListResponseFulfillmentStatus = OpenEnum<
-  typeof ApiOrderListResponseFulfillmentStatus
->;
-
-export const ApiOrderListResponseInvoicingStatus = {
-  Pending: "pending",
-  PartiallyInvoiced: "partially_invoiced",
-  Invoiced: "invoiced",
-} as const;
-export type ApiOrderListResponseInvoicingStatus = OpenEnum<
-  typeof ApiOrderListResponseInvoicingStatus
->;
 
 export type ApiOrderListResponseData = {
   object: "order";
@@ -64,27 +45,14 @@ export type ApiOrderListResponseData = {
   subtotal: number;
   taxAmount: number;
   total: number;
-  currency: ApiOrderListResponseCurrency;
-  orderStatus: ApiOrderListResponseOrderStatus;
-  fulfillmentStatus: ApiOrderListResponseFulfillmentStatus;
-  invoicingStatus: ApiOrderListResponseInvoicingStatus;
+  currency: ApiSharedEnum6cfb146157;
+  orderStatus: ApiSharedEnum4ac9200c4a;
+  fulfillmentStatus: ApiSharedEnumb49e56b125;
+  invoicingStatus: ApiSharedEnum2f67ddf0e8;
   notes: string | null;
   createdAt: Date;
   createdByName: string;
 };
-
-/**
- * List-envelope discriminator.
- */
-export const ApiOrderListResponseObject = {
-  List: "list",
-} as const;
-/**
- * List-envelope discriminator.
- */
-export type ApiOrderListResponseObject = ClosedEnum<
-  typeof ApiOrderListResponseObject
->;
 
 export type ApiOrderListResponse = {
   requestId: string;
@@ -94,36 +62,12 @@ export type ApiOrderListResponse = {
   /**
    * List-envelope discriminator.
    */
-  object: ApiOrderListResponseObject;
+  object: ApiSharedEnum8d46e1ec20;
   /**
    * Requested list path.
    */
   url: string;
 };
-
-/** @internal */
-export const ApiOrderListResponseCurrency$inboundSchema: z.ZodMiniType<
-  ApiOrderListResponseCurrency,
-  unknown
-> = openEnums.inboundSchema(ApiOrderListResponseCurrency);
-
-/** @internal */
-export const ApiOrderListResponseOrderStatus$inboundSchema: z.ZodMiniType<
-  ApiOrderListResponseOrderStatus,
-  unknown
-> = openEnums.inboundSchema(ApiOrderListResponseOrderStatus);
-
-/** @internal */
-export const ApiOrderListResponseFulfillmentStatus$inboundSchema: z.ZodMiniType<
-  ApiOrderListResponseFulfillmentStatus,
-  unknown
-> = openEnums.inboundSchema(ApiOrderListResponseFulfillmentStatus);
-
-/** @internal */
-export const ApiOrderListResponseInvoicingStatus$inboundSchema: z.ZodMiniType<
-  ApiOrderListResponseInvoicingStatus,
-  unknown
-> = openEnums.inboundSchema(ApiOrderListResponseInvoicingStatus);
 
 /** @internal */
 export const ApiOrderListResponseData$inboundSchema: z.ZodMiniType<
@@ -145,10 +89,10 @@ export const ApiOrderListResponseData$inboundSchema: z.ZodMiniType<
     subtotal: types.number(),
     tax_amount: types.number(),
     total: types.number(),
-    currency: ApiOrderListResponseCurrency$inboundSchema,
-    order_status: ApiOrderListResponseOrderStatus$inboundSchema,
-    fulfillment_status: ApiOrderListResponseFulfillmentStatus$inboundSchema,
-    invoicing_status: ApiOrderListResponseInvoicingStatus$inboundSchema,
+    currency: ApiSharedEnum6cfb146157$inboundSchema,
+    order_status: ApiSharedEnum4ac9200c4a$inboundSchema,
+    fulfillment_status: ApiSharedEnumb49e56b125$inboundSchema,
+    invoicing_status: ApiSharedEnum2f67ddf0e8$inboundSchema,
     notes: types.nullable(types.string()),
     created_at: types.date(),
     created_by_name: types.string(),
@@ -185,11 +129,6 @@ export function apiOrderListResponseDataFromJSON(
 }
 
 /** @internal */
-export const ApiOrderListResponseObject$inboundSchema: z.ZodMiniEnum<
-  typeof ApiOrderListResponseObject
-> = z.enum(ApiOrderListResponseObject);
-
-/** @internal */
 export const ApiOrderListResponse$inboundSchema: z.ZodMiniType<
   ApiOrderListResponse,
   unknown
@@ -199,7 +138,7 @@ export const ApiOrderListResponse$inboundSchema: z.ZodMiniType<
     data: z.array(z.lazy(() => ApiOrderListResponseData$inboundSchema)),
     has_more: types.boolean(),
     next_cursor: types.nullable(types.string()),
-    object: ApiOrderListResponseObject$inboundSchema,
+    object: ApiSharedEnum8d46e1ec20$inboundSchema,
     url: types.string(),
   }),
   z.transform((v) => {

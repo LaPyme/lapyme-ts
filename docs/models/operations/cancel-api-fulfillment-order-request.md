@@ -7,6 +7,7 @@ import { CancelApiFulfillmentOrderRequest } from "lapyme/models/operations";
 
 let value: CancelApiFulfillmentOrderRequest = {
   fulfillmentOrderId: "bdc333eb-1bba-4eb5-a66e-0456cf5c1ecb",
+  body: {},
 };
 ```
 
@@ -15,4 +16,4 @@ let value: CancelApiFulfillmentOrderRequest = {
 | Field                                                                                     | Type                                                                                      | Required                                                                                  | Description                                                                               |
 | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
 | `fulfillmentOrderId`                                                                      | *string*                                                                                  | :heavy_check_mark:                                                                        | ID de la orden de preparación                                                             |
-| `body`                                                                                    | [models.ApiOrderOptionalReasonRequest](../../models/api-order-optional-reason-request.md) | :heavy_minus_sign:                                                                        | N/A                                                                                       |
+| `body`                                                                                    | [models.ApiOrderOptionalReasonRequest](../../models/api-order-optional-reason-request.md) | :heavy_check_mark:                                                                        | N/A                                                                                       |

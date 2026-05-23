@@ -7,6 +7,7 @@
 * [list](#list) - Listar ventas
 * [create](#create) - Crear venta
 * [getSaleById](#getsalebyid) - Obtener venta por ID
+* [patchMetadata](#patchmetadata) - Actualizar metadatos de venta
 
 ## list
 
@@ -489,6 +490,202 @@ run();
 | Error Type                | Status Code               | Content Type              |
 | ------------------------- | ------------------------- | ------------------------- |
 | errors.ApiErrorEnvelope   | 401, 403, 404             | application/json          |
+| errors.ApiErrorEnvelope   | 429                       | application/json          |
+| errors.ApiErrorEnvelope   | 500                       | application/json          |
+| errors.LapymeDefaultError | 4XX, 5XX                  | \*/\*                     |
+
+## patchMetadata
+
+Actualiza solo metadatos operativos de una venta: notas, referencia de integracion externa y vendedor. No permite modificar items, importes, pagos ni datos fiscales.
+
+Required scopes: `sales:write`.
+
+### Example Usage: clear_external_reference
+
+<!-- UsageSnippet language="typescript" operationID="patchApiSaleMetadata" method="patch" path="/api/v1/sales/{sale_id}" example="clear_external_reference" -->
+```typescript
+import { Lapyme } from "lapyme";
+
+const lapyme = new Lapyme({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const result = await lapyme.sales.patchMetadata({
+    saleId: "3ea26e3c-db45-4006-b281-fd6df4877733",
+    body: {
+      integrationSource: null,
+      integrationId: null,
+    },
+  });
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { LapymeCore } from "lapyme/core.js";
+import { salesPatchMetadata } from "lapyme/funcs/sales-patch-metadata.js";
+
+// Use `LapymeCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const lapyme = new LapymeCore({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const res = await salesPatchMetadata(lapyme, {
+    saleId: "3ea26e3c-db45-4006-b281-fd6df4877733",
+    body: {
+      integrationSource: null,
+      integrationId: null,
+    },
+  });
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("salesPatchMetadata failed:", res.error);
+  }
+}
+
+run();
+```
+### Example Usage: default
+
+<!-- UsageSnippet language="typescript" operationID="patchApiSaleMetadata" method="patch" path="/api/v1/sales/{sale_id}" example="default" -->
+```typescript
+import { Lapyme } from "lapyme";
+
+const lapyme = new Lapyme({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const result = await lapyme.sales.patchMetadata({
+    saleId: "a1bdc9f3-c37c-4a91-8321-43a4ec3fed7f",
+    body: {},
+  });
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { LapymeCore } from "lapyme/core.js";
+import { salesPatchMetadata } from "lapyme/funcs/sales-patch-metadata.js";
+
+// Use `LapymeCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const lapyme = new LapymeCore({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const res = await salesPatchMetadata(lapyme, {
+    saleId: "a1bdc9f3-c37c-4a91-8321-43a4ec3fed7f",
+    body: {},
+  });
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("salesPatchMetadata failed:", res.error);
+  }
+}
+
+run();
+```
+### Example Usage: update_notes_and_reference
+
+<!-- UsageSnippet language="typescript" operationID="patchApiSaleMetadata" method="patch" path="/api/v1/sales/{sale_id}" example="update_notes_and_reference" -->
+```typescript
+import { Lapyme } from "lapyme";
+
+const lapyme = new Lapyme({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const result = await lapyme.sales.patchMetadata({
+    saleId: "662db1fb-57d3-4b09-b2b1-a1fd5be32a40",
+    body: {
+      notes: "Pedido conciliado con ERP",
+      integrationSource: "ERP",
+      integrationId: "SO-10045",
+    },
+  });
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { LapymeCore } from "lapyme/core.js";
+import { salesPatchMetadata } from "lapyme/funcs/sales-patch-metadata.js";
+
+// Use `LapymeCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const lapyme = new LapymeCore({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const res = await salesPatchMetadata(lapyme, {
+    saleId: "662db1fb-57d3-4b09-b2b1-a1fd5be32a40",
+    body: {
+      notes: "Pedido conciliado con ERP",
+      integrationSource: "ERP",
+      integrationId: "SO-10045",
+    },
+  });
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("salesPatchMetadata failed:", res.error);
+  }
+}
+
+run();
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `request`                                                                                                                                                                      | [operations.PatchApiSaleMetadataRequest](../../models/operations/patch-api-sale-metadata-request.md)                                                                           | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
+| `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
+
+### Response
+
+**Promise\<[operations.PatchApiSaleMetadataResponse](../../models/operations/patch-api-sale-metadata-response.md)\>**
+
+### Errors
+
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| errors.ApiErrorEnvelope   | 400, 401, 403, 404, 409   | application/json          |
 | errors.ApiErrorEnvelope   | 429                       | application/json          |
 | errors.ApiErrorEnvelope   | 500                       | application/json          |
 | errors.LapymeDefaultError | 4XX, 5XX                  | \*/\*                     |

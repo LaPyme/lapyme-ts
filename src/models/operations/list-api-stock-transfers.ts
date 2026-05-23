@@ -6,20 +6,9 @@
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
 import { safeParse } from "../../lib/schemas.js";
-import { ClosedEnum } from "../../types/enums.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import * as models from "../index.js";
-
-export const ListApiStockTransfersStatus = {
-  Draft: "draft",
-  InTransit: "in_transit",
-  Completed: "completed",
-  Cancelled: "cancelled",
-} as const;
-export type ListApiStockTransfersStatus = ClosedEnum<
-  typeof ListApiStockTransfersStatus
->;
 
 export type ListApiStockTransfersRequest = {
   /**
@@ -49,7 +38,7 @@ export type ListApiStockTransfersRequest = {
   /**
    * Estados de la transferencia. Puede repetirse o enviarse separada por comas.
    */
-  statuses?: Array<ListApiStockTransfersStatus> | undefined;
+  statuses?: Array<models.ApiSharedEnumc66b046f05> | undefined;
   /**
    * Depósito de origen
    */
@@ -64,11 +53,6 @@ export type ListApiStockTransfersResponse = {
   headers: { [k: string]: Array<string> };
   result: models.ApiTransferListResponse;
 };
-
-/** @internal */
-export const ListApiStockTransfersStatus$outboundSchema: z.ZodMiniEnum<
-  typeof ListApiStockTransfersStatus
-> = z.enum(ListApiStockTransfersStatus);
 
 /** @internal */
 export type ListApiStockTransfersRequest$Outbound = {
@@ -101,7 +85,9 @@ export const ListApiStockTransfersRequest$outboundSchema: z.ZodMiniType<
       z.date(),
       z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
     )),
-    statuses: z.optional(z.array(ListApiStockTransfersStatus$outboundSchema)),
+    statuses: z.optional(
+      z.array(models.ApiSharedEnumc66b046f05$outboundSchema),
+    ),
     sourceWarehouseId: z.optional(z.string()),
     targetWarehouseId: z.optional(z.string()),
   }),

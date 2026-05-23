@@ -5,85 +5,52 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
-import { ClosedEnum } from "../types/enums.js";
+import {
+  ApiSharedEnum377ec234cb,
+  ApiSharedEnum377ec234cb$outboundSchema,
+} from "./api-shared-enum377ec234cb.js";
+import {
+  ApiSharedEnum73bb779813,
+  ApiSharedEnum73bb779813$outboundSchema,
+} from "./api-shared-enum73bb779813.js";
 
-export const ApiPaymentMethodMutationRequestType = {
-  Cash: "cash",
-  Check: "check",
-  Card: "card",
-  BankTransfer: "bank_transfer",
-  Other: "other",
-} as const;
-export type ApiPaymentMethodMutationRequestType = ClosedEnum<
-  typeof ApiPaymentMethodMutationRequestType
->;
-
-export const ApiPaymentMethodMutationRequestVisibility = {
-  Sales: "sales",
-  Purchases: "purchases",
-  Both: "both",
-  System: "system",
-} as const;
-export type ApiPaymentMethodMutationRequestVisibility = ClosedEnum<
-  typeof ApiPaymentMethodMutationRequestVisibility
->;
-
-export type ApiPaymentMethodMutationRequestInstallmentPlan = {
+export type InstallmentPlan = {
   code: string;
   label: string;
 };
 
 export type ApiPaymentMethodMutationRequest = {
   name: string;
-  type?: ApiPaymentMethodMutationRequestType | undefined;
+  type?: ApiSharedEnum377ec234cb | undefined;
   bankAccountId?: string | null | undefined;
   linkedAccountId?: string | null | undefined;
   feePercentage?: string | null | undefined;
   feeFixed?: number | null | undefined;
   requiresReference?: boolean | undefined;
-  visibility?: ApiPaymentMethodMutationRequestVisibility | undefined;
-  installmentPlans?:
-    | Array<ApiPaymentMethodMutationRequestInstallmentPlan>
-    | undefined;
+  visibility?: ApiSharedEnum73bb779813 | undefined;
+  installmentPlans?: Array<InstallmentPlan> | undefined;
   isActive?: boolean | undefined;
 };
 
 /** @internal */
-export const ApiPaymentMethodMutationRequestType$outboundSchema: z.ZodMiniEnum<
-  typeof ApiPaymentMethodMutationRequestType
-> = z.enum(ApiPaymentMethodMutationRequestType);
-
-/** @internal */
-export const ApiPaymentMethodMutationRequestVisibility$outboundSchema:
-  z.ZodMiniEnum<typeof ApiPaymentMethodMutationRequestVisibility> = z.enum(
-    ApiPaymentMethodMutationRequestVisibility,
-  );
-
-/** @internal */
-export type ApiPaymentMethodMutationRequestInstallmentPlan$Outbound = {
+export type InstallmentPlan$Outbound = {
   code: string;
   label: string;
 };
 
 /** @internal */
-export const ApiPaymentMethodMutationRequestInstallmentPlan$outboundSchema:
-  z.ZodMiniType<
-    ApiPaymentMethodMutationRequestInstallmentPlan$Outbound,
-    ApiPaymentMethodMutationRequestInstallmentPlan
-  > = z.object({
-    code: z.string(),
-    label: z.string(),
-  });
+export const InstallmentPlan$outboundSchema: z.ZodMiniType<
+  InstallmentPlan$Outbound,
+  InstallmentPlan
+> = z.object({
+  code: z.string(),
+  label: z.string(),
+});
 
-export function apiPaymentMethodMutationRequestInstallmentPlanToJSON(
-  apiPaymentMethodMutationRequestInstallmentPlan:
-    ApiPaymentMethodMutationRequestInstallmentPlan,
+export function installmentPlanToJSON(
+  installmentPlan: InstallmentPlan,
 ): string {
-  return JSON.stringify(
-    ApiPaymentMethodMutationRequestInstallmentPlan$outboundSchema.parse(
-      apiPaymentMethodMutationRequestInstallmentPlan,
-    ),
-  );
+  return JSON.stringify(InstallmentPlan$outboundSchema.parse(installmentPlan));
 }
 
 /** @internal */
@@ -96,9 +63,7 @@ export type ApiPaymentMethodMutationRequest$Outbound = {
   fee_fixed?: number | null | undefined;
   requires_reference?: boolean | undefined;
   visibility?: string | undefined;
-  installment_plans?:
-    | Array<ApiPaymentMethodMutationRequestInstallmentPlan$Outbound>
-    | undefined;
+  installment_plans?: Array<InstallmentPlan$Outbound> | undefined;
   is_active?: boolean | undefined;
 };
 
@@ -109,18 +74,16 @@ export const ApiPaymentMethodMutationRequest$outboundSchema: z.ZodMiniType<
 > = z.pipe(
   z.object({
     name: z.string(),
-    type: z.optional(ApiPaymentMethodMutationRequestType$outboundSchema),
+    type: z.optional(ApiSharedEnum377ec234cb$outboundSchema),
     bankAccountId: z.optional(z.nullable(z.string())),
     linkedAccountId: z.optional(z.nullable(z.string())),
     feePercentage: z.optional(z.nullable(z.string())),
     feeFixed: z.optional(z.nullable(z.int())),
     requiresReference: z.optional(z.boolean()),
-    visibility: z.optional(
-      ApiPaymentMethodMutationRequestVisibility$outboundSchema,
+    visibility: z.optional(ApiSharedEnum73bb779813$outboundSchema),
+    installmentPlans: z.optional(
+      z.array(z.lazy(() => InstallmentPlan$outboundSchema)),
     ),
-    installmentPlans: z.optional(z.array(z.lazy(() =>
-      ApiPaymentMethodMutationRequestInstallmentPlan$outboundSchema
-    ))),
     isActive: z.optional(z.boolean()),
   }),
   z.transform((v) => {

@@ -6,42 +6,29 @@
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
 import { safeParse } from "../lib/schemas.js";
-import * as openEnums from "../types/enums.js";
-import { ClosedEnum, OpenEnum } from "../types/enums.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
+import {
+  ApiSharedEnum8d46e1ec20,
+  ApiSharedEnum8d46e1ec20$inboundSchema,
+} from "./api-shared-enum8d46e1ec20.js";
+import {
+  ApiSharedEnumff49232140,
+  ApiSharedEnumff49232140$inboundSchema,
+} from "./api-shared-enumff49232140.js";
+import {
+  ApiSharedObject5884d24e45,
+  ApiSharedObject5884d24e45$inboundSchema,
+} from "./api-shared-object5884d24e45.js";
+import {
+  ApiSharedObject8aeeceaf0f,
+  ApiSharedObject8aeeceaf0f$inboundSchema,
+} from "./api-shared-object8aeeceaf0f.js";
+import {
+  ApiSharedObjectadcf6da6ce,
+  ApiSharedObjectadcf6da6ce$inboundSchema,
+} from "./api-shared-objectadcf6da6ce.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
-
-export type ApiInventoryListResponseWarehouse = {
-  object: "warehouse";
-  id: string;
-  name: string;
-  address: string | null;
-  isDefault: boolean;
-  isActive: boolean;
-};
-
-export type ApiInventoryListResponseCategory = {
-  id: string;
-  name: string;
-};
-
-export const ApiInventoryListResponseProductType = {
-  Product: "product",
-  Service: "service",
-  Combo: "combo",
-  Kit: "kit",
-} as const;
-export type ApiInventoryListResponseProductType = OpenEnum<
-  typeof ApiInventoryListResponseProductType
->;
-
-export type Stock = {
-  available: number;
-  onHand: number;
-  reserved: number;
-  incoming: number;
-};
 
 export type ApiInventoryListResponseItem = {
   object: "inventory_item";
@@ -50,28 +37,15 @@ export type ApiInventoryListResponseItem = {
   sku: string;
   variantOptions: { [k: string]: string } | null;
   optionNames: Array<string>;
-  category: ApiInventoryListResponseCategory | null;
-  productType: ApiInventoryListResponseProductType;
-  stock: Stock;
+  category: ApiSharedObject8aeeceaf0f | null;
+  productType: ApiSharedEnumff49232140;
+  stock: ApiSharedObject5884d24e45;
 };
 
 export type ApiInventoryListResponseData = {
-  warehouse: ApiInventoryListResponseWarehouse;
+  warehouse: ApiSharedObjectadcf6da6ce;
   items: Array<ApiInventoryListResponseItem>;
 };
-
-/**
- * List-envelope discriminator.
- */
-export const ApiInventoryListResponseObject = {
-  List: "list",
-} as const;
-/**
- * List-envelope discriminator.
- */
-export type ApiInventoryListResponseObject = ClosedEnum<
-  typeof ApiInventoryListResponseObject
->;
 
 export type ApiInventoryListResponse = {
   requestId: string;
@@ -81,93 +55,12 @@ export type ApiInventoryListResponse = {
   /**
    * List-envelope discriminator.
    */
-  object: ApiInventoryListResponseObject;
+  object: ApiSharedEnum8d46e1ec20;
   /**
    * Requested list path.
    */
   url: string;
 };
-
-/** @internal */
-export const ApiInventoryListResponseWarehouse$inboundSchema: z.ZodMiniType<
-  ApiInventoryListResponseWarehouse,
-  unknown
-> = z.pipe(
-  z.object({
-    object: types.literal("warehouse"),
-    id: types.string(),
-    name: types.string(),
-    address: types.nullable(types.string()),
-    is_default: types.boolean(),
-    is_active: types.boolean(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "is_default": "isDefault",
-      "is_active": "isActive",
-    });
-  }),
-);
-
-export function apiInventoryListResponseWarehouseFromJSON(
-  jsonString: string,
-): SafeParseResult<ApiInventoryListResponseWarehouse, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) => ApiInventoryListResponseWarehouse$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'ApiInventoryListResponseWarehouse' from JSON`,
-  );
-}
-
-/** @internal */
-export const ApiInventoryListResponseCategory$inboundSchema: z.ZodMiniType<
-  ApiInventoryListResponseCategory,
-  unknown
-> = z.object({
-  id: types.string(),
-  name: types.string(),
-});
-
-export function apiInventoryListResponseCategoryFromJSON(
-  jsonString: string,
-): SafeParseResult<ApiInventoryListResponseCategory, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) => ApiInventoryListResponseCategory$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'ApiInventoryListResponseCategory' from JSON`,
-  );
-}
-
-/** @internal */
-export const ApiInventoryListResponseProductType$inboundSchema: z.ZodMiniType<
-  ApiInventoryListResponseProductType,
-  unknown
-> = openEnums.inboundSchema(ApiInventoryListResponseProductType);
-
-/** @internal */
-export const Stock$inboundSchema: z.ZodMiniType<Stock, unknown> = z.pipe(
-  z.object({
-    available: types.number(),
-    on_hand: types.number(),
-    reserved: types.number(),
-    incoming: types.number(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "on_hand": "onHand",
-    });
-  }),
-);
-
-export function stockFromJSON(
-  jsonString: string,
-): SafeParseResult<Stock, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) => Stock$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'Stock' from JSON`,
-  );
-}
 
 /** @internal */
 export const ApiInventoryListResponseItem$inboundSchema: z.ZodMiniType<
@@ -181,11 +74,9 @@ export const ApiInventoryListResponseItem$inboundSchema: z.ZodMiniType<
     sku: types.string(),
     variant_options: types.nullable(z.record(z.string(), types.string())),
     option_names: z.array(types.string()),
-    category: types.nullable(
-      z.lazy(() => ApiInventoryListResponseCategory$inboundSchema),
-    ),
-    product_type: ApiInventoryListResponseProductType$inboundSchema,
-    stock: z.lazy(() => Stock$inboundSchema),
+    category: types.nullable(ApiSharedObject8aeeceaf0f$inboundSchema),
+    product_type: ApiSharedEnumff49232140$inboundSchema,
+    stock: ApiSharedObject5884d24e45$inboundSchema,
   }),
   z.transform((v) => {
     return remap$(v, {
@@ -213,7 +104,7 @@ export const ApiInventoryListResponseData$inboundSchema: z.ZodMiniType<
   ApiInventoryListResponseData,
   unknown
 > = z.object({
-  warehouse: z.lazy(() => ApiInventoryListResponseWarehouse$inboundSchema),
+  warehouse: ApiSharedObjectadcf6da6ce$inboundSchema,
   items: z.array(z.lazy(() => ApiInventoryListResponseItem$inboundSchema)),
 });
 
@@ -228,11 +119,6 @@ export function apiInventoryListResponseDataFromJSON(
 }
 
 /** @internal */
-export const ApiInventoryListResponseObject$inboundSchema: z.ZodMiniEnum<
-  typeof ApiInventoryListResponseObject
-> = z.enum(ApiInventoryListResponseObject);
-
-/** @internal */
 export const ApiInventoryListResponse$inboundSchema: z.ZodMiniType<
   ApiInventoryListResponse,
   unknown
@@ -242,7 +128,7 @@ export const ApiInventoryListResponse$inboundSchema: z.ZodMiniType<
     data: z.lazy(() => ApiInventoryListResponseData$inboundSchema),
     has_more: types.boolean(),
     next_cursor: types.nullable(types.string()),
-    object: ApiInventoryListResponseObject$inboundSchema,
+    object: ApiSharedEnum8d46e1ec20$inboundSchema,
     url: types.string(),
   }),
   z.transform((v) => {

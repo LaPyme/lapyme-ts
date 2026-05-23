@@ -55,70 +55,35 @@ let value: ApiSaleTransactionSuccessResponse = {
       grossIncomePerceptionAmount: 933761,
       grossIncomeTaxBreakdown: [
         {
-          provinceId: 981554,
-          amount: 484461,
+          provinceId: 438840,
+          amount: 290368,
         },
       ],
-      municipalPerceptionAmount: 174733,
-      internalTributeAmount: 454441,
-      uncategorizedVatPerceptionAmount: 459257,
-      otherTributeAmount: 733084,
-      discountType: "percentage",
-      discountValue: 561.47,
-      discountAmount: 47491,
-      roundingAdjustment: 864813,
-      balance: 1778.6,
-      isFullAmountPending: true,
-      items: [
-        {
-          productId: "e006673b-6b7a-40d8-8190-6929677cdaf6",
-          productName: "<value>",
-          sku: "<value>",
-          warehouseId: "813f17bc-9a75-4f6c-a667-2dd64813da15",
-          name: "<value>",
-          productType: "kit",
-          quantity: 6313.96,
-          unitPrice: 389913,
-          unitCost: 104823,
-          taxRateId: 242458,
-          isExempt: true,
-          discount: {
-            type: "amount",
-            value: 2299.32,
-          },
-          notes: "<value>",
-          accountId: "514dae75-282b-411e-a2de-f058a36bb273",
-          costCenter1Id: "179ad6fc-b9e4-463c-8159-bc2fed437ee5",
-          costCenter2Id: null,
-          costCenter3Id: "37a84bb7-be18-422a-b77b-83dfd4bfe362",
-        },
-      ],
-      paymentMethods: [
-        {
-          methodId: "423a76c9-b903-4661-8363-2e71534c51f2",
-          amount: 335436,
-          description: "yuck warlike across",
-          reference: "<value>",
-          feeAmount: 190582,
-          terminalId: "03dc4b1f-2838-4ee9-9ec1-c024a570b14f",
-          cardBatchNumber: "<value>",
-          cardCouponNumber: null,
-          cardInstallmentPlanCode: "<value>",
-          cardBrand: "<value>",
-        },
-      ],
+      municipalPerceptionAmount: 981554,
+      internalTributeAmount: 484461,
+      uncategorizedVatPerceptionAmount: 174733,
+      otherTributeAmount: 454441,
+      discountType: "amount",
+      discountValue: 1015.29,
+      discountAmount: 132497,
+      roundingAdjustment: 56147,
+      balance: 474.91,
+      isFullAmountPending: false,
+      items: [],
+      paymentMethods: [],
     },
     projectedEffects: {
       inventory: {
-        willAffectStock: true,
+        willAffectStock: false,
         warehouseIds: [
-          "2178e60d-4f5d-4f42-a283-3304bcec3a01",
+          "e006673b-6b7a-40d8-8190-6929677cdaf6",
+          "77c813f1-7bc9-4a75-af6c-6672dd64813d",
         ],
-        productLineCount: 250522,
-        totalQuantity: 1606.33,
+        productLineCount: 68286,
+        totalQuantity: 3190.65,
       },
       accounting: {
-        willCreateSaleEntry: true,
+        willCreateSaleEntry: false,
         willCreatePaymentEntry: true,
       },
       fiscal: {
@@ -126,9 +91,9 @@ let value: ApiSaleTransactionSuccessResponse = {
       },
       payments: {
         willCreatePayments: false,
-        paymentMethodCount: 664715,
-        totalAmount: 1494.96,
-        pendingAmount: 7808.37,
+        paymentMethodCount: 631396,
+        totalAmount: 3899.13,
+        pendingAmount: 5394.58,
       },
     },
     idempotentReplay: true,
@@ -139,8 +104,8 @@ let value: ApiSaleTransactionSuccessResponse = {
 
 ## Fields
 
-| Field                                                                                                           | Type                                                                                                            | Required                                                                                                        | Description                                                                                                     |
-| --------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
-| `requestId`                                                                                                     | *string*                                                                                                        | :heavy_check_mark:                                                                                              | N/A                                                                                                             |
-| `data`                                                                                                          | [models.ApiSaleTransactionSuccessResponseData](../models/api-sale-transaction-success-response-data.md)         | :heavy_check_mark:                                                                                              | N/A                                                                                                             |
-| `warnings`                                                                                                      | [models.ApiSaleTransactionSuccessResponseWarning](../models/api-sale-transaction-success-response-warning.md)[] | :heavy_check_mark:                                                                                              | N/A                                                                                                             |
+| Field                                                                                                   | Type                                                                                                    | Required                                                                                                | Description                                                                                             |
+| ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| `requestId`                                                                                             | *string*                                                                                                | :heavy_check_mark:                                                                                      | N/A                                                                                                     |
+| `data`                                                                                                  | [models.ApiSaleTransactionSuccessResponseData](../models/api-sale-transaction-success-response-data.md) | :heavy_check_mark:                                                                                      | N/A                                                                                                     |
+| `warnings`                                                                                              | [models.ApiSharedObjectc671832641](../models/api-shared-objectc671832641.md)[]                          | :heavy_check_mark:                                                                                      | N/A                                                                                                     |

@@ -7,8 +7,7 @@ import { GetApiStockTransferByIdResponse } from "lapyme/models/operations";
 
 let value: GetApiStockTransferByIdResponse = {
   headers: {
-    "key": [],
-    "key1": [
+    "key": [
       "<value 1>",
     ],
   },
@@ -28,11 +27,11 @@ let value: GetApiStockTransferByIdResponse = {
       createdBy: "812da217-0912-4faa-b34f-dc09b64999c6",
       updatedBy: "6cd42fc6-354f-4a4d-9ae6-2bb6eb2ee7ac",
       sourceWarehouse: {
-        id: "7657e0fc-35aa-40f1-9acb-076badc5978d",
+        id: "bea67aa9-4cab-4290-aa26-8749e7435e10",
         name: "<value>",
       },
       targetWarehouse: {
-        id: "e5b92dff-0fc2-4c5f-898e-76dbd68ea865",
+        id: "38d07e33-fb22-4193-8a9b-253b14e9cce9",
         name: "<value>",
       },
       items: [],

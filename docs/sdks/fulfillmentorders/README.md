@@ -89,7 +89,7 @@ Cancelar orden de preparación
 
 ### Example Usage
 
-<!-- UsageSnippet language="typescript" operationID="cancelApiFulfillmentOrder" method="post" path="/api/v1/fulfillment-orders/{fulfillment_order_id}/cancel" -->
+<!-- UsageSnippet language="typescript" operationID="cancelApiFulfillmentOrder" method="post" path="/api/v1/fulfillment-orders/{fulfillment_order_id}/cancel" example="default" -->
 ```typescript
 import { Lapyme } from "lapyme";
 
@@ -100,6 +100,7 @@ const lapyme = new Lapyme({
 async function run() {
   const result = await lapyme.fulfillmentOrders.cancelFulfillmentOrder({
     fulfillmentOrderId: "9b14556b-4b54-4548-a0b8-97266953c038",
+    body: {},
   });
 
   console.log(result);
@@ -125,6 +126,7 @@ const lapyme = new LapymeCore({
 async function run() {
   const res = await fulfillmentOrdersCancelFulfillmentOrder(lapyme, {
     fulfillmentOrderId: "9b14556b-4b54-4548-a0b8-97266953c038",
+    body: {},
   });
   if (res.ok) {
     const { value: result } = res;

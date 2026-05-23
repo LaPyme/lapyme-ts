@@ -6,23 +6,35 @@
 import { GetApiCustomerPaymentResponse } from "lapyme/models/operations";
 
 let value: GetApiCustomerPaymentResponse = {
-  headers: {},
+  headers: {
+    "key": [
+      "<value 1>",
+    ],
+    "key1": [
+      "<value 1>",
+    ],
+    "key2": [
+      "<value 1>",
+      "<value 2>",
+      "<value 3>",
+    ],
+  },
   result: {
     requestId: "<id>",
     data: {
       customerPayment: {
-        id: "d65c8d3d-9351-4cc3-9a71-3f90c1210440",
+        id: "2cc2547c-6761-4400-8b17-6e5f34eca7b8",
         type: "customer",
         status: "active",
-        contactId: "10dfe69f-00a3-4e47-afc1-d87b0ec18610",
-        contactName: null,
-        paymentNumber: 412636,
-        formattedPaymentNumber: null,
+        contactId: "1a097f2f-4bfb-40dc-b3cd-8fe4a7e2fcc5",
+        contactName: "<value>",
+        paymentNumber: 790450,
+        formattedPaymentNumber: "<value>",
         paymentDate: "<value>",
         currency: "PES",
-        totalAmount: 71482,
-        balance: 976692,
-        createdAt: new Date("2024-12-04T16:27:15.015Z"),
+        totalAmount: 783901,
+        balance: 111225,
+        createdAt: new Date("2024-05-01T06:17:09.879Z"),
         createdByName: "<value>",
       },
     },

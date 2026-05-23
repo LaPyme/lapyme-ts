@@ -7,29 +7,25 @@ import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
 import { ClosedEnum } from "../types/enums.js";
 
-export const ApiPriceListMutationRequestAutomaticPricingMode = {
+export const AutomaticPricingMode = {
   BasePriceAdjustment: "base_price_adjustment",
   CostMarkup: "cost_markup",
 } as const;
-export type ApiPriceListMutationRequestAutomaticPricingMode = ClosedEnum<
-  typeof ApiPriceListMutationRequestAutomaticPricingMode
->;
+export type AutomaticPricingMode = ClosedEnum<typeof AutomaticPricingMode>;
 
 export type ApiPriceListMutationRequest = {
   name: string;
   isAutomatic?: boolean | undefined;
-  automaticPricingMode?:
-    | ApiPriceListMutationRequestAutomaticPricingMode
-    | undefined;
+  automaticPricingMode?: AutomaticPricingMode | undefined;
   adjustmentPercentage?: number | null | undefined;
   defaultEconomicActivity?: string | null | undefined;
   taxInclusive?: boolean | undefined;
 };
 
 /** @internal */
-export const ApiPriceListMutationRequestAutomaticPricingMode$outboundSchema:
-  z.ZodMiniEnum<typeof ApiPriceListMutationRequestAutomaticPricingMode> = z
-    .enum(ApiPriceListMutationRequestAutomaticPricingMode);
+export const AutomaticPricingMode$outboundSchema: z.ZodMiniEnum<
+  typeof AutomaticPricingMode
+> = z.enum(AutomaticPricingMode);
 
 /** @internal */
 export type ApiPriceListMutationRequest$Outbound = {
@@ -50,7 +46,7 @@ export const ApiPriceListMutationRequest$outboundSchema: z.ZodMiniType<
     name: z.string(),
     isAutomatic: z._default(z.boolean(), true),
     automaticPricingMode: z._default(
-      ApiPriceListMutationRequestAutomaticPricingMode$outboundSchema,
+      AutomaticPricingMode$outboundSchema,
       "base_price_adjustment",
     ),
     adjustmentPercentage: z.optional(z.nullable(z.number())),

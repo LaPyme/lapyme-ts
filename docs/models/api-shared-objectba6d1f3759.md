@@ -1,0 +1,51 @@
+# ApiSharedObjectba6d1f3759
+
+## Example Usage
+
+```typescript
+import { ApiSharedObjectba6d1f3759 } from "lapyme/models";
+
+let value: ApiSharedObjectba6d1f3759 = {
+  id: "dc5b8619-e1b8-4ff9-ae24-0f162af250ed",
+  type: "customer",
+  status: "voided",
+  contactId: "8f1f5e8e-dfac-432d-9fe9-9c8b4ba8b580",
+  contactName: "<value>",
+  paymentNumber: 475511,
+  formattedPaymentNumber: "<value>",
+  paymentDate: "<value>",
+  currency: "PES",
+  totalAmount: 837867,
+  balance: 829268,
+  createdAt: new Date("2024-06-23T13:43:52.301Z"),
+  createdByName: null,
+};
+```
+
+## Fields
+
+| Field                                                                                         | Type                                                                                          | Required                                                                                      | Description                                                                                   |
+| --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| `id`                                                                                          | *string*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
+| `type`                                                                                        | *"customer"*                                                                                  | :heavy_check_mark:                                                                            | N/A                                                                                           |
+| `status`                                                                                      | [models.ApiSharedEnum65e97ceeee](../models/api-shared-enum65e97ceeee.md)                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
+| `contactId`                                                                                   | *string*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
+| `contactName`                                                                                 | *string*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
+| `paymentNumber`                                                                               | *number*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
+| `formattedPaymentNumber`                                                                      | *string*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
+| `paymentDate`                                                                                 | *string*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
+| `currency`                                                                                    | [models.ApiSharedEnum6cfb146157](../models/api-shared-enum6cfb146157.md)                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
+| `settlementCurrency`                                                                          | [models.ApiSharedEnum6cfb146157](../models/api-shared-enum6cfb146157.md)                      | :heavy_minus_sign:                                                                            | N/A                                                                                           |
+| `settlementTotalAmount`                                                                       | *number*                                                                                      | :heavy_minus_sign:                                                                            | N/A                                                                                           |
+| `exchangeRate`                                                                                | *models.ApiSharedObjectba6d1f3759ExchangeRate*                                                | :heavy_minus_sign:                                                                            | N/A                                                                                           |
+| `totalAmount`                                                                                 | *number*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
+| `balance`                                                                                     | *number*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
+| `notes`                                                                                       | *string*                                                                                      | :heavy_minus_sign:                                                                            | N/A                                                                                           |
+| `createdAt`                                                                                   | [Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date) | :heavy_check_mark:                                                                            | N/A                                                                                           |
+| `createdByName`                                                                               | *string*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
+| `splits`                                                                                      | [models.ApiSharedObject63c2faf817](../models/api-shared-object63c2faf817.md)[]                | :heavy_minus_sign:                                                                            | N/A                                                                                           |
+| `applications`                                                                                | [models.ApiSharedObject2cdf35e652](../models/api-shared-object2cdf35e652.md)[]                | :heavy_minus_sign:                                                                            | N/A                                                                                           |
+| `creditApplications`                                                                          | [models.ApiSharedObject2cdf35e652](../models/api-shared-object2cdf35e652.md)[]                | :heavy_minus_sign:                                                                            | N/A                                                                                           |
+| `journalLineApplications`                                                                     | [models.ApiSharedObject2cdf35e652](../models/api-shared-object2cdf35e652.md)[]                | :heavy_minus_sign:                                                                            | N/A                                                                                           |
+| `advanceApplications`                                                                         | [models.ApiSharedObject2cdf35e652](../models/api-shared-object2cdf35e652.md)[]                | :heavy_minus_sign:                                                                            | N/A                                                                                           |
+| `withholdings`                                                                                | [models.ApiSharedObject4faf4c3ad5](../models/api-shared-object4faf4c3ad5.md)[]                | :heavy_minus_sign:                                                                            | N/A                                                                                           |

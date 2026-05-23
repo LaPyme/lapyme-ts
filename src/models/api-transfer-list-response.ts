@@ -6,252 +6,32 @@
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
 import { safeParse } from "../lib/schemas.js";
-import * as openEnums from "../types/enums.js";
-import { ClosedEnum, OpenEnum } from "../types/enums.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
+import {
+  ApiSharedEnum8d46e1ec20,
+  ApiSharedEnum8d46e1ec20$inboundSchema,
+} from "./api-shared-enum8d46e1ec20.js";
+import {
+  ApiSharedObject4b29ca9c27,
+  ApiSharedObject4b29ca9c27$inboundSchema,
+} from "./api-shared-object4b29ca9c27.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
-
-export const ApiTransferListResponseStatus = {
-  Draft: "draft",
-  InTransit: "in_transit",
-  Completed: "completed",
-  Cancelled: "cancelled",
-} as const;
-export type ApiTransferListResponseStatus = OpenEnum<
-  typeof ApiTransferListResponseStatus
->;
-
-export type ApiTransferListResponseSourceWarehouse = {
-  id: string;
-  name: string;
-};
-
-export type ApiTransferListResponseTargetWarehouse = {
-  id: string;
-  name: string;
-};
-
-export type ApiTransferListResponseProduct = {
-  id: string;
-  name: string;
-  sku: string;
-  variantOptions: { [k: string]: string } | null;
-  optionNames: Array<string> | null;
-};
-
-export type ApiTransferListResponseItem = {
-  id: string;
-  productId: string;
-  quantity: number;
-  receivedQuantity: number;
-  product: ApiTransferListResponseProduct;
-};
-
-export type ApiTransferListResponseData = {
-  object: "stock_transfer";
-  id: string;
-  organizationId: string;
-  sourceWarehouseId: string;
-  targetWarehouseId: string;
-  transferDate: Date;
-  notes: string | null;
-  status: ApiTransferListResponseStatus;
-  createdAt: Date;
-  updatedAt: Date;
-  createdBy: string;
-  updatedBy: string | null;
-  sourceWarehouse: ApiTransferListResponseSourceWarehouse;
-  targetWarehouse: ApiTransferListResponseTargetWarehouse;
-  items: Array<ApiTransferListResponseItem>;
-};
-
-/**
- * List-envelope discriminator.
- */
-export const ApiTransferListResponseObject = {
-  List: "list",
-} as const;
-/**
- * List-envelope discriminator.
- */
-export type ApiTransferListResponseObject = ClosedEnum<
-  typeof ApiTransferListResponseObject
->;
 
 export type ApiTransferListResponse = {
   requestId: string;
-  data: Array<ApiTransferListResponseData>;
+  data: Array<ApiSharedObject4b29ca9c27>;
   hasMore: boolean;
   nextCursor: string | null;
   /**
    * List-envelope discriminator.
    */
-  object: ApiTransferListResponseObject;
+  object: ApiSharedEnum8d46e1ec20;
   /**
    * Requested list path.
    */
   url: string;
 };
-
-/** @internal */
-export const ApiTransferListResponseStatus$inboundSchema: z.ZodMiniType<
-  ApiTransferListResponseStatus,
-  unknown
-> = openEnums.inboundSchema(ApiTransferListResponseStatus);
-
-/** @internal */
-export const ApiTransferListResponseSourceWarehouse$inboundSchema:
-  z.ZodMiniType<ApiTransferListResponseSourceWarehouse, unknown> = z.object({
-    id: types.string(),
-    name: types.string(),
-  });
-
-export function apiTransferListResponseSourceWarehouseFromJSON(
-  jsonString: string,
-): SafeParseResult<ApiTransferListResponseSourceWarehouse, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) =>
-      ApiTransferListResponseSourceWarehouse$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'ApiTransferListResponseSourceWarehouse' from JSON`,
-  );
-}
-
-/** @internal */
-export const ApiTransferListResponseTargetWarehouse$inboundSchema:
-  z.ZodMiniType<ApiTransferListResponseTargetWarehouse, unknown> = z.object({
-    id: types.string(),
-    name: types.string(),
-  });
-
-export function apiTransferListResponseTargetWarehouseFromJSON(
-  jsonString: string,
-): SafeParseResult<ApiTransferListResponseTargetWarehouse, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) =>
-      ApiTransferListResponseTargetWarehouse$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'ApiTransferListResponseTargetWarehouse' from JSON`,
-  );
-}
-
-/** @internal */
-export const ApiTransferListResponseProduct$inboundSchema: z.ZodMiniType<
-  ApiTransferListResponseProduct,
-  unknown
-> = z.pipe(
-  z.object({
-    id: types.string(),
-    name: types.string(),
-    sku: types.string(),
-    variant_options: types.nullable(z.record(z.string(), types.string())),
-    option_names: types.nullable(z.array(types.string())),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "variant_options": "variantOptions",
-      "option_names": "optionNames",
-    });
-  }),
-);
-
-export function apiTransferListResponseProductFromJSON(
-  jsonString: string,
-): SafeParseResult<ApiTransferListResponseProduct, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) => ApiTransferListResponseProduct$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'ApiTransferListResponseProduct' from JSON`,
-  );
-}
-
-/** @internal */
-export const ApiTransferListResponseItem$inboundSchema: z.ZodMiniType<
-  ApiTransferListResponseItem,
-  unknown
-> = z.pipe(
-  z.object({
-    id: types.string(),
-    product_id: types.string(),
-    quantity: types.number(),
-    received_quantity: types.number(),
-    product: z.lazy(() => ApiTransferListResponseProduct$inboundSchema),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "product_id": "productId",
-      "received_quantity": "receivedQuantity",
-    });
-  }),
-);
-
-export function apiTransferListResponseItemFromJSON(
-  jsonString: string,
-): SafeParseResult<ApiTransferListResponseItem, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) => ApiTransferListResponseItem$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'ApiTransferListResponseItem' from JSON`,
-  );
-}
-
-/** @internal */
-export const ApiTransferListResponseData$inboundSchema: z.ZodMiniType<
-  ApiTransferListResponseData,
-  unknown
-> = z.pipe(
-  z.object({
-    object: types.literal("stock_transfer"),
-    id: types.string(),
-    organization_id: types.string(),
-    source_warehouse_id: types.string(),
-    target_warehouse_id: types.string(),
-    transfer_date: types.date(),
-    notes: types.nullable(types.string()),
-    status: ApiTransferListResponseStatus$inboundSchema,
-    created_at: types.date(),
-    updated_at: types.date(),
-    created_by: types.string(),
-    updated_by: types.nullable(types.string()),
-    source_warehouse: z.lazy(() =>
-      ApiTransferListResponseSourceWarehouse$inboundSchema
-    ),
-    target_warehouse: z.lazy(() =>
-      ApiTransferListResponseTargetWarehouse$inboundSchema
-    ),
-    items: z.array(z.lazy(() => ApiTransferListResponseItem$inboundSchema)),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "organization_id": "organizationId",
-      "source_warehouse_id": "sourceWarehouseId",
-      "target_warehouse_id": "targetWarehouseId",
-      "transfer_date": "transferDate",
-      "created_at": "createdAt",
-      "updated_at": "updatedAt",
-      "created_by": "createdBy",
-      "updated_by": "updatedBy",
-      "source_warehouse": "sourceWarehouse",
-      "target_warehouse": "targetWarehouse",
-    });
-  }),
-);
-
-export function apiTransferListResponseDataFromJSON(
-  jsonString: string,
-): SafeParseResult<ApiTransferListResponseData, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) => ApiTransferListResponseData$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'ApiTransferListResponseData' from JSON`,
-  );
-}
-
-/** @internal */
-export const ApiTransferListResponseObject$inboundSchema: z.ZodMiniEnum<
-  typeof ApiTransferListResponseObject
-> = z.enum(ApiTransferListResponseObject);
 
 /** @internal */
 export const ApiTransferListResponse$inboundSchema: z.ZodMiniType<
@@ -260,10 +40,10 @@ export const ApiTransferListResponse$inboundSchema: z.ZodMiniType<
 > = z.pipe(
   z.object({
     request_id: types.string(),
-    data: z.array(z.lazy(() => ApiTransferListResponseData$inboundSchema)),
+    data: z.array(ApiSharedObject4b29ca9c27$inboundSchema),
     has_more: types.boolean(),
     next_cursor: types.nullable(types.string()),
-    object: ApiTransferListResponseObject$inboundSchema,
+    object: ApiSharedEnum8d46e1ec20$inboundSchema,
     url: types.string(),
   }),
   z.transform((v) => {

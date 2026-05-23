@@ -6,6 +6,10 @@
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
 import { ClosedEnum } from "../types/enums.js";
+import {
+  ApiSharedEnumff49232140,
+  ApiSharedEnumff49232140$outboundSchema,
+} from "./api-shared-enumff49232140.js";
 
 export const Target = {
   Cost: "cost",
@@ -24,16 +28,6 @@ export const AdjustmentType = {
   Fixed: "fixed",
 } as const;
 export type AdjustmentType = ClosedEnum<typeof AdjustmentType>;
-
-export const ApiProductBulkAdjustmentRequestProductType = {
-  Product: "product",
-  Service: "service",
-  Combo: "combo",
-  Kit: "kit",
-} as const;
-export type ApiProductBulkAdjustmentRequestProductType = ClosedEnum<
-  typeof ApiProductBulkAdjustmentRequestProductType
->;
 
 export type SelectionSpecific = {
   type: "specific";
@@ -54,7 +48,7 @@ export type ApiProductBulkAdjustmentRequest = {
   adjustmentValue: number;
   search?: string | undefined;
   category?: Array<string> | undefined;
-  productType?: Array<ApiProductBulkAdjustmentRequestProductType> | undefined;
+  productType?: Array<ApiSharedEnumff49232140> | undefined;
   defaultSupplierId?: string | undefined;
   selection: SelectionAll | SelectionSpecific;
 };
@@ -72,12 +66,6 @@ export const OperationType$outboundSchema: z.ZodMiniEnum<typeof OperationType> =
 export const AdjustmentType$outboundSchema: z.ZodMiniEnum<
   typeof AdjustmentType
 > = z.enum(AdjustmentType);
-
-/** @internal */
-export const ApiProductBulkAdjustmentRequestProductType$outboundSchema:
-  z.ZodMiniEnum<typeof ApiProductBulkAdjustmentRequestProductType> = z.enum(
-    ApiProductBulkAdjustmentRequestProductType,
-  );
 
 /** @internal */
 export type SelectionSpecific$Outbound = {
@@ -171,9 +159,7 @@ export const ApiProductBulkAdjustmentRequest$outboundSchema: z.ZodMiniType<
     adjustmentValue: z.number(),
     search: z.optional(z.string()),
     category: z.optional(z.array(z.string())),
-    productType: z.optional(
-      z.array(ApiProductBulkAdjustmentRequestProductType$outboundSchema),
-    ),
+    productType: z.optional(z.array(ApiSharedEnumff49232140$outboundSchema)),
     defaultSupplierId: z.optional(z.string()),
     selection: z.union([
       z.lazy(() => SelectionAll$outboundSchema),

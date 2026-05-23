@@ -11,42 +11,6 @@ import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import * as models from "../index.js";
 
-export const ListApiSalesField = {
-  Id: "id",
-  Document: "document",
-  Customer: "customer",
-  Amounts: "amounts",
-  Items: "items",
-  Payments: "payments",
-  Applications: "applications",
-  Fiscal: "fiscal",
-  Integration: "integration",
-  ReversesVoucher: "reversesVoucher",
-  Audit: "audit",
-} as const;
-export type ListApiSalesField = ClosedEnum<typeof ListApiSalesField>;
-
-/**
- * Campo de fecha a usar para el filtro
- */
-export const ListApiSalesDateAttribute = {
-  InvoiceDate: "invoiceDate",
-  DueDate: "dueDate",
-} as const;
-/**
- * Campo de fecha a usar para el filtro
- */
-export type ListApiSalesDateAttribute = ClosedEnum<
-  typeof ListApiSalesDateAttribute
->;
-
-export const InvoiceStatus = {
-  NotRequired: "not_required",
-  Pending: "pending",
-  Issued: "issued",
-} as const;
-export type InvoiceStatus = ClosedEnum<typeof InvoiceStatus>;
-
 export const PaymentStatus = {
   Paid: "paid",
   Owed: "owed",
@@ -71,7 +35,7 @@ export type ListApiSalesRequest = {
   /**
    * Comma-separated top-level sale sections to include. Omit for the endpoint default. List default: id, document, customer, amounts, reversesVoucher, integration, audit. Detail default: id, document, customer, amounts, items, payments, applications, fiscal, reversesVoucher, integration, audit.
    */
-  fields?: Array<ListApiSalesField> | undefined;
+  fields?: Array<models.ApiSharedEnumd1f2fb458d> | undefined;
   /**
    * Valor de next_cursor recibido en la respuesta anterior
    */
@@ -103,7 +67,7 @@ export type ListApiSalesRequest = {
   /**
    * Campo de fecha a usar para el filtro
    */
-  dateAttribute?: ListApiSalesDateAttribute | undefined;
+  dateAttribute?: models.ApiSharedEnume975a7c122 | undefined;
   /**
    * Fuentes de integración. Puede repetirse o enviarse separada por comas.
    */
@@ -123,7 +87,7 @@ export type ListApiSalesRequest = {
   /**
    * Estados fiscales. Puede repetirse o enviarse separada por comas.
    */
-  invoiceStatuses?: Array<InvoiceStatus> | undefined;
+  invoiceStatuses?: Array<models.ApiSharedEnum9ac70a3316> | undefined;
   /**
    * Estados de cobranza. Puede repetirse o enviarse separada por comas.
    */
@@ -150,20 +114,6 @@ export type ListApiSalesResponse = {
   headers: { [k: string]: Array<string> };
   result: models.ApiSaleListResponse;
 };
-
-/** @internal */
-export const ListApiSalesField$outboundSchema: z.ZodMiniEnum<
-  typeof ListApiSalesField
-> = z.enum(ListApiSalesField);
-
-/** @internal */
-export const ListApiSalesDateAttribute$outboundSchema: z.ZodMiniEnum<
-  typeof ListApiSalesDateAttribute
-> = z.enum(ListApiSalesDateAttribute);
-
-/** @internal */
-export const InvoiceStatus$outboundSchema: z.ZodMiniEnum<typeof InvoiceStatus> =
-  z.enum(InvoiceStatus);
 
 /** @internal */
 export const PaymentStatus$outboundSchema: z.ZodMiniEnum<typeof PaymentStatus> =
@@ -203,7 +153,7 @@ export const ListApiSalesRequest$outboundSchema: z.ZodMiniType<
   ListApiSalesRequest
 > = z.pipe(
   z.object({
-    fields: z.optional(z.array(ListApiSalesField$outboundSchema)),
+    fields: z.optional(z.array(models.ApiSharedEnumd1f2fb458d$outboundSchema)),
     cursor: z.optional(z.string()),
     limit: z._default(z.int(), 50),
     query: z.optional(z.string()),
@@ -218,14 +168,16 @@ export const ListApiSalesRequest$outboundSchema: z.ZodMiniType<
       z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
     )),
     dateAttribute: z._default(
-      ListApiSalesDateAttribute$outboundSchema,
+      models.ApiSharedEnume975a7c122$outboundSchema,
       "invoiceDate",
     ),
     integrationSources: z.optional(z.array(z.string())),
     pointOfSaleIds: z.optional(z.array(z.string())),
     registerIds: z.optional(z.array(z.string())),
     sellerIds: z.optional(z.array(z.string())),
-    invoiceStatuses: z.optional(z.array(InvoiceStatus$outboundSchema)),
+    invoiceStatuses: z.optional(
+      z.array(models.ApiSharedEnum9ac70a3316$outboundSchema),
+    ),
     paymentStatuses: z.optional(z.array(PaymentStatus$outboundSchema)),
     voucherTypes: z.optional(z.array(z.string())),
     amountAttribute: z._default(

@@ -6,45 +6,29 @@
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
 import { safeParse } from "../lib/schemas.js";
-import * as openEnums from "../types/enums.js";
-import { OpenEnum } from "../types/enums.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
+import {
+  ApiSharedEnumf2073aa092,
+  ApiSharedEnumf2073aa092$inboundSchema,
+} from "./api-shared-enumf2073aa092.js";
+import {
+  ApiSharedObject8aeeceaf0f,
+  ApiSharedObject8aeeceaf0f$inboundSchema,
+} from "./api-shared-object8aeeceaf0f.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
-
-export const ApiPurchaseOrderListResponseStatus = {
-  Draft: "draft",
-  Sent: "sent",
-  PartiallyReceived: "partially_received",
-  Received: "received",
-  Closed: "closed",
-  Cancelled: "cancelled",
-} as const;
-export type ApiPurchaseOrderListResponseStatus = OpenEnum<
-  typeof ApiPurchaseOrderListResponseStatus
->;
-
-export type ApiPurchaseOrderListResponseSupplier = {
-  id: string;
-  name: string;
-};
-
-export type ApiPurchaseOrderListResponseWarehouse = {
-  id: string;
-  name: string;
-};
 
 export type ApiPurchaseOrderListResponseData = {
   object: "purchase_order";
   id: string;
   orderNumber: number;
   formattedOrderNumber: string | null;
-  status: ApiPurchaseOrderListResponseStatus;
+  status: ApiSharedEnumf2073aa092;
   orderDate: Date;
   expectedDate: Date | null;
   currency: string;
-  supplier: ApiPurchaseOrderListResponseSupplier | null;
-  warehouse: ApiPurchaseOrderListResponseWarehouse | null;
+  supplier: ApiSharedObject8aeeceaf0f | null;
+  warehouse: ApiSharedObject8aeeceaf0f | null;
   createdAt: Date;
 };
 
@@ -52,52 +36,6 @@ export type ApiPurchaseOrderListResponse = {
   requestId: string;
   data: Array<ApiPurchaseOrderListResponseData>;
 };
-
-/** @internal */
-export const ApiPurchaseOrderListResponseStatus$inboundSchema: z.ZodMiniType<
-  ApiPurchaseOrderListResponseStatus,
-  unknown
-> = openEnums.inboundSchema(ApiPurchaseOrderListResponseStatus);
-
-/** @internal */
-export const ApiPurchaseOrderListResponseSupplier$inboundSchema: z.ZodMiniType<
-  ApiPurchaseOrderListResponseSupplier,
-  unknown
-> = z.object({
-  id: types.string(),
-  name: types.string(),
-});
-
-export function apiPurchaseOrderListResponseSupplierFromJSON(
-  jsonString: string,
-): SafeParseResult<ApiPurchaseOrderListResponseSupplier, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) =>
-      ApiPurchaseOrderListResponseSupplier$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'ApiPurchaseOrderListResponseSupplier' from JSON`,
-  );
-}
-
-/** @internal */
-export const ApiPurchaseOrderListResponseWarehouse$inboundSchema: z.ZodMiniType<
-  ApiPurchaseOrderListResponseWarehouse,
-  unknown
-> = z.object({
-  id: types.string(),
-  name: types.string(),
-});
-
-export function apiPurchaseOrderListResponseWarehouseFromJSON(
-  jsonString: string,
-): SafeParseResult<ApiPurchaseOrderListResponseWarehouse, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) =>
-      ApiPurchaseOrderListResponseWarehouse$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'ApiPurchaseOrderListResponseWarehouse' from JSON`,
-  );
-}
 
 /** @internal */
 export const ApiPurchaseOrderListResponseData$inboundSchema: z.ZodMiniType<
@@ -109,16 +47,12 @@ export const ApiPurchaseOrderListResponseData$inboundSchema: z.ZodMiniType<
     id: types.string(),
     order_number: types.number(),
     formatted_order_number: types.nullable(types.string()),
-    status: ApiPurchaseOrderListResponseStatus$inboundSchema,
+    status: ApiSharedEnumf2073aa092$inboundSchema,
     order_date: types.date(),
     expected_date: types.nullable(types.date()),
     currency: types.string(),
-    supplier: types.nullable(
-      z.lazy(() => ApiPurchaseOrderListResponseSupplier$inboundSchema),
-    ),
-    warehouse: types.nullable(
-      z.lazy(() => ApiPurchaseOrderListResponseWarehouse$inboundSchema),
-    ),
+    supplier: types.nullable(ApiSharedObject8aeeceaf0f$inboundSchema),
+    warehouse: types.nullable(ApiSharedObject8aeeceaf0f$inboundSchema),
     created_at: types.date(),
   }),
   z.transform((v) => {

@@ -11,11 +11,11 @@ import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import * as models from "../index.js";
 
-export const ListApiCustomersStatus = {
+export const Status = {
   Active: "active",
   Inactive: "inactive",
 } as const;
-export type ListApiCustomersStatus = ClosedEnum<typeof ListApiCustomersStatus>;
+export type Status = ClosedEnum<typeof Status>;
 
 export type ListApiCustomersRequest = {
   /**
@@ -41,7 +41,7 @@ export type ListApiCustomersRequest = {
   /**
    * Estado lógico del cliente. Puede repetirse o enviarse separado por comas.
    */
-  status?: Array<ListApiCustomersStatus> | undefined;
+  status?: Array<Status> | undefined;
 };
 
 export type ListApiCustomersResponse = {
@@ -50,9 +50,9 @@ export type ListApiCustomersResponse = {
 };
 
 /** @internal */
-export const ListApiCustomersStatus$outboundSchema: z.ZodMiniEnum<
-  typeof ListApiCustomersStatus
-> = z.enum(ListApiCustomersStatus);
+export const Status$outboundSchema: z.ZodMiniEnum<typeof Status> = z.enum(
+  Status,
+);
 
 /** @internal */
 export type ListApiCustomersRequest$Outbound = {
@@ -75,7 +75,7 @@ export const ListApiCustomersRequest$outboundSchema: z.ZodMiniType<
     query: z.optional(z.string()),
     search: z.optional(z.string()),
     isActive: z.optional(z.boolean()),
-    status: z.optional(z.array(ListApiCustomersStatus$outboundSchema)),
+    status: z.optional(z.array(Status$outboundSchema)),
   }),
   z.transform((v) => {
     return remap$(v, {

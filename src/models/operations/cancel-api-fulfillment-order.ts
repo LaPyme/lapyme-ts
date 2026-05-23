@@ -15,7 +15,7 @@ export type CancelApiFulfillmentOrderRequest = {
    * ID de la orden de preparación
    */
   fulfillmentOrderId: string;
-  body?: models.ApiOrderOptionalReasonRequest | undefined;
+  body: models.ApiOrderOptionalReasonRequest;
 };
 
 export type CancelApiFulfillmentOrderResponse = {
@@ -26,7 +26,7 @@ export type CancelApiFulfillmentOrderResponse = {
 /** @internal */
 export type CancelApiFulfillmentOrderRequest$Outbound = {
   fulfillment_order_id: string;
-  body?: models.ApiOrderOptionalReasonRequest$Outbound | undefined;
+  body: models.ApiOrderOptionalReasonRequest$Outbound;
 };
 
 /** @internal */
@@ -36,7 +36,7 @@ export const CancelApiFulfillmentOrderRequest$outboundSchema: z.ZodMiniType<
 > = z.pipe(
   z.object({
     fulfillmentOrderId: z.string(),
-    body: z.optional(models.ApiOrderOptionalReasonRequest$outboundSchema),
+    body: models.ApiOrderOptionalReasonRequest$outboundSchema,
   }),
   z.transform((v) => {
     return remap$(v, {

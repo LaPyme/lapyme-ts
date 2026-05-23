@@ -69,6 +69,7 @@ export * from "./list-api-tags.js";
 export * from "./list-api-warehouses.js";
 export * from "./package-api-order.js";
 export * from "./patch-api-order.js";
+export * from "./patch-api-sale-metadata.js";
 export * from "./prepare-api-order.js";
 export * from "./query-api-report.js";
 export * from "./receive-api-purchase-order.js";

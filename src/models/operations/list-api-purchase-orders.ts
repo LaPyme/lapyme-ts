@@ -6,28 +6,9 @@
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
 import { safeParse } from "../../lib/schemas.js";
-import { ClosedEnum } from "../../types/enums.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import * as models from "../index.js";
-
-/**
- * Estado o lista de estados separados por coma: draft, sent, partially_received, received, closed, cancelled
- */
-export const ListApiPurchaseOrdersStatus = {
-  Draft: "draft",
-  Sent: "sent",
-  PartiallyReceived: "partially_received",
-  Received: "received",
-  Closed: "closed",
-  Cancelled: "cancelled",
-} as const;
-/**
- * Estado o lista de estados separados por coma: draft, sent, partially_received, received, closed, cancelled
- */
-export type ListApiPurchaseOrdersStatus = ClosedEnum<
-  typeof ListApiPurchaseOrdersStatus
->;
 
 export type ListApiPurchaseOrdersRequest = {
   /**
@@ -53,18 +34,13 @@ export type ListApiPurchaseOrdersRequest = {
   /**
    * Estado o lista de estados separados por coma: draft, sent, partially_received, received, closed, cancelled
    */
-  status?: ListApiPurchaseOrdersStatus | undefined;
+  status?: models.ApiSharedEnumf2073aa092 | undefined;
 };
 
 export type ListApiPurchaseOrdersResponse = {
   headers: { [k: string]: Array<string> };
   result: models.ApiPurchaseOrderListResponse;
 };
-
-/** @internal */
-export const ListApiPurchaseOrdersStatus$outboundSchema: z.ZodMiniEnum<
-  typeof ListApiPurchaseOrdersStatus
-> = z.enum(ListApiPurchaseOrdersStatus);
 
 /** @internal */
 export type ListApiPurchaseOrdersRequest$Outbound = {
@@ -93,7 +69,7 @@ export const ListApiPurchaseOrdersRequest$outboundSchema: z.ZodMiniType<
       z.date(),
       z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
     )),
-    status: z.optional(ListApiPurchaseOrdersStatus$outboundSchema),
+    status: z.optional(models.ApiSharedEnumf2073aa092$outboundSchema),
   }),
   z.transform((v) => {
     return remap$(v, {

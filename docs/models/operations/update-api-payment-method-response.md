@@ -9,7 +9,11 @@ let value: UpdateApiPaymentMethodResponse = {
   headers: {
     "key": [
       "<value 1>",
+    ],
+    "key1": [
+      "<value 1>",
       "<value 2>",
+      "<value 3>",
     ],
   },
   result: {
@@ -17,22 +21,24 @@ let value: UpdateApiPaymentMethodResponse = {
     data: {
       paymentMethod: {
         object: "payment_method",
-        id: "5a7eb1a6-3f0c-404c-9948-c76e68d9773c",
+        id: "bec89f76-dcdd-4231-98ff-28002ad98b02",
         name: "<value>",
         icon: "<value>",
         type: "check",
-        bankAccountId: "63491e9c-aa7c-42d1-80e0-afd5b35872aa",
+        bankAccountId: "efa4d747-0133-4532-8cd1-6fb65b7c80a6",
         feePercentage: "<value>",
-        feeFixed: 987977,
+        feeFixed: null,
         requiresReference: false,
-        visibility: "purchases",
+        visibility: "both",
         isActive: false,
-        isDefault: false,
-        createdAt: new Date("2026-05-13T19:17:15.611Z"),
-        updatedAt: new Date("2024-06-15T12:10:40.799Z"),
+        isDefault: true,
+        createdAt: new Date("2025-01-10T20:59:02.707Z"),
+        updatedAt: new Date("2026-03-06T13:29:21.502Z"),
       },
     },
-    warnings: [],
+    warnings: [
+      "<value 1>",
+    ],
   },
 };
 ```

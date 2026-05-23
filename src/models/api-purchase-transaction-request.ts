@@ -6,52 +6,36 @@
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
 import { ClosedEnum } from "../types/enums.js";
-
-export const ApiPurchaseTransactionRequestImportDocumentRole = {
-  CommercialInvoice: "commercial_invoice",
-  CustomsDispatch: "customs_dispatch",
-  CustomsDispatchReversal: "customs_dispatch_reversal",
-} as const;
-export type ApiPurchaseTransactionRequestImportDocumentRole = ClosedEnum<
-  typeof ApiPurchaseTransactionRequestImportDocumentRole
->;
-
-export const ApiPurchaseTransactionRequestImportNationalizationStatus = {
-  PendingNationalization: "pending_nationalization",
-  PartiallyNationalized: "partially_nationalized",
-  FullyNationalized: "fully_nationalized",
-} as const;
-export type ApiPurchaseTransactionRequestImportNationalizationStatus =
-  ClosedEnum<typeof ApiPurchaseTransactionRequestImportNationalizationStatus>;
-
-export const ApiPurchaseTransactionRequestPaymentTermId = {
-  Days7: "days_7",
-  Days15: "days_15",
-  Days30: "days_30",
-  Days45: "days_45",
-  Days60: "days_60",
-  Days90: "days_90",
-  Days3060: "days_30_60",
-  Days306090: "days_30_60_90",
-} as const;
-export type ApiPurchaseTransactionRequestPaymentTermId = ClosedEnum<
-  typeof ApiPurchaseTransactionRequestPaymentTermId
->;
-
-export type ApiPurchaseTransactionRequestGrossIncomeTaxBreakdown = {
-  provinceId: number;
-  amount: number;
-};
-
-export const ApiPurchaseTransactionRequestItemVatCategory = {
-  Goods: "goods",
-  FixedAssets: "fixed_assets",
-  Leases: "leases",
-  Services: "services",
-} as const;
-export type ApiPurchaseTransactionRequestItemVatCategory = ClosedEnum<
-  typeof ApiPurchaseTransactionRequestItemVatCategory
->;
+import {
+  ApiSharedEnum6cfb146157,
+  ApiSharedEnum6cfb146157$outboundSchema,
+} from "./api-shared-enum6cfb146157.js";
+import {
+  ApiSharedEnum822a963f55,
+  ApiSharedEnum822a963f55$outboundSchema,
+} from "./api-shared-enum822a963f55.js";
+import {
+  ApiSharedEnum9e7af09974,
+  ApiSharedEnum9e7af09974$outboundSchema,
+} from "./api-shared-enum9e7af09974.js";
+import {
+  ApiSharedEnumd34af90520,
+  ApiSharedEnumd34af90520$outboundSchema,
+} from "./api-shared-enumd34af90520.js";
+import {
+  ApiSharedEnumf0d69c3d87,
+  ApiSharedEnumf0d69c3d87$outboundSchema,
+} from "./api-shared-enumf0d69c3d87.js";
+import {
+  ApiSharedObject95929ea589,
+  ApiSharedObject95929ea589$Outbound,
+  ApiSharedObject95929ea589$outboundSchema,
+} from "./api-shared-object95929ea589.js";
+import {
+  ApiSharedObjectfb7405a472,
+  ApiSharedObjectfb7405a472$Outbound,
+  ApiSharedObjectfb7405a472$outboundSchema,
+} from "./api-shared-objectfb7405a472.js";
 
 export type ApiPurchaseTransactionRequestItem = {
   productId?: string | undefined;
@@ -64,40 +48,14 @@ export type ApiPurchaseTransactionRequestItem = {
   isExempt?: boolean | undefined;
   discountPercentage?: number | undefined;
   purchaseOrderItemId?: string | undefined;
-  vatCategory?: ApiPurchaseTransactionRequestItemVatCategory | null | undefined;
+  vatCategory?: ApiSharedEnum822a963f55 | null | undefined;
 };
 
-export type ApiPurchaseTransactionRequestVatBreakdown = {
-  taxRateId: number;
-  baseAmount: number;
-  taxAmount: number;
-};
-
-export const ApiPurchaseTransactionRequestCurrency = {
-  Pes: "PES",
-  Dol: "DOL",
-} as const;
-export type ApiPurchaseTransactionRequestCurrency = ClosedEnum<
-  typeof ApiPurchaseTransactionRequestCurrency
->;
-
-export const ApiPurchaseTransactionRequestVatCategory = {
-  Goods: "goods",
-  FixedAssets: "fixed_assets",
-  Leases: "leases",
-  Services: "services",
-} as const;
-export type ApiPurchaseTransactionRequestVatCategory = ClosedEnum<
-  typeof ApiPurchaseTransactionRequestVatCategory
->;
-
-export const ApiPurchaseTransactionRequestStatus = {
+export const Status = {
   Draft: "draft",
   Confirmed: "confirmed",
 } as const;
-export type ApiPurchaseTransactionRequestStatus = ClosedEnum<
-  typeof ApiPurchaseTransactionRequestStatus
->;
+export type Status = ClosedEnum<typeof Status>;
 
 export type ApiPurchaseTransactionRequest = {
   supplierId?: string | undefined;
@@ -105,10 +63,7 @@ export type ApiPurchaseTransactionRequest = {
   /**
    * Rol del comprobante dentro del flujo de importacion.
    */
-  importDocumentRole?:
-    | ApiPurchaseTransactionRequestImportDocumentRole
-    | null
-    | undefined;
+  importDocumentRole?: ApiSharedEnum9e7af09974 | null | undefined;
   /**
    * ID de la factura comercial asociada al despacho aduanero.
    */
@@ -116,10 +71,7 @@ export type ApiPurchaseTransactionRequest = {
   /**
    * Estado de nacionalizacion de la factura comercial de importacion.
    */
-  importNationalizationStatus?:
-    | ApiPurchaseTransactionRequestImportNationalizationStatus
-    | null
-    | undefined;
+  importNationalizationStatus?: ApiSharedEnumf0d69c3d87 | null | undefined;
   /**
    * Numero de despacho aduanero informado por el proveedor. Hasta 32 caracteres.
    */
@@ -140,13 +92,11 @@ export type ApiPurchaseTransactionRequest = {
    * Fecha de vencimiento en formato YYYY-MM-DD.
    */
   dueDate?: Date | undefined;
-  paymentTermId?: ApiPurchaseTransactionRequestPaymentTermId | null | undefined;
+  paymentTermId?: ApiSharedEnumd34af90520 | null | undefined;
   vatPerceptionAmount?: number | undefined;
   nationalTaxAmount?: number | undefined;
   grossIncomeTaxAmount?: number | undefined;
-  grossIncomeTaxBreakdown?:
-    | Array<ApiPurchaseTransactionRequestGrossIncomeTaxBreakdown>
-    | undefined;
+  grossIncomeTaxBreakdown?: Array<ApiSharedObject95929ea589> | undefined;
   municipalTaxAmount?: number | undefined;
   internalTaxAmount?: number | undefined;
   otherTaxAmount?: number | undefined;
@@ -161,71 +111,14 @@ export type ApiPurchaseTransactionRequest = {
   exemptAmount?: number | undefined;
   nonTaxedAmount?: number | undefined;
   baseAmount?: number | undefined;
-  vatBreakdown?: Array<ApiPurchaseTransactionRequestVatBreakdown> | undefined;
+  vatBreakdown?: Array<ApiSharedObjectfb7405a472> | undefined;
   notes?: string | undefined;
-  currency: ApiPurchaseTransactionRequestCurrency;
+  currency: ApiSharedEnum6cfb146157;
   exchangeRate?: number | undefined;
   pdfPath?: string | undefined;
-  vatCategory?: ApiPurchaseTransactionRequestVatCategory | null | undefined;
-  status?: ApiPurchaseTransactionRequestStatus | undefined;
+  vatCategory?: ApiSharedEnum822a963f55 | null | undefined;
+  status?: Status | undefined;
 };
-
-/** @internal */
-export const ApiPurchaseTransactionRequestImportDocumentRole$outboundSchema:
-  z.ZodMiniEnum<typeof ApiPurchaseTransactionRequestImportDocumentRole> = z
-    .enum(ApiPurchaseTransactionRequestImportDocumentRole);
-
-/** @internal */
-export const ApiPurchaseTransactionRequestImportNationalizationStatus$outboundSchema:
-  z.ZodMiniEnum<
-    typeof ApiPurchaseTransactionRequestImportNationalizationStatus
-  > = z.enum(ApiPurchaseTransactionRequestImportNationalizationStatus);
-
-/** @internal */
-export const ApiPurchaseTransactionRequestPaymentTermId$outboundSchema:
-  z.ZodMiniEnum<typeof ApiPurchaseTransactionRequestPaymentTermId> = z.enum(
-    ApiPurchaseTransactionRequestPaymentTermId,
-  );
-
-/** @internal */
-export type ApiPurchaseTransactionRequestGrossIncomeTaxBreakdown$Outbound = {
-  province_id: number;
-  amount: number;
-};
-
-/** @internal */
-export const ApiPurchaseTransactionRequestGrossIncomeTaxBreakdown$outboundSchema:
-  z.ZodMiniType<
-    ApiPurchaseTransactionRequestGrossIncomeTaxBreakdown$Outbound,
-    ApiPurchaseTransactionRequestGrossIncomeTaxBreakdown
-  > = z.pipe(
-    z.object({
-      provinceId: z.int(),
-      amount: z.int(),
-    }),
-    z.transform((v) => {
-      return remap$(v, {
-        provinceId: "province_id",
-      });
-    }),
-  );
-
-export function apiPurchaseTransactionRequestGrossIncomeTaxBreakdownToJSON(
-  apiPurchaseTransactionRequestGrossIncomeTaxBreakdown:
-    ApiPurchaseTransactionRequestGrossIncomeTaxBreakdown,
-): string {
-  return JSON.stringify(
-    ApiPurchaseTransactionRequestGrossIncomeTaxBreakdown$outboundSchema.parse(
-      apiPurchaseTransactionRequestGrossIncomeTaxBreakdown,
-    ),
-  );
-}
-
-/** @internal */
-export const ApiPurchaseTransactionRequestItemVatCategory$outboundSchema:
-  z.ZodMiniEnum<typeof ApiPurchaseTransactionRequestItemVatCategory> = z.enum(
-    ApiPurchaseTransactionRequestItemVatCategory,
-  );
 
 /** @internal */
 export type ApiPurchaseTransactionRequestItem$Outbound = {
@@ -258,9 +151,7 @@ export const ApiPurchaseTransactionRequestItem$outboundSchema: z.ZodMiniType<
     isExempt: z.optional(z.boolean()),
     discountPercentage: z.optional(z.number()),
     purchaseOrderItemId: z.optional(z.string()),
-    vatCategory: z.optional(
-      z.nullable(ApiPurchaseTransactionRequestItemVatCategory$outboundSchema),
-    ),
+    vatCategory: z.optional(z.nullable(ApiSharedEnum822a963f55$outboundSchema)),
   }),
   z.transform((v) => {
     return remap$(v, {
@@ -286,59 +177,9 @@ export function apiPurchaseTransactionRequestItemToJSON(
 }
 
 /** @internal */
-export type ApiPurchaseTransactionRequestVatBreakdown$Outbound = {
-  tax_rate_id: number;
-  base_amount: number;
-  tax_amount: number;
-};
-
-/** @internal */
-export const ApiPurchaseTransactionRequestVatBreakdown$outboundSchema:
-  z.ZodMiniType<
-    ApiPurchaseTransactionRequestVatBreakdown$Outbound,
-    ApiPurchaseTransactionRequestVatBreakdown
-  > = z.pipe(
-    z.object({
-      taxRateId: z.int(),
-      baseAmount: z.int(),
-      taxAmount: z.int(),
-    }),
-    z.transform((v) => {
-      return remap$(v, {
-        taxRateId: "tax_rate_id",
-        baseAmount: "base_amount",
-        taxAmount: "tax_amount",
-      });
-    }),
-  );
-
-export function apiPurchaseTransactionRequestVatBreakdownToJSON(
-  apiPurchaseTransactionRequestVatBreakdown:
-    ApiPurchaseTransactionRequestVatBreakdown,
-): string {
-  return JSON.stringify(
-    ApiPurchaseTransactionRequestVatBreakdown$outboundSchema.parse(
-      apiPurchaseTransactionRequestVatBreakdown,
-    ),
-  );
-}
-
-/** @internal */
-export const ApiPurchaseTransactionRequestCurrency$outboundSchema:
-  z.ZodMiniEnum<typeof ApiPurchaseTransactionRequestCurrency> = z.enum(
-    ApiPurchaseTransactionRequestCurrency,
-  );
-
-/** @internal */
-export const ApiPurchaseTransactionRequestVatCategory$outboundSchema:
-  z.ZodMiniEnum<typeof ApiPurchaseTransactionRequestVatCategory> = z.enum(
-    ApiPurchaseTransactionRequestVatCategory,
-  );
-
-/** @internal */
-export const ApiPurchaseTransactionRequestStatus$outboundSchema: z.ZodMiniEnum<
-  typeof ApiPurchaseTransactionRequestStatus
-> = z.enum(ApiPurchaseTransactionRequestStatus);
+export const Status$outboundSchema: z.ZodMiniEnum<typeof Status> = z.enum(
+  Status,
+);
 
 /** @internal */
 export type ApiPurchaseTransactionRequest$Outbound = {
@@ -357,7 +198,7 @@ export type ApiPurchaseTransactionRequest$Outbound = {
   national_tax_amount?: number | undefined;
   gross_income_tax_amount?: number | undefined;
   gross_income_tax_breakdown?:
-    | Array<ApiPurchaseTransactionRequestGrossIncomeTaxBreakdown$Outbound>
+    | Array<ApiSharedObject95929ea589$Outbound>
     | undefined;
   municipal_tax_amount?: number | undefined;
   internal_tax_amount?: number | undefined;
@@ -373,9 +214,7 @@ export type ApiPurchaseTransactionRequest$Outbound = {
   exempt_amount?: number | undefined;
   non_taxed_amount?: number | undefined;
   base_amount?: number | undefined;
-  vat_breakdown?:
-    | Array<ApiPurchaseTransactionRequestVatBreakdown$Outbound>
-    | undefined;
+  vat_breakdown?: Array<ApiSharedObjectfb7405a472$Outbound> | undefined;
   notes?: string | undefined;
   currency: string;
   exchange_rate?: number | undefined;
@@ -393,46 +232,34 @@ export const ApiPurchaseTransactionRequest$outboundSchema: z.ZodMiniType<
     supplierId: z.optional(z.string()),
     voucherType: z.int(),
     importDocumentRole: z.optional(
-      z.nullable(
-        ApiPurchaseTransactionRequestImportDocumentRole$outboundSchema,
-      ),
+      z.nullable(ApiSharedEnum9e7af09974$outboundSchema),
     ),
     importSourcePurchaseId: z.optional(z.string()),
     importNationalizationStatus: z.optional(
-      z.nullable(
-        ApiPurchaseTransactionRequestImportNationalizationStatus$outboundSchema,
-      ),
+      z.nullable(ApiSharedEnumf0d69c3d87$outboundSchema),
     ),
     customsDispatchNumber: z.optional(z.string()),
     supplierInvoiceNumber: z.optional(z.string()),
-    invoiceDate: z.optional(
-      z.pipe(
-        z.date(),
-        z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
-      ),
-    ),
-    accountDate: z.optional(
-      z.pipe(
-        z.date(),
-        z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
-      ),
-    ),
-    dueDate: z.optional(
-      z.pipe(
-        z.date(),
-        z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
-      ),
-    ),
+    invoiceDate: z.optional(z.pipe(
+      z.date(),
+      z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
+    )),
+    accountDate: z.optional(z.pipe(
+      z.date(),
+      z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
+    )),
+    dueDate: z.optional(z.pipe(
+      z.date(),
+      z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
+    )),
     paymentTermId: z.optional(
-      z.nullable(ApiPurchaseTransactionRequestPaymentTermId$outboundSchema),
+      z.nullable(ApiSharedEnumd34af90520$outboundSchema),
     ),
     vatPerceptionAmount: z.optional(z.int()),
     nationalTaxAmount: z.optional(z.int()),
     grossIncomeTaxAmount: z.optional(z.int()),
     grossIncomeTaxBreakdown: z.optional(
-      z.array(z.lazy(() =>
-        ApiPurchaseTransactionRequestGrossIncomeTaxBreakdown$outboundSchema
-      )),
+      z.array(ApiSharedObject95929ea589$outboundSchema),
     ),
     municipalTaxAmount: z.optional(z.int()),
     internalTaxAmount: z.optional(z.int()),
@@ -440,9 +267,9 @@ export const ApiPurchaseTransactionRequest$outboundSchema: z.ZodMiniType<
     warehouseId: z.optional(z.nullable(z.string())),
     productsReceived: z.optional(z.boolean()),
     updateProductVariantCost: z.optional(z.boolean()),
-    items: z.optional(
-      z.array(z.lazy(() => ApiPurchaseTransactionRequestItem$outboundSchema)),
-    ),
+    items: z.optional(z.array(z.lazy(() =>
+      ApiPurchaseTransactionRequestItem$outboundSchema
+    ))),
     subtotal: z.optional(z.int()),
     taxAmount: z.optional(z.int()),
     total: z.optional(z.int()),
@@ -450,19 +277,13 @@ export const ApiPurchaseTransactionRequest$outboundSchema: z.ZodMiniType<
     exemptAmount: z.optional(z.int()),
     nonTaxedAmount: z.optional(z.int()),
     baseAmount: z.optional(z.int()),
-    vatBreakdown: z.optional(
-      z.array(z.lazy(() =>
-        ApiPurchaseTransactionRequestVatBreakdown$outboundSchema
-      )),
-    ),
+    vatBreakdown: z.optional(z.array(ApiSharedObjectfb7405a472$outboundSchema)),
     notes: z.optional(z.string()),
-    currency: ApiPurchaseTransactionRequestCurrency$outboundSchema,
+    currency: ApiSharedEnum6cfb146157$outboundSchema,
     exchangeRate: z.optional(z.number()),
     pdfPath: z.optional(z.string()),
-    vatCategory: z.optional(
-      z.nullable(ApiPurchaseTransactionRequestVatCategory$outboundSchema),
-    ),
-    status: z.optional(ApiPurchaseTransactionRequestStatus$outboundSchema),
+    vatCategory: z.optional(z.nullable(ApiSharedEnum822a963f55$outboundSchema)),
+    status: z.optional(Status$outboundSchema),
   }),
   z.transform((v) => {
     return remap$(v, {

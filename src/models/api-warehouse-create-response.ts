@@ -8,19 +8,14 @@ import { remap as remap$ } from "../lib/primitives.js";
 import { safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
+import {
+  ApiSharedObjectadcf6da6ce,
+  ApiSharedObjectadcf6da6ce$inboundSchema,
+} from "./api-shared-objectadcf6da6ce.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
-export type ApiWarehouseCreateResponseWarehouse = {
-  object: "warehouse";
-  id: string;
-  name: string;
-  address: string | null;
-  isDefault: boolean;
-  isActive: boolean;
-};
-
 export type ApiWarehouseCreateResponseData = {
-  warehouse: ApiWarehouseCreateResponseWarehouse;
+  warehouse: ApiSharedObjectadcf6da6ce;
   idempotentReplay: boolean;
 };
 
@@ -31,44 +26,12 @@ export type ApiWarehouseCreateResponse = {
 };
 
 /** @internal */
-export const ApiWarehouseCreateResponseWarehouse$inboundSchema: z.ZodMiniType<
-  ApiWarehouseCreateResponseWarehouse,
-  unknown
-> = z.pipe(
-  z.object({
-    object: types.literal("warehouse"),
-    id: types.string(),
-    name: types.string(),
-    address: types.nullable(types.string()),
-    is_default: types.boolean(),
-    is_active: types.boolean(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "is_default": "isDefault",
-      "is_active": "isActive",
-    });
-  }),
-);
-
-export function apiWarehouseCreateResponseWarehouseFromJSON(
-  jsonString: string,
-): SafeParseResult<ApiWarehouseCreateResponseWarehouse, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) =>
-      ApiWarehouseCreateResponseWarehouse$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'ApiWarehouseCreateResponseWarehouse' from JSON`,
-  );
-}
-
-/** @internal */
 export const ApiWarehouseCreateResponseData$inboundSchema: z.ZodMiniType<
   ApiWarehouseCreateResponseData,
   unknown
 > = z.pipe(
   z.object({
-    warehouse: z.lazy(() => ApiWarehouseCreateResponseWarehouse$inboundSchema),
+    warehouse: ApiSharedObjectadcf6da6ce$inboundSchema,
     idempotent_replay: types.boolean(),
   }),
   z.transform((v) => {
