@@ -6,10 +6,6 @@ Developer-friendly & type-safe Typescript SDK specifically catered to leverage *
 [![License: MIT](https://img.shields.io/badge/LICENSE_//_MIT-3b5bdb?style=for-the-badge&labelColor=eff6ff)](https://opensource.org/licenses/MIT)
 
 
-<br /><br />
-> [!IMPORTANT]
-> This SDK is not yet ready for production use. To complete setup please follow the steps outlined in your [workspace](https://app.speakeasy.com/org/lapyme/la-pyme). Delete this section before > publishing to a package manager.
-
 <!-- Start Summary [summary] -->
 ## Summary
 
@@ -32,7 +28,7 @@ La Pyme API: Resources and workflows for purchases, sales, inventory, contacts, 
   * [Custom HTTP Client](#custom-http-client)
   * [Debugging](#debugging)
 * [Development](#development)
-  * [Maturity](#maturity)
+  * [Versioning](#versioning)
   * [Contributions](#contributions)
 
 <!-- End Table of Contents [toc] -->
@@ -636,11 +632,9 @@ You can also enable a default debug logger by setting an environment variable `L
 
 # Development
 
-## Maturity
+## Versioning
 
-This SDK is in beta, and there may be breaking changes between versions without a major version update. Therefore, we recommend pinning usage
-to a specific package version. This way, you can install the same version each time without breaking changes unless you are intentionally
-looking for the latest version.
+Pin the SDK to a specific package version in production applications. This keeps installs reproducible and lets you adopt SDK updates intentionally.
 
 ## Contributions
 

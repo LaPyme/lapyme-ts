@@ -17,3 +17,9 @@
 /.tshy
 /.tshy-*
 /__tests__
+
+# Defense-in-depth exclusions after broad source allowlists.
+**/node_modules/**
+**/.env*
+**/.speakeasy/**
+**/.github/**

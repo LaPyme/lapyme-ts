@@ -4,7 +4,7 @@
   "author": "Speakeasy",
   "repository": {
     "type": "git",
-    "url": "https://github.com/LaPyme/lapyme-ts.git"
+    "url": "git+https://github.com/LaPyme/lapyme-ts.git"
   },
   "type": "module",
   "main": "./esm/index.js",
@@ -47,10 +47,6 @@
     }
   },
   "sideEffects": false,
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/LaPyme/lapyme-ts.git"
-  },
   "scripts": {
     "lint": "oxlint --max-warnings=0 --deny-warnings src/**/*.ts src/**/*.tsx",
     "build": "tsgo",
