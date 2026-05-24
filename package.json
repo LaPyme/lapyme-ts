@@ -2,6 +2,7 @@
   "name": "lapyme",
   "version": "0.2.5",
   "author": "Speakeasy",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/LaPyme/lapyme-ts.git"

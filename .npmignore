@@ -2,6 +2,7 @@
 !/FUNCTIONS.md
 !/RUNTIMES.md
 !/REACT_QUERY.md
+!/docs/**
 !/**/*.ts
 !/**/*.js
 !/**/*.mjs

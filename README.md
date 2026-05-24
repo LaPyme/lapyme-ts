@@ -1,6 +1,54 @@
 # lapyme
 
-Developer-friendly & type-safe Typescript SDK specifically catered to leverage *lapyme* API.
+Official TypeScript SDK for La Pyme's public API.
+
+Use La Pyme as the business operations layer for custom backends, scripts,
+workers, and automations: customers, products, sales, purchases, inventory,
+payments, and reports. The SDK is generated from La Pyme's public OpenAPI
+contract with Speakeasy, then complemented with authored examples and recipes.
+
+```bash
+pnpm add lapyme
+```
+
+```typescript
+import { Lapyme } from "lapyme";
+
+const lapyme = new Lapyme({
+  bearerAuth: process.env["LAPYME_API_KEY"] ?? "",
+});
+
+const externalOrderId = "shopify-1001";
+const customerId = "cus_...";
+const pointOfSaleId = "pos_...";
+const productId = "prod_...";
+
+const sale = await lapyme.sales.create({
+  idempotencyKey: `sale:shopify:${externalOrderId}`,
+  body: {
+    customerId,
+    pointOfSaleId,
+    voucherType: 6,
+    invoiceDate: new Date("2026-05-24"),
+    currency: "PES",
+    items: [
+      {
+        productId,
+        quantity: 1,
+        unitPrice: 125000,
+      },
+    ],
+  },
+});
+
+console.log(sale.result.data.sale.id);
+```
+
+Set API keys as `LAPYME_API_KEY` in your server environment and pass that value
+to the SDK constructor as `bearerAuth`. Do not expose API keys in browser code.
+
+See [`examples/`](examples/) for copy-pasteable workflows, including
+credential checks, sales, purchase orders, reports, and error handling.
 
 [![Built by Speakeasy](https://img.shields.io/badge/Built_by-SPEAKEASY-374151?style=for-the-badge&labelColor=f3f4f6)](https://www.speakeasy.com/?utm_source=lapyme&utm_campaign=typescript)
 [![License: MIT](https://img.shields.io/badge/LICENSE_//_MIT-3b5bdb?style=for-the-badge&labelColor=eff6ff)](https://opensource.org/licenses/MIT)

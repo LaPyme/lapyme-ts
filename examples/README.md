@@ -1,6 +1,7 @@
-# lapyme Examples
+# La Pyme SDK examples
 
-This directory contains example scripts demonstrating how to use the lapyme SDK.
+This directory contains authored example scripts for the official `lapyme`
+TypeScript SDK.
 
 ## Prerequisites
 
@@ -14,18 +15,24 @@ This directory contains example scripts demonstrating how to use the lapyme SDK.
    cp .env.template .env
    ```
 
-2. Edit `.env` and add your actual credentials (API keys, tokens, etc.)
+2. Edit `.env` and add your API key and any IDs required by the workflow.
 
 ## Running the Examples
 
 To run an example file from the examples directory:
 
 ```bash
-npm run build && npx tsx example.ts
+npm run build && npx tsx 01-check-credentials.ts
 ```
 
-## Creating new examples
+## Examples
 
-Duplicate an existing example file, they won't be overwritten by the generation process.
+- `01-check-credentials.ts`: verify the API key with a read-only request.
+- `02-create-customer.ts`: create a customer with a stable idempotency key.
+- `03-create-sale.ts`: create a sale with line items and retry-safe idempotency.
+- `04-create-purchase-order-and-receive.ts`: create, confirm, and receive a purchase order.
+- `05-run-sales-report.ts`: query a sales report.
+- `06-handle-errors-and-retries.ts`: inspect structured API errors and retry safely.
 
-
+Generated examples may also exist in this folder. New authored examples are not
+overwritten by SDK generation.

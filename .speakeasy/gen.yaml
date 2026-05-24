@@ -48,7 +48,7 @@ typescript:
       url: https://github.com/LaPyme/lapyme-ts.git
   additionalScripts: {}
   alwaysIncludeInboundAndOutbound: false
-  author: Speakeasy
+  author: La Pyme
   baseErrorName: LapymeError
   clientServerStatusCodesAsErrors: true
   constFieldsAlwaysOptional: false
