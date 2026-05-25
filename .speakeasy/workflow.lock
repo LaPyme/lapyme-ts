@@ -2,8 +2,8 @@ speakeasyVersion: 1.764.1
 sources:
     La Pyme API:
         sourceNamespace: la-pyme-api
-        sourceRevisionDigest: sha256:a2c1d15190c6b78a0169113c8f552acc096ecaf19cc8fa5f756c347eb1a686b5
-        sourceBlobDigest: sha256:5352c8731b4efe48e2b2302b01a6238213b0e539807801bda8b9813bf87f1c44
+        sourceRevisionDigest: sha256:e86118c46d6a446034352f9b07e561480dd95f7076284d5dce2ce9140120c206
+        sourceBlobDigest: sha256:03a74a69c6a8e3ac6aa0efd3c062da223361b0eaca6c71332be4480b9bd1b701
         tags:
             - latest
             - 1.0.0
@@ -11,10 +11,10 @@ targets:
     lapyme:
         source: La Pyme API
         sourceNamespace: la-pyme-api
-        sourceRevisionDigest: sha256:a2c1d15190c6b78a0169113c8f552acc096ecaf19cc8fa5f756c347eb1a686b5
-        sourceBlobDigest: sha256:5352c8731b4efe48e2b2302b01a6238213b0e539807801bda8b9813bf87f1c44
+        sourceRevisionDigest: sha256:e86118c46d6a446034352f9b07e561480dd95f7076284d5dce2ce9140120c206
+        sourceBlobDigest: sha256:03a74a69c6a8e3ac6aa0efd3c062da223361b0eaca6c71332be4480b9bd1b701
         codeSamplesNamespace: la-pyme-api-typescript-code-samples
-        codeSamplesRevisionDigest: sha256:0a553725b6bd3519cd153c7aae58fef44426b38cba59960173afeb802251ae4a
+        codeSamplesRevisionDigest: sha256:aa3d373aa9a4373b5cd4c13b1d674dc4ffd4c3bf1089096d400d99ecfd9d4c5d
 workflow:
     workflowVersion: 1.0.0
     speakeasyVersion: latest
