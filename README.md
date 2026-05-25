@@ -3,9 +3,11 @@
 Official TypeScript SDK for La Pyme's public API.
 
 Use La Pyme as the business operations layer for custom backends, scripts,
-workers, and automations: customers, products, sales, purchases, inventory,
-payments, and reports. The SDK is generated from La Pyme's public OpenAPI
-contract with Speakeasy, then complemented with authored examples and recipes.
+workers, and automations. Manage customers, products, sales, purchases,
+inventory, payments, and reports with typed requests and responses.
+
+To learn more, check the [API reference](https://docs.lapyme.com.ar/api-reference)
+and the copy-pasteable workflows in [`examples/`](examples/).
 
 ```bash
 pnpm add lapyme
@@ -50,7 +52,6 @@ to the SDK constructor as `bearerAuth`. Do not expose API keys in browser code.
 See [`examples/`](examples/) for copy-pasteable workflows, including
 credential checks, sales, purchase orders, reports, and error handling.
 
-[![Built by Speakeasy](https://img.shields.io/badge/Built_by-SPEAKEASY-374151?style=for-the-badge&labelColor=f3f4f6)](https://www.speakeasy.com/?utm_source=lapyme&utm_campaign=typescript)
 [![License: MIT](https://img.shields.io/badge/LICENSE_//_MIT-3b5bdb?style=for-the-badge&labelColor=eff6ff)](https://opensource.org/licenses/MIT)
 
 
@@ -676,8 +677,6 @@ const sdk = new Lapyme({ debugLogger: console });
 You can also enable a default debug logger by setting an environment variable `LAPYME_DEBUG` to true.
 <!-- End Debugging [debug] -->
 
-<!-- Placeholder for Future Speakeasy SDK Sections -->
-
 # Development
 
 ## Versioning
@@ -686,7 +685,6 @@ Pin the SDK to a specific package version in production applications. This keeps
 
 ## Contributions
 
-While we value open-source contributions to this SDK, this library is generated programmatically. Any manual changes added to internal files will be overwritten on the next generation. 
-We look forward to hearing your feedback. Feel free to open a PR or an issue with a proof of concept and we'll do our best to include it in a future release. 
-
-### SDK Created by [Speakeasy](https://www.speakeasy.com/?utm_source=lapyme&utm_campaign=typescript)
+Open an issue or PR with the integration you are building, a minimal repro, and
+the expected SDK behavior. We prioritize changes that make common La Pyme API
+workflows easier to build and safer to operate.
