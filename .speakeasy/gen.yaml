@@ -43,6 +43,7 @@ typescript:
     devDependencies: {}
     peerDependencies: {}
   additionalPackageJSON:
+    license: MIT
     repository:
       type: git
       url: https://github.com/LaPyme/lapyme-ts.git
