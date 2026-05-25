@@ -12035,6 +12035,10 @@ paths:
                       details: []
       x-required-scopes:
         - "suppliers:read"
+      x-codeSamples:
+        - lang: "typescript"
+          label: "La Pyme SDK"
+          source: "import { Lapyme } from \"lapyme\";\n\nconst lapyme = new Lapyme({\n  bearerAuth: process.env[\"LAPYME_API_KEY\"] ?? \"\",\n});\n\nconst suppliers = await lapyme.suppliers.list({\n  limit: 20,\n  query: \"Textiles\",\n});\n"
       x-speakeasy-group: suppliers
       x-speakeasy-name-override: list
     post:
@@ -12185,6 +12189,10 @@ paths:
                       details: []
       x-required-scopes:
         - "suppliers:write"
+      x-codeSamples:
+        - lang: "typescript"
+          label: "La Pyme SDK"
+          source: "import { Lapyme } from \"lapyme\";\n\nconst lapyme = new Lapyme({\n  bearerAuth: process.env[\"LAPYME_API_KEY\"] ?? \"\",\n});\n\nconst supplier = await lapyme.suppliers.createSupplier({\n  idempotencyKey: crypto.randomUUID(),\n  body: {\n    name: \"Textiles Norte\",\n    taxId: \"30700111222\",\n    email: \"ventas@textilesnorte.com.ar\",\n  },\n});\n"
       x-speakeasy-group: suppliers
       x-speakeasy-name-override: createSupplier
   /api/v1/suppliers/{supplier_id}:
@@ -12348,6 +12356,10 @@ paths:
                       details: []
       x-required-scopes:
         - "suppliers:read"
+      x-codeSamples:
+        - lang: "typescript"
+          label: "La Pyme SDK"
+          source: "import { Lapyme } from \"lapyme\";\n\nconst lapyme = new Lapyme({\n  bearerAuth: process.env[\"LAPYME_API_KEY\"] ?? \"\",\n});\n\nconst supplier = await lapyme.suppliers.getSupplier({\n  supplierId: \"9c692e8b-0f9a-4f7c-8b99-061a2eb188ae\",\n});\n"
       x-speakeasy-group: suppliers
       x-speakeasy-name-override: getSupplier
     put:
@@ -12521,6 +12533,10 @@ paths:
                       details: []
       x-required-scopes:
         - "suppliers:write"
+      x-codeSamples:
+        - lang: "typescript"
+          label: "La Pyme SDK"
+          source: "import { Lapyme } from \"lapyme\";\n\nconst lapyme = new Lapyme({\n  bearerAuth: process.env[\"LAPYME_API_KEY\"] ?? \"\",\n});\n\nconst supplier = await lapyme.suppliers.updateSupplier({\n  supplierId: \"9c692e8b-0f9a-4f7c-8b99-061a2eb188ae\",\n  body: {\n    email: \"administracion@textilesnorte.com.ar\",\n  },\n});\n"
       x-speakeasy-group: suppliers
       x-speakeasy-name-override: updateSupplier
   /api/v1/categories:
@@ -12680,6 +12696,10 @@ paths:
                       details: []
       x-required-scopes:
         - "categories:read"
+      x-codeSamples:
+        - lang: "typescript"
+          label: "La Pyme SDK"
+          source: "import { Lapyme } from \"lapyme\";\n\nconst lapyme = new Lapyme({\n  bearerAuth: process.env[\"LAPYME_API_KEY\"] ?? \"\",\n});\n\nconst categories = await lapyme.categories.get({\n  limit: 20,\n  query: \"indumentaria\",\n});\n"
       x-speakeasy-group: categories
       x-speakeasy-name-override: get
     post:
@@ -12830,6 +12850,10 @@ paths:
                       details: []
       x-required-scopes:
         - "categories:write"
+      x-codeSamples:
+        - lang: "typescript"
+          label: "La Pyme SDK"
+          source: "import { Lapyme } from \"lapyme\";\n\nconst lapyme = new Lapyme({\n  bearerAuth: process.env[\"LAPYME_API_KEY\"] ?? \"\",\n});\n\nconst category = await lapyme.categories.create({\n  idempotencyKey: crypto.randomUUID(),\n  body: {\n    name: \"Indumentaria\",\n  },\n});\n"
       x-speakeasy-group: categories
       x-speakeasy-name-override: create
   /api/v1/categories/{category_id}:
@@ -13352,6 +13376,10 @@ paths:
                       details: []
       x-required-scopes:
         - "products:read"
+      x-codeSamples:
+        - lang: "typescript"
+          label: "La Pyme SDK"
+          source: "import { Lapyme } from \"lapyme\";\n\nconst lapyme = new Lapyme({\n  bearerAuth: process.env[\"LAPYME_API_KEY\"] ?? \"\",\n});\n\nconst products = await lapyme.products.list({\n  limit: 20,\n  query: \"remera\",\n  productType: \"product\",\n});\n"
       x-speakeasy-group: products
       x-speakeasy-name-override: list
     post:
@@ -13543,6 +13571,10 @@ paths:
                       details: []
       x-required-scopes:
         - "products:write"
+      x-codeSamples:
+        - lang: "typescript"
+          label: "La Pyme SDK"
+          source: "import { Lapyme } from \"lapyme\";\n\nconst lapyme = new Lapyme({\n  bearerAuth: process.env[\"LAPYME_API_KEY\"] ?? \"\",\n});\n\nconst product = await lapyme.products.create({\n  idempotencyKey: crypto.randomUUID(),\n  body: {\n    name: \"Remera basica\",\n    sku: \"REM-BASICA-M\",\n    productType: \"product\",\n    price: 1250000,\n    cost: 700000,\n    currency: \"PES\",\n  },\n});\n"
       x-speakeasy-group: products
       x-speakeasy-name-override: create
   /api/v1/products/bulk-adjustments:
@@ -13730,6 +13762,10 @@ paths:
                       details: []
       x-required-scopes:
         - "products:write"
+      x-codeSamples:
+        - lang: "typescript"
+          label: "La Pyme SDK"
+          source: "import { Lapyme } from \"lapyme\";\n\nconst lapyme = new Lapyme({\n  bearerAuth: process.env[\"LAPYME_API_KEY\"] ?? \"\",\n});\n\nconst adjustment = await lapyme.productBulkAdjustments.create({\n  idempotencyKey: crypto.randomUUID(),\n  body: {\n    target: \"price\",\n    operationType: \"increase\",\n    adjustmentType: \"percentage\",\n    adjustmentValue: 10,\n    selection: {\n      type: \"specific\",\n      ids: [\"9c692e8b-0f9a-4f7c-8b99-061a2eb188ae\"],\n    },\n  },\n});\n"
       x-speakeasy-group: productBulkAdjustments
       x-speakeasy-name-override: create
   /api/v1/products/{product_id}:
@@ -13894,6 +13930,10 @@ paths:
                       details: []
       x-required-scopes:
         - "products:read"
+      x-codeSamples:
+        - lang: "typescript"
+          label: "La Pyme SDK"
+          source: "import { Lapyme } from \"lapyme\";\n\nconst lapyme = new Lapyme({\n  bearerAuth: process.env[\"LAPYME_API_KEY\"] ?? \"\",\n});\n\nconst product = await lapyme.products.getProductById({\n  productId: \"9c692e8b-0f9a-4f7c-8b99-061a2eb188ae\",\n});\n"
       x-speakeasy-group: products
       x-speakeasy-name-override: getProductById
     put:
@@ -14086,6 +14126,10 @@ paths:
                       details: []
       x-required-scopes:
         - "products:write"
+      x-codeSamples:
+        - lang: "typescript"
+          label: "La Pyme SDK"
+          source: "import { Lapyme } from \"lapyme\";\n\nconst lapyme = new Lapyme({\n  bearerAuth: process.env[\"LAPYME_API_KEY\"] ?? \"\",\n});\n\nconst product = await lapyme.products.update({\n  productId: \"9c692e8b-0f9a-4f7c-8b99-061a2eb188ae\",\n  body: {\n    price: 1390000,\n  },\n});\n"
       x-speakeasy-group: products
       x-speakeasy-name-override: update
   /api/v1/warehouses:
@@ -14253,6 +14297,10 @@ paths:
                       details: []
       x-required-scopes:
         - "warehouses:read"
+      x-codeSamples:
+        - lang: "typescript"
+          label: "La Pyme SDK"
+          source: "import { Lapyme } from \"lapyme\";\n\nconst lapyme = new Lapyme({\n  bearerAuth: process.env[\"LAPYME_API_KEY\"] ?? \"\",\n});\n\nconst warehouses = await lapyme.warehouses.list({\n  limit: 20,\n});\n"
       x-speakeasy-group: warehouses
       x-speakeasy-name-override: list
     post:
@@ -14427,6 +14475,10 @@ paths:
                       details: []
       x-required-scopes:
         - "warehouses:write"
+      x-codeSamples:
+        - lang: "typescript"
+          label: "La Pyme SDK"
+          source: "import { Lapyme } from \"lapyme\";\n\nconst lapyme = new Lapyme({\n  bearerAuth: process.env[\"LAPYME_API_KEY\"] ?? \"\",\n});\n\nconst warehouse = await lapyme.warehouses.create({\n  idempotencyKey: crypto.randomUUID(),\n  body: {\n    name: \"Deposito central\",\n    address: \"Av. Corrientes 1234\",\n  },\n});\n"
       x-speakeasy-group: warehouses
       x-speakeasy-name-override: create
   /api/v1/warehouses/{warehouse_id}:
@@ -14591,6 +14643,10 @@ paths:
                       details: []
       x-required-scopes:
         - "warehouses:read"
+      x-codeSamples:
+        - lang: "typescript"
+          label: "La Pyme SDK"
+          source: "import { Lapyme } from \"lapyme\";\n\nconst lapyme = new Lapyme({\n  bearerAuth: process.env[\"LAPYME_API_KEY\"] ?? \"\",\n});\n\nconst warehouse = await lapyme.warehouses.getWarehouseById({\n  warehouseId: \"9c692e8b-0f9a-4f7c-8b99-061a2eb188ae\",\n});\n"
       x-speakeasy-group: warehouses
       x-speakeasy-name-override: getWarehouseById
     put:
@@ -14783,6 +14839,10 @@ paths:
                       details: []
       x-required-scopes:
         - "warehouses:write"
+      x-codeSamples:
+        - lang: "typescript"
+          label: "La Pyme SDK"
+          source: "import { Lapyme } from \"lapyme\";\n\nconst lapyme = new Lapyme({\n  bearerAuth: process.env[\"LAPYME_API_KEY\"] ?? \"\",\n});\n\nconst warehouse = await lapyme.warehouses.updateWarehouse({\n  warehouseId: \"9c692e8b-0f9a-4f7c-8b99-061a2eb188ae\",\n  body: {\n    name: \"Deposito central\",\n    address: \"Av. Corrientes 1234\",\n  },\n});\n"
       x-speakeasy-group: warehouses
       x-speakeasy-name-override: updateWarehouse
   /api/v1/price-lists:
@@ -14950,6 +15010,10 @@ paths:
                       details: []
       x-required-scopes:
         - "price_lists:read"
+      x-codeSamples:
+        - lang: "typescript"
+          label: "La Pyme SDK"
+          source: "import { Lapyme } from \"lapyme\";\n\nconst lapyme = new Lapyme({\n  bearerAuth: process.env[\"LAPYME_API_KEY\"] ?? \"\",\n});\n\nconst priceLists = await lapyme.priceLists.get({\n  limit: 20,\n});\n"
       x-speakeasy-group: priceLists
       x-speakeasy-name-override: get
     post:
@@ -15689,6 +15753,10 @@ paths:
                       details: []
       x-required-scopes:
         - "purchases:read"
+      x-codeSamples:
+        - lang: "typescript"
+          label: "La Pyme SDK"
+          source: "import { Lapyme } from \"lapyme\";\n\nconst lapyme = new Lapyme({\n  bearerAuth: process.env[\"LAPYME_API_KEY\"] ?? \"\",\n});\n\nconst purchases = await lapyme.purchases.listPurchases({\n  limit: 20,\n  dateFrom: new Date(\"2026-03-01\"),\n  dateTo: new Date(\"2026-03-31\"),\n});\n"
       x-speakeasy-group: purchases
       x-speakeasy-name-override: listPurchases
     post:
@@ -16275,6 +16343,10 @@ paths:
                       details: []
       x-required-scopes:
         - "sales:read"
+      x-codeSamples:
+        - lang: "typescript"
+          label: "La Pyme SDK"
+          source: "import { Lapyme } from \"lapyme\";\n\nconst lapyme = new Lapyme({\n  bearerAuth: process.env[\"LAPYME_API_KEY\"] ?? \"\",\n});\n\nconst sales = await lapyme.sales.list({\n  limit: 20,\n  dateFrom: new Date(\"2026-03-01\"),\n  dateTo: new Date(\"2026-03-31\"),\n});\n"
       x-speakeasy-group: sales
       x-speakeasy-name-override: list
     post:
@@ -16806,6 +16878,10 @@ paths:
                       details: []
       x-required-scopes:
         - "transfers:read"
+      x-codeSamples:
+        - lang: "typescript"
+          label: "La Pyme SDK"
+          source: "import { Lapyme } from \"lapyme\";\n\nconst lapyme = new Lapyme({\n  bearerAuth: process.env[\"LAPYME_API_KEY\"] ?? \"\",\n});\n\nconst transfers = await lapyme.stockTransfers.listStockTransfers({\n  limit: 20,\n});\n"
       x-speakeasy-group: stockTransfers
       x-speakeasy-name-override: listStockTransfers
     post:
@@ -17279,6 +17355,10 @@ paths:
                       details: []
       x-required-scopes:
         - "reports:read"
+      x-codeSamples:
+        - lang: "typescript"
+          label: "La Pyme SDK"
+          source: "import { Lapyme } from \"lapyme\";\n\nconst lapyme = new Lapyme({\n  bearerAuth: process.env[\"LAPYME_API_KEY\"] ?? \"\",\n});\n\nconst report = await lapyme.reports.query({\n  source: \"sales\",\n  period: {\n    startDate: \"2026-01-01\",\n    endDate: \"2026-03-31\",\n  },\n  dimensions: [\"product\"],\n  measures: [\"total\", \"units\", \"count\"],\n  includeTotals: true,\n});\n"
       x-speakeasy-group: reports
       x-speakeasy-name-override: query
   /api/v1/purchases/{purchase_id}:
@@ -17426,6 +17506,10 @@ paths:
                       details: []
       x-required-scopes:
         - "purchases:read"
+      x-codeSamples:
+        - lang: "typescript"
+          label: "La Pyme SDK"
+          source: "import { Lapyme } from \"lapyme\";\n\nconst lapyme = new Lapyme({\n  bearerAuth: process.env[\"LAPYME_API_KEY\"] ?? \"\",\n});\n\nconst purchase = await lapyme.purchases.getPurchaseById({\n  purchaseId: \"9c692e8b-0f9a-4f7c-8b99-061a2eb188ae\",\n});\n"
       x-speakeasy-group: purchases
       x-speakeasy-name-override: getPurchaseById
   /api/v1/purchase-orders:
@@ -17607,6 +17691,10 @@ paths:
                       details: []
       x-required-scopes:
         - "purchases:read"
+      x-codeSamples:
+        - lang: "typescript"
+          label: "La Pyme SDK"
+          source: "import { Lapyme } from \"lapyme\";\n\nconst lapyme = new Lapyme({\n  bearerAuth: process.env[\"LAPYME_API_KEY\"] ?? \"\",\n});\n\nconst purchaseOrders = await lapyme.purchaseOrders.listPurchaseOrders({\n  limit: 20,\n  status: \"draft\",\n});\n"
       x-speakeasy-group: purchaseOrders
       x-speakeasy-name-override: listPurchaseOrders
     post:
@@ -17956,6 +18044,10 @@ paths:
                       details: []
       x-required-scopes:
         - "purchases:read"
+      x-codeSamples:
+        - lang: "typescript"
+          label: "La Pyme SDK"
+          source: "import { Lapyme } from \"lapyme\";\n\nconst lapyme = new Lapyme({\n  bearerAuth: process.env[\"LAPYME_API_KEY\"] ?? \"\",\n});\n\nconst purchaseOrder = await lapyme.purchaseOrders.getPurchaseOrderById({\n  purchaseOrderId: \"9c692e8b-0f9a-4f7c-8b99-061a2eb188ae\",\n});\n"
       x-speakeasy-group: purchaseOrders
       x-speakeasy-name-override: getPurchaseOrderById
   /api/v1/purchase-orders/{purchase_order_id}/confirm:
@@ -18137,6 +18229,10 @@ paths:
                       details: []
       x-required-scopes:
         - "purchases:write"
+      x-codeSamples:
+        - lang: "typescript"
+          label: "La Pyme SDK"
+          source: "import { Lapyme } from \"lapyme\";\n\nconst lapyme = new Lapyme({\n  bearerAuth: process.env[\"LAPYME_API_KEY\"] ?? \"\",\n});\n\nconst purchaseOrder = await lapyme.purchaseOrders.confirm({\n  purchaseOrderId: \"9c692e8b-0f9a-4f7c-8b99-061a2eb188ae\",\n});\n"
       x-speakeasy-group: purchaseOrders
       x-speakeasy-name-override: confirm
   /api/v1/purchase-orders/{purchase_order_id}/close:
@@ -18870,6 +18966,10 @@ paths:
                       message: "Error interno del servidor"
                       retryable: false
                       details: []
+      x-codeSamples:
+        - lang: "typescript"
+          label: "La Pyme SDK"
+          source: "import { Lapyme } from \"lapyme\";\n\nconst lapyme = new Lapyme({\n  bearerAuth: process.env[\"LAPYME_API_KEY\"] ?? \"\",\n});\n\nconst orders = await lapyme.orders.listOrders({\n  limit: 20,\n});\n"
       x-speakeasy-group: orders
       x-speakeasy-name-override: listOrders
     post:
@@ -19232,6 +19332,10 @@ paths:
                       message: "Error interno del servidor"
                       retryable: false
                       details: []
+      x-codeSamples:
+        - lang: "typescript"
+          label: "La Pyme SDK"
+          source: "import { Lapyme } from \"lapyme\";\n\nconst lapyme = new Lapyme({\n  bearerAuth: process.env[\"LAPYME_API_KEY\"] ?? \"\",\n});\n\nconst order = await lapyme.orders.getOrderById({\n  orderId: \"9c692e8b-0f9a-4f7c-8b99-061a2eb188ae\",\n});\n"
       x-speakeasy-group: orders
       x-speakeasy-name-override: getOrderById
     patch:
@@ -19420,6 +19524,10 @@ paths:
                       message: "Error interno del servidor"
                       retryable: false
                       details: []
+      x-codeSamples:
+        - lang: "typescript"
+          label: "La Pyme SDK"
+          source: "import { Lapyme } from \"lapyme\";\n\nconst lapyme = new Lapyme({\n  bearerAuth: process.env[\"LAPYME_API_KEY\"] ?? \"\",\n});\n\nconst order = await lapyme.orders.updateOrderNotes({\n  orderId: \"9c692e8b-0f9a-4f7c-8b99-061a2eb188ae\",\n  body: {\n    notes: \"Retira por sucursal.\",\n  },\n});\n"
       x-speakeasy-group: orders
       x-speakeasy-name-override: updateOrderNotes
     delete:
@@ -19776,6 +19884,10 @@ paths:
                       message: "Error interno del servidor"
                       retryable: false
                       details: []
+      x-codeSamples:
+        - lang: "typescript"
+          label: "La Pyme SDK"
+          source: "import { Lapyme } from \"lapyme\";\n\nconst lapyme = new Lapyme({\n  bearerAuth: process.env[\"LAPYME_API_KEY\"] ?? \"\",\n});\n\nconst order = await lapyme.orders.complete({\n  orderId: \"9c692e8b-0f9a-4f7c-8b99-061a2eb188ae\",\n});\n"
       x-speakeasy-group: orders
       x-speakeasy-name-override: complete
   /api/v1/orders/{order_id}/cancel:
@@ -19954,6 +20066,10 @@ paths:
                       message: "Error interno del servidor"
                       retryable: false
                       details: []
+      x-codeSamples:
+        - lang: "typescript"
+          label: "La Pyme SDK"
+          source: "import { Lapyme } from \"lapyme\";\n\nconst lapyme = new Lapyme({\n  bearerAuth: process.env[\"LAPYME_API_KEY\"] ?? \"\",\n});\n\nconst order = await lapyme.orders.cancel({\n  orderId: \"9c692e8b-0f9a-4f7c-8b99-061a2eb188ae\",\n});\n"
       x-speakeasy-group: orders
       x-speakeasy-name-override: cancel
   /api/v1/orders/{order_id}/prepare:
@@ -21041,6 +21157,10 @@ paths:
                       message: "Error interno del servidor"
                       retryable: false
                       details: []
+      x-codeSamples:
+        - lang: "typescript"
+          label: "La Pyme SDK"
+          source: "import { Lapyme } from \"lapyme\";\n\nconst lapyme = new Lapyme({\n  bearerAuth: process.env[\"LAPYME_API_KEY\"] ?? \"\",\n});\n\nconst fulfillmentOrders = await lapyme.orders.listFulfillmentOrders({\n  orderId: \"9c692e8b-0f9a-4f7c-8b99-061a2eb188ae\",\n});\n"
       x-speakeasy-group: orders
       x-speakeasy-name-override: listFulfillmentOrders
   /api/v1/fulfillment-orders/{fulfillment_order_id}/start:
@@ -21219,6 +21339,10 @@ paths:
                       message: "Error interno del servidor"
                       retryable: false
                       details: []
+      x-codeSamples:
+        - lang: "typescript"
+          label: "La Pyme SDK"
+          source: "import { Lapyme } from \"lapyme\";\n\nconst lapyme = new Lapyme({\n  bearerAuth: process.env[\"LAPYME_API_KEY\"] ?? \"\",\n});\n\nconst fulfillmentOrder = await lapyme.fulfillmentOrders.start({\n  fulfillmentOrderId: \"9c692e8b-0f9a-4f7c-8b99-061a2eb188ae\",\n});\n"
       x-speakeasy-group: fulfillmentOrders
       x-speakeasy-name-override: start
   /api/v1/fulfillment-orders/{fulfillment_order_id}/cancel:
@@ -22118,6 +22242,10 @@ paths:
                       details: []
       x-required-scopes:
         - "sales:read"
+      x-codeSamples:
+        - lang: "typescript"
+          label: "La Pyme SDK"
+          source: "import { Lapyme } from \"lapyme\";\n\nconst lapyme = new Lapyme({\n  bearerAuth: process.env[\"LAPYME_API_KEY\"] ?? \"\",\n});\n\nconst sale = await lapyme.sales.getSaleById({\n  saleId: \"9c692e8b-0f9a-4f7c-8b99-061a2eb188ae\",\n});\n"
       x-speakeasy-group: sales
       x-speakeasy-name-override: getSaleById
     patch:
@@ -22322,6 +22450,10 @@ paths:
                       details: []
       x-required-scopes:
         - "sales:write"
+      x-codeSamples:
+        - lang: "typescript"
+          label: "La Pyme SDK"
+          source: "import { Lapyme } from \"lapyme\";\n\nconst lapyme = new Lapyme({\n  bearerAuth: process.env[\"LAPYME_API_KEY\"] ?? \"\",\n});\n\nconst sale = await lapyme.sales.patchMetadata({\n  saleId: \"9c692e8b-0f9a-4f7c-8b99-061a2eb188ae\",\n  body: {\n    notes: \"Referencia actualizada desde integracion\",\n  },\n});\n"
       x-speakeasy-group: sales
       x-speakeasy-name-override: patchMetadata
   /api/v1/stock-transfers/{transfer_id}:
@@ -22847,6 +22979,10 @@ paths:
                       details: []
       x-required-scopes:
         - "customers:read"
+      x-codeSamples:
+        - lang: "typescript"
+          label: "La Pyme SDK"
+          source: "import { Lapyme } from \"lapyme\";\n\nconst lapyme = new Lapyme({\n  bearerAuth: process.env[\"LAPYME_API_KEY\"] ?? \"\",\n});\n\nconst customers = await lapyme.customers.get({\n  limit: 20,\n  query: \"Acme\",\n});\n"
       x-speakeasy-group: customers
       x-speakeasy-name-override: get
     post:
@@ -23038,6 +23174,10 @@ paths:
                       details: []
       x-required-scopes:
         - "customers:write"
+      x-codeSamples:
+        - lang: "typescript"
+          label: "La Pyme SDK"
+          source: "import { Lapyme } from \"lapyme\";\n\nconst lapyme = new Lapyme({\n  bearerAuth: process.env[\"LAPYME_API_KEY\"] ?? \"\",\n});\n\nconst customer = await lapyme.customers.create({\n  idempotencyKey: crypto.randomUUID(),\n  body: {\n    name: \"Acme S.A.\",\n    taxId: \"30711222333\",\n    email: \"compras@acme.com.ar\",\n  },\n});\n"
       x-speakeasy-group: customers
       x-speakeasy-name-override: create
   /api/v1/customers/{customer_id}:
@@ -23202,6 +23342,10 @@ paths:
                       details: []
       x-required-scopes:
         - "customers:read"
+      x-codeSamples:
+        - lang: "typescript"
+          label: "La Pyme SDK"
+          source: "import { Lapyme } from \"lapyme\";\n\nconst lapyme = new Lapyme({\n  bearerAuth: process.env[\"LAPYME_API_KEY\"] ?? \"\",\n});\n\nconst customer = await lapyme.customers.getCustomerById({\n  customerId: \"9c692e8b-0f9a-4f7c-8b99-061a2eb188ae\",\n});\n"
       x-speakeasy-group: customers
       x-speakeasy-name-override: getCustomerById
     put:
@@ -23394,6 +23538,10 @@ paths:
                       details: []
       x-required-scopes:
         - "customers:write"
+      x-codeSamples:
+        - lang: "typescript"
+          label: "La Pyme SDK"
+          source: "import { Lapyme } from \"lapyme\";\n\nconst lapyme = new Lapyme({\n  bearerAuth: process.env[\"LAPYME_API_KEY\"] ?? \"\",\n});\n\nconst customer = await lapyme.customers.updateCustomer({\n  customerId: \"9c692e8b-0f9a-4f7c-8b99-061a2eb188ae\",\n  body: {\n    email: \"administracion@acme.com.ar\",\n  },\n});\n"
       x-speakeasy-group: customers
       x-speakeasy-name-override: updateCustomer
   /api/v1/tags:
@@ -24855,6 +25003,10 @@ paths:
                       details: []
       x-required-scopes:
         - "sales:read"
+      x-codeSamples:
+        - lang: "typescript"
+          label: "La Pyme SDK"
+          source: "import { Lapyme } from \"lapyme\";\n\nconst lapyme = new Lapyme({\n  bearerAuth: process.env[\"LAPYME_API_KEY\"] ?? \"\",\n});\n\nconst payments = await lapyme.customerPayments.listCustomerPayments({\n  limit: 20,\n  dateFrom: new Date(\"2026-03-01\"),\n  dateTo: new Date(\"2026-03-31\"),\n});\n"
       x-speakeasy-group: customerPayments
       x-speakeasy-name-override: listCustomerPayments
     post:
@@ -25551,6 +25703,10 @@ paths:
                       details: []
       x-required-scopes:
         - "purchases:read"
+      x-codeSamples:
+        - lang: "typescript"
+          label: "La Pyme SDK"
+          source: "import { Lapyme } from \"lapyme\";\n\nconst lapyme = new Lapyme({\n  bearerAuth: process.env[\"LAPYME_API_KEY\"] ?? \"\",\n});\n\nconst payments = await lapyme.supplierPayments.listSupplierPayments({\n  limit: 20,\n  dateFrom: new Date(\"2026-03-01\"),\n  dateTo: new Date(\"2026-03-31\"),\n});\n"
       x-speakeasy-group: supplierPayments
       x-speakeasy-name-override: listSupplierPayments
     post:
@@ -26239,6 +26395,10 @@ paths:
                       details: []
       x-required-scopes:
         - "payment_methods:read"
+      x-codeSamples:
+        - lang: "typescript"
+          label: "La Pyme SDK"
+          source: "import { Lapyme } from \"lapyme\";\n\nconst lapyme = new Lapyme({\n  bearerAuth: process.env[\"LAPYME_API_KEY\"] ?? \"\",\n});\n\nconst paymentMethods = await lapyme.paymentMethods.list({\n  limit: 20,\n});\n"
       x-speakeasy-group: paymentMethods
       x-speakeasy-name-override: list
     post:
@@ -26899,6 +27059,10 @@ paths:
                       details: []
       x-required-scopes:
         - "sales:read"
+      x-codeSamples:
+        - lang: "typescript"
+          label: "La Pyme SDK"
+          source: "import { Lapyme } from \"lapyme\";\n\nconst lapyme = new Lapyme({\n  bearerAuth: process.env[\"LAPYME_API_KEY\"] ?? \"\",\n});\n\nconst pointsOfSale = await lapyme.pointsOfSale.listPointsOfSale({\n  limit: 20,\n});\n"
       x-speakeasy-group: pointsOfSale
       x-speakeasy-name-override: listPointsOfSale
   /api/v1/inventory:
@@ -27213,6 +27377,10 @@ paths:
       x-required-scopes:
         - "products:read"
         - "warehouses:read"
+      x-codeSamples:
+        - lang: "typescript"
+          label: "La Pyme SDK"
+          source: "import { Lapyme } from \"lapyme\";\n\nconst lapyme = new Lapyme({\n  bearerAuth: process.env[\"LAPYME_API_KEY\"] ?? \"\",\n});\n\nconst inventory = await lapyme.inventory.listInventory({\n  warehouseId: \"9c692e8b-0f9a-4f7c-8b99-061a2eb188ae\",\n  limit: 20,\n  query: \"remera\",\n});\n"
       x-speakeasy-group: inventory
       x-speakeasy-name-override: listInventory
   /api/v1/inventory/movements:
@@ -27382,5 +27550,9 @@ paths:
                       details: []
       x-required-scopes:
         - "products:read"
+      x-codeSamples:
+        - lang: "typescript"
+          label: "La Pyme SDK"
+          source: "import { Lapyme } from \"lapyme\";\n\nconst lapyme = new Lapyme({\n  bearerAuth: process.env[\"LAPYME_API_KEY\"] ?? \"\",\n});\n\nconst movements = await lapyme.inventory.listInventoryMovements({\n  limit: 20,\n  productId: \"9c692e8b-0f9a-4f7c-8b99-061a2eb188ae\",\n});\n"
       x-speakeasy-group: inventory
       x-speakeasy-name-override: listInventoryMovements
