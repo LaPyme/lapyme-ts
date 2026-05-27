@@ -5,11 +5,11 @@
 ```typescript
 import { InventoryReportRequestDimension } from "lapyme/models";
 
-let value: InventoryReportRequestDimension = "productType";
+let value: InventoryReportRequestDimension = "defaultSupplierName";
 ```
 
 ## Values
 
 ```typescript
-"product" | "variant" | "category" | "subcategory" | "productType" | "warehouse" | "currency"
+"product" | "productName" | "variant" | "variantSku" | "category" | "subcategory" | "defaultSupplierName" | "productType" | "warehouse" | "currency"
 ```

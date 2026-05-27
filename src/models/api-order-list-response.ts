@@ -47,7 +47,7 @@ export type ApiOrderListResponseData = {
   total: number;
   currency: ApiSharedEnum6cfb146157;
   orderStatus: ApiSharedEnum4ac9200c4a;
-  fulfillmentStatus: ApiSharedEnumb49e56b125;
+  preparationStatus: ApiSharedEnumb49e56b125;
   invoicingStatus: ApiSharedEnum2f67ddf0e8;
   notes: string | null;
   createdAt: Date;
@@ -91,7 +91,7 @@ export const ApiOrderListResponseData$inboundSchema: z.ZodMiniType<
     total: types.number(),
     currency: ApiSharedEnum6cfb146157$inboundSchema,
     order_status: ApiSharedEnum4ac9200c4a$inboundSchema,
-    fulfillment_status: ApiSharedEnumb49e56b125$inboundSchema,
+    preparation_status: ApiSharedEnumb49e56b125$inboundSchema,
     invoicing_status: ApiSharedEnum2f67ddf0e8$inboundSchema,
     notes: types.nullable(types.string()),
     created_at: types.date(),
@@ -110,7 +110,7 @@ export const ApiOrderListResponseData$inboundSchema: z.ZodMiniType<
       "discount_amount": "discountAmount",
       "tax_amount": "taxAmount",
       "order_status": "orderStatus",
-      "fulfillment_status": "fulfillmentStatus",
+      "preparation_status": "preparationStatus",
       "invoicing_status": "invoicingStatus",
       "created_at": "createdAt",
       "created_by_name": "createdByName",

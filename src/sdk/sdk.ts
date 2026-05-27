@@ -4,11 +4,10 @@
  */
 
 import { ClientSDK } from "../lib/sdks.js";
+import { Api } from "./api.js";
 import { Categories } from "./categories.js";
 import { CustomerPayments } from "./customer-payments.js";
 import { Customers } from "./customers.js";
-import { FulfillmentOrders } from "./fulfillment-orders.js";
-import { Fulfillments } from "./fulfillments.js";
 import { Inventory } from "./inventory.js";
 import { Orders } from "./orders.js";
 import { PaymentMethods } from "./payment-methods.js";
@@ -91,14 +90,9 @@ export class Lapyme extends ClientSDK {
     return (this._orders ??= new Orders(this._options));
   }
 
-  private _fulfillmentOrders?: FulfillmentOrders;
-  get fulfillmentOrders(): FulfillmentOrders {
-    return (this._fulfillmentOrders ??= new FulfillmentOrders(this._options));
-  }
-
-  private _fulfillments?: Fulfillments;
-  get fulfillments(): Fulfillments {
-    return (this._fulfillments ??= new Fulfillments(this._options));
+  private _api?: Api;
+  get api(): Api {
+    return (this._api ??= new Api(this._options));
   }
 
   private _stockMovements?: StockMovements;

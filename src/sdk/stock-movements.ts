@@ -14,8 +14,6 @@ export class StockMovements extends ClientSDK {
    *
    * @remarks
    * Registra un movimiento manual para ajustar stock de un producto o variante.
-   *
-   * Required scopes: `products:write`.
    */
   async createStockMovement(
     request: operations.CreateApiStockMovementRequest,

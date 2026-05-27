@@ -13,8 +13,6 @@
 
 Lista las ventas de la organización. Soporta filtros por cliente, fecha, estado, punto de venta, vendedor e integración.
 
-Required scopes: `sales:read`.
-
 ### Example Usage
 
 <!-- UsageSnippet language="typescript" operationID="listApiSales" method="get" path="/api/v1/sales" -->
@@ -86,8 +84,6 @@ run();
 ## create
 
 Registra una venta y devuelve la operación creada junto con sus efectos fiscales, de stock, pagos y contabilidad.
-
-Required scopes: `sales:write`.
 
 ### Example Usage: created
 
@@ -420,8 +416,6 @@ run();
 
 Devuelve el detalle de la venta.
 
-Required scopes: `sales:read`.
-
 ### Example Usage
 
 <!-- UsageSnippet language="typescript" operationID="getApiSaleById" method="get" path="/api/v1/sales/{sale_id}" -->
@@ -497,8 +491,6 @@ run();
 ## patchMetadata
 
 Actualiza solo metadatos operativos de una venta: notas, referencia de integracion externa y vendedor. No permite modificar items, importes, pagos ni datos fiscales.
-
-Required scopes: `sales:write`.
 
 ### Example Usage: clear_external_reference
 

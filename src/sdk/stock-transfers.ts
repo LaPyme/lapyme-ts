@@ -16,8 +16,6 @@ export class StockTransfers extends ClientSDK {
    *
    * @remarks
    * Lista las transferencias de stock de la organización con filtros por fecha, estado y depósitos.
-   *
-   * Required scopes: `transfers:read`.
    */
   async listStockTransfers(
     request?: operations.ListApiStockTransfersRequest | undefined,
@@ -35,8 +33,6 @@ export class StockTransfers extends ClientSDK {
    *
    * @remarks
    * Crea una transferencia para mover productos entre depósitos.
-   *
-   * Required scopes: `transfers:write`.
    */
   async createStockTransfer(
     request: operations.CreateApiStockTransferRequest,
@@ -54,8 +50,6 @@ export class StockTransfers extends ClientSDK {
    *
    * @remarks
    * Devuelve el detalle de la transferencia de stock.
-   *
-   * Required scopes: `transfers:read`.
    */
   async getStockTransferById(
     request: operations.GetApiStockTransferByIdRequest,

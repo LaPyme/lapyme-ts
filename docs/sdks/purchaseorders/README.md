@@ -15,8 +15,6 @@
 
 Lista las órdenes de compra de la organización. Soporta búsqueda por proveedor o número de orden y filtros por fecha y estado.
 
-Required scopes: `purchases:read`.
-
 ### Example Usage
 
 <!-- UsageSnippet language="typescript" operationID="listApiPurchaseOrders" method="get" path="/api/v1/purchase-orders" -->
@@ -88,8 +86,6 @@ run();
 ## createPurchaseOrder
 
 Crea una orden de compra en borrador. Requiere Idempotency-Key.
-
-Required scopes: `purchases:write`.
 
 ### Example Usage
 
@@ -189,8 +185,6 @@ run();
 
 Devuelve el detalle de una orden de compra.
 
-Required scopes: `purchases:read`.
-
 ### Example Usage
 
 <!-- UsageSnippet language="typescript" operationID="getApiPurchaseOrderById" method="get" path="/api/v1/purchase-orders/{purchase_order_id}" -->
@@ -266,8 +260,6 @@ run();
 ## confirm
 
 Confirma una orden de compra y devuelve el detalle persistido.
-
-Required scopes: `purchases:write`.
 
 ### Example Usage
 
@@ -345,8 +337,6 @@ run();
 
 Cierra una orden de compra y devuelve el detalle persistido.
 
-Required scopes: `purchases:write`.
-
 ### Example Usage
 
 <!-- UsageSnippet language="typescript" operationID="closeApiPurchaseOrder" method="post" path="/api/v1/purchase-orders/{purchase_order_id}/close" -->
@@ -422,8 +412,6 @@ run();
 ## reopen
 
 Reabre una orden de compra cerrada y devuelve el detalle persistido.
-
-Required scopes: `purchases:write`.
 
 ### Example Usage
 

@@ -12,8 +12,6 @@
 
 Lista las transferencias de stock de la organización con filtros por fecha, estado y depósitos.
 
-Required scopes: `transfers:read`.
-
 ### Example Usage
 
 <!-- UsageSnippet language="typescript" operationID="listApiStockTransfers" method="get" path="/api/v1/stock-transfers" -->
@@ -85,8 +83,6 @@ run();
 ## createStockTransfer
 
 Crea una transferencia para mover productos entre depósitos.
-
-Required scopes: `transfers:write`.
 
 ### Example Usage: created
 
@@ -232,8 +228,6 @@ run();
 ## getStockTransferById
 
 Devuelve el detalle de la transferencia de stock.
-
-Required scopes: `transfers:read`.
 
 ### Example Usage
 

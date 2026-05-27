@@ -15,8 +15,6 @@ export class Reports extends ClientSDK {
    *
    * @remarks
    * Ejecuta una consulta analítica agrupada sobre ventas, compras, pagos o inventario. El campo `source` determina qué dimensiones y métricas están disponibles.
-   *
-   * Required scopes: `reports:read`.
    */
   async query(
     request: models.ReportRequest,

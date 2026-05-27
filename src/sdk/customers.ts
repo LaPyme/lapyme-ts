@@ -18,8 +18,6 @@ export class Customers extends ClientSDK {
    *
    * @remarks
    * Devuelve clientes de la organización. Permite buscar por nombre, CUIT o email.
-   *
-   * Required scopes: `customers:read`.
    */
   async get(
     request?: operations.ListApiCustomersRequest | undefined,
@@ -37,8 +35,6 @@ export class Customers extends ClientSDK {
    *
    * @remarks
    * Crea un cliente para ventas, cuentas corrientes, etiquetas y reportes.
-   *
-   * Required scopes: `customers:write`.
    */
   async create(
     request: operations.CreateApiCustomerRequest,
@@ -56,8 +52,6 @@ export class Customers extends ClientSDK {
    *
    * @remarks
    * Devuelve los datos del cliente.
-   *
-   * Required scopes: `customers:read`.
    */
   async getCustomerById(
     request: operations.GetApiCustomerByIdRequest,
@@ -75,8 +69,6 @@ export class Customers extends ClientSDK {
    *
    * @remarks
    * Actualiza un cliente y devuelve los datos persistidos.
-   *
-   * Required scopes: `customers:write`.
    */
   async updateCustomer(
     request: operations.UpdateApiCustomerRequest,
@@ -94,8 +86,6 @@ export class Customers extends ClientSDK {
    *
    * @remarks
    * Agrega y/o remueve etiquetas de scope `customer` en un lote de clientes.
-   *
-   * Required scopes: `customers:write`.
    */
   async applyTags(
     request: operations.ApplyApiCustomerTagsRequest,

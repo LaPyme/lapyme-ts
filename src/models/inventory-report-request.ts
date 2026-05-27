@@ -23,9 +23,12 @@ export type InventoryReportRequestPeriod = {
 
 export const InventoryReportRequestDimension = {
   Product: "product",
+  ProductName: "productName",
   Variant: "variant",
+  VariantSku: "variantSku",
   Category: "category",
   Subcategory: "subcategory",
+  DefaultSupplierName: "defaultSupplierName",
   ProductType: "productType",
   Warehouse: "warehouse",
   Currency: "currency",
@@ -45,6 +48,14 @@ export const InventoryReportRequestMeasure = {
   InventoryUnitsSold: "inventoryUnitsSold",
   InventoryUnitsSoldPerDay: "inventoryUnitsSoldPerDay",
   DaysOfInventoryRemaining: "daysOfInventoryRemaining",
+  SellThroughRate: "sellThroughRate",
+  InventoryUnitsNetChange: "inventoryUnitsNetChange",
+  InventoryAdjustmentChange: "inventoryAdjustmentChange",
+  InventoryAdjustmentCount: "inventoryAdjustmentCount",
+  ReceivedQuantity: "receivedQuantity",
+  TransferCount: "transferCount",
+  TransferLineItemCount: "transferLineItemCount",
+  UniqueItemsTransferred: "uniqueItemsTransferred",
 } as const;
 export type InventoryReportRequestMeasure = ClosedEnum<
   typeof InventoryReportRequestMeasure
@@ -55,8 +66,11 @@ export type InventoryReportRequestMeasure = ClosedEnum<
  */
 export type InventoryReportRequestDimensionFilters = {
   product?: Array<string> | undefined;
+  productName?: Array<string> | undefined;
+  variantSku?: Array<string> | undefined;
   category?: Array<string> | undefined;
   subcategory?: Array<string> | undefined;
+  defaultSupplierName?: Array<string> | undefined;
   productType?: Array<string> | undefined;
   warehouse?: Array<string> | undefined;
   currency?: Array<string> | undefined;
@@ -156,8 +170,11 @@ export const InventoryReportRequestMeasure$outboundSchema: z.ZodMiniEnum<
 /** @internal */
 export type InventoryReportRequestDimensionFilters$Outbound = {
   product?: Array<string> | undefined;
+  product_name?: Array<string> | undefined;
+  variant_sku?: Array<string> | undefined;
   category?: Array<string> | undefined;
   subcategory?: Array<string> | undefined;
+  default_supplier_name?: Array<string> | undefined;
   product_type?: Array<string> | undefined;
   warehouse?: Array<string> | undefined;
   currency?: Array<string> | undefined;
@@ -171,14 +188,20 @@ export const InventoryReportRequestDimensionFilters$outboundSchema:
   > = z.pipe(
     z.object({
       product: z.optional(z.array(z.string())),
+      productName: z.optional(z.array(z.string())),
+      variantSku: z.optional(z.array(z.string())),
       category: z.optional(z.array(z.string())),
       subcategory: z.optional(z.array(z.string())),
+      defaultSupplierName: z.optional(z.array(z.string())),
       productType: z.optional(z.array(z.string())),
       warehouse: z.optional(z.array(z.string())),
       currency: z.optional(z.array(z.string())),
     }),
     z.transform((v) => {
       return remap$(v, {
+        productName: "product_name",
+        variantSku: "variant_sku",
+        defaultSupplierName: "default_supplier_name",
         productType: "product_type",
       });
     }),

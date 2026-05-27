@@ -38,7 +38,7 @@ let value: ListApiOrdersResponse = {
         total: 671136,
         currency: "PES",
         orderStatus: "open",
-        fulfillmentStatus: "in_progress",
+        preparationStatus: "in_progress",
         invoicingStatus: "partially_invoiced",
         notes: "<value>",
         createdAt: new Date("2025-01-28T20:17:37.951Z"),

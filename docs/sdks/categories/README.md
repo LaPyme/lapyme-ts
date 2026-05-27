@@ -13,8 +13,6 @@
 
 Devuelve las categorías de productos de la organización.
 
-Required scopes: `categories:read`.
-
 ### Example Usage
 
 <!-- UsageSnippet language="typescript" operationID="listApiCategories" method="get" path="/api/v1/categories" -->
@@ -86,8 +84,6 @@ run();
 ## create
 
 Crea una categoría para organizar productos y asociar actividad económica predeterminada.
-
-Required scopes: `categories:write`.
 
 ### Example Usage
 
@@ -171,8 +167,6 @@ run();
 
 Devuelve una categoría por ID.
 
-Required scopes: `categories:read`.
-
 ### Example Usage
 
 <!-- UsageSnippet language="typescript" operationID="getApiCategory" method="get" path="/api/v1/categories/{category_id}" -->
@@ -248,8 +242,6 @@ run();
 ## updateCategory
 
 Actualiza el nombre, la categoría padre o la actividad económica de una categoría.
-
-Required scopes: `categories:write`.
 
 ### Example Usage
 

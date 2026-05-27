@@ -15,8 +15,6 @@ export class Inventory extends ClientSDK {
    *
    * @remarks
    * Devuelve el inventario de un depósito específico con filtros por categoría, tipo y cantidades.
-   *
-   * Required scopes: `products:read`, `warehouses:read`.
    */
   async listInventory(
     request: operations.ListApiInventoryRequest,
@@ -34,8 +32,6 @@ export class Inventory extends ClientSDK {
    *
    * @remarks
    * Lista el historial de movimientos de inventario del producto, opcionalmente filtrado por depósito.
-   *
-   * Required scopes: `products:read`.
    */
   async listInventoryMovements(
     request: operations.ListApiInventoryMovementsRequest,

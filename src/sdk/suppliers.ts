@@ -18,8 +18,6 @@ export class Suppliers extends ClientSDK {
    *
    * @remarks
    * Devuelve una lista de proveedores de la organización. Permite buscar por nombre, CUIT o email.
-   *
-   * Required scopes: `suppliers:read`.
    */
   async list(
     request?: operations.ListApiSuppliersRequest | undefined,
@@ -37,8 +35,6 @@ export class Suppliers extends ClientSDK {
    *
    * @remarks
    * Crea un proveedor para usarlo en compras, cuentas corrientes y reportes.
-   *
-   * Required scopes: `suppliers:write`.
    */
   async createSupplier(
     request: operations.CreateApiSupplierRequest,
@@ -56,8 +52,6 @@ export class Suppliers extends ClientSDK {
    *
    * @remarks
    * Devuelve los datos de un proveedor por ID.
-   *
-   * Required scopes: `suppliers:read`.
    */
   async getSupplier(
     request: operations.GetApiSupplierRequest,
@@ -75,8 +69,6 @@ export class Suppliers extends ClientSDK {
    *
    * @remarks
    * Actualiza los datos comerciales, fiscales y de contacto de un proveedor.
-   *
-   * Required scopes: `suppliers:write`.
    */
   async updateSupplier(
     request: operations.UpdateApiSupplierRequest,
@@ -94,8 +86,6 @@ export class Suppliers extends ClientSDK {
    *
    * @remarks
    * Agrega y/o remueve etiquetas de scope `supplier` en un lote de proveedores.
-   *
-   * Required scopes: `suppliers:write`.
    */
   async applySupplierTags(
     request: operations.ApplyApiSupplierTagsRequest,

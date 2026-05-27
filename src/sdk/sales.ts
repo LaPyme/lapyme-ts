@@ -17,8 +17,6 @@ export class Sales extends ClientSDK {
    *
    * @remarks
    * Lista las ventas de la organización. Soporta filtros por cliente, fecha, estado, punto de venta, vendedor e integración.
-   *
-   * Required scopes: `sales:read`.
    */
   async list(
     request?: operations.ListApiSalesRequest | undefined,
@@ -36,8 +34,6 @@ export class Sales extends ClientSDK {
    *
    * @remarks
    * Registra una venta y devuelve la operación creada junto con sus efectos fiscales, de stock, pagos y contabilidad.
-   *
-   * Required scopes: `sales:write`.
    */
   async create(
     request: operations.CreateApiSaleRequest,
@@ -55,8 +51,6 @@ export class Sales extends ClientSDK {
    *
    * @remarks
    * Devuelve el detalle de la venta.
-   *
-   * Required scopes: `sales:read`.
    */
   async getSaleById(
     request: operations.GetApiSaleByIdRequest,
@@ -74,8 +68,6 @@ export class Sales extends ClientSDK {
    *
    * @remarks
    * Actualiza solo metadatos operativos de una venta: notas, referencia de integracion externa y vendedor. No permite modificar items, importes, pagos ni datos fiscales.
-   *
-   * Required scopes: `sales:write`.
    */
   async patchMetadata(
     request: operations.PatchApiSaleMetadataRequest,

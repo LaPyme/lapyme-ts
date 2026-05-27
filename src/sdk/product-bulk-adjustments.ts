@@ -10,12 +10,10 @@ import { unwrapAsync } from "../types/fp.js";
 
 export class ProductBulkAdjustments extends ClientSDK {
   /**
-   * Ajustar productos en lote
+   * Actualizar productos masivamente
    *
    * @remarks
    * Aplica ajustes masivos de costo o precio base sobre una selección de productos.
-   *
-   * Required scopes: `products:write`.
    */
   async create(
     request: operations.CreateApiProductBulkAdjustmentRequest,
