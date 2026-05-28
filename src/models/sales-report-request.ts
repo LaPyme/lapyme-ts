@@ -23,13 +23,18 @@ export const SalesReportRequestDimension = {
   Quarter: "quarter",
   HourOfDay: "hourOfDay",
   Customer: "customer",
+  CustomerName: "customerName",
+  CustomerEmail: "customerEmail",
   CustomerTaxCategory: "customerTaxCategory",
   Province: "province",
   City: "city",
   Product: "product",
+  ProductName: "productName",
   Variant: "variant",
+  VariantSku: "variantSku",
   Category: "category",
   Subcategory: "subcategory",
+  DefaultSupplierName: "defaultSupplierName",
   ProductType: "productType",
   Salesperson: "salesperson",
   PointOfSale: "pointOfSale",
@@ -40,6 +45,7 @@ export const SalesReportRequestDimension = {
   Currency: "currency",
   PaymentStatus: "paymentStatus",
   CaeStatus: "caeStatus",
+  FormattedInvoiceNumber: "formattedInvoiceNumber",
   PaymentMethod: "paymentMethod",
   TaxRate: "taxRate",
 } as const;
@@ -71,12 +77,17 @@ export type SalesReportRequestMeasure = ClosedEnum<
  */
 export type SalesReportRequestDimensionFilters = {
   customer?: Array<string> | undefined;
+  customerName?: Array<string> | undefined;
+  customerEmail?: Array<string> | undefined;
   customerTaxCategory?: Array<string> | undefined;
   province?: Array<string> | undefined;
   city?: Array<string> | undefined;
   product?: Array<string> | undefined;
+  productName?: Array<string> | undefined;
+  variantSku?: Array<string> | undefined;
   category?: Array<string> | undefined;
   subcategory?: Array<string> | undefined;
+  defaultSupplierName?: Array<string> | undefined;
   productType?: Array<string> | undefined;
   salesperson?: Array<string> | undefined;
   pointOfSale?: Array<string> | undefined;
@@ -87,6 +98,7 @@ export type SalesReportRequestDimensionFilters = {
   currency?: Array<string> | undefined;
   paymentStatus?: Array<string> | undefined;
   caeStatus?: Array<string> | undefined;
+  formattedInvoiceNumber?: Array<string> | undefined;
   paymentMethod?: Array<string> | undefined;
   taxRate?: Array<string> | undefined;
 };
@@ -143,12 +155,17 @@ export const SalesReportRequestMeasure$outboundSchema: z.ZodMiniEnum<
 /** @internal */
 export type SalesReportRequestDimensionFilters$Outbound = {
   customer?: Array<string> | undefined;
+  customer_name?: Array<string> | undefined;
+  customer_email?: Array<string> | undefined;
   customer_tax_category?: Array<string> | undefined;
   province?: Array<string> | undefined;
   city?: Array<string> | undefined;
   product?: Array<string> | undefined;
+  product_name?: Array<string> | undefined;
+  variant_sku?: Array<string> | undefined;
   category?: Array<string> | undefined;
   subcategory?: Array<string> | undefined;
+  default_supplier_name?: Array<string> | undefined;
   product_type?: Array<string> | undefined;
   salesperson?: Array<string> | undefined;
   point_of_sale?: Array<string> | undefined;
@@ -159,6 +176,7 @@ export type SalesReportRequestDimensionFilters$Outbound = {
   currency?: Array<string> | undefined;
   payment_status?: Array<string> | undefined;
   cae_status?: Array<string> | undefined;
+  formatted_invoice_number?: Array<string> | undefined;
   payment_method?: Array<string> | undefined;
   tax_rate?: Array<string> | undefined;
 };
@@ -170,12 +188,17 @@ export const SalesReportRequestDimensionFilters$outboundSchema: z.ZodMiniType<
 > = z.pipe(
   z.object({
     customer: z.optional(z.array(z.string())),
+    customerName: z.optional(z.array(z.string())),
+    customerEmail: z.optional(z.array(z.string())),
     customerTaxCategory: z.optional(z.array(z.string())),
     province: z.optional(z.array(z.string())),
     city: z.optional(z.array(z.string())),
     product: z.optional(z.array(z.string())),
+    productName: z.optional(z.array(z.string())),
+    variantSku: z.optional(z.array(z.string())),
     category: z.optional(z.array(z.string())),
     subcategory: z.optional(z.array(z.string())),
+    defaultSupplierName: z.optional(z.array(z.string())),
     productType: z.optional(z.array(z.string())),
     salesperson: z.optional(z.array(z.string())),
     pointOfSale: z.optional(z.array(z.string())),
@@ -186,18 +209,25 @@ export const SalesReportRequestDimensionFilters$outboundSchema: z.ZodMiniType<
     currency: z.optional(z.array(z.string())),
     paymentStatus: z.optional(z.array(z.string())),
     caeStatus: z.optional(z.array(z.string())),
+    formattedInvoiceNumber: z.optional(z.array(z.string())),
     paymentMethod: z.optional(z.array(z.string())),
     taxRate: z.optional(z.array(z.string())),
   }),
   z.transform((v) => {
     return remap$(v, {
+      customerName: "customer_name",
+      customerEmail: "customer_email",
       customerTaxCategory: "customer_tax_category",
+      productName: "product_name",
+      variantSku: "variant_sku",
+      defaultSupplierName: "default_supplier_name",
       productType: "product_type",
       pointOfSale: "point_of_sale",
       integrationSource: "integration_source",
       voucherType: "voucher_type",
       paymentStatus: "payment_status",
       caeStatus: "cae_status",
+      formattedInvoiceNumber: "formatted_invoice_number",
       paymentMethod: "payment_method",
       taxRate: "tax_rate",
     });

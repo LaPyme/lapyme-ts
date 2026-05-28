@@ -11,8 +11,8 @@ let value: ApiOrderInvoiceRequest = {
   invoiceDate: new Date("2025-05-02"),
   lines: [
     {
-      orderLineId: "050fcd75-781a-43fd-ad5a-082001c3885b",
-      quantityToInvoice: 26604,
+      orderLineId: "4ed05c6f-41d4-477d-8d43-4aacd96c1da4",
+      quantityToInvoice: 942518,
     },
   ],
 };

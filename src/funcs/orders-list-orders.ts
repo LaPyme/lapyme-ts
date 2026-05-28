@@ -101,8 +101,8 @@ async function $do(
     "cursor": payload?.cursor,
     "date_from": payload?.date_from,
     "date_to": payload?.date_to,
-    "fulfillment_status": payload?.fulfillment_status,
     "limit": payload?.limit,
+    "preparation_status": payload?.preparation_status,
     "query": payload?.query,
     "status": payload?.status,
   });
@@ -126,8 +126,18 @@ async function $do(
     securitySource: client._options.bearerAuth,
     retryConfig: options?.retries
       || client._options.retryConfig
+      || {
+        strategy: "backoff",
+        backoff: {
+          initialInterval: 500,
+          maxInterval: 60000,
+          exponent: 1.5,
+          maxElapsedTime: 3600000,
+        },
+        retryConnectionErrors: true,
+      }
       || { strategy: "none" },
-    retryCodes: options?.retryCodes || ["429", "500", "502", "503", "504"],
+    retryCodes: options?.retryCodes || ["5XX"],
   };
 
   const requestRes = client._createRequest(context, {

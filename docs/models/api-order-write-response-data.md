@@ -23,7 +23,7 @@ let value: ApiOrderWriteResponseData = {
     total: 377906,
     currency: "PES",
     orderStatus: "completed",
-    fulfillmentStatus: "fulfilled",
+    preparationStatus: "fulfilled",
     invoicingStatus: "partially_invoiced",
     notes: "<value>",
     createdAt: new Date("2026-11-24T16:57:34.205Z"),
@@ -49,10 +49,9 @@ let value: ApiOrderWriteResponseData = {
       },
     ],
     activeWarehouses: [],
-    pendingFulfillmentLocationId: "73d3fbcf-c396-42e4-a3f0-d6891a37f27d",
-    fulfillmentOrders: [],
-    fulfillments: [],
-    generatedInvoices: [],
+    pendingPreparationWarehouseId: "73d3fbcf-c396-42e4-a3f0-d6891a37f27d",
+    preparations: [],
+    invoices: [],
   },
 };
 ```
@@ -61,6 +60,6 @@ let value: ApiOrderWriteResponseData = {
 
 | Field                                                                        | Type                                                                         | Required                                                                     | Description                                                                  |
 | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| `order`                                                                      | [models.ApiSharedObject9223e6f740](../models/api-shared-object9223e6f740.md) | :heavy_check_mark:                                                           | N/A                                                                          |
+| `order`                                                                      | [models.ApiSharedObject1cf33bb430](../models/api-shared-object1cf33bb430.md) | :heavy_check_mark:                                                           | N/A                                                                          |
 | `idempotentReplay`                                                           | *boolean*                                                                    | :heavy_minus_sign:                                                           | N/A                                                                          |
 | `result`                                                                     | *any*                                                                        | :heavy_minus_sign:                                                           | N/A                                                                          |

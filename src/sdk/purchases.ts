@@ -17,8 +17,6 @@ export class Purchases extends ClientSDK {
    *
    * @remarks
    * Lista las compras de la organización. Soporta filtros por fecha, importe y búsqueda de proveedor.
-   *
-   * Required scopes: `purchases:read`.
    */
   async listPurchases(
     request?: operations.ListApiPurchasesRequest | undefined,
@@ -36,8 +34,6 @@ export class Purchases extends ClientSDK {
    *
    * @remarks
    * Registra una compra y devuelve la operación creada junto con sus efectos de stock y contabilidad.
-   *
-   * Required scopes: `purchases:write`.
    */
   async createPurchase(
     request: operations.CreateApiPurchaseRequest,
@@ -55,8 +51,6 @@ export class Purchases extends ClientSDK {
    *
    * @remarks
    * Devuelve el detalle de la compra.
-   *
-   * Required scopes: `purchases:read`.
    */
   async getPurchaseById(
     request: operations.GetApiPurchaseByIdRequest,
@@ -74,8 +68,6 @@ export class Purchases extends ClientSDK {
    *
    * @remarks
    * Agrega y/o remueve etiquetas de scope `purchase` en un lote de compras.
-   *
-   * Required scopes: `purchases:write`.
    */
   async applyPurchaseTags(
     request: operations.ApplyApiPurchaseTagsRequest,

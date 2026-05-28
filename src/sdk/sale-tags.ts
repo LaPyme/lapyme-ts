@@ -14,8 +14,6 @@ export class SaleTags extends ClientSDK {
    *
    * @remarks
    * Agrega y/o remueve etiquetas de scope `sale` en un lote de ventas.
-   *
-   * Required scopes: `sales:write`.
    */
   async apply(
     request: operations.ApplyApiSaleTagsRequest,

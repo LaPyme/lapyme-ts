@@ -19,6 +19,7 @@ export const PurchasesReportRequestDimension = {
   Quarter: "quarter",
   Year: "year",
   Supplier: "supplier",
+  SupplierName: "supplierName",
   SupplierTaxCategory: "supplierTaxCategory",
   SupplierProvince: "supplierProvince",
   SupplierCity: "supplierCity",
@@ -56,6 +57,7 @@ export type PurchasesReportRequestMeasure = ClosedEnum<
  */
 export type PurchasesReportRequestDimensionFilters = {
   supplier?: Array<string> | undefined;
+  supplierName?: Array<string> | undefined;
   supplierTaxCategory?: Array<string> | undefined;
   supplierProvince?: Array<string> | undefined;
   supplierCity?: Array<string> | undefined;
@@ -103,6 +105,7 @@ export const PurchasesReportRequestMeasure$outboundSchema: z.ZodMiniEnum<
 /** @internal */
 export type PurchasesReportRequestDimensionFilters$Outbound = {
   supplier?: Array<string> | undefined;
+  supplier_name?: Array<string> | undefined;
   supplier_tax_category?: Array<string> | undefined;
   supplier_province?: Array<string> | undefined;
   supplier_city?: Array<string> | undefined;
@@ -124,6 +127,7 @@ export const PurchasesReportRequestDimensionFilters$outboundSchema:
   > = z.pipe(
     z.object({
       supplier: z.optional(z.array(z.string())),
+      supplierName: z.optional(z.array(z.string())),
       supplierTaxCategory: z.optional(z.array(z.string())),
       supplierProvince: z.optional(z.array(z.string())),
       supplierCity: z.optional(z.array(z.string())),
@@ -138,6 +142,7 @@ export const PurchasesReportRequestDimensionFilters$outboundSchema:
     }),
     z.transform((v) => {
       return remap$(v, {
+        supplierName: "supplier_name",
         supplierTaxCategory: "supplier_tax_category",
         supplierProvince: "supplier_province",
         supplierCity: "supplier_city",

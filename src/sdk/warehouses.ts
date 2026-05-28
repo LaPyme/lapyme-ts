@@ -17,8 +17,6 @@ export class Warehouses extends ClientSDK {
    *
    * @remarks
    * Lista los depósitos activos de la organización.
-   *
-   * Required scopes: `warehouses:read`.
    */
   async list(
     request?: operations.ListApiWarehousesRequest | undefined,
@@ -36,8 +34,6 @@ export class Warehouses extends ClientSDK {
    *
    * @remarks
    * Crea un depósito para operar stock, puntos de venta y disponibilidad.
-   *
-   * Required scopes: `warehouses:write`.
    */
   async create(
     request: operations.CreateApiWarehouseRequest,
@@ -55,8 +51,6 @@ export class Warehouses extends ClientSDK {
    *
    * @remarks
    * Devuelve el detalle del depósito.
-   *
-   * Required scopes: `warehouses:read`.
    */
   async getWarehouseById(
     request: operations.GetApiWarehouseByIdRequest,
@@ -74,8 +68,6 @@ export class Warehouses extends ClientSDK {
    *
    * @remarks
    * Actualiza un depósito y devuelve el detalle persistido.
-   *
-   * Required scopes: `warehouses:write`.
    */
   async updateWarehouse(
     request: operations.UpdateApiWarehouseRequest,

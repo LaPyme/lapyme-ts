@@ -10,8 +10,6 @@
 
 Agrega y/o remueve etiquetas de scope `sale` en un lote de ventas.
 
-Required scopes: `sales:write`.
-
 ### Example Usage
 
 <!-- UsageSnippet language="typescript" operationID="applyApiSaleTags" method="post" path="/api/v1/sales/tags/apply" example="default" -->

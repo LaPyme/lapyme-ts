@@ -4,18 +4,11 @@
  */
 
 import { ordersCancel } from "../funcs/orders-cancel.js";
-import { ordersChangeFulfillmentLocation } from "../funcs/orders-change-fulfillment-location.js";
-import { ordersComplete } from "../funcs/orders-complete.js";
 import { ordersCreateOrder } from "../funcs/orders-create-order.js";
 import { ordersDeleteArchived } from "../funcs/orders-delete-archived.js";
 import { ordersGetOrderById } from "../funcs/orders-get-order-by-id.js";
-import { ordersInvoice } from "../funcs/orders-invoice.js";
-import { ordersListFulfillmentOrders } from "../funcs/orders-list-fulfillment-orders.js";
 import { ordersListOrders } from "../funcs/orders-list-orders.js";
-import { ordersPackage } from "../funcs/orders-package.js";
-import { ordersPrepare } from "../funcs/orders-prepare.js";
 import { ordersUnarchive } from "../funcs/orders-unarchive.js";
-import { ordersUnprepare } from "../funcs/orders-unprepare.js";
 import { ordersUpdateOrderNotes } from "../funcs/orders-update-order-notes.js";
 import { ClientSDK, RequestOptions } from "../lib/sdks.js";
 import * as operations from "../models/operations/index.js";
@@ -108,20 +101,6 @@ export class Orders extends ClientSDK {
   }
 
   /**
-   * Completar pedido
-   */
-  async complete(
-    request: operations.CompleteApiOrderRequest,
-    options?: RequestOptions,
-  ): Promise<operations.CompleteApiOrderResponse> {
-    return unwrapAsync(ordersComplete(
-      this,
-      request,
-      options,
-    ));
-  }
-
-  /**
    * Cancelar pedido
    */
   async cancel(
@@ -136,65 +115,6 @@ export class Orders extends ClientSDK {
   }
 
   /**
-   * Preparar pedido
-   *
-   * @remarks
-   * Prepara líneas del pedido y requiere Idempotency-Key.
-   */
-  async prepare(
-    request: operations.PrepareApiOrderRequest,
-    options?: RequestOptions,
-  ): Promise<operations.PrepareApiOrderResponse> {
-    return unwrapAsync(ordersPrepare(
-      this,
-      request,
-      options,
-    ));
-  }
-
-  /**
-   * Empaquetar pedido
-   */
-  async package(
-    request: operations.PackageApiOrderRequest,
-    options?: RequestOptions,
-  ): Promise<operations.PackageApiOrderResponse> {
-    return unwrapAsync(ordersPackage(
-      this,
-      request,
-      options,
-    ));
-  }
-
-  /**
-   * Revertir preparación del pedido
-   */
-  async unprepare(
-    request: operations.UnprepareApiOrderRequest,
-    options?: RequestOptions,
-  ): Promise<operations.UnprepareApiOrderResponse> {
-    return unwrapAsync(ordersUnprepare(
-      this,
-      request,
-      options,
-    ));
-  }
-
-  /**
-   * Cambiar ubicación de preparación
-   */
-  async changeFulfillmentLocation(
-    request: operations.ChangeApiOrderFulfillmentLocationRequest,
-    options?: RequestOptions,
-  ): Promise<operations.ChangeApiOrderFulfillmentLocationResponse> {
-    return unwrapAsync(ordersChangeFulfillmentLocation(
-      this,
-      request,
-      options,
-    ));
-  }
-
-  /**
    * Desarchivar pedido
    */
   async unarchive(
@@ -202,37 +122,6 @@ export class Orders extends ClientSDK {
     options?: RequestOptions,
   ): Promise<operations.UnarchiveApiOrderResponse> {
     return unwrapAsync(ordersUnarchive(
-      this,
-      request,
-      options,
-    ));
-  }
-
-  /**
-   * Listar órdenes de preparación del pedido
-   */
-  async listFulfillmentOrders(
-    request: operations.ListApiOrderFulfillmentOrdersRequest,
-    options?: RequestOptions,
-  ): Promise<operations.ListApiOrderFulfillmentOrdersResponse> {
-    return unwrapAsync(ordersListFulfillmentOrders(
-      this,
-      request,
-      options,
-    ));
-  }
-
-  /**
-   * Facturar pedido
-   *
-   * @remarks
-   * Factura líneas del pedido y requiere Idempotency-Key.
-   */
-  async invoice(
-    request: operations.InvoiceApiOrderRequest,
-    options?: RequestOptions,
-  ): Promise<operations.InvoiceApiOrderResponse> {
-    return unwrapAsync(ordersInvoice(
       this,
       request,
       options,

@@ -51,11 +51,13 @@ export type ApiPurchaseTransactionRequestItem = {
   vatCategory?: ApiSharedEnum822a963f55 | null | undefined;
 };
 
-export const Status = {
+export const ApiPurchaseTransactionRequestStatus = {
   Draft: "draft",
   Confirmed: "confirmed",
 } as const;
-export type Status = ClosedEnum<typeof Status>;
+export type ApiPurchaseTransactionRequestStatus = ClosedEnum<
+  typeof ApiPurchaseTransactionRequestStatus
+>;
 
 export type ApiPurchaseTransactionRequest = {
   supplierId?: string | undefined;
@@ -117,7 +119,7 @@ export type ApiPurchaseTransactionRequest = {
   exchangeRate?: number | undefined;
   pdfPath?: string | undefined;
   vatCategory?: ApiSharedEnum822a963f55 | null | undefined;
-  status?: Status | undefined;
+  status?: ApiPurchaseTransactionRequestStatus | undefined;
 };
 
 /** @internal */
@@ -177,9 +179,9 @@ export function apiPurchaseTransactionRequestItemToJSON(
 }
 
 /** @internal */
-export const Status$outboundSchema: z.ZodMiniEnum<typeof Status> = z.enum(
-  Status,
-);
+export const ApiPurchaseTransactionRequestStatus$outboundSchema: z.ZodMiniEnum<
+  typeof ApiPurchaseTransactionRequestStatus
+> = z.enum(ApiPurchaseTransactionRequestStatus);
 
 /** @internal */
 export type ApiPurchaseTransactionRequest$Outbound = {
@@ -283,7 +285,7 @@ export const ApiPurchaseTransactionRequest$outboundSchema: z.ZodMiniType<
     exchangeRate: z.optional(z.number()),
     pdfPath: z.optional(z.string()),
     vatCategory: z.optional(z.nullable(ApiSharedEnum822a963f55$outboundSchema)),
-    status: z.optional(Status$outboundSchema),
+    status: z.optional(ApiPurchaseTransactionRequestStatus$outboundSchema),
   }),
   z.transform((v) => {
     return remap$(v, {

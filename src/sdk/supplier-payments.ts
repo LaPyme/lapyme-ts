@@ -17,8 +17,6 @@ export class SupplierPayments extends ClientSDK {
    *
    * @remarks
    * Lista pagos a proveedores con búsqueda, filtro por fecha, estado y paginación por cursor.
-   *
-   * Required scopes: `purchases:read`.
    */
   async listSupplierPayments(
     request?: operations.ListApiSupplierPaymentsRequest | undefined,
@@ -36,8 +34,6 @@ export class SupplierPayments extends ClientSDK {
    *
    * @remarks
    * Registra un pago a proveedor con uno o más métodos de pago, aplicaciones a compras o cuenta corriente, retenciones y datos de cheque cuando corresponde.
-   *
-   * Required scopes: `purchases:write`.
    */
   async createSupplierPayment(
     request: operations.CreateApiSupplierPaymentRequest,
@@ -55,8 +51,6 @@ export class SupplierPayments extends ClientSDK {
    *
    * @remarks
    * Obtiene un pago a proveedor por ID.
-   *
-   * Required scopes: `purchases:read`.
    */
   async getSupplierPayment(
     request: operations.GetApiSupplierPaymentRequest,
@@ -74,8 +68,6 @@ export class SupplierPayments extends ClientSDK {
    *
    * @remarks
    * Anula un pago a proveedor existente por ID.
-   *
-   * Required scopes: `purchases:write`.
    */
   async voidSupplierPayment(
     request: operations.VoidApiSupplierPaymentRequest,
