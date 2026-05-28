@@ -6,17 +6,7 @@
 import { GetApiOrderByIdResponse } from "lapyme/models/operations";
 
 let value: GetApiOrderByIdResponse = {
-  headers: {
-    "key": [
-      "<value 1>",
-      "<value 2>",
-      "<value 3>",
-    ],
-    "key1": [
-      "<value 1>",
-    ],
-    "key2": [],
-  },
+  headers: {},
   result: {
     requestId: "<id>",
     data: {
@@ -36,7 +26,7 @@ let value: GetApiOrderByIdResponse = {
       total: 983409,
       currency: "PES",
       orderStatus: "open",
-      fulfillmentStatus: "cancelled",
+      preparationStatus: "cancelled",
       invoicingStatus: "invoiced",
       notes: "<value>",
       createdAt: new Date("2024-12-29T05:45:52.637Z"),
@@ -50,31 +40,31 @@ let value: GetApiOrderByIdResponse = {
           isDefault: true,
         },
       ],
-      pendingFulfillmentLocationId: "9a3998fe-a4a0-4b44-a943-36fea01a3326",
-      fulfillmentOrders: [
+      pendingPreparationWarehouseId: "9a3998fe-a4a0-4b44-a943-36fea01a3326",
+      preparations: [
         {
-          object: "fulfillment_order",
+          object: "order_preparation",
           id: "f6908528-73ce-4abd-91b3-5d7ead30af7c",
-          status: "closed",
-          assignedWarehouseId: "0f724554-1971-489a-b745-089ddd55756f",
-          assignedWarehouseName: "<value>",
+          preparedAt: new Date("2026-02-02T18:45:16.857Z"),
+          warehouseName: "<value>",
           deliveryMethod: "shipping",
-          requestedAt: new Date("2025-09-10T11:50:07.932Z"),
-          startedAt: new Date("2026-06-29T05:35:21.598Z"),
-          closedAt: new Date("2026-07-09T21:43:10.411Z"),
-          cancelledAt: new Date("2025-12-20T12:23:22.646Z"),
-          notes: "<value>",
+          remitoDeliveryId: "72455419-7189-4a74-9508-9ddd55756ff2",
+          formattedRemitoNumber: "<value>",
           lines: [],
         },
       ],
-      fulfillments: [
-        "<value 1>",
-        "<value 2>",
-      ],
-      generatedInvoices: [
-        "<value 1>",
-        "<value 2>",
-        "<value 3>",
+      invoices: [
+        {
+          object: "order_invoice",
+          id: "9d9a409e-ff52-4288-a076-441e3aca3969",
+          formattedInvoiceNumber: "<value>",
+          invoiceDate: "<value>",
+          createdAt: new Date("2024-04-12T16:54:27.438Z"),
+          invoiceStatus: "pending",
+          itemsCount: 707786,
+          totalUnits: 996321,
+          total: 837254,
+        },
       ],
     },
   },

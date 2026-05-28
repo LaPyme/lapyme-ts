@@ -10,8 +10,6 @@
 
 Lista los puntos de venta accesibles para la API key autenticada.
 
-Required scopes: `sales:read`.
-
 ### Example Usage
 
 <!-- UsageSnippet language="typescript" operationID="listApiPointsOfSale" method="get" path="/api/v1/points-of-sale" -->

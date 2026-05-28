@@ -10,8 +10,6 @@
 
 Ejecuta una consulta analítica agrupada sobre ventas, compras, pagos o inventario. El campo `source` determina qué dimensiones y métricas están disponibles.
 
-Required scopes: `reports:read`.
-
 ### Example Usage: default
 
 <!-- UsageSnippet language="typescript" operationID="queryApiReport" method="post" path="/api/v1/reports/query" example="default" -->

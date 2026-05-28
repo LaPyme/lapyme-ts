@@ -13,8 +13,6 @@
 
 Lista cobranzas de clientes con búsqueda, filtro por fecha, estado y paginación por cursor.
 
-Required scopes: `sales:read`.
-
 ### Example Usage
 
 <!-- UsageSnippet language="typescript" operationID="listApiCustomerPayments" method="get" path="/api/v1/customer-payments" -->
@@ -86,8 +84,6 @@ run();
 ## createCustomerPayment
 
 Registra una cobranza de cliente con uno o más métodos de pago, aplicaciones a ventas o cuenta corriente, retenciones y datos de cheque cuando corresponde.
-
-Required scopes: `sales:write`.
 
 ### Example Usage
 
@@ -181,8 +177,6 @@ run();
 
 Obtiene una cobranza de cliente por ID.
 
-Required scopes: `sales:read`.
-
 ### Example Usage
 
 <!-- UsageSnippet language="typescript" operationID="getApiCustomerPayment" method="get" path="/api/v1/customer-payments/{payment_id}" -->
@@ -258,8 +252,6 @@ run();
 ## void
 
 Anula una cobranza de cliente existente por ID.
-
-Required scopes: `sales:write`.
 
 ### Example Usage
 

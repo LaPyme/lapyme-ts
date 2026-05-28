@@ -13,8 +13,6 @@
 
 Lista los métodos de pago operativos para ventas. Devuelve solo métodos activos por defecto.
 
-Required scopes: `payment_methods:read`.
-
 ### Example Usage
 
 <!-- UsageSnippet language="typescript" operationID="listApiPaymentMethods" method="get" path="/api/v1/payment-methods" -->
@@ -86,8 +84,6 @@ run();
 ## create
 
 Crea un método de pago para registrar cobros y pagos.
-
-Required scopes: `payment_methods:write`.
 
 ### Example Usage
 
@@ -171,8 +167,6 @@ run();
 
 Obtiene un método de pago por ID.
 
-Required scopes: `payment_methods:read`.
-
 ### Example Usage
 
 <!-- UsageSnippet language="typescript" operationID="getApiPaymentMethod" method="get" path="/api/v1/payment-methods/{payment_method_id}" -->
@@ -248,8 +242,6 @@ run();
 ## updatePaymentMethod
 
 Actualiza el nombre, estado o configuración contable de un método de pago.
-
-Required scopes: `payment_methods:write`.
 
 ### Example Usage
 

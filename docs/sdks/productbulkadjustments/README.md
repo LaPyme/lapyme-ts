@@ -4,13 +4,11 @@
 
 ### Available Operations
 
-* [create](#create) - Ajustar productos en lote
+* [create](#create) - Actualizar productos masivamente
 
 ## create
 
 Aplica ajustes masivos de costo o precio base sobre una selección de productos.
-
-Required scopes: `products:write`.
 
 ### Example Usage: default
 

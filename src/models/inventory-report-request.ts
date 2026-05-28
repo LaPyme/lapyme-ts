@@ -6,6 +6,7 @@
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
 import { ClosedEnum } from "../types/enums.js";
+import { smartUnion } from "../types/smart-union.js";
 
 /**
  * Obligatorio solo cuando se piden métricas derivadas de ventas: endingInventoryUnits, inventoryUnitsSold, inventoryUnitsSoldPerDay, daysOfInventoryRemaining.
@@ -21,18 +22,25 @@ export type InventoryReportRequestPeriod = {
   endDate: Date;
 };
 
-export const InventoryReportRequestDimension = {
+export const InventoryReportRequestDimensionEnum = {
   Product: "product",
+  ProductName: "productName",
   Variant: "variant",
+  VariantSku: "variantSku",
   Category: "category",
   Subcategory: "subcategory",
+  DefaultSupplierName: "defaultSupplierName",
   ProductType: "productType",
   Warehouse: "warehouse",
   Currency: "currency",
 } as const;
-export type InventoryReportRequestDimension = ClosedEnum<
-  typeof InventoryReportRequestDimension
+export type InventoryReportRequestDimensionEnum = ClosedEnum<
+  typeof InventoryReportRequestDimensionEnum
 >;
+
+export type InventoryReportRequestDimensionUnion =
+  | InventoryReportRequestDimensionEnum
+  | string;
 
 export const InventoryReportRequestMeasure = {
   StockOnHand: "stockOnHand",
@@ -45,21 +53,33 @@ export const InventoryReportRequestMeasure = {
   InventoryUnitsSold: "inventoryUnitsSold",
   InventoryUnitsSoldPerDay: "inventoryUnitsSoldPerDay",
   DaysOfInventoryRemaining: "daysOfInventoryRemaining",
+  SellThroughRate: "sellThroughRate",
+  InventoryUnitsNetChange: "inventoryUnitsNetChange",
+  InventoryAdjustmentChange: "inventoryAdjustmentChange",
+  InventoryAdjustmentCount: "inventoryAdjustmentCount",
+  ReceivedQuantity: "receivedQuantity",
+  TransferCount: "transferCount",
+  TransferLineItemCount: "transferLineItemCount",
+  UniqueItemsTransferred: "uniqueItemsTransferred",
 } as const;
 export type InventoryReportRequestMeasure = ClosedEnum<
   typeof InventoryReportRequestMeasure
 >;
 
 /**
- * Filtros por dimensión. Cada clave debe ser una dimensión filtrable para la fuente. El valor es un array de IDs o valores a incluir.
+ * Filtros por dimensión. Cada clave debe ser una dimensión filtrable para la fuente. También acepta product_metafield:<key> para campos personalizados select de producto. El valor es un array de IDs o valores a incluir.
  */
 export type InventoryReportRequestDimensionFilters = {
   product?: Array<string> | undefined;
+  productName?: Array<string> | undefined;
+  variantSku?: Array<string> | undefined;
   category?: Array<string> | undefined;
   subcategory?: Array<string> | undefined;
+  defaultSupplierName?: Array<string> | undefined;
   productType?: Array<string> | undefined;
   warehouse?: Array<string> | undefined;
   currency?: Array<string> | undefined;
+  saleLineType?: Array<string> | undefined;
 };
 
 /**
@@ -83,15 +103,15 @@ export type InventoryReportRequest = {
    */
   period?: InventoryReportRequestPeriod | undefined;
   /**
-   * Dimensiones de agrupación. Máximo 4.
+   * Dimensiones de agrupación. Máximo 4. Acepta product_metafield:<key> para campos personalizados select de producto.
    */
-  dimensions?: Array<InventoryReportRequestDimension> | undefined;
+  dimensions?: Array<InventoryReportRequestDimensionEnum | string> | undefined;
   /**
    * Measures to calculate. Snapshot measures (stockOnHand, stockAvailable, etc.) do not require period. Sales-derived measures do require it.
    */
   measures: Array<InventoryReportRequestMeasure>;
   /**
-   * Filtros por dimensión. Cada clave debe ser una dimensión filtrable para la fuente. El valor es un array de IDs o valores a incluir.
+   * Filtros por dimensión. Cada clave debe ser una dimensión filtrable para la fuente. También acepta product_metafield:<key> para campos personalizados select de producto. El valor es un array de IDs o valores a incluir.
    */
   dimensionFilters?: InventoryReportRequestDimensionFilters | undefined;
   /**
@@ -144,9 +164,31 @@ export function inventoryReportRequestPeriodToJSON(
 }
 
 /** @internal */
-export const InventoryReportRequestDimension$outboundSchema: z.ZodMiniEnum<
-  typeof InventoryReportRequestDimension
-> = z.enum(InventoryReportRequestDimension);
+export const InventoryReportRequestDimensionEnum$outboundSchema: z.ZodMiniEnum<
+  typeof InventoryReportRequestDimensionEnum
+> = z.enum(InventoryReportRequestDimensionEnum);
+
+/** @internal */
+export type InventoryReportRequestDimensionUnion$Outbound = string | string;
+
+/** @internal */
+export const InventoryReportRequestDimensionUnion$outboundSchema: z.ZodMiniType<
+  InventoryReportRequestDimensionUnion$Outbound,
+  InventoryReportRequestDimensionUnion
+> = smartUnion([
+  InventoryReportRequestDimensionEnum$outboundSchema,
+  z.string(),
+]);
+
+export function inventoryReportRequestDimensionUnionToJSON(
+  inventoryReportRequestDimensionUnion: InventoryReportRequestDimensionUnion,
+): string {
+  return JSON.stringify(
+    InventoryReportRequestDimensionUnion$outboundSchema.parse(
+      inventoryReportRequestDimensionUnion,
+    ),
+  );
+}
 
 /** @internal */
 export const InventoryReportRequestMeasure$outboundSchema: z.ZodMiniEnum<
@@ -156,11 +198,15 @@ export const InventoryReportRequestMeasure$outboundSchema: z.ZodMiniEnum<
 /** @internal */
 export type InventoryReportRequestDimensionFilters$Outbound = {
   product?: Array<string> | undefined;
+  product_name?: Array<string> | undefined;
+  variant_sku?: Array<string> | undefined;
   category?: Array<string> | undefined;
   subcategory?: Array<string> | undefined;
+  default_supplier_name?: Array<string> | undefined;
   product_type?: Array<string> | undefined;
   warehouse?: Array<string> | undefined;
   currency?: Array<string> | undefined;
+  sale_line_type?: Array<string> | undefined;
 };
 
 /** @internal */
@@ -171,15 +217,23 @@ export const InventoryReportRequestDimensionFilters$outboundSchema:
   > = z.pipe(
     z.object({
       product: z.optional(z.array(z.string())),
+      productName: z.optional(z.array(z.string())),
+      variantSku: z.optional(z.array(z.string())),
       category: z.optional(z.array(z.string())),
       subcategory: z.optional(z.array(z.string())),
+      defaultSupplierName: z.optional(z.array(z.string())),
       productType: z.optional(z.array(z.string())),
       warehouse: z.optional(z.array(z.string())),
       currency: z.optional(z.array(z.string())),
+      saleLineType: z.optional(z.array(z.string())),
     }),
     z.transform((v) => {
       return remap$(v, {
+        productName: "product_name",
+        variantSku: "variant_sku",
+        defaultSupplierName: "default_supplier_name",
         productType: "product_type",
+        saleLineType: "sale_line_type",
       });
     }),
   );
@@ -204,7 +258,7 @@ export const InventoryReportRequestDateBasis$outboundSchema: z.ZodMiniEnum<
 export type InventoryReportRequest$Outbound = {
   source: "inventory";
   period?: InventoryReportRequestPeriod$Outbound | undefined;
-  dimensions?: Array<string> | undefined;
+  dimensions?: Array<string | string> | undefined;
   measures: Array<string>;
   dimension_filters?:
     | InventoryReportRequestDimensionFilters$Outbound
@@ -224,7 +278,12 @@ export const InventoryReportRequest$outboundSchema: z.ZodMiniType<
       z.lazy(() => InventoryReportRequestPeriod$outboundSchema),
     ),
     dimensions: z.optional(
-      z.array(InventoryReportRequestDimension$outboundSchema),
+      z.array(
+        smartUnion([
+          InventoryReportRequestDimensionEnum$outboundSchema,
+          z.string(),
+        ]),
+      ),
     ),
     measures: z.array(InventoryReportRequestMeasure$outboundSchema),
     dimensionFilters: z.optional(

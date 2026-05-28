@@ -13,8 +13,6 @@
 
 Lista pagos a proveedores con búsqueda, filtro por fecha, estado y paginación por cursor.
 
-Required scopes: `purchases:read`.
-
 ### Example Usage
 
 <!-- UsageSnippet language="typescript" operationID="listApiSupplierPayments" method="get" path="/api/v1/supplier-payments" -->
@@ -86,8 +84,6 @@ run();
 ## createSupplierPayment
 
 Registra un pago a proveedor con uno o más métodos de pago, aplicaciones a compras o cuenta corriente, retenciones y datos de cheque cuando corresponde.
-
-Required scopes: `purchases:write`.
 
 ### Example Usage
 
@@ -191,8 +187,6 @@ run();
 
 Obtiene un pago a proveedor por ID.
 
-Required scopes: `purchases:read`.
-
 ### Example Usage
 
 <!-- UsageSnippet language="typescript" operationID="getApiSupplierPayment" method="get" path="/api/v1/supplier-payments/{payment_id}" -->
@@ -268,8 +262,6 @@ run();
 ## voidSupplierPayment
 
 Anula un pago a proveedor existente por ID.
-
-Required scopes: `purchases:write`.
 
 ### Example Usage
 

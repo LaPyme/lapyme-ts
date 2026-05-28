@@ -14,8 +14,6 @@ export class Receipts extends ClientSDK {
    *
    * @remarks
    * Registra la recepción de líneas de una orden de compra confirmada. Requiere Idempotency-Key.
-   *
-   * Required scopes: `purchases:write`.
    */
   async receive(
     request: operations.ReceiveApiPurchaseOrderRequest,

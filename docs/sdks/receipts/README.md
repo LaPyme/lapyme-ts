@@ -10,8 +10,6 @@
 
 Registra la recepción de líneas de una orden de compra confirmada. Requiere Idempotency-Key.
 
-Required scopes: `purchases:write`.
-
 ### Example Usage
 
 <!-- UsageSnippet language="typescript" operationID="receiveApiPurchaseOrder" method="post" path="/api/v1/purchase-orders/{purchase_order_id}/receipts" example="default" -->
