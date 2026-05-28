@@ -11,8 +11,6 @@
 
 Devuelve el inventario de un depósito específico con filtros por categoría, tipo y cantidades.
 
-Required scopes: `products:read`, `warehouses:read`.
-
 ### Example Usage
 
 <!-- UsageSnippet language="typescript" operationID="listApiInventory" method="get" path="/api/v1/inventory" -->
@@ -88,8 +86,6 @@ run();
 ## listInventoryMovements
 
 Lista el historial de movimientos de inventario del producto, opcionalmente filtrado por depósito.
-
-Required scopes: `products:read`.
 
 ### Example Usage
 

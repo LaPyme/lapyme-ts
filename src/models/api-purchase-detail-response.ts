@@ -25,6 +25,10 @@ import {
   ApiSharedEnumf0d69c3d87$inboundSchema,
 } from "./api-shared-enumf0d69c3d87.js";
 import {
+  ApiSharedObject799d3e3f37,
+  ApiSharedObject799d3e3f37$inboundSchema,
+} from "./api-shared-object799d3e3f37.js";
+import {
   ApiSharedObject8aeeceaf0f,
   ApiSharedObject8aeeceaf0f$inboundSchema,
 } from "./api-shared-object8aeeceaf0f.js";
@@ -49,6 +53,7 @@ import { SDKValidationError } from "./errors/sdk-validation-error.js";
 export type ApiPurchaseDetailResponseData = {
   object: "purchase";
   id: string;
+  accounting?: ApiSharedObject799d3e3f37 | undefined;
   voucherType: string;
   /**
    * Rol del comprobante dentro del flujo de importacion.
@@ -121,6 +126,7 @@ export const ApiPurchaseDetailResponseData$inboundSchema: z.ZodMiniType<
   z.object({
     object: types.literal("purchase"),
     id: types.string(),
+    accounting: types.optional(ApiSharedObject799d3e3f37$inboundSchema),
     voucher_type: types.string(),
     import_document_role: types.nullable(ApiSharedEnum9e7af09974$inboundSchema),
     import_source_purchase_id: types.nullable(types.string()),

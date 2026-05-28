@@ -17,7 +17,7 @@ export type ListApiOrdersRequest = {
   dateFrom?: Date | undefined;
   dateTo?: Date | undefined;
   status?: models.ApiSharedEnum4ac9200c4a | undefined;
-  fulfillmentStatus?: models.ApiSharedEnumb49e56b125 | undefined;
+  preparationStatus?: models.ApiSharedEnumb49e56b125 | undefined;
 };
 
 export type ListApiOrdersResponse = {
@@ -33,7 +33,7 @@ export type ListApiOrdersRequest$Outbound = {
   date_from?: string | undefined;
   date_to?: string | undefined;
   status?: string | undefined;
-  fulfillment_status?: string | undefined;
+  preparation_status?: string | undefined;
 };
 
 /** @internal */
@@ -54,7 +54,7 @@ export const ListApiOrdersRequest$outboundSchema: z.ZodMiniType<
       z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
     )),
     status: z.optional(models.ApiSharedEnum4ac9200c4a$outboundSchema),
-    fulfillmentStatus: z.optional(
+    preparationStatus: z.optional(
       models.ApiSharedEnumb49e56b125$outboundSchema,
     ),
   }),
@@ -62,7 +62,7 @@ export const ListApiOrdersRequest$outboundSchema: z.ZodMiniType<
     return remap$(v, {
       dateFrom: "date_from",
       dateTo: "date_to",
-      fulfillmentStatus: "fulfillment_status",
+      preparationStatus: "preparation_status",
     });
   }),
 );

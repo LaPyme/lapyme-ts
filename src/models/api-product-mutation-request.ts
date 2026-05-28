@@ -91,11 +91,13 @@ export type ApiProductMutationRequestUnitOfMeasure = ClosedEnum<
   typeof ApiProductMutationRequestUnitOfMeasure
 >;
 
-export const Currency = {
+export const ApiProductMutationRequestCurrency = {
   Pes: "PES",
   Dol: "DOL",
 } as const;
-export type Currency = ClosedEnum<typeof Currency>;
+export type ApiProductMutationRequestCurrency = ClosedEnum<
+  typeof ApiProductMutationRequestCurrency
+>;
 
 export type ApiProductMutationRequest = {
   name: string;
@@ -107,7 +109,7 @@ export type ApiProductMutationRequest = {
   sku: string;
   barcode?: string | null | undefined;
   unitOfMeasure?: ApiProductMutationRequestUnitOfMeasure | undefined;
-  currency?: Currency | undefined;
+  currency?: ApiProductMutationRequestCurrency | undefined;
   cost?: number | undefined;
   price?: number | undefined;
   promotionalPrice?: number | null | undefined;
@@ -138,9 +140,9 @@ export const ApiProductMutationRequestUnitOfMeasure$outboundSchema:
   );
 
 /** @internal */
-export const Currency$outboundSchema: z.ZodMiniEnum<typeof Currency> = z.enum(
-  Currency,
-);
+export const ApiProductMutationRequestCurrency$outboundSchema: z.ZodMiniEnum<
+  typeof ApiProductMutationRequestCurrency
+> = z.enum(ApiProductMutationRequestCurrency);
 
 /** @internal */
 export type ApiProductMutationRequest$Outbound = {
@@ -191,7 +193,10 @@ export const ApiProductMutationRequest$outboundSchema: z.ZodMiniType<
       ApiProductMutationRequestUnitOfMeasure$outboundSchema,
       "07",
     ),
-    currency: z._default(Currency$outboundSchema, "PES"),
+    currency: z._default(
+      ApiProductMutationRequestCurrency$outboundSchema,
+      "PES",
+    ),
     cost: z._default(z.int(), 0),
     price: z.optional(z.int()),
     promotionalPrice: z.optional(z.nullable(z.int())),

@@ -1,10 +1,11 @@
 {
   "name": "lapyme",
-  "version": "0.2.7",
+  "version": "0.3.0",
   "author": "La Pyme",
+  "license": "MIT",
   "repository": {
-    "url": "https://github.com/LaPyme/lapyme-ts.git",
-    "type": "git"
+    "type": "git",
+    "url": "https://github.com/LaPyme/lapyme-ts.git"
   },
   "type": "module",
   "main": "./esm/index.js",

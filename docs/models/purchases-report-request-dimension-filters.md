@@ -1,6 +1,6 @@
 # PurchasesReportRequestDimensionFilters
 
-Filtros por dimensión. Cada clave debe ser una dimensión filtrable para la fuente. El valor es un array de IDs o valores a incluir.
+Filtros por dimensión. Cada clave debe ser una dimensión filtrable para la fuente. También acepta product_metafield:<key> para campos personalizados select de producto. El valor es un array de IDs o valores a incluir.
 
 ## Example Usage
 
@@ -15,6 +15,7 @@ let value: PurchasesReportRequestDimensionFilters = {};
 | Field                 | Type                  | Required              | Description           |
 | --------------------- | --------------------- | --------------------- | --------------------- |
 | `supplier`            | *string*[]            | :heavy_minus_sign:    | N/A                   |
+| `supplierName`        | *string*[]            | :heavy_minus_sign:    | N/A                   |
 | `supplierTaxCategory` | *string*[]            | :heavy_minus_sign:    | N/A                   |
 | `supplierProvince`    | *string*[]            | :heavy_minus_sign:    | N/A                   |
 | `supplierCity`        | *string*[]            | :heavy_minus_sign:    | N/A                   |

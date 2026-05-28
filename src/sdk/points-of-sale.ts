@@ -14,8 +14,6 @@ export class PointsOfSale extends ClientSDK {
    *
    * @remarks
    * Lista los puntos de venta accesibles para la API key autenticada.
-   *
-   * Required scopes: `sales:read`.
    */
   async listPointsOfSale(
     request?: operations.ListApiPointsOfSaleRequest | undefined,

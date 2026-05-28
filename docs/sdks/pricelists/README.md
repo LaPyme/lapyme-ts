@@ -13,8 +13,6 @@
 
 Lista las listas de precios de la organización.
 
-Required scopes: `price_lists:read`.
-
 ### Example Usage
 
 <!-- UsageSnippet language="typescript" operationID="listApiPriceLists" method="get" path="/api/v1/price-lists" -->
@@ -86,8 +84,6 @@ run();
 ## createPriceList
 
 Crea una lista de precios para vender con reglas y valores comerciales diferenciados.
-
-Required scopes: `price_lists:write`.
 
 ### Example Usage
 
@@ -171,8 +167,6 @@ run();
 
 Devuelve el detalle de la lista de precios.
 
-Required scopes: `price_lists:read`.
-
 ### Example Usage
 
 <!-- UsageSnippet language="typescript" operationID="getApiPriceListById" method="get" path="/api/v1/price-lists/{price_list_id}" -->
@@ -248,8 +242,6 @@ run();
 ## updatePriceList
 
 Actualiza una lista de precios y devuelve el detalle persistido, incluyendo si se disparó la sincronización de precios.
-
-Required scopes: `price_lists:write`.
 
 ### Example Usage
 

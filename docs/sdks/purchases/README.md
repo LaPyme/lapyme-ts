@@ -13,8 +13,6 @@
 
 Lista las compras de la organización. Soporta filtros por fecha, importe y búsqueda de proveedor.
 
-Required scopes: `purchases:read`.
-
 ### Example Usage
 
 <!-- UsageSnippet language="typescript" operationID="listApiPurchases" method="get" path="/api/v1/purchases" -->
@@ -86,8 +84,6 @@ run();
 ## createPurchase
 
 Registra una compra y devuelve la operación creada junto con sus efectos de stock y contabilidad.
-
-Required scopes: `purchases:write`.
 
 ### Example Usage: created
 
@@ -402,8 +398,6 @@ run();
 
 Devuelve el detalle de la compra.
 
-Required scopes: `purchases:read`.
-
 ### Example Usage
 
 <!-- UsageSnippet language="typescript" operationID="getApiPurchaseById" method="get" path="/api/v1/purchases/{purchase_id}" -->
@@ -479,8 +473,6 @@ run();
 ## applyPurchaseTags
 
 Agrega y/o remueve etiquetas de scope `purchase` en un lote de compras.
-
-Required scopes: `purchases:write`.
 
 ### Example Usage
 
