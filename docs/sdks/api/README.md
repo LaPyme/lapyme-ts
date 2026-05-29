@@ -896,7 +896,7 @@ const lapyme = new Lapyme({
 });
 
 async function run() {
-  const result = await lapyme.api.getApiComparativeIncomeStatement();
+  const result = await lapyme.api.getApiComparativeIncomeStatement({});
 
   console.log(result);
 }
@@ -919,7 +919,7 @@ const lapyme = new LapymeCore({
 });
 
 async function run() {
-  const res = await apiGetAPIComparativeIncomeStatement(lapyme);
+  const res = await apiGetAPIComparativeIncomeStatement(lapyme, {});
   if (res.ok) {
     const { value: result } = res;
     console.log(result);
