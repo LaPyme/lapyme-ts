@@ -1,6 +1,6 @@
 # SalesReportRequestDimensionFilters
 
-Filtros por dimensión. Cada clave debe ser una dimensión filtrable para la fuente. El valor es un array de IDs o valores a incluir.
+Filtros por dimensión. Cada clave debe ser una dimensión filtrable para la fuente. También acepta product_metafield:<key> para campos personalizados select de producto. El valor es un array de IDs o valores a incluir.
 
 ## Example Usage
 
@@ -12,24 +12,31 @@ let value: SalesReportRequestDimensionFilters = {};
 
 ## Fields
 
-| Field                 | Type                  | Required              | Description           |
-| --------------------- | --------------------- | --------------------- | --------------------- |
-| `customer`            | *string*[]            | :heavy_minus_sign:    | N/A                   |
-| `customerTaxCategory` | *string*[]            | :heavy_minus_sign:    | N/A                   |
-| `province`            | *string*[]            | :heavy_minus_sign:    | N/A                   |
-| `city`                | *string*[]            | :heavy_minus_sign:    | N/A                   |
-| `product`             | *string*[]            | :heavy_minus_sign:    | N/A                   |
-| `category`            | *string*[]            | :heavy_minus_sign:    | N/A                   |
-| `subcategory`         | *string*[]            | :heavy_minus_sign:    | N/A                   |
-| `productType`         | *string*[]            | :heavy_minus_sign:    | N/A                   |
-| `salesperson`         | *string*[]            | :heavy_minus_sign:    | N/A                   |
-| `pointOfSale`         | *string*[]            | :heavy_minus_sign:    | N/A                   |
-| `warehouse`           | *string*[]            | :heavy_minus_sign:    | N/A                   |
-| `register`            | *string*[]            | :heavy_minus_sign:    | N/A                   |
-| `integrationSource`   | *string*[]            | :heavy_minus_sign:    | N/A                   |
-| `voucherType`         | *string*[]            | :heavy_minus_sign:    | N/A                   |
-| `currency`            | *string*[]            | :heavy_minus_sign:    | N/A                   |
-| `paymentStatus`       | *string*[]            | :heavy_minus_sign:    | N/A                   |
-| `caeStatus`           | *string*[]            | :heavy_minus_sign:    | N/A                   |
-| `paymentMethod`       | *string*[]            | :heavy_minus_sign:    | N/A                   |
-| `taxRate`             | *string*[]            | :heavy_minus_sign:    | N/A                   |
+| Field                    | Type                     | Required                 | Description              |
+| ------------------------ | ------------------------ | ------------------------ | ------------------------ |
+| `customer`               | *string*[]               | :heavy_minus_sign:       | N/A                      |
+| `customerName`           | *string*[]               | :heavy_minus_sign:       | N/A                      |
+| `customerEmail`          | *string*[]               | :heavy_minus_sign:       | N/A                      |
+| `customerTaxCategory`    | *string*[]               | :heavy_minus_sign:       | N/A                      |
+| `province`               | *string*[]               | :heavy_minus_sign:       | N/A                      |
+| `city`                   | *string*[]               | :heavy_minus_sign:       | N/A                      |
+| `product`                | *string*[]               | :heavy_minus_sign:       | N/A                      |
+| `productName`            | *string*[]               | :heavy_minus_sign:       | N/A                      |
+| `variantSku`             | *string*[]               | :heavy_minus_sign:       | N/A                      |
+| `category`               | *string*[]               | :heavy_minus_sign:       | N/A                      |
+| `subcategory`            | *string*[]               | :heavy_minus_sign:       | N/A                      |
+| `defaultSupplierName`    | *string*[]               | :heavy_minus_sign:       | N/A                      |
+| `productType`            | *string*[]               | :heavy_minus_sign:       | N/A                      |
+| `salesperson`            | *string*[]               | :heavy_minus_sign:       | N/A                      |
+| `pointOfSale`            | *string*[]               | :heavy_minus_sign:       | N/A                      |
+| `warehouse`              | *string*[]               | :heavy_minus_sign:       | N/A                      |
+| `register`               | *string*[]               | :heavy_minus_sign:       | N/A                      |
+| `integrationSource`      | *string*[]               | :heavy_minus_sign:       | N/A                      |
+| `voucherType`            | *string*[]               | :heavy_minus_sign:       | N/A                      |
+| `currency`               | *string*[]               | :heavy_minus_sign:       | N/A                      |
+| `paymentStatus`          | *string*[]               | :heavy_minus_sign:       | N/A                      |
+| `caeStatus`              | *string*[]               | :heavy_minus_sign:       | N/A                      |
+| `formattedInvoiceNumber` | *string*[]               | :heavy_minus_sign:       | N/A                      |
+| `paymentMethod`          | *string*[]               | :heavy_minus_sign:       | N/A                      |
+| `taxRate`                | *string*[]               | :heavy_minus_sign:       | N/A                      |
+| `saleLineType`           | *string*[]               | :heavy_minus_sign:       | N/A                      |

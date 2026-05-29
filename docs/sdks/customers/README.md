@@ -14,8 +14,6 @@
 
 Devuelve clientes de la organización. Permite buscar por nombre, CUIT o email.
 
-Required scopes: `customers:read`.
-
 ### Example Usage
 
 <!-- UsageSnippet language="typescript" operationID="listApiCustomers" method="get" path="/api/v1/customers" -->
@@ -87,8 +85,6 @@ run();
 ## create
 
 Crea un cliente para ventas, cuentas corrientes, etiquetas y reportes.
-
-Required scopes: `customers:write`.
 
 ### Example Usage
 
@@ -172,8 +168,6 @@ run();
 
 Devuelve los datos del cliente.
 
-Required scopes: `customers:read`.
-
 ### Example Usage
 
 <!-- UsageSnippet language="typescript" operationID="getApiCustomerById" method="get" path="/api/v1/customers/{customer_id}" -->
@@ -249,8 +243,6 @@ run();
 ## updateCustomer
 
 Actualiza un cliente y devuelve los datos persistidos.
-
-Required scopes: `customers:write`.
 
 ### Example Usage
 
@@ -329,8 +321,6 @@ run();
 ## applyTags
 
 Agrega y/o remueve etiquetas de scope `customer` en un lote de clientes.
-
-Required scopes: `customers:write`.
 
 ### Example Usage
 

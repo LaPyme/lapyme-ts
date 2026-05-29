@@ -33,8 +33,6 @@ import { Result } from "../types/fp.js";
  *
  * @remarks
  * Anula un pago a proveedor existente por ID.
- *
- * Required scopes: `purchases:write`.
  */
 export function supplierPaymentsVoidSupplierPayment(
   client: LapymeCore,
@@ -128,8 +126,18 @@ async function $do(
     securitySource: client._options.bearerAuth,
     retryConfig: options?.retries
       || client._options.retryConfig
+      || {
+        strategy: "backoff",
+        backoff: {
+          initialInterval: 500,
+          maxInterval: 60000,
+          exponent: 1.5,
+          maxElapsedTime: 3600000,
+        },
+        retryConnectionErrors: true,
+      }
       || { strategy: "none" },
-    retryCodes: options?.retryCodes || ["429", "500", "502", "503", "504"],
+    retryCodes: options?.retryCodes || ["5XX"],
   };
 
   const requestRes = client._createRequest(context, {

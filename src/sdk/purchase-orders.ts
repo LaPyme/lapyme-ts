@@ -25,8 +25,6 @@ export class PurchaseOrders extends ClientSDK {
    *
    * @remarks
    * Lista las órdenes de compra de la organización. Soporta búsqueda por proveedor o número de orden y filtros por fecha y estado.
-   *
-   * Required scopes: `purchases:read`.
    */
   async listPurchaseOrders(
     request?: operations.ListApiPurchaseOrdersRequest | undefined,
@@ -44,8 +42,6 @@ export class PurchaseOrders extends ClientSDK {
    *
    * @remarks
    * Crea una orden de compra en borrador. Requiere Idempotency-Key.
-   *
-   * Required scopes: `purchases:write`.
    */
   async createPurchaseOrder(
     request: operations.CreateApiPurchaseOrderRequest,
@@ -63,8 +59,6 @@ export class PurchaseOrders extends ClientSDK {
    *
    * @remarks
    * Devuelve el detalle de una orden de compra.
-   *
-   * Required scopes: `purchases:read`.
    */
   async getPurchaseOrderById(
     request: operations.GetApiPurchaseOrderByIdRequest,
@@ -82,8 +76,6 @@ export class PurchaseOrders extends ClientSDK {
    *
    * @remarks
    * Confirma una orden de compra y devuelve el detalle persistido.
-   *
-   * Required scopes: `purchases:write`.
    */
   async confirm(
     request: operations.ConfirmApiPurchaseOrderRequest,
@@ -101,8 +93,6 @@ export class PurchaseOrders extends ClientSDK {
    *
    * @remarks
    * Cierra una orden de compra y devuelve el detalle persistido.
-   *
-   * Required scopes: `purchases:write`.
    */
   async close(
     request: operations.CloseApiPurchaseOrderRequest,
@@ -120,8 +110,6 @@ export class PurchaseOrders extends ClientSDK {
    *
    * @remarks
    * Reabre una orden de compra cerrada y devuelve el detalle persistido.
-   *
-   * Required scopes: `purchases:write`.
    */
   async reopen(
     request: operations.ReopenApiPurchaseOrderRequest,

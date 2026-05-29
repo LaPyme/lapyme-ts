@@ -14,8 +14,6 @@
 
 Devuelve una lista de proveedores de la organización. Permite buscar por nombre, CUIT o email.
 
-Required scopes: `suppliers:read`.
-
 ### Example Usage
 
 <!-- UsageSnippet language="typescript" operationID="listApiSuppliers" method="get" path="/api/v1/suppliers" -->
@@ -87,8 +85,6 @@ run();
 ## createSupplier
 
 Crea un proveedor para usarlo en compras, cuentas corrientes y reportes.
-
-Required scopes: `suppliers:write`.
 
 ### Example Usage
 
@@ -172,8 +168,6 @@ run();
 
 Devuelve los datos de un proveedor por ID.
 
-Required scopes: `suppliers:read`.
-
 ### Example Usage
 
 <!-- UsageSnippet language="typescript" operationID="getApiSupplier" method="get" path="/api/v1/suppliers/{supplier_id}" -->
@@ -249,8 +243,6 @@ run();
 ## updateSupplier
 
 Actualiza los datos comerciales, fiscales y de contacto de un proveedor.
-
-Required scopes: `suppliers:write`.
 
 ### Example Usage
 
@@ -331,8 +323,6 @@ run();
 ## applySupplierTags
 
 Agrega y/o remueve etiquetas de scope `supplier` en un lote de proveedores.
-
-Required scopes: `suppliers:write`.
 
 ### Example Usage
 

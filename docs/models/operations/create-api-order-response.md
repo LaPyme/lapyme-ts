@@ -9,8 +9,12 @@ let value: CreateApiOrderResponse = {
   headers: {
     "key": [
       "<value 1>",
+      "<value 2>",
     ],
-    "key1": [],
+    "key1": [
+      "<value 1>",
+    ],
+    "key2": [],
   },
   result: {
     requestId: "<id>",
@@ -32,7 +36,7 @@ let value: CreateApiOrderResponse = {
         total: 377906,
         currency: "PES",
         orderStatus: "completed",
-        fulfillmentStatus: "fulfilled",
+        preparationStatus: "fulfilled",
         invoicingStatus: "partially_invoiced",
         notes: "<value>",
         createdAt: new Date("2026-11-24T16:57:34.205Z"),
@@ -58,17 +62,12 @@ let value: CreateApiOrderResponse = {
           },
         ],
         activeWarehouses: [],
-        pendingFulfillmentLocationId: "73d3fbcf-c396-42e4-a3f0-d6891a37f27d",
-        fulfillmentOrders: [],
-        fulfillments: [],
-        generatedInvoices: [],
+        pendingPreparationWarehouseId: "73d3fbcf-c396-42e4-a3f0-d6891a37f27d",
+        preparations: [],
+        invoices: [],
       },
     },
-    warnings: [
-      "<value 1>",
-      "<value 2>",
-      "<value 3>",
-    ],
+    warnings: [],
   },
 };
 ```

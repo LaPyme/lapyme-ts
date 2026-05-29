@@ -36,7 +36,7 @@ generation:
     generateNewTests: true
     skipResponseBodyAssertions: false
 typescript:
-  version: 0.2.8
+  version: 0.3.1
   acceptHeaderEnum: false
   additionalDependencies:
     dependencies: {}
@@ -90,6 +90,7 @@ typescript:
   packageName: lapyme
   preApplyUnionDiscriminators: true
   preserveModelFieldNames: false
+  privateIdentifierPrefix: '#'
   responseFormat: flat
   sseFlatResponse: false
   templateVersion: v2

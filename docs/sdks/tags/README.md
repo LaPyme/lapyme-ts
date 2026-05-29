@@ -12,8 +12,6 @@
 
 Lista el catálogo de etiquetas para un scope específico. Puede incluir etiquetas archivadas.
 
-Required scopes: `scope-dependent read scope`.
-
 ### Example Usage
 
 <!-- UsageSnippet language="typescript" operationID="listApiTags" method="get" path="/api/v1/tags" -->
@@ -89,8 +87,6 @@ run();
 ## createTag
 
 Crea una etiqueta para clasificar clientes, proveedores, productos o ventas.
-
-Required scopes: `admin`.
 
 ### Example Usage
 
@@ -175,8 +171,6 @@ run();
 ## updateTag
 
 Renombra, actualiza metadatos o archiva/desarchiva una etiqueta existente.
-
-Required scopes: `admin`.
 
 ### Example Usage
 

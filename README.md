@@ -181,6 +181,31 @@ run();
 <details open>
 <summary>Available methods</summary>
 
+### [Api](docs/sdks/api/README.md)
+
+* [archiveApiOrder](docs/sdks/api/README.md#archiveapiorder) - Archivar pedido
+* [updateApiOrderPreparation](docs/sdks/api/README.md#updateapiorderpreparation) - Actualizar preparación pendiente
+* [createApiOrderPreparation](docs/sdks/api/README.md#createapiorderpreparation) - Marcar líneas como preparadas
+* [cancelApiOrderPreparation](docs/sdks/api/README.md#cancelapiorderpreparation) - Cancelar preparación
+* [createApiOrderInvoice](docs/sdks/api/README.md#createapiorderinvoice) - Facturar pedido
+* [listApiAccountingAccounts](docs/sdks/api/README.md#listapiaccountingaccounts) - Listar cuentas contables
+* [getApiAccountingAccount](docs/sdks/api/README.md#getapiaccountingaccount) - Obtener cuenta contable
+* [listApiCostCenterDimensions](docs/sdks/api/README.md#listapicostcenterdimensions) - Listar dimensiones de centros de costo
+* [listApiCostCenters](docs/sdks/api/README.md#listapicostcenters) - Listar centros de costo
+* [getApiTrialBalance](docs/sdks/api/README.md#getapitrialbalance) - Obtener sumas y saldos
+* [getApiIncomeStatement](docs/sdks/api/README.md#getapiincomestatement) - Obtener estado de resultados
+* [getApiComparativeIncomeStatement](docs/sdks/api/README.md#getapicomparativeincomestatement) - Obtener estado de resultados comparativo
+* [getApiIncomeStatementByCostCenter](docs/sdks/api/README.md#getapiincomestatementbycostcenter) - Obtener estado de resultados por centro de costo
+* [listApiSummarizedJournal](docs/sdks/api/README.md#listapisummarizedjournal) - Listar libro diario resumido
+* [previewApiInflationAdjustment](docs/sdks/api/README.md#previewapiinflationadjustment) - Previsualizar ajuste por inflación
+* [createApiInflationAdjustment](docs/sdks/api/README.md#createapiinflationadjustment) - Crear ajuste por inflación
+* [listApiAccountingJournalEntries](docs/sdks/api/README.md#listapiaccountingjournalentries) - Listar asientos contables
+* [createApiManualJournalEntry](docs/sdks/api/README.md#createapimanualjournalentry) - Crear asiento manual
+* [getApiAccountingJournalEntry](docs/sdks/api/README.md#getapiaccountingjournalentry) - Obtener asiento contable
+* [updateApiManualJournalEntry](docs/sdks/api/README.md#updateapimanualjournalentry) - Reemplazar asiento manual
+* [deleteApiManualJournalEntry](docs/sdks/api/README.md#deleteapimanualjournalentry) - Eliminar asiento manual
+* [getApiAccountLedger](docs/sdks/api/README.md#getapiaccountledger) - Obtener mayor de cuenta
+
 ### [Categories](docs/sdks/categories/README.md)
 
 * [get](docs/sdks/categories/README.md#get) - Listar categorías
@@ -203,16 +228,6 @@ run();
 * [updateCustomer](docs/sdks/customers/README.md#updatecustomer) - Actualizar cliente
 * [applyTags](docs/sdks/customers/README.md#applytags) - Aplicar etiquetas a clientes
 
-### [FulfillmentOrders](docs/sdks/fulfillmentorders/README.md)
-
-* [start](docs/sdks/fulfillmentorders/README.md#start) - Iniciar orden de preparación
-* [cancelFulfillmentOrder](docs/sdks/fulfillmentorders/README.md#cancelfulfillmentorder) - Cancelar orden de preparación
-
-### [Fulfillments](docs/sdks/fulfillments/README.md)
-
-* [createFulfillment](docs/sdks/fulfillments/README.md#createfulfillment) - Crear fulfillment
-* [voidFulfillment](docs/sdks/fulfillments/README.md#voidfulfillment) - Anular fulfillment
-
 ### [Inventory](docs/sdks/inventory/README.md)
 
 * [listInventory](docs/sdks/inventory/README.md#listinventory) - Consultar inventario por depósito
@@ -225,15 +240,8 @@ run();
 * [getOrderById](docs/sdks/orders/README.md#getorderbyid) - Obtener pedido
 * [updateOrderNotes](docs/sdks/orders/README.md#updateordernotes) - Actualizar notas del pedido
 * [deleteArchived](docs/sdks/orders/README.md#deletearchived) - Eliminar pedido archivado
-* [complete](docs/sdks/orders/README.md#complete) - Completar pedido
 * [cancel](docs/sdks/orders/README.md#cancel) - Cancelar pedido
-* [prepare](docs/sdks/orders/README.md#prepare) - Preparar pedido
-* [package](docs/sdks/orders/README.md#package) - Empaquetar pedido
-* [unprepare](docs/sdks/orders/README.md#unprepare) - Revertir preparación del pedido
-* [changeFulfillmentLocation](docs/sdks/orders/README.md#changefulfillmentlocation) - Cambiar ubicación de preparación
 * [unarchive](docs/sdks/orders/README.md#unarchive) - Desarchivar pedido
-* [listFulfillmentOrders](docs/sdks/orders/README.md#listfulfillmentorders) - Listar órdenes de preparación del pedido
-* [invoice](docs/sdks/orders/README.md#invoice) - Facturar pedido
 
 ### [PaymentMethods](docs/sdks/paymentmethods/README.md)
 
@@ -255,7 +263,7 @@ run();
 
 ### [ProductBulkAdjustments](docs/sdks/productbulkadjustments/README.md)
 
-* [create](docs/sdks/productbulkadjustments/README.md#create) - Ajustar productos en lote
+* [create](docs/sdks/productbulkadjustments/README.md#create) - Actualizar productos masivamente
 
 ### [Products](docs/sdks/products/README.md)
 
@@ -356,6 +364,28 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 
 <summary>Available standalone functions</summary>
 
+- [`apiArchiveAPIOrder`](docs/sdks/api/README.md#archiveapiorder) - Archivar pedido
+- [`apiCancelAPIOrderPreparation`](docs/sdks/api/README.md#cancelapiorderpreparation) - Cancelar preparación
+- [`apiCreateAPIInflationAdjustment`](docs/sdks/api/README.md#createapiinflationadjustment) - Crear ajuste por inflación
+- [`apiCreateAPIManualJournalEntry`](docs/sdks/api/README.md#createapimanualjournalentry) - Crear asiento manual
+- [`apiCreateAPIOrderInvoice`](docs/sdks/api/README.md#createapiorderinvoice) - Facturar pedido
+- [`apiCreateAPIOrderPreparation`](docs/sdks/api/README.md#createapiorderpreparation) - Marcar líneas como preparadas
+- [`apiDeleteAPIManualJournalEntry`](docs/sdks/api/README.md#deleteapimanualjournalentry) - Eliminar asiento manual
+- [`apiGetAPIAccountingAccount`](docs/sdks/api/README.md#getapiaccountingaccount) - Obtener cuenta contable
+- [`apiGetAPIAccountingJournalEntry`](docs/sdks/api/README.md#getapiaccountingjournalentry) - Obtener asiento contable
+- [`apiGetAPIAccountLedger`](docs/sdks/api/README.md#getapiaccountledger) - Obtener mayor de cuenta
+- [`apiGetAPIComparativeIncomeStatement`](docs/sdks/api/README.md#getapicomparativeincomestatement) - Obtener estado de resultados comparativo
+- [`apiGetAPIIncomeStatement`](docs/sdks/api/README.md#getapiincomestatement) - Obtener estado de resultados
+- [`apiGetAPIIncomeStatementByCostCenter`](docs/sdks/api/README.md#getapiincomestatementbycostcenter) - Obtener estado de resultados por centro de costo
+- [`apiGetAPITrialBalance`](docs/sdks/api/README.md#getapitrialbalance) - Obtener sumas y saldos
+- [`apiListAPIAccountingAccounts`](docs/sdks/api/README.md#listapiaccountingaccounts) - Listar cuentas contables
+- [`apiListAPIAccountingJournalEntries`](docs/sdks/api/README.md#listapiaccountingjournalentries) - Listar asientos contables
+- [`apiListAPICostCenterDimensions`](docs/sdks/api/README.md#listapicostcenterdimensions) - Listar dimensiones de centros de costo
+- [`apiListAPICostCenters`](docs/sdks/api/README.md#listapicostcenters) - Listar centros de costo
+- [`apiListAPISummarizedJournal`](docs/sdks/api/README.md#listapisummarizedjournal) - Listar libro diario resumido
+- [`apiPreviewAPIInflationAdjustment`](docs/sdks/api/README.md#previewapiinflationadjustment) - Previsualizar ajuste por inflación
+- [`apiUpdateAPIManualJournalEntry`](docs/sdks/api/README.md#updateapimanualjournalentry) - Reemplazar asiento manual
+- [`apiUpdateAPIOrderPreparation`](docs/sdks/api/README.md#updateapiorderpreparation) - Actualizar preparación pendiente
 - [`categoriesCreate`](docs/sdks/categories/README.md#create) - Crear categoría
 - [`categoriesGet`](docs/sdks/categories/README.md#get) - Listar categorías
 - [`categoriesGetById`](docs/sdks/categories/README.md#getbyid) - Obtener categoría
@@ -369,25 +399,14 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`customersGet`](docs/sdks/customers/README.md#get) - Listar clientes
 - [`customersGetCustomerById`](docs/sdks/customers/README.md#getcustomerbyid) - Obtener cliente por ID
 - [`customersUpdateCustomer`](docs/sdks/customers/README.md#updatecustomer) - Actualizar cliente
-- [`fulfillmentOrdersCancelFulfillmentOrder`](docs/sdks/fulfillmentorders/README.md#cancelfulfillmentorder) - Cancelar orden de preparación
-- [`fulfillmentOrdersStart`](docs/sdks/fulfillmentorders/README.md#start) - Iniciar orden de preparación
-- [`fulfillmentsCreateFulfillment`](docs/sdks/fulfillments/README.md#createfulfillment) - Crear fulfillment
-- [`fulfillmentsVoidFulfillment`](docs/sdks/fulfillments/README.md#voidfulfillment) - Anular fulfillment
 - [`inventoryListInventory`](docs/sdks/inventory/README.md#listinventory) - Consultar inventario por depósito
 - [`inventoryListInventoryMovements`](docs/sdks/inventory/README.md#listinventorymovements) - Listar movimientos de inventario
 - [`ordersCancel`](docs/sdks/orders/README.md#cancel) - Cancelar pedido
-- [`ordersChangeFulfillmentLocation`](docs/sdks/orders/README.md#changefulfillmentlocation) - Cambiar ubicación de preparación
-- [`ordersComplete`](docs/sdks/orders/README.md#complete) - Completar pedido
 - [`ordersCreateOrder`](docs/sdks/orders/README.md#createorder) - Crear pedido
 - [`ordersDeleteArchived`](docs/sdks/orders/README.md#deletearchived) - Eliminar pedido archivado
 - [`ordersGetOrderById`](docs/sdks/orders/README.md#getorderbyid) - Obtener pedido
-- [`ordersInvoice`](docs/sdks/orders/README.md#invoice) - Facturar pedido
-- [`ordersListFulfillmentOrders`](docs/sdks/orders/README.md#listfulfillmentorders) - Listar órdenes de preparación del pedido
 - [`ordersListOrders`](docs/sdks/orders/README.md#listorders) - Listar pedidos
-- [`ordersPackage`](docs/sdks/orders/README.md#package) - Empaquetar pedido
-- [`ordersPrepare`](docs/sdks/orders/README.md#prepare) - Preparar pedido
 - [`ordersUnarchive`](docs/sdks/orders/README.md#unarchive) - Desarchivar pedido
-- [`ordersUnprepare`](docs/sdks/orders/README.md#unprepare) - Revertir preparación del pedido
 - [`ordersUpdateOrderNotes`](docs/sdks/orders/README.md#updateordernotes) - Actualizar notas del pedido
 - [`paymentMethodsCreate`](docs/sdks/paymentmethods/README.md#create) - Crear método de pago
 - [`paymentMethodsGet`](docs/sdks/paymentmethods/README.md#get) - Obtener método de pago
@@ -398,7 +417,7 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`priceListsGet`](docs/sdks/pricelists/README.md#get) - Listar listas de precios
 - [`priceListsGetPriceListById`](docs/sdks/pricelists/README.md#getpricelistbyid) - Obtener lista de precios por ID
 - [`priceListsUpdatePriceList`](docs/sdks/pricelists/README.md#updatepricelist) - Actualizar lista de precios
-- [`productBulkAdjustmentsCreate`](docs/sdks/productbulkadjustments/README.md#create) - Ajustar productos en lote
+- [`productBulkAdjustmentsCreate`](docs/sdks/productbulkadjustments/README.md#create) - Actualizar productos masivamente
 - [`productsApplyProductTags`](docs/sdks/products/README.md#applyproducttags) - Aplicar etiquetas a productos
 - [`productsCreate`](docs/sdks/products/README.md#create) - Crear producto
 - [`productsGetProductById`](docs/sdks/products/README.md#getproductbyid) - Obtener producto por ID

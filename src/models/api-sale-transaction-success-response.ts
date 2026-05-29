@@ -29,6 +29,10 @@ import {
   ApiSharedObject43ed7be04f$inboundSchema,
 } from "./api-shared-object43ed7be04f.js";
 import {
+  ApiSharedObject55e2bcf4a7,
+  ApiSharedObject55e2bcf4a7$inboundSchema,
+} from "./api-shared-object55e2bcf4a7.js";
+import {
   ApiSharedObject6a71e7888b,
   ApiSharedObject6a71e7888b$inboundSchema,
 } from "./api-shared-object6a71e7888b.js";
@@ -48,10 +52,6 @@ import {
   ApiSharedObjectc671832641,
   ApiSharedObjectc671832641$inboundSchema,
 } from "./api-shared-objectc671832641.js";
-import {
-  ApiSharedObjecte9e792772e,
-  ApiSharedObjecte9e792772e$inboundSchema,
-} from "./api-shared-objecte9e792772e.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type Sale = {
@@ -111,7 +111,7 @@ export type NormalizedSale = {
   roundingAdjustment: number;
   balance: number;
   isFullAmountPending: boolean;
-  items: Array<ApiSharedObjecte9e792772e>;
+  items: Array<ApiSharedObject55e2bcf4a7>;
   paymentMethods: Array<ApiSharedObject43ed7be04f>;
 };
 
@@ -232,7 +232,7 @@ export const NormalizedSale$inboundSchema: z.ZodMiniType<
     rounding_adjustment: types.number(),
     balance: types.number(),
     is_full_amount_pending: types.boolean(),
-    items: z.array(ApiSharedObjecte9e792772e$inboundSchema),
+    items: z.array(ApiSharedObject55e2bcf4a7$inboundSchema),
     payment_methods: z.array(ApiSharedObject43ed7be04f$inboundSchema),
   }),
   z.transform((v) => {

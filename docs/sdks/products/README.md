@@ -14,8 +14,6 @@
 
 Lista los productos de la organización con precios. Soporta búsqueda y filtros por categoría, tipo y estado.
 
-Required scopes: `products:read`.
-
 ### Example Usage
 
 <!-- UsageSnippet language="typescript" operationID="listApiProducts" method="get" path="/api/v1/products" -->
@@ -87,8 +85,6 @@ run();
 ## create
 
 Crea un producto, servicio, combo o kit con su información comercial y de inventario.
-
-Required scopes: `products:write`.
 
 ### Example Usage
 
@@ -174,8 +170,6 @@ run();
 
 Devuelve el detalle persistido del producto.
 
-Required scopes: `products:read`.
-
 ### Example Usage
 
 <!-- UsageSnippet language="typescript" operationID="getApiProductById" method="get" path="/api/v1/products/{product_id}" -->
@@ -251,8 +245,6 @@ run();
 ## update
 
 Actualiza un producto y devuelve el detalle persistido.
-
-Required scopes: `products:write`.
 
 ### Example Usage
 
@@ -331,8 +323,6 @@ run();
 ## applyProductTags
 
 Agrega y/o remueve etiquetas de scope `product` en un lote de productos.
-
-Required scopes: `products:write`.
 
 ### Example Usage
 

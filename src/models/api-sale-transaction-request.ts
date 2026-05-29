@@ -7,6 +7,10 @@ import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
 import { ClosedEnum } from "../types/enums.js";
 import {
+  ApiSharedEnum4e55733f20,
+  ApiSharedEnum4e55733f20$outboundSchema,
+} from "./api-shared-enum4e55733f20.js";
+import {
   ApiSharedEnum539fdceccc,
   ApiSharedEnum539fdceccc$outboundSchema,
 } from "./api-shared-enum539fdceccc.js";
@@ -46,6 +50,7 @@ export type ApiSaleTransactionRequestItem = {
   discount?: ApiSharedObject16c3799d74 | undefined;
   notes?: string | undefined;
   accountId?: string | undefined;
+  lineType?: ApiSharedEnum4e55733f20 | undefined;
   costCenter1Id?: string | undefined;
   costCenter2Id?: string | undefined;
   costCenter3Id?: string | undefined;
@@ -120,6 +125,7 @@ export type ApiSaleTransactionRequestItem$Outbound = {
   discount?: ApiSharedObject16c3799d74$Outbound | undefined;
   notes?: string | undefined;
   account_id?: string | undefined;
+  line_type?: string | undefined;
   cost_center1_id?: string | undefined;
   cost_center2_id?: string | undefined;
   cost_center3_id?: string | undefined;
@@ -145,6 +151,7 @@ export const ApiSaleTransactionRequestItem$outboundSchema: z.ZodMiniType<
     discount: z.optional(ApiSharedObject16c3799d74$outboundSchema),
     notes: z.optional(z.string()),
     accountId: z.optional(z.string()),
+    lineType: z.optional(ApiSharedEnum4e55733f20$outboundSchema),
     costCenter1Id: z.optional(z.string()),
     costCenter2Id: z.optional(z.string()),
     costCenter3Id: z.optional(z.string()),
@@ -159,6 +166,7 @@ export const ApiSaleTransactionRequestItem$outboundSchema: z.ZodMiniType<
       isExempt: "is_exempt",
       unitPrice: "unit_price",
       accountId: "account_id",
+      lineType: "line_type",
       costCenter1Id: "cost_center1_id",
       costCenter2Id: "cost_center2_id",
       costCenter3Id: "cost_center3_id",

@@ -10,8 +10,6 @@
 
 Registra un movimiento manual para ajustar stock de un producto o variante.
 
-Required scopes: `products:write`.
-
 ### Example Usage
 
 <!-- UsageSnippet language="typescript" operationID="createApiStockMovement" method="post" path="/api/v1/stock-movements" example="default" -->

@@ -17,8 +17,6 @@ export class PaymentMethods extends ClientSDK {
    *
    * @remarks
    * Lista los métodos de pago operativos para ventas. Devuelve solo métodos activos por defecto.
-   *
-   * Required scopes: `payment_methods:read`.
    */
   async list(
     request?: operations.ListApiPaymentMethodsRequest | undefined,
@@ -36,8 +34,6 @@ export class PaymentMethods extends ClientSDK {
    *
    * @remarks
    * Crea un método de pago para registrar cobros y pagos.
-   *
-   * Required scopes: `payment_methods:write`.
    */
   async create(
     request: operations.CreateApiPaymentMethodRequest,
@@ -55,8 +51,6 @@ export class PaymentMethods extends ClientSDK {
    *
    * @remarks
    * Obtiene un método de pago por ID.
-   *
-   * Required scopes: `payment_methods:read`.
    */
   async get(
     request: operations.GetApiPaymentMethodRequest,
@@ -74,8 +68,6 @@ export class PaymentMethods extends ClientSDK {
    *
    * @remarks
    * Actualiza el nombre, estado o configuración contable de un método de pago.
-   *
-   * Required scopes: `payment_methods:write`.
    */
   async updatePaymentMethod(
     request: operations.UpdateApiPaymentMethodRequest,

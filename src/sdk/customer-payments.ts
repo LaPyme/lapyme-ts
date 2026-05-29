@@ -17,8 +17,6 @@ export class CustomerPayments extends ClientSDK {
    *
    * @remarks
    * Lista cobranzas de clientes con búsqueda, filtro por fecha, estado y paginación por cursor.
-   *
-   * Required scopes: `sales:read`.
    */
   async listCustomerPayments(
     request?: operations.ListApiCustomerPaymentsRequest | undefined,
@@ -36,8 +34,6 @@ export class CustomerPayments extends ClientSDK {
    *
    * @remarks
    * Registra una cobranza de cliente con uno o más métodos de pago, aplicaciones a ventas o cuenta corriente, retenciones y datos de cheque cuando corresponde.
-   *
-   * Required scopes: `sales:write`.
    */
   async createCustomerPayment(
     request: operations.CreateApiCustomerPaymentRequest,
@@ -55,8 +51,6 @@ export class CustomerPayments extends ClientSDK {
    *
    * @remarks
    * Obtiene una cobranza de cliente por ID.
-   *
-   * Required scopes: `sales:read`.
    */
   async getCustomerPayment(
     request: operations.GetApiCustomerPaymentRequest,
@@ -74,8 +68,6 @@ export class CustomerPayments extends ClientSDK {
    *
    * @remarks
    * Anula una cobranza de cliente existente por ID.
-   *
-   * Required scopes: `sales:write`.
    */
   async void(
     request: operations.VoidApiCustomerPaymentRequest,

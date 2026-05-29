@@ -58,20 +58,21 @@ let value: NormalizedSale = {
       },
       notes: "<value>",
       accountId: "881640d5-c632-4db8-a5bc-cac8e03d6e07",
-      costCenter1Id: "265aa4ed-d6cf-4c53-a7b2-465a89c340d8",
-      costCenter2Id: "a3f7c6b4-2f98-40dc-b7ea-66f7ed547755",
-      costCenter3Id: "d4688b6f-ebde-4522-ae61-304af4eed51f",
+      lineType: "product",
+      costCenter1Id: "65aa4edd-6cfc-4537-ab24-65a89c340d8a",
+      costCenter2Id: "3f7c6b42-f980-4dc7-9ea6-6f7ed547755f",
+      costCenter3Id: "4688b6fe-bde5-422e-a613-04af4eed51f8",
     },
   ],
   paymentMethods: [
     {
-      methodId: "cad149a5-8f75-4ac6-8ebf-a6f8b9d218c8",
-      amount: 217194,
+      methodId: "ad149a58-f75a-4c6e-8bfa-6f8b9d218c82",
+      amount: 901329,
       description:
-        "since redress masterpiece blend about geez entire during minister not",
+        "coincide hm onto depot doubtfully excitedly square aha scary plugin",
       reference: "<value>",
-      feeAmount: 692331,
-      terminalId: "1da62b7f-1693-423f-bc31-309b25e3444d",
+      feeAmount: 761591,
+      terminalId: null,
       cardBatchNumber: "<value>",
       cardCouponNumber: "<value>",
       cardInstallmentPlanCode: "<value>",
@@ -118,5 +119,5 @@ let value: NormalizedSale = {
 | `roundingAdjustment`                                                           | *number*                                                                       | :heavy_check_mark:                                                             | N/A                                                                            |
 | `balance`                                                                      | *number*                                                                       | :heavy_check_mark:                                                             | N/A                                                                            |
 | `isFullAmountPending`                                                          | *boolean*                                                                      | :heavy_check_mark:                                                             | N/A                                                                            |
-| `items`                                                                        | [models.ApiSharedObjecte9e792772e](../models/api-shared-objecte9e792772e.md)[] | :heavy_check_mark:                                                             | N/A                                                                            |
+| `items`                                                                        | [models.ApiSharedObject55e2bcf4a7](../models/api-shared-object55e2bcf4a7.md)[] | :heavy_check_mark:                                                             | N/A                                                                            |
 | `paymentMethods`                                                               | [models.ApiSharedObject43ed7be04f](../models/api-shared-object43ed7be04f.md)[] | :heavy_check_mark:                                                             | N/A                                                                            |
