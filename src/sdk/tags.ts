@@ -16,8 +16,6 @@ export class Tags extends ClientSDK {
    *
    * @remarks
    * Lista el catálogo de etiquetas para un scope específico. Puede incluir etiquetas archivadas.
-   *
-   * Required scopes: `scope-dependent read scope`.
    */
   async listTags(
     request: operations.ListApiTagsRequest,
@@ -35,8 +33,6 @@ export class Tags extends ClientSDK {
    *
    * @remarks
    * Crea una etiqueta para clasificar clientes, proveedores, productos o ventas.
-   *
-   * Required scopes: `admin`.
    */
   async createTag(
     request: operations.CreateApiTagRequest,
@@ -54,8 +50,6 @@ export class Tags extends ClientSDK {
    *
    * @remarks
    * Renombra, actualiza metadatos o archiva/desarchiva una etiqueta existente.
-   *
-   * Required scopes: `admin`.
    */
   async updateTag(
     request: operations.UpdateApiTagRequest,

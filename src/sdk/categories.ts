@@ -17,8 +17,6 @@ export class Categories extends ClientSDK {
    *
    * @remarks
    * Devuelve las categorías de productos de la organización.
-   *
-   * Required scopes: `categories:read`.
    */
   async get(
     request?: operations.ListApiCategoriesRequest | undefined,
@@ -36,8 +34,6 @@ export class Categories extends ClientSDK {
    *
    * @remarks
    * Crea una categoría para organizar productos y asociar actividad económica predeterminada.
-   *
-   * Required scopes: `categories:write`.
    */
   async create(
     request: operations.CreateApiCategoryRequest,
@@ -55,8 +51,6 @@ export class Categories extends ClientSDK {
    *
    * @remarks
    * Devuelve una categoría por ID.
-   *
-   * Required scopes: `categories:read`.
    */
   async getById(
     request: operations.GetApiCategoryRequest,
@@ -74,8 +68,6 @@ export class Categories extends ClientSDK {
    *
    * @remarks
    * Actualiza el nombre, la categoría padre o la actividad económica de una categoría.
-   *
-   * Required scopes: `categories:write`.
    */
   async updateCategory(
     request: operations.UpdateApiCategoryRequest,

@@ -29,12 +29,10 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * Ajustar productos en lote
+ * Actualizar productos masivamente
  *
  * @remarks
  * Aplica ajustes masivos de costo o precio base sobre una selección de productos.
- *
- * Required scopes: `products:write`.
  */
 export function productBulkAdjustmentsCreate(
   client: LapymeCore,
@@ -128,8 +126,18 @@ async function $do(
     securitySource: client._options.bearerAuth,
     retryConfig: options?.retries
       || client._options.retryConfig
+      || {
+        strategy: "backoff",
+        backoff: {
+          initialInterval: 500,
+          maxInterval: 60000,
+          exponent: 1.5,
+          maxElapsedTime: 3600000,
+        },
+        retryConnectionErrors: true,
+      }
       || { strategy: "none" },
-    retryCodes: options?.retryCodes || ["429", "500", "502", "503", "504"],
+    retryCodes: options?.retryCodes || ["5XX"],
   };
 
   const requestRes = client._createRequest(context, {

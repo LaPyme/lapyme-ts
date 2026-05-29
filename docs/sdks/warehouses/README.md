@@ -13,8 +13,6 @@
 
 Lista los depósitos activos de la organización.
 
-Required scopes: `warehouses:read`.
-
 ### Example Usage
 
 <!-- UsageSnippet language="typescript" operationID="listApiWarehouses" method="get" path="/api/v1/warehouses" -->
@@ -86,8 +84,6 @@ run();
 ## create
 
 Crea un depósito para operar stock, puntos de venta y disponibilidad.
-
-Required scopes: `warehouses:write`.
 
 ### Example Usage
 
@@ -171,8 +167,6 @@ run();
 
 Devuelve el detalle del depósito.
 
-Required scopes: `warehouses:read`.
-
 ### Example Usage
 
 <!-- UsageSnippet language="typescript" operationID="getApiWarehouseById" method="get" path="/api/v1/warehouses/{warehouse_id}" -->
@@ -248,8 +242,6 @@ run();
 ## updateWarehouse
 
 Actualiza un depósito y devuelve el detalle persistido.
-
-Required scopes: `warehouses:write`.
 
 ### Example Usage
 

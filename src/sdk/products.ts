@@ -18,8 +18,6 @@ export class Products extends ClientSDK {
    *
    * @remarks
    * Lista los productos de la organización con precios. Soporta búsqueda y filtros por categoría, tipo y estado.
-   *
-   * Required scopes: `products:read`.
    */
   async list(
     request?: operations.ListApiProductsRequest | undefined,
@@ -37,8 +35,6 @@ export class Products extends ClientSDK {
    *
    * @remarks
    * Crea un producto, servicio, combo o kit con su información comercial y de inventario.
-   *
-   * Required scopes: `products:write`.
    */
   async create(
     request: operations.CreateApiProductRequest,
@@ -56,8 +52,6 @@ export class Products extends ClientSDK {
    *
    * @remarks
    * Devuelve el detalle persistido del producto.
-   *
-   * Required scopes: `products:read`.
    */
   async getProductById(
     request: operations.GetApiProductByIdRequest,
@@ -75,8 +69,6 @@ export class Products extends ClientSDK {
    *
    * @remarks
    * Actualiza un producto y devuelve el detalle persistido.
-   *
-   * Required scopes: `products:write`.
    */
   async update(
     request: operations.UpdateApiProductRequest,
@@ -94,8 +86,6 @@ export class Products extends ClientSDK {
    *
    * @remarks
    * Agrega y/o remueve etiquetas de scope `product` en un lote de productos.
-   *
-   * Required scopes: `products:write`.
    */
   async applyProductTags(
     request: operations.ApplyApiProductTagsRequest,

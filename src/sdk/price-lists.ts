@@ -17,8 +17,6 @@ export class PriceLists extends ClientSDK {
    *
    * @remarks
    * Lista las listas de precios de la organización.
-   *
-   * Required scopes: `price_lists:read`.
    */
   async get(
     request?: operations.ListApiPriceListsRequest | undefined,
@@ -36,8 +34,6 @@ export class PriceLists extends ClientSDK {
    *
    * @remarks
    * Crea una lista de precios para vender con reglas y valores comerciales diferenciados.
-   *
-   * Required scopes: `price_lists:write`.
    */
   async createPriceList(
     request: operations.CreateApiPriceListRequest,
@@ -55,8 +51,6 @@ export class PriceLists extends ClientSDK {
    *
    * @remarks
    * Devuelve el detalle de la lista de precios.
-   *
-   * Required scopes: `price_lists:read`.
    */
   async getPriceListById(
     request: operations.GetApiPriceListByIdRequest,
@@ -74,8 +68,6 @@ export class PriceLists extends ClientSDK {
    *
    * @remarks
    * Actualiza una lista de precios y devuelve el detalle persistido, incluyendo si se disparó la sincronización de precios.
-   *
-   * Required scopes: `price_lists:write`.
    */
   async updatePriceList(
     request: operations.UpdateApiPriceListRequest,
