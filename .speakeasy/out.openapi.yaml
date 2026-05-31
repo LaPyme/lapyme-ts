@@ -12897,6 +12897,17 @@ components:
       type: "string"
       enum:
         - "list"
+    ApiSharedEnumab9ba78640:
+      type: "string"
+      enum:
+        - "today"
+        - "yesterday"
+        - "last_7_days"
+        - "last_30_days"
+        - "last_90_days"
+        - "this_month"
+        - "previous_month"
+        - "this_year"
     ApiSharedObject682bce59ac:
       type: "object"
       properties:
@@ -28215,16 +28226,24 @@ paths:
         - name: "date_from"
           in: "query"
           required: false
+          description: "Fecha inicial del período. Obligatoria junto con date_to si no se envía period_preset."
           schema:
             type: "string"
             format: "date"
         - name: "date_to"
           in: "query"
           required: false
+          description: "Fecha final inclusiva del período. Obligatoria junto con date_from si no se envía period_preset."
           schema:
             type: "string"
             format: "date"
-        - name: "cost_center1_ids"
+        - name: "period_preset"
+          in: "query"
+          required: false
+          description: "Atajo de período resuelto por la API a date_from/date_to en horario de Argentina. No enviarlo junto con date_from/date_to."
+          schema:
+            $ref: "#/components/schemas/ApiSharedEnumab9ba78640"
+        - name: "cost_center_1_ids"
           in: "query"
           required: false
           schema:
@@ -28232,7 +28251,7 @@ paths:
             items:
               type: "string"
               format: "uuid"
-        - name: "cost_center2_ids"
+        - name: "cost_center_2_ids"
           in: "query"
           required: false
           schema:
@@ -28240,7 +28259,7 @@ paths:
             items:
               type: "string"
               format: "uuid"
-        - name: "cost_center3_ids"
+        - name: "cost_center_3_ids"
           in: "query"
           required: false
           schema:
@@ -28386,16 +28405,24 @@ paths:
         - name: "date_from"
           in: "query"
           required: false
+          description: "Fecha inicial del período. Obligatoria junto con date_to si no se envía period_preset."
           schema:
             type: "string"
             format: "date"
         - name: "date_to"
           in: "query"
           required: false
+          description: "Fecha final inclusiva del período. Obligatoria junto con date_from si no se envía period_preset."
           schema:
             type: "string"
             format: "date"
-        - name: "cost_center1_ids"
+        - name: "period_preset"
+          in: "query"
+          required: false
+          description: "Atajo de período resuelto por la API a date_from/date_to en horario de Argentina. No enviarlo junto con date_from/date_to."
+          schema:
+            $ref: "#/components/schemas/ApiSharedEnumab9ba78640"
+        - name: "cost_center_1_ids"
           in: "query"
           required: false
           schema:
@@ -28403,7 +28430,7 @@ paths:
             items:
               type: "string"
               format: "uuid"
-        - name: "cost_center2_ids"
+        - name: "cost_center_2_ids"
           in: "query"
           required: false
           schema:
@@ -28411,7 +28438,7 @@ paths:
             items:
               type: "string"
               format: "uuid"
-        - name: "cost_center3_ids"
+        - name: "cost_center_3_ids"
           in: "query"
           required: false
           schema:
@@ -28557,16 +28584,24 @@ paths:
         - name: "date_from"
           in: "query"
           required: false
+          description: "Fecha inicial del período. Obligatoria junto con date_to si no se envía period_preset."
           schema:
             type: "string"
             format: "date"
         - name: "date_to"
           in: "query"
           required: false
+          description: "Fecha final inclusiva del período. Obligatoria junto con date_from si no se envía period_preset."
           schema:
             type: "string"
             format: "date"
-        - name: "cost_center1_ids"
+        - name: "period_preset"
+          in: "query"
+          required: false
+          description: "Atajo de período resuelto por la API a date_from/date_to en horario de Argentina. No enviarlo junto con date_from/date_to."
+          schema:
+            $ref: "#/components/schemas/ApiSharedEnumab9ba78640"
+        - name: "cost_center_1_ids"
           in: "query"
           required: false
           schema:
@@ -28574,7 +28609,7 @@ paths:
             items:
               type: "string"
               format: "uuid"
-        - name: "cost_center2_ids"
+        - name: "cost_center_2_ids"
           in: "query"
           required: false
           schema:
@@ -28582,7 +28617,7 @@ paths:
             items:
               type: "string"
               format: "uuid"
-        - name: "cost_center3_ids"
+        - name: "cost_center_3_ids"
           in: "query"
           required: false
           schema:
@@ -28593,15 +28628,29 @@ paths:
         - name: "compare_date_from"
           in: "query"
           required: false
+          description: "Fecha inicial del período de comparación. Obligatoria junto con compare_date_to si compare_enabled=true y no se envía compare_period_preset."
           schema:
             type: "string"
             format: "date"
         - name: "compare_date_to"
           in: "query"
           required: false
+          description: "Fecha final inclusiva del período de comparación. Obligatoria junto con compare_date_from si compare_enabled=true y no se envía compare_period_preset."
           schema:
             type: "string"
             format: "date"
+        - name: "compare_period_preset"
+          in: "query"
+          required: false
+          description: "Atajo para el período de comparación. No enviarlo junto con compare_date_from/compare_date_to."
+          schema:
+            $ref: "#/components/schemas/ApiSharedEnumab9ba78640"
+        - name: "compare_enabled"
+          in: "query"
+          required: false
+          schema:
+            type: "boolean"
+            default: true
       responses:
         "200":
           description: "Comparativo obtenido"
@@ -28740,16 +28789,24 @@ paths:
         - name: "date_from"
           in: "query"
           required: false
+          description: "Fecha inicial del período. Obligatoria junto con date_to si no se envía period_preset."
           schema:
             type: "string"
             format: "date"
         - name: "date_to"
           in: "query"
           required: false
+          description: "Fecha final inclusiva del período. Obligatoria junto con date_from si no se envía period_preset."
           schema:
             type: "string"
             format: "date"
-        - name: "cost_center1_ids"
+        - name: "period_preset"
+          in: "query"
+          required: false
+          description: "Atajo de período resuelto por la API a date_from/date_to en horario de Argentina. No enviarlo junto con date_from/date_to."
+          schema:
+            $ref: "#/components/schemas/ApiSharedEnumab9ba78640"
+        - name: "cost_center_1_ids"
           in: "query"
           required: false
           schema:
@@ -28757,7 +28814,7 @@ paths:
             items:
               type: "string"
               format: "uuid"
-        - name: "cost_center2_ids"
+        - name: "cost_center_2_ids"
           in: "query"
           required: false
           schema:
@@ -28765,7 +28822,7 @@ paths:
             items:
               type: "string"
               format: "uuid"
-        - name: "cost_center3_ids"
+        - name: "cost_center_3_ids"
           in: "query"
           required: false
           schema:
@@ -28919,16 +28976,24 @@ paths:
         - name: "date_from"
           in: "query"
           required: false
+          description: "Fecha inicial del período. Obligatoria junto con date_to si no se envía period_preset."
           schema:
             type: "string"
             format: "date"
         - name: "date_to"
           in: "query"
           required: false
+          description: "Fecha final inclusiva del período. Obligatoria junto con date_from si no se envía period_preset."
           schema:
             type: "string"
             format: "date"
-        - name: "cost_center1_ids"
+        - name: "period_preset"
+          in: "query"
+          required: false
+          description: "Atajo de período resuelto por la API a date_from/date_to en horario de Argentina. No enviarlo junto con date_from/date_to."
+          schema:
+            $ref: "#/components/schemas/ApiSharedEnumab9ba78640"
+        - name: "cost_center_1_ids"
           in: "query"
           required: false
           schema:
@@ -28936,7 +29001,7 @@ paths:
             items:
               type: "string"
               format: "uuid"
-        - name: "cost_center2_ids"
+        - name: "cost_center_2_ids"
           in: "query"
           required: false
           schema:
@@ -28944,7 +29009,7 @@ paths:
             items:
               type: "string"
               format: "uuid"
-        - name: "cost_center3_ids"
+        - name: "cost_center_3_ids"
           in: "query"
           required: false
           schema:
