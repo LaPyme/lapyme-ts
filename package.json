@@ -1,6 +1,6 @@
 {
   "name": "lapyme",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "author": "La Pyme",
   "license": "MIT",
   "repository": {
@@ -48,6 +48,10 @@
     }
   },
   "sideEffects": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LaPyme/lapyme-ts.git"
+  },
   "scripts": {
     "lint": "oxlint --max-warnings=0 --deny-warnings src/**/*.ts src/**/*.tsx",
     "build": "tsgo",
