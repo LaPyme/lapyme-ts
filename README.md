@@ -707,3 +707,5 @@ Pin the SDK to a specific package version in production applications. This keeps
 Open an issue or PR with the integration you are building, a minimal repro, and
 the expected SDK behavior. We prioritize changes that make common La Pyme API
 workflows easier to build and safer to operate.
+
+<!-- Placeholder for Future Speakeasy SDK Sections -->
