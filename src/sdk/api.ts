@@ -19,6 +19,7 @@ import { apiGetAPIIncomeStatement } from "../funcs/api-get-api-income-statement.
 import { apiGetAPITrialBalance } from "../funcs/api-get-api-trial-balance.js";
 import { apiListAPIAccountingAccounts } from "../funcs/api-list-api-accounting-accounts.js";
 import { apiListAPIAccountingJournalEntries } from "../funcs/api-list-api-accounting-journal-entries.js";
+import { apiListAPICashSources } from "../funcs/api-list-api-cash-sources.js";
 import { apiListAPICostCenterDimensions } from "../funcs/api-list-api-cost-center-dimensions.js";
 import { apiListAPICostCenters } from "../funcs/api-list-api-cost-centers.js";
 import { apiListAPISummarizedJournal } from "../funcs/api-list-api-summarized-journal.js";
@@ -104,6 +105,23 @@ export class Api extends ClientSDK {
     options?: RequestOptions,
   ): Promise<operations.CreateApiOrderInvoiceResponse> {
     return unwrapAsync(apiCreateAPIOrderInvoice(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Listar cajas para efectivo
+   *
+   * @remarks
+   * Lista las cajas operativas y cajas fuertes accesibles para registrar pagos en efectivo en ventas.
+   */
+  async listApiCashSources(
+    request?: operations.ListApiCashSourcesRequest | undefined,
+    options?: RequestOptions,
+  ): Promise<operations.ListApiCashSourcesResponse> {
+    return unwrapAsync(apiListAPICashSources(
       this,
       request,
       options,

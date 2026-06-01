@@ -11,6 +11,7 @@ Public API operations for La Pyme integrations.
 * [createApiOrderPreparation](#createapiorderpreparation) - Marcar líneas como preparadas
 * [cancelApiOrderPreparation](#cancelapiorderpreparation) - Cancelar preparación
 * [createApiOrderInvoice](#createapiorderinvoice) - Facturar pedido
+* [listApiCashSources](#listapicashsources) - Listar cajas para efectivo
 * [listApiAccountingAccounts](#listapiaccountingaccounts) - Listar cuentas contables
 * [getApiAccountingAccount](#getapiaccountingaccount) - Obtener cuenta contable
 * [listApiCostCenterDimensions](#listapicostcenterdimensions) - Listar dimensiones de centros de costo
@@ -441,6 +442,78 @@ run();
 | Error Type                | Status Code               | Content Type              |
 | ------------------------- | ------------------------- | ------------------------- |
 | errors.ApiErrorEnvelope   | 400, 401, 403, 404, 409   | application/json          |
+| errors.ApiErrorEnvelope   | 429                       | application/json          |
+| errors.ApiErrorEnvelope   | 500                       | application/json          |
+| errors.LapymeDefaultError | 4XX, 5XX                  | \*/\*                     |
+
+## listApiCashSources
+
+Lista las cajas operativas y cajas fuertes accesibles para registrar pagos en efectivo en ventas.
+
+### Example Usage
+
+<!-- UsageSnippet language="typescript" operationID="listApiCashSources" method="get" path="/api/v1/cash-sources" example="cash_sources" -->
+```typescript
+import { Lapyme } from "lapyme";
+
+const lapyme = new Lapyme({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const result = await lapyme.api.listApiCashSources({});
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { LapymeCore } from "lapyme/core.js";
+import { apiListAPICashSources } from "lapyme/funcs/api-list-api-cash-sources.js";
+
+// Use `LapymeCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const lapyme = new LapymeCore({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const res = await apiListAPICashSources(lapyme, {});
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("apiListAPICashSources failed:", res.error);
+  }
+}
+
+run();
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `request`                                                                                                                                                                      | [operations.ListApiCashSourcesRequest](../../models/operations/list-api-cash-sources-request.md)                                                                               | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
+| `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
+
+### Response
+
+**Promise\<[operations.ListApiCashSourcesResponse](../../models/operations/list-api-cash-sources-response.md)\>**
+
+### Errors
+
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| errors.ApiErrorEnvelope   | 400, 401, 403             | application/json          |
 | errors.ApiErrorEnvelope   | 429                       | application/json          |
 | errors.ApiErrorEnvelope   | 500                       | application/json          |
 | errors.LapymeDefaultError | 4XX, 5XX                  | \*/\*                     |
@@ -896,7 +969,7 @@ const lapyme = new Lapyme({
 });
 
 async function run() {
-  const result = await lapyme.api.getApiComparativeIncomeStatement();
+  const result = await lapyme.api.getApiComparativeIncomeStatement({});
 
   console.log(result);
 }
@@ -919,7 +992,7 @@ const lapyme = new LapymeCore({
 });
 
 async function run() {
-  const res = await apiGetAPIComparativeIncomeStatement(lapyme);
+  const res = await apiGetAPIComparativeIncomeStatement(lapyme, {});
   if (res.ok) {
     const { value: result } = res;
     console.log(result);
