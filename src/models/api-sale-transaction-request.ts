@@ -7,6 +7,11 @@ import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
 import { ClosedEnum } from "../types/enums.js";
 import {
+  ApiCashSourceRef,
+  ApiCashSourceRef$Outbound,
+  ApiCashSourceRef$outboundSchema,
+} from "./api-cash-source-ref.js";
+import {
   ApiSharedEnum4e55733f20,
   ApiSharedEnum4e55733f20$outboundSchema,
 } from "./api-shared-enum4e55733f20.js";
@@ -67,6 +72,15 @@ export type PaymentMethod = {
   cardCouponNumber?: string | undefined;
   cardInstallmentPlanCode?: string | undefined;
   cardBrand?: string | undefined;
+  /**
+   * ID de caja para pagos en efectivo. Usá cash_source en integraciones nuevas.
+   */
+  registerId?: string | undefined;
+  /**
+   * ID de caja fuerte para pagos en efectivo. Usá cash_source en integraciones nuevas.
+   */
+  safeId?: string | undefined;
+  cashSource?: ApiCashSourceRef | undefined;
 };
 
 export type ApiSaleTransactionRequest = {
@@ -196,6 +210,9 @@ export type PaymentMethod$Outbound = {
   card_coupon_number?: string | undefined;
   card_installment_plan_code?: string | undefined;
   card_brand?: string | undefined;
+  register_id?: string | undefined;
+  safe_id?: string | undefined;
+  cash_source?: ApiCashSourceRef$Outbound | undefined;
 };
 
 /** @internal */
@@ -214,6 +231,9 @@ export const PaymentMethod$outboundSchema: z.ZodMiniType<
     cardCouponNumber: z.optional(z.string()),
     cardInstallmentPlanCode: z.optional(z.string()),
     cardBrand: z.optional(z.string()),
+    registerId: z.optional(z.string()),
+    safeId: z.optional(z.string()),
+    cashSource: z.optional(ApiCashSourceRef$outboundSchema),
   }),
   z.transform((v) => {
     return remap$(v, {
@@ -224,6 +244,9 @@ export const PaymentMethod$outboundSchema: z.ZodMiniType<
       cardCouponNumber: "card_coupon_number",
       cardInstallmentPlanCode: "card_installment_plan_code",
       cardBrand: "card_brand",
+      registerId: "register_id",
+      safeId: "safe_id",
+      cashSource: "cash_source",
     });
   }),
 );
