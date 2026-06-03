@@ -15,7 +15,7 @@ import {
 } from "./api-shared-objectc671832641.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
-export const Type = {
+export const ApiErrorEnvelopeType = {
   ApiError: "api_error",
   AuthenticationError: "authentication_error",
   AuthorizationError: "authorization_error",
@@ -25,10 +25,10 @@ export const Type = {
   InvalidRequestError: "invalid_request_error",
   RateLimitError: "rate_limit_error",
 } as const;
-export type Type = OpenEnum<typeof Type>;
+export type ApiErrorEnvelopeType = OpenEnum<typeof ApiErrorEnvelopeType>;
 
 export type ErrorT = {
-  type: Type;
+  type: ApiErrorEnvelopeType;
   code: string;
   message: string;
   retryable: boolean;
@@ -36,12 +36,14 @@ export type ErrorT = {
 };
 
 /** @internal */
-export const Type$inboundSchema: z.ZodMiniType<Type, unknown> = openEnums
-  .inboundSchema(Type);
+export const ApiErrorEnvelopeType$inboundSchema: z.ZodMiniType<
+  ApiErrorEnvelopeType,
+  unknown
+> = openEnums.inboundSchema(ApiErrorEnvelopeType);
 
 /** @internal */
 export const ErrorT$inboundSchema: z.ZodMiniType<ErrorT, unknown> = z.object({
-  type: Type$inboundSchema,
+  type: ApiErrorEnvelopeType$inboundSchema,
   code: types.string(),
   message: types.string(),
   retryable: types.boolean(),
