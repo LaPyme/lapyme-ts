@@ -1,11 +1,11 @@
-# Type
+# ApiErrorEnvelopeType
 
 ## Example Usage
 
 ```typescript
-import { Type } from "lapyme/models";
+import { ApiErrorEnvelopeType } from "lapyme/models";
 
-let value: Type = "api_error";
+let value: ApiErrorEnvelopeType = "invalid_request_error";
 
 // Open enum: unrecognized values are captured as Unrecognized<string>
 ```
