@@ -59,6 +59,7 @@ export * from "./get-api-trial-balance.js";
 export * from "./get-api-warehouse-by-id.js";
 export * from "./list-api-accounting-accounts.js";
 export * from "./list-api-accounting-journal-entries.js";
+export * from "./list-api-cash-sources.js";
 export * from "./list-api-categories.js";
 export * from "./list-api-cost-center-dimensions.js";
 export * from "./list-api-cost-centers.js";
