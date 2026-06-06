@@ -11,13 +11,34 @@ import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import * as models from "../index.js";
 
 export type GetApiComparativeIncomeStatementRequest = {
+  /**
+   * Fecha inicial del período. Obligatoria junto con date_to si no se envía period_preset.
+   */
   dateFrom?: Date | undefined;
+  /**
+   * Fecha final inclusiva del período. Obligatoria junto con date_from si no se envía period_preset.
+   */
   dateTo?: Date | undefined;
+  /**
+   * Atajo de período resuelto por la API a date_from/date_to en horario de Argentina. No enviarlo junto con date_from/date_to.
+   */
+  periodPreset?: models.ApiSharedEnumab9ba78640 | undefined;
   costCenter1Ids?: Array<string> | undefined;
   costCenter2Ids?: Array<string> | undefined;
   costCenter3Ids?: Array<string> | undefined;
+  /**
+   * Fecha inicial del período de comparación. Obligatoria junto con compare_date_to si compare_enabled=true y no se envía compare_period_preset.
+   */
   compareDateFrom?: Date | undefined;
+  /**
+   * Fecha final inclusiva del período de comparación. Obligatoria junto con compare_date_from si compare_enabled=true y no se envía compare_period_preset.
+   */
   compareDateTo?: Date | undefined;
+  /**
+   * Atajo para el período de comparación. No enviarlo junto con compare_date_from/compare_date_to.
+   */
+  comparePeriodPreset?: models.ApiSharedEnumab9ba78640 | undefined;
+  compareEnabled?: boolean | undefined;
 };
 
 export type GetApiComparativeIncomeStatementResponse = {
@@ -29,11 +50,14 @@ export type GetApiComparativeIncomeStatementResponse = {
 export type GetApiComparativeIncomeStatementRequest$Outbound = {
   date_from?: string | undefined;
   date_to?: string | undefined;
-  cost_center1_ids?: Array<string> | undefined;
-  cost_center2_ids?: Array<string> | undefined;
-  cost_center3_ids?: Array<string> | undefined;
+  period_preset?: string | undefined;
+  cost_center_1_ids?: Array<string> | undefined;
+  cost_center_2_ids?: Array<string> | undefined;
+  cost_center_3_ids?: Array<string> | undefined;
   compare_date_from?: string | undefined;
   compare_date_to?: string | undefined;
+  compare_period_preset?: string | undefined;
+  compare_enabled: boolean;
 };
 
 /** @internal */
@@ -51,6 +75,7 @@ export const GetApiComparativeIncomeStatementRequest$outboundSchema:
         z.date(),
         z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
       )),
+      periodPreset: z.optional(models.ApiSharedEnumab9ba78640$outboundSchema),
       costCenter1Ids: z.optional(z.array(z.string())),
       costCenter2Ids: z.optional(z.array(z.string())),
       costCenter3Ids: z.optional(z.array(z.string())),
@@ -62,16 +87,23 @@ export const GetApiComparativeIncomeStatementRequest$outboundSchema:
         z.date(),
         z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
       )),
+      comparePeriodPreset: z.optional(
+        models.ApiSharedEnumab9ba78640$outboundSchema,
+      ),
+      compareEnabled: z._default(z.boolean(), true),
     }),
     z.transform((v) => {
       return remap$(v, {
         dateFrom: "date_from",
         dateTo: "date_to",
-        costCenter1Ids: "cost_center1_ids",
-        costCenter2Ids: "cost_center2_ids",
-        costCenter3Ids: "cost_center3_ids",
+        periodPreset: "period_preset",
+        costCenter1Ids: "cost_center_1_ids",
+        costCenter2Ids: "cost_center_2_ids",
+        costCenter3Ids: "cost_center_3_ids",
         compareDateFrom: "compare_date_from",
         compareDateTo: "compare_date_to",
+        comparePeriodPreset: "compare_period_preset",
+        compareEnabled: "compare_enabled",
       });
     }),
   );

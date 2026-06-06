@@ -244,6 +244,10 @@ async function run() {
         {
           methodId: "550e8400-e29b-41d4-a716-446655440301",
           amount: 25000,
+          cashSource: {
+            type: "register",
+            id: "550e8400-e29b-41d4-a716-446655440701",
+          },
         },
       ],
     },
@@ -292,6 +296,10 @@ async function run() {
         {
           methodId: "550e8400-e29b-41d4-a716-446655440301",
           amount: 25000,
+          cashSource: {
+            type: "register",
+            id: "550e8400-e29b-41d4-a716-446655440701",
+          },
         },
       ],
     },

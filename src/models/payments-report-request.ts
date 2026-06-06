@@ -27,6 +27,7 @@ export const PaymentsReportRequestDimension = {
   PaymentContactTaxCategory: "paymentContactTaxCategory",
   PaymentContactProvince: "paymentContactProvince",
   PaymentContactCity: "paymentContactCity",
+  CreatedBy: "createdBy",
   PointOfSale: "pointOfSale",
   Register: "register",
   PosSession: "posSession",
@@ -69,6 +70,7 @@ export type PaymentsReportRequestDimensionFilters = {
   paymentContactTaxCategory?: Array<string> | undefined;
   paymentContactProvince?: Array<string> | undefined;
   paymentContactCity?: Array<string> | undefined;
+  createdBy?: Array<string> | undefined;
   pointOfSale?: Array<string> | undefined;
   register?: Array<string> | undefined;
   posSession?: Array<string> | undefined;
@@ -120,6 +122,7 @@ export type PaymentsReportRequestDimensionFilters$Outbound = {
   payment_contact_tax_category?: Array<string> | undefined;
   payment_contact_province?: Array<string> | undefined;
   payment_contact_city?: Array<string> | undefined;
+  created_by?: Array<string> | undefined;
   point_of_sale?: Array<string> | undefined;
   register?: Array<string> | undefined;
   pos_session?: Array<string> | undefined;
@@ -145,6 +148,7 @@ export const PaymentsReportRequestDimensionFilters$outboundSchema:
       paymentContactTaxCategory: z.optional(z.array(z.string())),
       paymentContactProvince: z.optional(z.array(z.string())),
       paymentContactCity: z.optional(z.array(z.string())),
+      createdBy: z.optional(z.array(z.string())),
       pointOfSale: z.optional(z.array(z.string())),
       register: z.optional(z.array(z.string())),
       posSession: z.optional(z.array(z.string())),
@@ -164,6 +168,7 @@ export const PaymentsReportRequestDimensionFilters$outboundSchema:
         paymentContactTaxCategory: "payment_contact_tax_category",
         paymentContactProvince: "payment_contact_province",
         paymentContactCity: "payment_contact_city",
+        createdBy: "created_by",
         pointOfSale: "point_of_sale",
         posSession: "pos_session",
         paymentType: "payment_type",
