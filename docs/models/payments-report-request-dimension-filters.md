@@ -19,6 +19,7 @@ let value: PaymentsReportRequestDimensionFilters = {};
 | `paymentContactTaxCategory` | *string*[]                  | :heavy_minus_sign:          | N/A                         |
 | `paymentContactProvince`    | *string*[]                  | :heavy_minus_sign:          | N/A                         |
 | `paymentContactCity`        | *string*[]                  | :heavy_minus_sign:          | N/A                         |
+| `createdBy`                 | *string*[]                  | :heavy_minus_sign:          | N/A                         |
 | `pointOfSale`               | *string*[]                  | :heavy_minus_sign:          | N/A                         |
 | `register`                  | *string*[]                  | :heavy_minus_sign:          | N/A                         |
 | `posSession`                | *string*[]                  | :heavy_minus_sign:          | N/A                         |
