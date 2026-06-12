@@ -11,8 +11,12 @@ Public API operations for La Pyme integrations.
 * [createApiOrderPreparation](#createapiorderpreparation) - Marcar líneas como preparadas
 * [cancelApiOrderPreparation](#cancelapiorderpreparation) - Cancelar preparación
 * [createApiOrderInvoice](#createapiorderinvoice) - Facturar pedido
+* [listApiCashSources](#listapicashsources) - Listar cajas para efectivo
 * [listApiAccountingAccounts](#listapiaccountingaccounts) - Listar cuentas contables
+* [createApiAccountingAccount](#createapiaccountingaccount) - Crear cuenta contable
 * [getApiAccountingAccount](#getapiaccountingaccount) - Obtener cuenta contable
+* [updateApiAccountingAccount](#updateapiaccountingaccount) - Actualizar cuenta contable
+* [deactivateApiAccountingAccount](#deactivateapiaccountingaccount) - Desactivar cuenta contable
 * [listApiCostCenterDimensions](#listapicostcenterdimensions) - Listar dimensiones de centros de costo
 * [listApiCostCenters](#listapicostcenters) - Listar centros de costo
 * [getApiTrialBalance](#getapitrialbalance) - Obtener sumas y saldos
@@ -445,6 +449,78 @@ run();
 | errors.ApiErrorEnvelope   | 500                       | application/json          |
 | errors.LapymeDefaultError | 4XX, 5XX                  | \*/\*                     |
 
+## listApiCashSources
+
+Lista las cajas operativas y cajas fuertes accesibles para registrar pagos en efectivo en ventas.
+
+### Example Usage
+
+<!-- UsageSnippet language="typescript" operationID="listApiCashSources" method="get" path="/api/v1/cash-sources" example="cash_sources" -->
+```typescript
+import { Lapyme } from "lapyme";
+
+const lapyme = new Lapyme({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const result = await lapyme.api.listApiCashSources({});
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { LapymeCore } from "lapyme/core.js";
+import { apiListAPICashSources } from "lapyme/funcs/api-list-api-cash-sources.js";
+
+// Use `LapymeCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const lapyme = new LapymeCore({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const res = await apiListAPICashSources(lapyme, {});
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("apiListAPICashSources failed:", res.error);
+  }
+}
+
+run();
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `request`                                                                                                                                                                      | [operations.ListApiCashSourcesRequest](../../models/operations/list-api-cash-sources-request.md)                                                                               | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
+| `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
+
+### Response
+
+**Promise\<[operations.ListApiCashSourcesResponse](../../models/operations/list-api-cash-sources-response.md)\>**
+
+### Errors
+
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| errors.ApiErrorEnvelope   | 400, 401, 403             | application/json          |
+| errors.ApiErrorEnvelope   | 429                       | application/json          |
+| errors.ApiErrorEnvelope   | 500                       | application/json          |
+| errors.LapymeDefaultError | 4XX, 5XX                  | \*/\*                     |
+
 ## listApiAccountingAccounts
 
 Lista el plan de cuentas disponible para asientos y reportes contables.
@@ -513,6 +589,96 @@ run();
 | Error Type                | Status Code               | Content Type              |
 | ------------------------- | ------------------------- | ------------------------- |
 | errors.ApiErrorEnvelope   | 400, 401, 403             | application/json          |
+| errors.ApiErrorEnvelope   | 429                       | application/json          |
+| errors.ApiErrorEnvelope   | 500                       | application/json          |
+| errors.LapymeDefaultError | 4XX, 5XX                  | \*/\*                     |
+
+## createApiAccountingAccount
+
+Crea una cuenta contable y permite configurar system_role e is_inflation_adjustable en el recurso cuenta.
+
+### Example Usage
+
+<!-- UsageSnippet language="typescript" operationID="createApiAccountingAccount" method="post" path="/api/v1/accounting/accounts" example="default" -->
+```typescript
+import { Lapyme } from "lapyme";
+
+const lapyme = new Lapyme({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const result = await lapyme.api.createApiAccountingAccount({
+    idempotencyKey: "<value>",
+    body: {
+      name: "<value>",
+      type: "revenue",
+      parentId: null,
+      isPostable: true,
+      isActive: false,
+    },
+  });
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { LapymeCore } from "lapyme/core.js";
+import { apiCreateAPIAccountingAccount } from "lapyme/funcs/api-create-api-accounting-account.js";
+
+// Use `LapymeCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const lapyme = new LapymeCore({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const res = await apiCreateAPIAccountingAccount(lapyme, {
+    idempotencyKey: "<value>",
+    body: {
+      name: "<value>",
+      type: "revenue",
+      parentId: null,
+      isPostable: true,
+      isActive: false,
+    },
+  });
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("apiCreateAPIAccountingAccount failed:", res.error);
+  }
+}
+
+run();
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `request`                                                                                                                                                                      | [operations.CreateApiAccountingAccountRequest](../../models/operations/create-api-accounting-account-request.md)                                                               | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
+| `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
+
+### Response
+
+**Promise\<[operations.CreateApiAccountingAccountResponse](../../models/operations/create-api-accounting-account-response.md)\>**
+
+### Errors
+
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| errors.ApiErrorEnvelope   | 400, 401, 403, 409        | application/json          |
 | errors.ApiErrorEnvelope   | 429                       | application/json          |
 | errors.ApiErrorEnvelope   | 500                       | application/json          |
 | errors.LapymeDefaultError | 4XX, 5XX                  | \*/\*                     |
@@ -589,6 +755,164 @@ run();
 | Error Type                | Status Code               | Content Type              |
 | ------------------------- | ------------------------- | ------------------------- |
 | errors.ApiErrorEnvelope   | 400, 401, 403, 404        | application/json          |
+| errors.ApiErrorEnvelope   | 429                       | application/json          |
+| errors.ApiErrorEnvelope   | 500                       | application/json          |
+| errors.LapymeDefaultError | 4XX, 5XX                  | \*/\*                     |
+
+## updateApiAccountingAccount
+
+Actualiza parcialmente metadatos y configuración de una cuenta contable, incluyendo system_role e is_inflation_adjustable.
+
+### Example Usage
+
+<!-- UsageSnippet language="typescript" operationID="updateApiAccountingAccount" method="patch" path="/api/v1/accounting/accounts/{account_id}" example="default" -->
+```typescript
+import { Lapyme } from "lapyme";
+
+const lapyme = new Lapyme({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const result = await lapyme.api.updateApiAccountingAccount({
+    accountId: "fc11b53a-ea87-4058-8142-357d345db1fe",
+    idempotencyKey: "<value>",
+    body: {},
+  });
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { LapymeCore } from "lapyme/core.js";
+import { apiUpdateAPIAccountingAccount } from "lapyme/funcs/api-update-api-accounting-account.js";
+
+// Use `LapymeCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const lapyme = new LapymeCore({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const res = await apiUpdateAPIAccountingAccount(lapyme, {
+    accountId: "fc11b53a-ea87-4058-8142-357d345db1fe",
+    idempotencyKey: "<value>",
+    body: {},
+  });
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("apiUpdateAPIAccountingAccount failed:", res.error);
+  }
+}
+
+run();
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `request`                                                                                                                                                                      | [operations.UpdateApiAccountingAccountRequest](../../models/operations/update-api-accounting-account-request.md)                                                               | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
+| `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
+
+### Response
+
+**Promise\<[operations.UpdateApiAccountingAccountResponse](../../models/operations/update-api-accounting-account-response.md)\>**
+
+### Errors
+
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| errors.ApiErrorEnvelope   | 400, 401, 403, 404, 409   | application/json          |
+| errors.ApiErrorEnvelope   | 429                       | application/json          |
+| errors.ApiErrorEnvelope   | 500                       | application/json          |
+| errors.LapymeDefaultError | 4XX, 5XX                  | \*/\*                     |
+
+## deactivateApiAccountingAccount
+
+Desactiva una cuenta contable sin borrar sus referencias históricas. Si la cuenta tenía system_role, el rol se limpia para mantener válida la configuración.
+
+### Example Usage
+
+<!-- UsageSnippet language="typescript" operationID="deactivateApiAccountingAccount" method="delete" path="/api/v1/accounting/accounts/{account_id}" -->
+```typescript
+import { Lapyme } from "lapyme";
+
+const lapyme = new Lapyme({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const result = await lapyme.api.deactivateApiAccountingAccount({
+    accountId: "856ec7ee-d67b-4144-add2-ea3edd692cb2",
+    idempotencyKey: "<value>",
+  });
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { LapymeCore } from "lapyme/core.js";
+import { apiDeactivateAPIAccountingAccount } from "lapyme/funcs/api-deactivate-api-accounting-account.js";
+
+// Use `LapymeCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const lapyme = new LapymeCore({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const res = await apiDeactivateAPIAccountingAccount(lapyme, {
+    accountId: "856ec7ee-d67b-4144-add2-ea3edd692cb2",
+    idempotencyKey: "<value>",
+  });
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("apiDeactivateAPIAccountingAccount failed:", res.error);
+  }
+}
+
+run();
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `request`                                                                                                                                                                      | [operations.DeactivateApiAccountingAccountRequest](../../models/operations/deactivate-api-accounting-account-request.md)                                                       | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
+| `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
+
+### Response
+
+**Promise\<[operations.DeactivateApiAccountingAccountResponse](../../models/operations/deactivate-api-accounting-account-response.md)\>**
+
+### Errors
+
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| errors.ApiErrorEnvelope   | 400, 401, 403, 404, 409   | application/json          |
 | errors.ApiErrorEnvelope   | 429                       | application/json          |
 | errors.ApiErrorEnvelope   | 500                       | application/json          |
 | errors.LapymeDefaultError | 4XX, 5XX                  | \*/\*                     |
@@ -824,7 +1148,7 @@ const lapyme = new Lapyme({
 });
 
 async function run() {
-  const result = await lapyme.api.getApiIncomeStatement();
+  const result = await lapyme.api.getApiIncomeStatement({});
 
   console.log(result);
 }
@@ -847,7 +1171,7 @@ const lapyme = new LapymeCore({
 });
 
 async function run() {
-  const res = await apiGetAPIIncomeStatement(lapyme);
+  const res = await apiGetAPIIncomeStatement(lapyme, {});
   if (res.ok) {
     const { value: result } = res;
     console.log(result);
@@ -896,7 +1220,7 @@ const lapyme = new Lapyme({
 });
 
 async function run() {
-  const result = await lapyme.api.getApiComparativeIncomeStatement();
+  const result = await lapyme.api.getApiComparativeIncomeStatement({});
 
   console.log(result);
 }
@@ -919,7 +1243,7 @@ const lapyme = new LapymeCore({
 });
 
 async function run() {
-  const res = await apiGetAPIComparativeIncomeStatement(lapyme);
+  const res = await apiGetAPIComparativeIncomeStatement(lapyme, {});
   if (res.ok) {
     const { value: result } = res;
     console.log(result);

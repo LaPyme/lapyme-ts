@@ -79,6 +79,8 @@ export type InventoryReportRequestDimensionFilters = {
   productType?: Array<string> | undefined;
   warehouse?: Array<string> | undefined;
   currency?: Array<string> | undefined;
+  productStatus?: Array<string> | undefined;
+  warehouseStatus?: Array<string> | undefined;
   saleLineType?: Array<string> | undefined;
 };
 
@@ -206,6 +208,8 @@ export type InventoryReportRequestDimensionFilters$Outbound = {
   product_type?: Array<string> | undefined;
   warehouse?: Array<string> | undefined;
   currency?: Array<string> | undefined;
+  product_status?: Array<string> | undefined;
+  warehouse_status?: Array<string> | undefined;
   sale_line_type?: Array<string> | undefined;
 };
 
@@ -225,6 +229,8 @@ export const InventoryReportRequestDimensionFilters$outboundSchema:
       productType: z.optional(z.array(z.string())),
       warehouse: z.optional(z.array(z.string())),
       currency: z.optional(z.array(z.string())),
+      productStatus: z.optional(z.array(z.string())),
+      warehouseStatus: z.optional(z.array(z.string())),
       saleLineType: z.optional(z.array(z.string())),
     }),
     z.transform((v) => {
@@ -233,6 +239,8 @@ export const InventoryReportRequestDimensionFilters$outboundSchema:
         variantSku: "variant_sku",
         defaultSupplierName: "default_supplier_name",
         productType: "product_type",
+        productStatus: "product_status",
+        warehouseStatus: "warehouse_status",
         saleLineType: "sale_line_type",
       });
     }),

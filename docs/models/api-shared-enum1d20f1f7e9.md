@@ -1,11 +1,11 @@
-# NormalBalance
+# ApiSharedEnum1d20f1f7e9
 
 ## Example Usage
 
 ```typescript
-import { NormalBalance } from "lapyme/models";
+import { ApiSharedEnum1d20f1f7e9 } from "lapyme/models";
 
-let value: NormalBalance = "credit";
+let value: ApiSharedEnum1d20f1f7e9 = "debit";
 
 // Open enum: unrecognized values are captured as Unrecognized<string>
 ```

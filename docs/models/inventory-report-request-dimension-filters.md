@@ -23,4 +23,6 @@ let value: InventoryReportRequestDimensionFilters = {};
 | `productType`         | *string*[]            | :heavy_minus_sign:    | N/A                   |
 | `warehouse`           | *string*[]            | :heavy_minus_sign:    | N/A                   |
 | `currency`            | *string*[]            | :heavy_minus_sign:    | N/A                   |
+| `productStatus`       | *string*[]            | :heavy_minus_sign:    | N/A                   |
+| `warehouseStatus`     | *string*[]            | :heavy_minus_sign:    | N/A                   |
 | `saleLineType`        | *string*[]            | :heavy_minus_sign:    | N/A                   |
