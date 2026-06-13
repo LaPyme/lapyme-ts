@@ -74,6 +74,9 @@ export type PurchasesReportRequestDimensionFilters = {
   voucherType?: Array<string> | undefined;
   currency?: Array<string> | undefined;
   taxRate?: Array<string> | undefined;
+  supplierStatus?: Array<string> | undefined;
+  productStatus?: Array<string> | undefined;
+  warehouseStatus?: Array<string> | undefined;
 };
 
 export type PurchasesReportRequest = {
@@ -144,6 +147,9 @@ export type PurchasesReportRequestDimensionFilters$Outbound = {
   voucher_type?: Array<string> | undefined;
   currency?: Array<string> | undefined;
   tax_rate?: Array<string> | undefined;
+  supplier_status?: Array<string> | undefined;
+  product_status?: Array<string> | undefined;
+  warehouse_status?: Array<string> | undefined;
 };
 
 /** @internal */
@@ -166,6 +172,9 @@ export const PurchasesReportRequestDimensionFilters$outboundSchema:
       voucherType: z.optional(z.array(z.string())),
       currency: z.optional(z.array(z.string())),
       taxRate: z.optional(z.array(z.string())),
+      supplierStatus: z.optional(z.array(z.string())),
+      productStatus: z.optional(z.array(z.string())),
+      warehouseStatus: z.optional(z.array(z.string())),
     }),
     z.transform((v) => {
       return remap$(v, {
@@ -176,6 +185,9 @@ export const PurchasesReportRequestDimensionFilters$outboundSchema:
         productType: "product_type",
         voucherType: "voucher_type",
         taxRate: "tax_rate",
+        supplierStatus: "supplier_status",
+        productStatus: "product_status",
+        warehouseStatus: "warehouse_status",
       });
     }),
   );

@@ -27,3 +27,6 @@ let value: PurchasesReportRequestDimensionFilters = {};
 | `voucherType`         | *string*[]            | :heavy_minus_sign:    | N/A                   |
 | `currency`            | *string*[]            | :heavy_minus_sign:    | N/A                   |
 | `taxRate`             | *string*[]            | :heavy_minus_sign:    | N/A                   |
+| `supplierStatus`      | *string*[]            | :heavy_minus_sign:    | N/A                   |
+| `productStatus`       | *string*[]            | :heavy_minus_sign:    | N/A                   |
+| `warehouseStatus`     | *string*[]            | :heavy_minus_sign:    | N/A                   |
