@@ -49,6 +49,24 @@ export type ApiPurchaseTransactionRequestItem = {
   discountPercentage?: number | undefined;
   purchaseOrderItemId?: string | undefined;
   vatCategory?: ApiSharedEnum822a963f55 | null | undefined;
+  /**
+   * ID de cuenta contable imputable de Activo o Gasto para este renglon.
+   */
+  accountId?: string | undefined;
+  costCenter1Id?: string | undefined;
+  costCenter2Id?: string | undefined;
+  costCenter3Id?: string | undefined;
+};
+
+export type ManualAccountAllocations = {
+  gravado21?: string | undefined;
+  gravado27?: string | undefined;
+  gravado105?: string | undefined;
+  gravado25?: string | undefined;
+  gravado5?: string | undefined;
+  nonTaxedAmount?: string | undefined;
+  exento?: string | undefined;
+  baseAmount?: string | undefined;
 };
 
 export const ApiPurchaseTransactionRequestStatus = {
@@ -114,6 +132,7 @@ export type ApiPurchaseTransactionRequest = {
   nonTaxedAmount?: number | undefined;
   baseAmount?: number | undefined;
   vatBreakdown?: Array<ApiSharedObjectfb7405a472> | undefined;
+  manualAccountAllocations?: ManualAccountAllocations | undefined;
   notes?: string | undefined;
   currency: ApiSharedEnum6cfb146157;
   exchangeRate?: number | undefined;
@@ -135,6 +154,10 @@ export type ApiPurchaseTransactionRequestItem$Outbound = {
   discount_percentage?: number | undefined;
   purchase_order_item_id?: string | undefined;
   vat_category?: string | null | undefined;
+  account_id?: string | undefined;
+  cost_center1_id?: string | undefined;
+  cost_center2_id?: string | undefined;
+  cost_center3_id?: string | undefined;
 };
 
 /** @internal */
@@ -154,6 +177,10 @@ export const ApiPurchaseTransactionRequestItem$outboundSchema: z.ZodMiniType<
     discountPercentage: z.optional(z.number()),
     purchaseOrderItemId: z.optional(z.string()),
     vatCategory: z.optional(z.nullable(ApiSharedEnum822a963f55$outboundSchema)),
+    accountId: z.optional(z.string()),
+    costCenter1Id: z.optional(z.string()),
+    costCenter2Id: z.optional(z.string()),
+    costCenter3Id: z.optional(z.string()),
   }),
   z.transform((v) => {
     return remap$(v, {
@@ -164,6 +191,10 @@ export const ApiPurchaseTransactionRequestItem$outboundSchema: z.ZodMiniType<
       discountPercentage: "discount_percentage",
       purchaseOrderItemId: "purchase_order_item_id",
       vatCategory: "vat_category",
+      accountId: "account_id",
+      costCenter1Id: "cost_center1_id",
+      costCenter2Id: "cost_center2_id",
+      costCenter3Id: "cost_center3_id",
     });
   }),
 );
@@ -175,6 +206,49 @@ export function apiPurchaseTransactionRequestItemToJSON(
     ApiPurchaseTransactionRequestItem$outboundSchema.parse(
       apiPurchaseTransactionRequestItem,
     ),
+  );
+}
+
+/** @internal */
+export type ManualAccountAllocations$Outbound = {
+  gravado21?: string | undefined;
+  gravado27?: string | undefined;
+  gravado105?: string | undefined;
+  gravado25?: string | undefined;
+  gravado5?: string | undefined;
+  non_taxed_amount?: string | undefined;
+  exento?: string | undefined;
+  base_amount?: string | undefined;
+};
+
+/** @internal */
+export const ManualAccountAllocations$outboundSchema: z.ZodMiniType<
+  ManualAccountAllocations$Outbound,
+  ManualAccountAllocations
+> = z.pipe(
+  z.object({
+    gravado21: z.optional(z.string()),
+    gravado27: z.optional(z.string()),
+    gravado105: z.optional(z.string()),
+    gravado25: z.optional(z.string()),
+    gravado5: z.optional(z.string()),
+    nonTaxedAmount: z.optional(z.string()),
+    exento: z.optional(z.string()),
+    baseAmount: z.optional(z.string()),
+  }),
+  z.transform((v) => {
+    return remap$(v, {
+      nonTaxedAmount: "non_taxed_amount",
+      baseAmount: "base_amount",
+    });
+  }),
+);
+
+export function manualAccountAllocationsToJSON(
+  manualAccountAllocations: ManualAccountAllocations,
+): string {
+  return JSON.stringify(
+    ManualAccountAllocations$outboundSchema.parse(manualAccountAllocations),
   );
 }
 
@@ -217,6 +291,7 @@ export type ApiPurchaseTransactionRequest$Outbound = {
   non_taxed_amount?: number | undefined;
   base_amount?: number | undefined;
   vat_breakdown?: Array<ApiSharedObjectfb7405a472$Outbound> | undefined;
+  manual_account_allocations?: ManualAccountAllocations$Outbound | undefined;
   notes?: string | undefined;
   currency: string;
   exchange_rate?: number | undefined;
@@ -280,6 +355,9 @@ export const ApiPurchaseTransactionRequest$outboundSchema: z.ZodMiniType<
     nonTaxedAmount: z.optional(z.int()),
     baseAmount: z.optional(z.int()),
     vatBreakdown: z.optional(z.array(ApiSharedObjectfb7405a472$outboundSchema)),
+    manualAccountAllocations: z.optional(z.lazy(() =>
+      ManualAccountAllocations$outboundSchema
+    )),
     notes: z.optional(z.string()),
     currency: ApiSharedEnum6cfb146157$outboundSchema,
     exchangeRate: z.optional(z.number()),
@@ -315,6 +393,7 @@ export const ApiPurchaseTransactionRequest$outboundSchema: z.ZodMiniType<
       nonTaxedAmount: "non_taxed_amount",
       baseAmount: "base_amount",
       vatBreakdown: "vat_breakdown",
+      manualAccountAllocations: "manual_account_allocations",
       exchangeRate: "exchange_rate",
       pdfPath: "pdf_path",
       vatCategory: "vat_category",

@@ -5,10 +5,12 @@
 
 import { apiArchiveAPIOrder } from "../funcs/api-archive-api-order.js";
 import { apiCancelAPIOrderPreparation } from "../funcs/api-cancel-api-order-preparation.js";
+import { apiCreateAPIAccountingAccount } from "../funcs/api-create-api-accounting-account.js";
 import { apiCreateAPIInflationAdjustment } from "../funcs/api-create-api-inflation-adjustment.js";
 import { apiCreateAPIManualJournalEntry } from "../funcs/api-create-api-manual-journal-entry.js";
 import { apiCreateAPIOrderInvoice } from "../funcs/api-create-api-order-invoice.js";
 import { apiCreateAPIOrderPreparation } from "../funcs/api-create-api-order-preparation.js";
+import { apiDeactivateAPIAccountingAccount } from "../funcs/api-deactivate-api-accounting-account.js";
 import { apiDeleteAPIManualJournalEntry } from "../funcs/api-delete-api-manual-journal-entry.js";
 import { apiGetAPIAccountLedger } from "../funcs/api-get-api-account-ledger.js";
 import { apiGetAPIAccountingAccount } from "../funcs/api-get-api-accounting-account.js";
@@ -19,10 +21,12 @@ import { apiGetAPIIncomeStatement } from "../funcs/api-get-api-income-statement.
 import { apiGetAPITrialBalance } from "../funcs/api-get-api-trial-balance.js";
 import { apiListAPIAccountingAccounts } from "../funcs/api-list-api-accounting-accounts.js";
 import { apiListAPIAccountingJournalEntries } from "../funcs/api-list-api-accounting-journal-entries.js";
+import { apiListAPICashSources } from "../funcs/api-list-api-cash-sources.js";
 import { apiListAPICostCenterDimensions } from "../funcs/api-list-api-cost-center-dimensions.js";
 import { apiListAPICostCenters } from "../funcs/api-list-api-cost-centers.js";
 import { apiListAPISummarizedJournal } from "../funcs/api-list-api-summarized-journal.js";
 import { apiPreviewAPIInflationAdjustment } from "../funcs/api-preview-api-inflation-adjustment.js";
+import { apiUpdateAPIAccountingAccount } from "../funcs/api-update-api-accounting-account.js";
 import { apiUpdateAPIManualJournalEntry } from "../funcs/api-update-api-manual-journal-entry.js";
 import { apiUpdateAPIOrderPreparation } from "../funcs/api-update-api-order-preparation.js";
 import { ClientSDK, RequestOptions } from "../lib/sdks.js";
@@ -111,6 +115,23 @@ export class Api extends ClientSDK {
   }
 
   /**
+   * Listar cajas para efectivo
+   *
+   * @remarks
+   * Lista las cajas operativas y cajas fuertes accesibles para registrar pagos en efectivo en ventas.
+   */
+  async listApiCashSources(
+    request?: operations.ListApiCashSourcesRequest | undefined,
+    options?: RequestOptions,
+  ): Promise<operations.ListApiCashSourcesResponse> {
+    return unwrapAsync(apiListAPICashSources(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
    * Listar cuentas contables
    *
    * @remarks
@@ -128,6 +149,23 @@ export class Api extends ClientSDK {
   }
 
   /**
+   * Crear cuenta contable
+   *
+   * @remarks
+   * Crea una cuenta contable y permite configurar system_role e is_inflation_adjustable en el recurso cuenta.
+   */
+  async createApiAccountingAccount(
+    request: operations.CreateApiAccountingAccountRequest,
+    options?: RequestOptions,
+  ): Promise<operations.CreateApiAccountingAccountResponse> {
+    return unwrapAsync(apiCreateAPIAccountingAccount(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
    * Obtener cuenta contable
    */
   async getApiAccountingAccount(
@@ -135,6 +173,40 @@ export class Api extends ClientSDK {
     options?: RequestOptions,
   ): Promise<operations.GetApiAccountingAccountResponse> {
     return unwrapAsync(apiGetAPIAccountingAccount(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Actualizar cuenta contable
+   *
+   * @remarks
+   * Actualiza parcialmente metadatos y configuración de una cuenta contable, incluyendo system_role e is_inflation_adjustable.
+   */
+  async updateApiAccountingAccount(
+    request: operations.UpdateApiAccountingAccountRequest,
+    options?: RequestOptions,
+  ): Promise<operations.UpdateApiAccountingAccountResponse> {
+    return unwrapAsync(apiUpdateAPIAccountingAccount(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Desactivar cuenta contable
+   *
+   * @remarks
+   * Desactiva una cuenta contable sin borrar sus referencias históricas. Si la cuenta tenía system_role, el rol se limpia para mantener válida la configuración.
+   */
+  async deactivateApiAccountingAccount(
+    request: operations.DeactivateApiAccountingAccountRequest,
+    options?: RequestOptions,
+  ): Promise<operations.DeactivateApiAccountingAccountResponse> {
+    return unwrapAsync(apiDeactivateAPIAccountingAccount(
       this,
       request,
       options,

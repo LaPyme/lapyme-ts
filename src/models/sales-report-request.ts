@@ -108,6 +108,12 @@ export type SalesReportRequestDimensionFilters = {
   paymentMethod?: Array<string> | undefined;
   taxRate?: Array<string> | undefined;
   saleLineType?: Array<string> | undefined;
+  customerStatus?: Array<string> | undefined;
+  productStatus?: Array<string> | undefined;
+  warehouseStatus?: Array<string> | undefined;
+  pointOfSaleStatus?: Array<string> | undefined;
+  registerStatus?: Array<string> | undefined;
+  paymentMethodStatus?: Array<string> | undefined;
 };
 
 /**
@@ -206,6 +212,12 @@ export type SalesReportRequestDimensionFilters$Outbound = {
   payment_method?: Array<string> | undefined;
   tax_rate?: Array<string> | undefined;
   sale_line_type?: Array<string> | undefined;
+  customer_status?: Array<string> | undefined;
+  product_status?: Array<string> | undefined;
+  warehouse_status?: Array<string> | undefined;
+  point_of_sale_status?: Array<string> | undefined;
+  register_status?: Array<string> | undefined;
+  payment_method_status?: Array<string> | undefined;
 };
 
 /** @internal */
@@ -240,6 +252,12 @@ export const SalesReportRequestDimensionFilters$outboundSchema: z.ZodMiniType<
     paymentMethod: z.optional(z.array(z.string())),
     taxRate: z.optional(z.array(z.string())),
     saleLineType: z.optional(z.array(z.string())),
+    customerStatus: z.optional(z.array(z.string())),
+    productStatus: z.optional(z.array(z.string())),
+    warehouseStatus: z.optional(z.array(z.string())),
+    pointOfSaleStatus: z.optional(z.array(z.string())),
+    registerStatus: z.optional(z.array(z.string())),
+    paymentMethodStatus: z.optional(z.array(z.string())),
   }),
   z.transform((v) => {
     return remap$(v, {
@@ -259,6 +277,12 @@ export const SalesReportRequestDimensionFilters$outboundSchema: z.ZodMiniType<
       paymentMethod: "payment_method",
       taxRate: "tax_rate",
       saleLineType: "sale_line_type",
+      customerStatus: "customer_status",
+      productStatus: "product_status",
+      warehouseStatus: "warehouse_status",
+      pointOfSaleStatus: "point_of_sale_status",
+      registerStatus: "register_status",
+      paymentMethodStatus: "payment_method_status",
     });
   }),
 );
