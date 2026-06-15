@@ -77,6 +77,10 @@ let value: NormalizedSale = {
       cardCouponNumber: "<value>",
       cardInstallmentPlanCode: "<value>",
       cardBrand: "<value>",
+      cashSource: {
+        type: "register",
+        id: "f169323f-c313-409b-b25e-3444de8ea873",
+      },
     },
   ],
 };
@@ -120,4 +124,4 @@ let value: NormalizedSale = {
 | `balance`                                                                      | *number*                                                                       | :heavy_check_mark:                                                             | N/A                                                                            |
 | `isFullAmountPending`                                                          | *boolean*                                                                      | :heavy_check_mark:                                                             | N/A                                                                            |
 | `items`                                                                        | [models.ApiSharedObject55e2bcf4a7](../models/api-shared-object55e2bcf4a7.md)[] | :heavy_check_mark:                                                             | N/A                                                                            |
-| `paymentMethods`                                                               | [models.ApiSharedObject43ed7be04f](../models/api-shared-object43ed7be04f.md)[] | :heavy_check_mark:                                                             | N/A                                                                            |
+| `paymentMethods`                                                               | [models.ApiSharedObjecte4ddc41067](../models/api-shared-objecte4ddc41067.md)[] | :heavy_check_mark:                                                             | N/A                                                                            |

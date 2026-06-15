@@ -25,10 +25,6 @@ import {
   ApiSharedObject3563932f8e$inboundSchema,
 } from "./api-shared-object3563932f8e.js";
 import {
-  ApiSharedObject43ed7be04f,
-  ApiSharedObject43ed7be04f$inboundSchema,
-} from "./api-shared-object43ed7be04f.js";
-import {
   ApiSharedObject55e2bcf4a7,
   ApiSharedObject55e2bcf4a7$inboundSchema,
 } from "./api-shared-object55e2bcf4a7.js";
@@ -52,6 +48,10 @@ import {
   ApiSharedObjectc671832641,
   ApiSharedObjectc671832641$inboundSchema,
 } from "./api-shared-objectc671832641.js";
+import {
+  ApiSharedObjecte4ddc41067,
+  ApiSharedObjecte4ddc41067$inboundSchema,
+} from "./api-shared-objecte4ddc41067.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type Sale = {
@@ -112,7 +112,7 @@ export type NormalizedSale = {
   balance: number;
   isFullAmountPending: boolean;
   items: Array<ApiSharedObject55e2bcf4a7>;
-  paymentMethods: Array<ApiSharedObject43ed7be04f>;
+  paymentMethods: Array<ApiSharedObjecte4ddc41067>;
 };
 
 export type ApiSaleTransactionSuccessResponseProjectedEffects = {
@@ -233,7 +233,7 @@ export const NormalizedSale$inboundSchema: z.ZodMiniType<
     balance: types.number(),
     is_full_amount_pending: types.boolean(),
     items: z.array(ApiSharedObject55e2bcf4a7$inboundSchema),
-    payment_methods: z.array(ApiSharedObject43ed7be04f$inboundSchema),
+    payment_methods: z.array(ApiSharedObjecte4ddc41067$inboundSchema),
   }),
   z.transform((v) => {
     return remap$(v, {

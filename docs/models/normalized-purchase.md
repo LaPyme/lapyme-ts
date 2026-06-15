@@ -37,7 +37,32 @@ let value: NormalizedPurchase = {
   otherTaxAmount: null,
   notes: "<value>",
   pdfPath: "<value>",
-  items: [],
+  manualAccountAllocations: {},
+  items: [
+    {
+      productId: "e997d052-a78b-4592-8380-e1531f4b5858",
+      productName: "<value>",
+      sku: "<value>",
+      name: "<value>",
+      quantity: 4641.85,
+      unitCost: 687278,
+      subtotal: 787901,
+      total: 269118,
+      taxRateId: null,
+      isExempt: true,
+      discountPercentage: 5857.12,
+      purchaseOrderItemId: "f5b1694d-7399-4277-b067-73f7df46c7f9",
+      vatCategory: "services",
+      accountId: "770d78b2-5acd-4098-b8ef-0c17a2e418ec",
+      accountName: "<value>",
+      costCenter1Id: "c5e0376c-b81f-4dc3-9aa0-c394392b999e",
+      costCenter1Name: "<value>",
+      costCenter2Id: "3bc992e1-f850-4f16-bd8e-be5e2a0412a5",
+      costCenter2Name: "<value>",
+      costCenter3Id: "9b840982-40dd-41f0-998c-8c31d799b51d",
+      costCenter3Name: "<value>",
+    },
+  ],
 };
 ```
 
@@ -76,4 +101,5 @@ let value: NormalizedPurchase = {
 | `otherTaxAmount`                                                               | *number*                                                                       | :heavy_check_mark:                                                             | N/A                                                                            |
 | `notes`                                                                        | *string*                                                                       | :heavy_check_mark:                                                             | N/A                                                                            |
 | `pdfPath`                                                                      | *string*                                                                       | :heavy_check_mark:                                                             | N/A                                                                            |
-| `items`                                                                        | [models.ApiSharedObjectedd0c22535](../models/api-shared-objectedd0c22535.md)[] | :heavy_check_mark:                                                             | N/A                                                                            |
+| `manualAccountAllocations`                                                     | Record<string, *string*>                                                       | :heavy_check_mark:                                                             | N/A                                                                            |
+| `items`                                                                        | [models.ApiSharedObjectbf19ed87b4](../models/api-shared-objectbf19ed87b4.md)[] | :heavy_check_mark:                                                             | N/A                                                                            |

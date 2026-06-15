@@ -53,8 +53,8 @@ let value: ApiSaleTransactionSuccessResponseData = {
     grossIncomePerceptionAmount: 933761,
     grossIncomeTaxBreakdown: [
       {
-        provinceId: 438840,
-        amount: 290368,
+        provinceId: 850995,
+        amount: 165215,
       },
     ],
     municipalPerceptionAmount: 981554,

@@ -99,12 +99,14 @@ async function $do(
   )();
 
   const query = encodeFormQuery({
-    "cost_center1_ids": payload?.cost_center1_ids,
-    "cost_center2_ids": payload?.cost_center2_ids,
-    "cost_center3_ids": payload?.cost_center3_ids,
+    "cost_center_1_ids": payload?.cost_center_1_ids,
+    "cost_center_2_ids": payload?.cost_center_2_ids,
+    "cost_center_3_ids": payload?.cost_center_3_ids,
     "date_from": payload?.date_from,
     "date_to": payload?.date_to,
     "group_by_cost_center_position": payload?.group_by_cost_center_position,
+    "period_preset": payload?.period_preset,
+    "reporting_currency": payload?.reporting_currency,
   });
 
   const headers = new Headers(compactMap({
