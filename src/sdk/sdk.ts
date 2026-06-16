@@ -60,6 +60,11 @@ export class Lapyme extends ClientSDK {
     return (this._priceLists ??= new PriceLists(this._options));
   }
 
+  private _api?: Api;
+  get api(): Api {
+    return (this._api ??= new Api(this._options));
+  }
+
   private _purchases?: Purchases;
   get purchases(): Purchases {
     return (this._purchases ??= new Purchases(this._options));
@@ -88,11 +93,6 @@ export class Lapyme extends ClientSDK {
   private _orders?: Orders;
   get orders(): Orders {
     return (this._orders ??= new Orders(this._options));
-  }
-
-  private _api?: Api;
-  get api(): Api {
-    return (this._api ??= new Api(this._options));
   }
 
   private _stockMovements?: StockMovements;

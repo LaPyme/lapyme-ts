@@ -94,6 +94,9 @@ export type ApiProductUpdateRequest = {
   description?: string | null | undefined;
   categoryId?: string | null | undefined;
   visibility?: ApiProductUpdateRequestVisibility | undefined;
+  /**
+   * External product image URL reference. La Pyme displays it best effort and does not copy, ingest, or host the image.
+   */
   imageUrl?: string | null | undefined;
   productType?: ApiSharedEnumff49232140 | undefined;
   sku?: string | undefined;
