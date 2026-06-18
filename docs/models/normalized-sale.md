@@ -36,47 +36,25 @@ let value: NormalizedSale = {
   discountType: "percentage",
   discountValue: 2374.99,
   discountAmount: 770571,
-  roundingAdjustment: 689920,
-  balance: 5855.06,
-  isFullAmountPending: true,
-  items: [
-    {
-      productId: null,
-      productName: "<value>",
-      sku: "<value>",
-      warehouseId: "2392c445-87a6-4229-b269-771398918bad",
-      name: null,
-      productType: "product",
-      quantity: 3573.95,
-      unitPrice: 924256,
-      unitCost: 846151,
-      taxRateId: 729577,
-      isExempt: false,
-      discount: {
-        type: "amount",
-        value: 4123.41,
-      },
-      notes: "<value>",
-      accountId: "881640d5-c632-4db8-a5bc-cac8e03d6e07",
-      lineType: "product",
-      costCenter1Id: "65aa4edd-6cfc-4537-ab24-65a89c340d8a",
-      costCenter2Id: "3f7c6b42-f980-4dc7-9ea6-6f7ed547755f",
-      costCenter3Id: "4688b6fe-bde5-422e-a613-04af4eed51f8",
-    },
-  ],
+  balance: 6899.2,
+  isFullAmountPending: false,
+  items: [],
   paymentMethods: [
     {
-      methodId: "ad149a58-f75a-4c6e-8bfa-6f8b9d218c82",
-      amount: 901329,
-      description:
-        "coincide hm onto depot doubtfully excitedly square aha scary plugin",
+      methodId: "22fae006-673b-46b7-ba0d-81906929677c",
+      amount: 652697,
+      description: "daddy over idle provided like caring",
       reference: "<value>",
-      feeAmount: 761591,
-      terminalId: null,
+      feeAmount: 338128,
+      terminalId: "b3f8514d-ae75-4282-ab11-e2def058a36b",
       cardBatchNumber: "<value>",
       cardCouponNumber: "<value>",
       cardInstallmentPlanCode: "<value>",
       cardBrand: "<value>",
+      cashSource: {
+        type: "register",
+        id: "79ad6fcb-9e46-43c1-859b-c2fed437ee52",
+      },
     },
   ],
 };
@@ -116,8 +94,7 @@ let value: NormalizedSale = {
 | `discountType`                                                                 | [models.ApiSharedEnum539fdceccc](../models/api-shared-enum539fdceccc.md)       | :heavy_check_mark:                                                             | N/A                                                                            |
 | `discountValue`                                                                | *number*                                                                       | :heavy_check_mark:                                                             | N/A                                                                            |
 | `discountAmount`                                                               | *number*                                                                       | :heavy_check_mark:                                                             | N/A                                                                            |
-| `roundingAdjustment`                                                           | *number*                                                                       | :heavy_check_mark:                                                             | N/A                                                                            |
 | `balance`                                                                      | *number*                                                                       | :heavy_check_mark:                                                             | N/A                                                                            |
 | `isFullAmountPending`                                                          | *boolean*                                                                      | :heavy_check_mark:                                                             | N/A                                                                            |
 | `items`                                                                        | [models.ApiSharedObject55e2bcf4a7](../models/api-shared-object55e2bcf4a7.md)[] | :heavy_check_mark:                                                             | N/A                                                                            |
-| `paymentMethods`                                                               | [models.ApiSharedObject43ed7be04f](../models/api-shared-object43ed7be04f.md)[] | :heavy_check_mark:                                                             | N/A                                                                            |
+| `paymentMethods`                                                               | [models.ApiSharedObjecte4ddc41067](../models/api-shared-objecte4ddc41067.md)[] | :heavy_check_mark:                                                             | N/A                                                                            |

@@ -9,7 +9,7 @@ import { ClosedEnum } from "../types/enums.js";
 import { smartUnion } from "../types/smart-union.js";
 
 /**
- * Obligatorio solo cuando se piden métricas derivadas de ventas: endingInventoryUnits, inventoryUnitsSold, inventoryUnitsSoldPerDay, daysOfInventoryRemaining.
+ * Obligatorio cuando se piden métricas históricas de inventario, métricas derivadas de ventas o métricas de movimientos.
  */
 export type InventoryReportRequestPeriod = {
   /**
@@ -23,6 +23,14 @@ export type InventoryReportRequestPeriod = {
 };
 
 export const InventoryReportRequestDimensionEnum = {
+  Date: "date",
+  Week: "week",
+  WeekOfYear: "weekOfYear",
+  Month: "month",
+  MonthOfYear: "monthOfYear",
+  DayOfWeek: "dayOfWeek",
+  Year: "year",
+  Quarter: "quarter",
   Product: "product",
   ProductName: "productName",
   Variant: "variant",
@@ -49,7 +57,12 @@ export const InventoryReportRequestMeasure = {
   StockIncoming: "stockIncoming",
   StockValueCost: "stockValueCost",
   StockValueRetail: "stockValueRetail",
+  StartingInventoryUnits: "startingInventoryUnits",
   EndingInventoryUnits: "endingInventoryUnits",
+  EndingInventoryValue: "endingInventoryValue",
+  EndingInventoryRetailValue: "endingInventoryRetailValue",
+  DaysInStock: "daysInStock",
+  DaysOutOfStock: "daysOutOfStock",
   InventoryUnitsSold: "inventoryUnitsSold",
   InventoryUnitsSoldPerDay: "inventoryUnitsSoldPerDay",
   DaysOfInventoryRemaining: "daysOfInventoryRemaining",
@@ -67,7 +80,7 @@ export type InventoryReportRequestMeasure = ClosedEnum<
 >;
 
 /**
- * Filtros por dimensión. Cada clave debe ser una dimensión filtrable para la fuente. También acepta product_metafield:<key> para campos personalizados select de producto. El valor es un array de IDs o valores a incluir.
+ * Filtros por dimensión. Cada clave debe ser una dimensión filtrable para la fuente. También acepta product_metafield:<key> para campos personalizados select de producto y contact_metafield:<key> para campos personalizados select de contacto cuando la fuente lo soporta. El valor es un array de IDs o valores a incluir.
  */
 export type InventoryReportRequestDimensionFilters = {
   product?: Array<string> | undefined;
@@ -79,6 +92,8 @@ export type InventoryReportRequestDimensionFilters = {
   productType?: Array<string> | undefined;
   warehouse?: Array<string> | undefined;
   currency?: Array<string> | undefined;
+  productStatus?: Array<string> | undefined;
+  warehouseStatus?: Array<string> | undefined;
   saleLineType?: Array<string> | undefined;
 };
 
@@ -99,7 +114,7 @@ export type InventoryReportRequestDateBasis = ClosedEnum<
 export type InventoryReportRequest = {
   source: "inventory";
   /**
-   * Obligatorio solo cuando se piden métricas derivadas de ventas: endingInventoryUnits, inventoryUnitsSold, inventoryUnitsSoldPerDay, daysOfInventoryRemaining.
+   * Obligatorio cuando se piden métricas históricas de inventario, métricas derivadas de ventas o métricas de movimientos.
    */
   period?: InventoryReportRequestPeriod | undefined;
   /**
@@ -107,11 +122,11 @@ export type InventoryReportRequest = {
    */
   dimensions?: Array<InventoryReportRequestDimensionEnum | string> | undefined;
   /**
-   * Measures to calculate. Snapshot measures (stockOnHand, stockAvailable, etc.) do not require period. Sales-derived measures do require it.
+   * Measures to calculate. Inventory analytics measures are period-based; use endingInventoryUnits for the inventory balance at the end of the requested period.
    */
   measures: Array<InventoryReportRequestMeasure>;
   /**
-   * Filtros por dimensión. Cada clave debe ser una dimensión filtrable para la fuente. También acepta product_metafield:<key> para campos personalizados select de producto. El valor es un array de IDs o valores a incluir.
+   * Filtros por dimensión. Cada clave debe ser una dimensión filtrable para la fuente. También acepta product_metafield:<key> para campos personalizados select de producto y contact_metafield:<key> para campos personalizados select de contacto cuando la fuente lo soporta. El valor es un array de IDs o valores a incluir.
    */
   dimensionFilters?: InventoryReportRequestDimensionFilters | undefined;
   /**
@@ -206,6 +221,8 @@ export type InventoryReportRequestDimensionFilters$Outbound = {
   product_type?: Array<string> | undefined;
   warehouse?: Array<string> | undefined;
   currency?: Array<string> | undefined;
+  product_status?: Array<string> | undefined;
+  warehouse_status?: Array<string> | undefined;
   sale_line_type?: Array<string> | undefined;
 };
 
@@ -225,6 +242,8 @@ export const InventoryReportRequestDimensionFilters$outboundSchema:
       productType: z.optional(z.array(z.string())),
       warehouse: z.optional(z.array(z.string())),
       currency: z.optional(z.array(z.string())),
+      productStatus: z.optional(z.array(z.string())),
+      warehouseStatus: z.optional(z.array(z.string())),
       saleLineType: z.optional(z.array(z.string())),
     }),
     z.transform((v) => {
@@ -233,6 +252,8 @@ export const InventoryReportRequestDimensionFilters$outboundSchema:
         variantSku: "variant_sku",
         defaultSupplierName: "default_supplier_name",
         productType: "product_type",
+        productStatus: "product_status",
+        warehouseStatus: "warehouse_status",
         saleLineType: "sale_line_type",
       });
     }),
