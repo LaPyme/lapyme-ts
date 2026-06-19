@@ -6,14 +6,13 @@
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
 import { ClosedEnum } from "../types/enums.js";
-import { smartUnion } from "../types/smart-union.js";
 import {
   ReportPeriod,
   ReportPeriod$Outbound,
   ReportPeriod$outboundSchema,
 } from "./report-period.js";
 
-export const PurchasesReportRequestDimensionEnum = {
+export const PurchasesReportRequestDimension = {
   Date: "date",
   Week: "week",
   Month: "month",
@@ -34,13 +33,9 @@ export const PurchasesReportRequestDimensionEnum = {
   Currency: "currency",
   TaxRate: "taxRate",
 } as const;
-export type PurchasesReportRequestDimensionEnum = ClosedEnum<
-  typeof PurchasesReportRequestDimensionEnum
+export type PurchasesReportRequestDimension = ClosedEnum<
+  typeof PurchasesReportRequestDimension
 >;
-
-export type PurchasesReportRequestDimensionUnion =
-  | PurchasesReportRequestDimensionEnum
-  | string;
 
 export const PurchasesReportRequestMeasure = {
   PurchaseTotal: "purchaseTotal",
@@ -58,7 +53,7 @@ export type PurchasesReportRequestMeasure = ClosedEnum<
 >;
 
 /**
- * Filtros por dimensión. Cada clave debe ser una dimensión filtrable para la fuente. También acepta product_metafield:<key> para campos personalizados select de producto. El valor es un array de IDs o valores a incluir.
+ * Filtros por dimensión. Cada clave debe ser una dimensión filtrable para la fuente. También acepta product_metafield:<key> para campos personalizados select de producto y contact_metafield:<key> para campos personalizados select de contacto cuando la fuente lo soporta. El valor es un array de IDs o valores a incluir.
  */
 export type PurchasesReportRequestDimensionFilters = {
   supplier?: Array<string> | undefined;
@@ -74,21 +69,24 @@ export type PurchasesReportRequestDimensionFilters = {
   voucherType?: Array<string> | undefined;
   currency?: Array<string> | undefined;
   taxRate?: Array<string> | undefined;
+  supplierStatus?: Array<string> | undefined;
+  productStatus?: Array<string> | undefined;
+  warehouseStatus?: Array<string> | undefined;
 };
 
 export type PurchasesReportRequest = {
   source: "purchases";
   period: ReportPeriod;
   /**
-   * Dimensiones de agrupación. Máximo 4. Acepta product_metafield:<key> para campos personalizados select de producto.
+   * Dimensiones de agrupación. Máximo 4. Acepta product_metafield:<key> para campos personalizados select de producto y contact_metafield:<key> para campos personalizados select de contacto.
    */
-  dimensions?: Array<PurchasesReportRequestDimensionEnum | string> | undefined;
+  dimensions?: Array<any> | undefined;
   /**
    * Medidas a calcular. Al menos una.
    */
   measures: Array<PurchasesReportRequestMeasure>;
   /**
-   * Filtros por dimensión. Cada clave debe ser una dimensión filtrable para la fuente. También acepta product_metafield:<key> para campos personalizados select de producto. El valor es un array de IDs o valores a incluir.
+   * Filtros por dimensión. Cada clave debe ser una dimensión filtrable para la fuente. También acepta product_metafield:<key> para campos personalizados select de producto y contact_metafield:<key> para campos personalizados select de contacto cuando la fuente lo soporta. El valor es un array de IDs o valores a incluir.
    */
   dimensionFilters?: PurchasesReportRequestDimensionFilters | undefined;
   /**
@@ -98,31 +96,9 @@ export type PurchasesReportRequest = {
 };
 
 /** @internal */
-export const PurchasesReportRequestDimensionEnum$outboundSchema: z.ZodMiniEnum<
-  typeof PurchasesReportRequestDimensionEnum
-> = z.enum(PurchasesReportRequestDimensionEnum);
-
-/** @internal */
-export type PurchasesReportRequestDimensionUnion$Outbound = string | string;
-
-/** @internal */
-export const PurchasesReportRequestDimensionUnion$outboundSchema: z.ZodMiniType<
-  PurchasesReportRequestDimensionUnion$Outbound,
-  PurchasesReportRequestDimensionUnion
-> = smartUnion([
-  PurchasesReportRequestDimensionEnum$outboundSchema,
-  z.string(),
-]);
-
-export function purchasesReportRequestDimensionUnionToJSON(
-  purchasesReportRequestDimensionUnion: PurchasesReportRequestDimensionUnion,
-): string {
-  return JSON.stringify(
-    PurchasesReportRequestDimensionUnion$outboundSchema.parse(
-      purchasesReportRequestDimensionUnion,
-    ),
-  );
-}
+export const PurchasesReportRequestDimension$outboundSchema: z.ZodMiniEnum<
+  typeof PurchasesReportRequestDimension
+> = z.enum(PurchasesReportRequestDimension);
 
 /** @internal */
 export const PurchasesReportRequestMeasure$outboundSchema: z.ZodMiniEnum<
@@ -144,6 +120,9 @@ export type PurchasesReportRequestDimensionFilters$Outbound = {
   voucher_type?: Array<string> | undefined;
   currency?: Array<string> | undefined;
   tax_rate?: Array<string> | undefined;
+  supplier_status?: Array<string> | undefined;
+  product_status?: Array<string> | undefined;
+  warehouse_status?: Array<string> | undefined;
 };
 
 /** @internal */
@@ -166,6 +145,9 @@ export const PurchasesReportRequestDimensionFilters$outboundSchema:
       voucherType: z.optional(z.array(z.string())),
       currency: z.optional(z.array(z.string())),
       taxRate: z.optional(z.array(z.string())),
+      supplierStatus: z.optional(z.array(z.string())),
+      productStatus: z.optional(z.array(z.string())),
+      warehouseStatus: z.optional(z.array(z.string())),
     }),
     z.transform((v) => {
       return remap$(v, {
@@ -176,6 +158,9 @@ export const PurchasesReportRequestDimensionFilters$outboundSchema:
         productType: "product_type",
         voucherType: "voucher_type",
         taxRate: "tax_rate",
+        supplierStatus: "supplier_status",
+        productStatus: "product_status",
+        warehouseStatus: "warehouse_status",
       });
     }),
   );
@@ -195,7 +180,7 @@ export function purchasesReportRequestDimensionFiltersToJSON(
 export type PurchasesReportRequest$Outbound = {
   source: "purchases";
   period: ReportPeriod$Outbound;
-  dimensions?: Array<string | string> | undefined;
+  dimensions?: Array<any> | undefined;
   measures: Array<string>;
   dimension_filters?:
     | PurchasesReportRequestDimensionFilters$Outbound
@@ -211,14 +196,7 @@ export const PurchasesReportRequest$outboundSchema: z.ZodMiniType<
   z.object({
     source: z.literal("purchases"),
     period: ReportPeriod$outboundSchema,
-    dimensions: z.optional(
-      z.array(
-        smartUnion([
-          PurchasesReportRequestDimensionEnum$outboundSchema,
-          z.string(),
-        ]),
-      ),
-    ),
+    dimensions: z.optional(z.array(z.any())),
     measures: z.array(PurchasesReportRequestMeasure$outboundSchema),
     dimensionFilters: z.optional(
       z.lazy(() => PurchasesReportRequestDimensionFilters$outboundSchema),
