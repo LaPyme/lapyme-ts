@@ -6,13 +6,23 @@ Public API operations for La Pyme integrations.
 
 ### Available Operations
 
+* [deleteApiPriceList](#deleteapipricelist) - Eliminar lista de precios
+* [updateApiPurchase](#updateapipurchase) - Actualizar compra
+* [deleteApiPurchase](#deleteapipurchase) - Eliminar compra
+* [updateApiPurchaseOrder](#updateapipurchaseorder) - Actualizar orden de compra
+* [deleteApiDraftPurchaseOrder](#deleteapidraftpurchaseorder) - Eliminar orden de compra en borrador
 * [archiveApiOrder](#archiveapiorder) - Archivar pedido
 * [updateApiOrderPreparation](#updateapiorderpreparation) - Actualizar preparación pendiente
 * [createApiOrderPreparation](#createapiorderpreparation) - Marcar líneas como preparadas
 * [cancelApiOrderPreparation](#cancelapiorderpreparation) - Cancelar preparación
 * [createApiOrderInvoice](#createapiorderinvoice) - Facturar pedido
+* [updateApiSupplierPayment](#updateapisupplierpayment) - Actualizar pago a proveedor
+* [listApiCashSources](#listapicashsources) - Listar cajas para efectivo
 * [listApiAccountingAccounts](#listapiaccountingaccounts) - Listar cuentas contables
+* [createApiAccountingAccount](#createapiaccountingaccount) - Crear cuenta contable
 * [getApiAccountingAccount](#getapiaccountingaccount) - Obtener cuenta contable
+* [updateApiAccountingAccount](#updateapiaccountingaccount) - Actualizar cuenta contable
+* [deactivateApiAccountingAccount](#deactivateapiaccountingaccount) - Desactivar cuenta contable
 * [listApiCostCenterDimensions](#listapicostcenterdimensions) - Listar dimensiones de centros de costo
 * [listApiCostCenters](#listapicostcenters) - Listar centros de costo
 * [getApiTrialBalance](#getapitrialbalance) - Obtener sumas y saldos
@@ -28,6 +38,414 @@ Public API operations for La Pyme integrations.
 * [updateApiManualJournalEntry](#updateapimanualjournalentry) - Reemplazar asiento manual
 * [deleteApiManualJournalEntry](#deleteapimanualjournalentry) - Eliminar asiento manual
 * [getApiAccountLedger](#getapiaccountledger) - Obtener mayor de cuenta
+
+## deleteApiPriceList
+
+Elimina una lista de precios existente.
+
+### Example Usage
+
+<!-- UsageSnippet language="typescript" operationID="deleteApiPriceList" method="delete" path="/api/v1/price-lists/{price_list_id}" -->
+```typescript
+import { Lapyme } from "lapyme";
+
+const lapyme = new Lapyme({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const result = await lapyme.api.deleteApiPriceList({
+    priceListId: "730cd697-93ab-4b01-a8c5-1df02b7f0abe",
+  });
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { LapymeCore } from "lapyme/core.js";
+import { apiDeleteAPIPriceList } from "lapyme/funcs/api-delete-api-price-list.js";
+
+// Use `LapymeCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const lapyme = new LapymeCore({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const res = await apiDeleteAPIPriceList(lapyme, {
+    priceListId: "730cd697-93ab-4b01-a8c5-1df02b7f0abe",
+  });
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("apiDeleteAPIPriceList failed:", res.error);
+  }
+}
+
+run();
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `request`                                                                                                                                                                      | [operations.DeleteApiPriceListRequest](../../models/operations/delete-api-price-list-request.md)                                                                               | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
+| `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
+
+### Response
+
+**Promise\<[operations.DeleteApiPriceListResponse](../../models/operations/delete-api-price-list-response.md)\>**
+
+### Errors
+
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| errors.ApiErrorEnvelope   | 400, 401, 403, 404, 409   | application/json          |
+| errors.ApiErrorEnvelope   | 429                       | application/json          |
+| errors.ApiErrorEnvelope   | 500                       | application/json          |
+| errors.LapymeDefaultError | 4XX, 5XX                  | \*/\*                     |
+
+## updateApiPurchase
+
+Actualiza una compra existente y devuelve el detalle persistido. El campo items es requerido y reemplaza los renglones de la compra. Requiere Idempotency-Key.
+
+### Example Usage
+
+<!-- UsageSnippet language="typescript" operationID="updateApiPurchase" method="put" path="/api/v1/purchases/{purchase_id}" example="default" -->
+```typescript
+import { Lapyme } from "lapyme";
+
+const lapyme = new Lapyme({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const result = await lapyme.api.updateApiPurchase({
+    purchaseId: "1cab93bb-81c9-42ed-87e9-0ff009a84e5c",
+    idempotencyKey: "<value>",
+    body: {
+      voucherType: 440083,
+      items: [],
+      currency: "PES",
+    },
+  });
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { LapymeCore } from "lapyme/core.js";
+import { apiUpdateAPIPurchase } from "lapyme/funcs/api-update-api-purchase.js";
+
+// Use `LapymeCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const lapyme = new LapymeCore({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const res = await apiUpdateAPIPurchase(lapyme, {
+    purchaseId: "1cab93bb-81c9-42ed-87e9-0ff009a84e5c",
+    idempotencyKey: "<value>",
+    body: {
+      voucherType: 440083,
+      items: [],
+      currency: "PES",
+    },
+  });
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("apiUpdateAPIPurchase failed:", res.error);
+  }
+}
+
+run();
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `request`                                                                                                                                                                      | [operations.UpdateApiPurchaseRequest](../../models/operations/update-api-purchase-request.md)                                                                                  | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
+| `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
+
+### Response
+
+**Promise\<[operations.UpdateApiPurchaseResponse](../../models/operations/update-api-purchase-response.md)\>**
+
+### Errors
+
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| errors.ApiErrorEnvelope   | 400, 401, 403, 404, 412   | application/json          |
+| errors.ApiErrorEnvelope   | 429                       | application/json          |
+| errors.ApiErrorEnvelope   | 500                       | application/json          |
+| errors.LapymeDefaultError | 4XX, 5XX                  | \*/\*                     |
+
+## deleteApiPurchase
+
+Elimina una compra existente. Puede revertir stock directo con undo_stock=true. Requiere Idempotency-Key.
+
+### Example Usage
+
+<!-- UsageSnippet language="typescript" operationID="deleteApiPurchase" method="delete" path="/api/v1/purchases/{purchase_id}" -->
+```typescript
+import { Lapyme } from "lapyme";
+
+const lapyme = new Lapyme({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const result = await lapyme.api.deleteApiPurchase({
+    purchaseId: "898a8b09-2bf6-4b8a-aa8e-29b9911ee29b",
+    idempotencyKey: "<value>",
+  });
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { LapymeCore } from "lapyme/core.js";
+import { apiDeleteAPIPurchase } from "lapyme/funcs/api-delete-api-purchase.js";
+
+// Use `LapymeCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const lapyme = new LapymeCore({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const res = await apiDeleteAPIPurchase(lapyme, {
+    purchaseId: "898a8b09-2bf6-4b8a-aa8e-29b9911ee29b",
+    idempotencyKey: "<value>",
+  });
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("apiDeleteAPIPurchase failed:", res.error);
+  }
+}
+
+run();
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `request`                                                                                                                                                                      | [operations.DeleteApiPurchaseRequest](../../models/operations/delete-api-purchase-request.md)                                                                                  | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
+| `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
+
+### Response
+
+**Promise\<[operations.DeleteApiPurchaseResponse](../../models/operations/delete-api-purchase-response.md)\>**
+
+### Errors
+
+| Error Type                   | Status Code                  | Content Type                 |
+| ---------------------------- | ---------------------------- | ---------------------------- |
+| errors.ApiErrorEnvelope      | 400, 401, 403, 404, 409, 412 | application/json             |
+| errors.ApiErrorEnvelope      | 429                          | application/json             |
+| errors.ApiErrorEnvelope      | 500                          | application/json             |
+| errors.LapymeDefaultError    | 4XX, 5XX                     | \*/\*                        |
+
+## updateApiPurchaseOrder
+
+Actualiza una orden de compra editable y devuelve el detalle persistido. Requiere Idempotency-Key.
+
+### Example Usage
+
+<!-- UsageSnippet language="typescript" operationID="updateApiPurchaseOrder" method="put" path="/api/v1/purchase-orders/{purchase_order_id}" example="default" -->
+```typescript
+import { Lapyme } from "lapyme";
+
+const lapyme = new Lapyme({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const result = await lapyme.api.updateApiPurchaseOrder({
+    purchaseOrderId: "7eb68c86-0feb-4658-ad76-368faac69ca8",
+    idempotencyKey: "<value>",
+    body: {
+      supplierId: "d5508f2b-96f7-48a6-9348-df030c952bdb",
+      orderDate: new Date("2026-07-13"),
+      warehouseId: "82ff84a2-5dee-4704-a7a5-60fdbdca024b",
+      items: [],
+    },
+  });
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { LapymeCore } from "lapyme/core.js";
+import { apiUpdateAPIPurchaseOrder } from "lapyme/funcs/api-update-api-purchase-order.js";
+
+// Use `LapymeCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const lapyme = new LapymeCore({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const res = await apiUpdateAPIPurchaseOrder(lapyme, {
+    purchaseOrderId: "7eb68c86-0feb-4658-ad76-368faac69ca8",
+    idempotencyKey: "<value>",
+    body: {
+      supplierId: "d5508f2b-96f7-48a6-9348-df030c952bdb",
+      orderDate: new Date("2026-07-13"),
+      warehouseId: "82ff84a2-5dee-4704-a7a5-60fdbdca024b",
+      items: [],
+    },
+  });
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("apiUpdateAPIPurchaseOrder failed:", res.error);
+  }
+}
+
+run();
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `request`                                                                                                                                                                      | [operations.UpdateApiPurchaseOrderRequest](../../models/operations/update-api-purchase-order-request.md)                                                                       | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
+| `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
+
+### Response
+
+**Promise\<[operations.UpdateApiPurchaseOrderResponse](../../models/operations/update-api-purchase-order-response.md)\>**
+
+### Errors
+
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| errors.ApiErrorEnvelope   | 400, 401, 403, 404, 409   | application/json          |
+| errors.ApiErrorEnvelope   | 429                       | application/json          |
+| errors.ApiErrorEnvelope   | 500                       | application/json          |
+| errors.LapymeDefaultError | 4XX, 5XX                  | \*/\*                     |
+
+## deleteApiDraftPurchaseOrder
+
+Elimina una orden de compra solo si todavía está en estado borrador.
+
+### Example Usage
+
+<!-- UsageSnippet language="typescript" operationID="deleteApiDraftPurchaseOrder" method="delete" path="/api/v1/purchase-orders/{purchase_order_id}" -->
+```typescript
+import { Lapyme } from "lapyme";
+
+const lapyme = new Lapyme({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const result = await lapyme.api.deleteApiDraftPurchaseOrder({
+    purchaseOrderId: "6a82f6f9-68d1-4c34-be58-bfb1d9669608",
+  });
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { LapymeCore } from "lapyme/core.js";
+import { apiDeleteAPIDraftPurchaseOrder } from "lapyme/funcs/api-delete-api-draft-purchase-order.js";
+
+// Use `LapymeCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const lapyme = new LapymeCore({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const res = await apiDeleteAPIDraftPurchaseOrder(lapyme, {
+    purchaseOrderId: "6a82f6f9-68d1-4c34-be58-bfb1d9669608",
+  });
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("apiDeleteAPIDraftPurchaseOrder failed:", res.error);
+  }
+}
+
+run();
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `request`                                                                                                                                                                      | [operations.DeleteApiDraftPurchaseOrderRequest](../../models/operations/delete-api-draft-purchase-order-request.md)                                                            | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
+| `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
+
+### Response
+
+**Promise\<[operations.DeleteApiDraftPurchaseOrderResponse](../../models/operations/delete-api-draft-purchase-order-response.md)\>**
+
+### Errors
+
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| errors.ApiErrorEnvelope   | 400, 401, 403, 404, 409   | application/json          |
+| errors.ApiErrorEnvelope   | 429                       | application/json          |
+| errors.ApiErrorEnvelope   | 500                       | application/json          |
+| errors.LapymeDefaultError | 4XX, 5XX                  | \*/\*                     |
 
 ## archiveApiOrder
 
@@ -445,6 +863,172 @@ run();
 | errors.ApiErrorEnvelope   | 500                       | application/json          |
 | errors.LapymeDefaultError | 4XX, 5XX                  | \*/\*                     |
 
+## updateApiSupplierPayment
+
+Actualiza un pago a proveedor existente y devuelve el detalle persistido. Requiere Idempotency-Key.
+
+### Example Usage
+
+<!-- UsageSnippet language="typescript" operationID="updateApiSupplierPayment" method="put" path="/api/v1/supplier-payments/{payment_id}" example="default" -->
+```typescript
+import { Lapyme } from "lapyme";
+
+const lapyme = new Lapyme({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const result = await lapyme.api.updateApiSupplierPayment({
+    paymentId: "accd5328-bd4d-4d27-9866-dfd9271f5bf2",
+    idempotencyKey: "<value>",
+    body: {
+      supplierId: "140df7d7-72c8-4a35-b9f8-d1738a83cf72",
+      pointOfSaleId: "8349c6d6-6c36-4dce-a21c-65e4ef288170",
+      paymentDate: "<value>",
+      currency: "DOL",
+      totalAmount: 955733,
+      splits: [],
+    },
+  });
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { LapymeCore } from "lapyme/core.js";
+import { apiUpdateAPISupplierPayment } from "lapyme/funcs/api-update-api-supplier-payment.js";
+
+// Use `LapymeCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const lapyme = new LapymeCore({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const res = await apiUpdateAPISupplierPayment(lapyme, {
+    paymentId: "accd5328-bd4d-4d27-9866-dfd9271f5bf2",
+    idempotencyKey: "<value>",
+    body: {
+      supplierId: "140df7d7-72c8-4a35-b9f8-d1738a83cf72",
+      pointOfSaleId: "8349c6d6-6c36-4dce-a21c-65e4ef288170",
+      paymentDate: "<value>",
+      currency: "DOL",
+      totalAmount: 955733,
+      splits: [],
+    },
+  });
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("apiUpdateAPISupplierPayment failed:", res.error);
+  }
+}
+
+run();
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `request`                                                                                                                                                                      | [operations.UpdateApiSupplierPaymentRequest](../../models/operations/update-api-supplier-payment-request.md)                                                                   | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
+| `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
+
+### Response
+
+**Promise\<[operations.UpdateApiSupplierPaymentResponse](../../models/operations/update-api-supplier-payment-response.md)\>**
+
+### Errors
+
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| errors.ApiErrorEnvelope   | 400, 401, 403, 404, 409   | application/json          |
+| errors.ApiErrorEnvelope   | 429                       | application/json          |
+| errors.ApiErrorEnvelope   | 500                       | application/json          |
+| errors.LapymeDefaultError | 4XX, 5XX                  | \*/\*                     |
+
+## listApiCashSources
+
+Lista las cajas operativas y cajas fuertes accesibles para registrar pagos en efectivo en ventas.
+
+### Example Usage
+
+<!-- UsageSnippet language="typescript" operationID="listApiCashSources" method="get" path="/api/v1/cash-sources" example="cash_sources" -->
+```typescript
+import { Lapyme } from "lapyme";
+
+const lapyme = new Lapyme({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const result = await lapyme.api.listApiCashSources({});
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { LapymeCore } from "lapyme/core.js";
+import { apiListAPICashSources } from "lapyme/funcs/api-list-api-cash-sources.js";
+
+// Use `LapymeCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const lapyme = new LapymeCore({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const res = await apiListAPICashSources(lapyme, {});
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("apiListAPICashSources failed:", res.error);
+  }
+}
+
+run();
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `request`                                                                                                                                                                      | [operations.ListApiCashSourcesRequest](../../models/operations/list-api-cash-sources-request.md)                                                                               | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
+| `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
+
+### Response
+
+**Promise\<[operations.ListApiCashSourcesResponse](../../models/operations/list-api-cash-sources-response.md)\>**
+
+### Errors
+
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| errors.ApiErrorEnvelope   | 400, 401, 403             | application/json          |
+| errors.ApiErrorEnvelope   | 429                       | application/json          |
+| errors.ApiErrorEnvelope   | 500                       | application/json          |
+| errors.LapymeDefaultError | 4XX, 5XX                  | \*/\*                     |
+
 ## listApiAccountingAccounts
 
 Lista el plan de cuentas disponible para asientos y reportes contables.
@@ -513,6 +1097,96 @@ run();
 | Error Type                | Status Code               | Content Type              |
 | ------------------------- | ------------------------- | ------------------------- |
 | errors.ApiErrorEnvelope   | 400, 401, 403             | application/json          |
+| errors.ApiErrorEnvelope   | 429                       | application/json          |
+| errors.ApiErrorEnvelope   | 500                       | application/json          |
+| errors.LapymeDefaultError | 4XX, 5XX                  | \*/\*                     |
+
+## createApiAccountingAccount
+
+Crea una cuenta contable y permite configurar system_role e is_inflation_adjustable en el recurso cuenta.
+
+### Example Usage
+
+<!-- UsageSnippet language="typescript" operationID="createApiAccountingAccount" method="post" path="/api/v1/accounting/accounts" example="default" -->
+```typescript
+import { Lapyme } from "lapyme";
+
+const lapyme = new Lapyme({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const result = await lapyme.api.createApiAccountingAccount({
+    idempotencyKey: "<value>",
+    body: {
+      name: "<value>",
+      type: "revenue",
+      parentId: null,
+      isPostable: true,
+      isActive: false,
+    },
+  });
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { LapymeCore } from "lapyme/core.js";
+import { apiCreateAPIAccountingAccount } from "lapyme/funcs/api-create-api-accounting-account.js";
+
+// Use `LapymeCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const lapyme = new LapymeCore({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const res = await apiCreateAPIAccountingAccount(lapyme, {
+    idempotencyKey: "<value>",
+    body: {
+      name: "<value>",
+      type: "revenue",
+      parentId: null,
+      isPostable: true,
+      isActive: false,
+    },
+  });
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("apiCreateAPIAccountingAccount failed:", res.error);
+  }
+}
+
+run();
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `request`                                                                                                                                                                      | [operations.CreateApiAccountingAccountRequest](../../models/operations/create-api-accounting-account-request.md)                                                               | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
+| `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
+
+### Response
+
+**Promise\<[operations.CreateApiAccountingAccountResponse](../../models/operations/create-api-accounting-account-response.md)\>**
+
+### Errors
+
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| errors.ApiErrorEnvelope   | 400, 401, 403, 409        | application/json          |
 | errors.ApiErrorEnvelope   | 429                       | application/json          |
 | errors.ApiErrorEnvelope   | 500                       | application/json          |
 | errors.LapymeDefaultError | 4XX, 5XX                  | \*/\*                     |
@@ -589,6 +1263,164 @@ run();
 | Error Type                | Status Code               | Content Type              |
 | ------------------------- | ------------------------- | ------------------------- |
 | errors.ApiErrorEnvelope   | 400, 401, 403, 404        | application/json          |
+| errors.ApiErrorEnvelope   | 429                       | application/json          |
+| errors.ApiErrorEnvelope   | 500                       | application/json          |
+| errors.LapymeDefaultError | 4XX, 5XX                  | \*/\*                     |
+
+## updateApiAccountingAccount
+
+Actualiza parcialmente metadatos y configuración de una cuenta contable, incluyendo system_role e is_inflation_adjustable.
+
+### Example Usage
+
+<!-- UsageSnippet language="typescript" operationID="updateApiAccountingAccount" method="patch" path="/api/v1/accounting/accounts/{account_id}" example="default" -->
+```typescript
+import { Lapyme } from "lapyme";
+
+const lapyme = new Lapyme({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const result = await lapyme.api.updateApiAccountingAccount({
+    accountId: "fc11b53a-ea87-4058-8142-357d345db1fe",
+    idempotencyKey: "<value>",
+    body: {},
+  });
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { LapymeCore } from "lapyme/core.js";
+import { apiUpdateAPIAccountingAccount } from "lapyme/funcs/api-update-api-accounting-account.js";
+
+// Use `LapymeCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const lapyme = new LapymeCore({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const res = await apiUpdateAPIAccountingAccount(lapyme, {
+    accountId: "fc11b53a-ea87-4058-8142-357d345db1fe",
+    idempotencyKey: "<value>",
+    body: {},
+  });
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("apiUpdateAPIAccountingAccount failed:", res.error);
+  }
+}
+
+run();
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `request`                                                                                                                                                                      | [operations.UpdateApiAccountingAccountRequest](../../models/operations/update-api-accounting-account-request.md)                                                               | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
+| `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
+
+### Response
+
+**Promise\<[operations.UpdateApiAccountingAccountResponse](../../models/operations/update-api-accounting-account-response.md)\>**
+
+### Errors
+
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| errors.ApiErrorEnvelope   | 400, 401, 403, 404, 409   | application/json          |
+| errors.ApiErrorEnvelope   | 429                       | application/json          |
+| errors.ApiErrorEnvelope   | 500                       | application/json          |
+| errors.LapymeDefaultError | 4XX, 5XX                  | \*/\*                     |
+
+## deactivateApiAccountingAccount
+
+Desactiva una cuenta contable sin borrar sus referencias históricas. Si la cuenta tenía system_role, el rol se limpia para mantener válida la configuración.
+
+### Example Usage
+
+<!-- UsageSnippet language="typescript" operationID="deactivateApiAccountingAccount" method="delete" path="/api/v1/accounting/accounts/{account_id}" -->
+```typescript
+import { Lapyme } from "lapyme";
+
+const lapyme = new Lapyme({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const result = await lapyme.api.deactivateApiAccountingAccount({
+    accountId: "856ec7ee-d67b-4144-add2-ea3edd692cb2",
+    idempotencyKey: "<value>",
+  });
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { LapymeCore } from "lapyme/core.js";
+import { apiDeactivateAPIAccountingAccount } from "lapyme/funcs/api-deactivate-api-accounting-account.js";
+
+// Use `LapymeCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const lapyme = new LapymeCore({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const res = await apiDeactivateAPIAccountingAccount(lapyme, {
+    accountId: "856ec7ee-d67b-4144-add2-ea3edd692cb2",
+    idempotencyKey: "<value>",
+  });
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("apiDeactivateAPIAccountingAccount failed:", res.error);
+  }
+}
+
+run();
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `request`                                                                                                                                                                      | [operations.DeactivateApiAccountingAccountRequest](../../models/operations/deactivate-api-accounting-account-request.md)                                                       | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
+| `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
+
+### Response
+
+**Promise\<[operations.DeactivateApiAccountingAccountResponse](../../models/operations/deactivate-api-accounting-account-response.md)\>**
+
+### Errors
+
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| errors.ApiErrorEnvelope   | 400, 401, 403, 404, 409   | application/json          |
 | errors.ApiErrorEnvelope   | 429                       | application/json          |
 | errors.ApiErrorEnvelope   | 500                       | application/json          |
 | errors.LapymeDefaultError | 4XX, 5XX                  | \*/\*                     |
@@ -824,7 +1656,7 @@ const lapyme = new Lapyme({
 });
 
 async function run() {
-  const result = await lapyme.api.getApiIncomeStatement();
+  const result = await lapyme.api.getApiIncomeStatement({});
 
   console.log(result);
 }
@@ -847,7 +1679,7 @@ const lapyme = new LapymeCore({
 });
 
 async function run() {
-  const res = await apiGetAPIIncomeStatement(lapyme);
+  const res = await apiGetAPIIncomeStatement(lapyme, {});
   if (res.ok) {
     const { value: result } = res;
     console.log(result);
@@ -896,7 +1728,7 @@ const lapyme = new Lapyme({
 });
 
 async function run() {
-  const result = await lapyme.api.getApiComparativeIncomeStatement();
+  const result = await lapyme.api.getApiComparativeIncomeStatement({});
 
   console.log(result);
 }
@@ -919,7 +1751,7 @@ const lapyme = new LapymeCore({
 });
 
 async function run() {
-  const res = await apiGetAPIComparativeIncomeStatement(lapyme);
+  const res = await apiGetAPIComparativeIncomeStatement(lapyme, {});
   if (res.ok) {
     const { value: result } = res;
     console.log(result);
@@ -1040,7 +1872,7 @@ const lapyme = new Lapyme({
 });
 
 async function run() {
-  const result = await lapyme.api.listApiSummarizedJournal();
+  const result = await lapyme.api.listApiSummarizedJournal({});
 
   console.log(result);
 }
@@ -1063,7 +1895,7 @@ const lapyme = new LapymeCore({
 });
 
 async function run() {
-  const res = await apiListAPISummarizedJournal(lapyme);
+  const res = await apiListAPISummarizedJournal(lapyme, {});
   if (res.ok) {
     const { value: result } = res;
     console.log(result);
