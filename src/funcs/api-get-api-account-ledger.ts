@@ -104,6 +104,9 @@ async function $do(
 
   const query = encodeFormQuery({
     "contact_id": payload.contact_id,
+    "cost_center_1_ids": payload.cost_center_1_ids,
+    "cost_center_2_ids": payload.cost_center_2_ids,
+    "cost_center_3_ids": payload.cost_center_3_ids,
     "cursor": payload.cursor,
     "date_from": payload.date_from,
     "date_to": payload.date_to,
