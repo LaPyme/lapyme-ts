@@ -18,15 +18,12 @@ let value: ApiSharedObjecte048f871c2 = {
   purchaseOrderItemId: "8da2ae63-0406-4bcd-8b22-8ccf5fd4fd20",
   vatCategory: null,
   product: {
-    id: "baa50ef9-3144-447c-8046-7ed9a72c4875",
+    id: "2329ff11-fd4d-42e8-a777-841a5af4a447",
     sku: "<value>",
     name: "<value>",
-    productType: "product",
+    productType: "combo",
   },
-  purchaseOrder: {
-    id: "451f1aff-4ff0-494e-bc56-8411ffc7f278",
-    formattedOrderNumber: "<value>",
-  },
+  purchaseOrder: null,
 };
 ```
 
