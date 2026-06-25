@@ -94,6 +94,9 @@ export type ApiProductUpdateRequest = {
   description?: string | null | undefined;
   categoryId?: string | null | undefined;
   visibility?: ApiProductUpdateRequestVisibility | undefined;
+  /**
+   * External product image URL reference. La Pyme displays it best effort and does not copy, ingest, or host the image.
+   */
   imageUrl?: string | null | undefined;
   productType?: ApiSharedEnumff49232140 | undefined;
   sku?: string | undefined;
@@ -101,8 +104,14 @@ export type ApiProductUpdateRequest = {
   unitOfMeasure?: ApiProductUpdateRequestUnitOfMeasure | undefined;
   currency?: ApiSharedEnum6cfb146157 | undefined;
   cost?: number | undefined;
+  /**
+   * Manual sale price in cents. Mutually exclusive with markup_percentage; send price for manual pricing or markup_percentage for markup pricing.
+   */
   price?: number | undefined;
   promotionalPrice?: number | null | undefined;
+  /**
+   * Markup percentage used to calculate the sale price from cost, tax, and organization rounding rules. Mutually exclusive with price; send null to switch back to manual pricing.
+   */
   markupPercentage?: number | null | undefined;
   taxRateId?: number | undefined;
   isExempt?: boolean | undefined;

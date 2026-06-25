@@ -7,21 +7,22 @@ import { ApiPurchaseTransactionSuccessResponseProjectedEffects } from "lapyme/mo
 
 let value: ApiPurchaseTransactionSuccessResponseProjectedEffects = {
   inventory: {
-    willReceiveProducts: false,
+    willReceiveProducts: true,
     willCreateReceipt: true,
-    willIncreaseDirectStock: true,
+    willIncreaseDirectStock: false,
     warehouseId: null,
-    productLineCount: 852377,
-    totalQuantity: 4391.22,
+    productLineCount: 361211,
+    totalQuantity: 3746.46,
     purchaseOrderIds: [
-      "b25acd09-88ef-40c1-87a2-e418ecd43c5e",
-      "376cb81f-dc3a-4a0c-a394-392b999e57d3",
+      "2a880da3-b1c3-42ea-b066-283d50d0fcf1",
+      "f5c6378e-0016-4416-bf0b-6e2cb0de1fd4",
+      "98388518-9910-410a-862b-388a43f37026",
     ],
   },
   accounting: {
     willCreateJournalEntry: false,
-    currency: "DOL",
-    exchangeRate: 5742.06,
+    currency: "PES",
+    exchangeRate: 8636.37,
   },
 };
 ```
