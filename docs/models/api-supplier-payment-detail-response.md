@@ -9,18 +9,18 @@ let value: ApiSupplierPaymentDetailResponse = {
   requestId: "<id>",
   data: {
     supplierPayment: {
-      id: "c0f7cbd9-3523-45b2-986a-d3df2cb86b1a",
+      id: "1f9267fe-f042-4713-9d87-6a08873f83ab",
       type: "supplier",
-      status: "active",
-      contactId: "77d392a7-1168-43de-9c41-fa1ad75d01f4",
+      status: "voided",
+      contactId: "dec371dd-2d7f-4c13-8f2c-72ddd171fe32",
       contactName: "<value>",
-      paymentNumber: 694729,
-      formattedPaymentNumber: null,
+      paymentNumber: 772889,
+      formattedPaymentNumber: "<value>",
       paymentDate: "<value>",
       currency: "PES",
-      totalAmount: 163801,
-      balance: 471858,
-      createdAt: new Date("2026-03-29T02:04:46.450Z"),
+      totalAmount: 958454,
+      balance: 509013,
+      createdAt: new Date("2024-12-27T13:40:31.877Z"),
       createdByName: "<value>",
     },
   },
@@ -29,7 +29,7 @@ let value: ApiSupplierPaymentDetailResponse = {
 
 ## Fields
 
-| Field                                                                                                 | Type                                                                                                  | Required                                                                                              | Description                                                                                           |
-| ----------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
-| `requestId`                                                                                           | *string*                                                                                              | :heavy_check_mark:                                                                                    | N/A                                                                                                   |
-| `data`                                                                                                | [models.ApiSupplierPaymentDetailResponseData](../models/api-supplier-payment-detail-response-data.md) | :heavy_check_mark:                                                                                    | N/A                                                                                                   |
+| Field                                                                        | Type                                                                         | Required                                                                     | Description                                                                  |
+| ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| `requestId`                                                                  | *string*                                                                     | :heavy_check_mark:                                                           | N/A                                                                          |
+| `data`                                                                       | [models.ApiSharedObject18422faad3](../models/api-shared-object18422faad3.md) | :heavy_check_mark:                                                           | N/A                                                                          |
