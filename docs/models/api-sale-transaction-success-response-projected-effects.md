@@ -8,25 +8,22 @@ import { ApiSaleTransactionSuccessResponseProjectedEffects } from "lapyme/models
 let value: ApiSaleTransactionSuccessResponseProjectedEffects = {
   inventory: {
     willAffectStock: false,
-    warehouseIds: [
-      "e006673b-6b7a-40d8-8190-6929677cdaf6",
-      "77c813f1-7bc9-4a75-af6c-6672dd64813d",
-    ],
-    productLineCount: 68286,
-    totalQuantity: 3190.65,
+    warehouseIds: [],
+    productLineCount: 494896,
+    totalQuantity: 6798.65,
   },
   accounting: {
     willCreateSaleEntry: false,
     willCreatePaymentEntry: true,
   },
   fiscal: {
-    invoiceStatus: "not_required",
+    invoiceStatus: "pending",
   },
   payments: {
     willCreatePayments: false,
-    paymentMethodCount: 631396,
-    totalAmount: 3899.13,
-    pendingAmount: 5394.58,
+    paymentMethodCount: 466639,
+    totalAmount: 6924.13,
+    pendingAmount: 9051.44,
   },
 };
 ```
