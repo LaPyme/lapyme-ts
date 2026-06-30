@@ -6,14 +6,13 @@
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
 import { ClosedEnum } from "../types/enums.js";
-import { smartUnion } from "../types/smart-union.js";
 import {
   ReportPeriod,
   ReportPeriod$Outbound,
   ReportPeriod$outboundSchema,
 } from "./report-period.js";
 
-export const SalesReportRequestDimensionEnum = {
+export const SalesReportRequestDimension = {
   Date: "date",
   Week: "week",
   WeekOfYear: "weekOfYear",
@@ -47,17 +46,12 @@ export const SalesReportRequestDimensionEnum = {
   PaymentStatus: "paymentStatus",
   CaeStatus: "caeStatus",
   FormattedInvoiceNumber: "formattedInvoiceNumber",
-  PaymentMethod: "paymentMethod",
   TaxRate: "taxRate",
   SaleLineType: "saleLineType",
 } as const;
-export type SalesReportRequestDimensionEnum = ClosedEnum<
-  typeof SalesReportRequestDimensionEnum
+export type SalesReportRequestDimension = ClosedEnum<
+  typeof SalesReportRequestDimension
 >;
-
-export type SalesReportRequestDimensionUnion =
-  | SalesReportRequestDimensionEnum
-  | string;
 
 export const SalesReportRequestMeasure = {
   Total: "total",
@@ -70,6 +64,11 @@ export const SalesReportRequestMeasure = {
   AvgTicket: "avgTicket",
   MarginPercent: "marginPercent",
   DiscountAmount: "discountAmount",
+  LineDiscountAmount: "lineDiscountAmount",
+  LineDiscountRate: "lineDiscountRate",
+  GlobalDiscountAmount: "globalDiscountAmount",
+  GlobalDiscountRate: "globalDiscountRate",
+  DiscountedSalesCount: "discountedSalesCount",
   Balance: "balance",
   UniqueCustomers: "uniqueCustomers",
   UniqueProducts: "uniqueProducts",
@@ -79,7 +78,7 @@ export type SalesReportRequestMeasure = ClosedEnum<
 >;
 
 /**
- * Filtros por dimensión. Cada clave debe ser una dimensión filtrable para la fuente. También acepta product_metafield:<key> para campos personalizados select de producto. El valor es un array de IDs o valores a incluir.
+ * Filtros por dimensión. Cada clave debe ser una dimensión filtrable para la fuente. También acepta product_metafield:<key> para campos personalizados select de producto y contact_metafield:<key> para campos personalizados select de contacto cuando la fuente lo soporta. El valor es un array de IDs o valores a incluir.
  */
 export type SalesReportRequestDimensionFilters = {
   customer?: Array<string> | undefined;
@@ -105,9 +104,13 @@ export type SalesReportRequestDimensionFilters = {
   paymentStatus?: Array<string> | undefined;
   caeStatus?: Array<string> | undefined;
   formattedInvoiceNumber?: Array<string> | undefined;
-  paymentMethod?: Array<string> | undefined;
   taxRate?: Array<string> | undefined;
   saleLineType?: Array<string> | undefined;
+  customerStatus?: Array<string> | undefined;
+  productStatus?: Array<string> | undefined;
+  warehouseStatus?: Array<string> | undefined;
+  pointOfSaleStatus?: Array<string> | undefined;
+  registerStatus?: Array<string> | undefined;
 };
 
 /**
@@ -128,15 +131,15 @@ export type SalesReportRequest = {
   source: "sales";
   period: ReportPeriod;
   /**
-   * Dimensiones de agrupación. Máximo 4. Acepta product_metafield:<key> para campos personalizados select de producto.
+   * Dimensiones de agrupación. Máximo 12. Acepta product_metafield:<key> para campos personalizados select de producto y contact_metafield:<key> para campos personalizados select de contacto.
    */
-  dimensions?: Array<SalesReportRequestDimensionEnum | string> | undefined;
+  dimensions?: Array<any> | undefined;
   /**
    * Medidas a calcular. Al menos una.
    */
   measures: Array<SalesReportRequestMeasure>;
   /**
-   * Filtros por dimensión. Cada clave debe ser una dimensión filtrable para la fuente. También acepta product_metafield:<key> para campos personalizados select de producto. El valor es un array de IDs o valores a incluir.
+   * Filtros por dimensión. Cada clave debe ser una dimensión filtrable para la fuente. También acepta product_metafield:<key> para campos personalizados select de producto y contact_metafield:<key> para campos personalizados select de contacto cuando la fuente lo soporta. El valor es un array de IDs o valores a incluir.
    */
   dimensionFilters?: SalesReportRequestDimensionFilters | undefined;
   /**
@@ -150,28 +153,9 @@ export type SalesReportRequest = {
 };
 
 /** @internal */
-export const SalesReportRequestDimensionEnum$outboundSchema: z.ZodMiniEnum<
-  typeof SalesReportRequestDimensionEnum
-> = z.enum(SalesReportRequestDimensionEnum);
-
-/** @internal */
-export type SalesReportRequestDimensionUnion$Outbound = string | string;
-
-/** @internal */
-export const SalesReportRequestDimensionUnion$outboundSchema: z.ZodMiniType<
-  SalesReportRequestDimensionUnion$Outbound,
-  SalesReportRequestDimensionUnion
-> = smartUnion([SalesReportRequestDimensionEnum$outboundSchema, z.string()]);
-
-export function salesReportRequestDimensionUnionToJSON(
-  salesReportRequestDimensionUnion: SalesReportRequestDimensionUnion,
-): string {
-  return JSON.stringify(
-    SalesReportRequestDimensionUnion$outboundSchema.parse(
-      salesReportRequestDimensionUnion,
-    ),
-  );
-}
+export const SalesReportRequestDimension$outboundSchema: z.ZodMiniEnum<
+  typeof SalesReportRequestDimension
+> = z.enum(SalesReportRequestDimension);
 
 /** @internal */
 export const SalesReportRequestMeasure$outboundSchema: z.ZodMiniEnum<
@@ -203,9 +187,13 @@ export type SalesReportRequestDimensionFilters$Outbound = {
   payment_status?: Array<string> | undefined;
   cae_status?: Array<string> | undefined;
   formatted_invoice_number?: Array<string> | undefined;
-  payment_method?: Array<string> | undefined;
   tax_rate?: Array<string> | undefined;
   sale_line_type?: Array<string> | undefined;
+  customer_status?: Array<string> | undefined;
+  product_status?: Array<string> | undefined;
+  warehouse_status?: Array<string> | undefined;
+  point_of_sale_status?: Array<string> | undefined;
+  register_status?: Array<string> | undefined;
 };
 
 /** @internal */
@@ -237,9 +225,13 @@ export const SalesReportRequestDimensionFilters$outboundSchema: z.ZodMiniType<
     paymentStatus: z.optional(z.array(z.string())),
     caeStatus: z.optional(z.array(z.string())),
     formattedInvoiceNumber: z.optional(z.array(z.string())),
-    paymentMethod: z.optional(z.array(z.string())),
     taxRate: z.optional(z.array(z.string())),
     saleLineType: z.optional(z.array(z.string())),
+    customerStatus: z.optional(z.array(z.string())),
+    productStatus: z.optional(z.array(z.string())),
+    warehouseStatus: z.optional(z.array(z.string())),
+    pointOfSaleStatus: z.optional(z.array(z.string())),
+    registerStatus: z.optional(z.array(z.string())),
   }),
   z.transform((v) => {
     return remap$(v, {
@@ -256,9 +248,13 @@ export const SalesReportRequestDimensionFilters$outboundSchema: z.ZodMiniType<
       paymentStatus: "payment_status",
       caeStatus: "cae_status",
       formattedInvoiceNumber: "formatted_invoice_number",
-      paymentMethod: "payment_method",
       taxRate: "tax_rate",
       saleLineType: "sale_line_type",
+      customerStatus: "customer_status",
+      productStatus: "product_status",
+      warehouseStatus: "warehouse_status",
+      pointOfSaleStatus: "point_of_sale_status",
+      registerStatus: "register_status",
     });
   }),
 );
@@ -282,7 +278,7 @@ export const SalesReportRequestDateBasis$outboundSchema: z.ZodMiniEnum<
 export type SalesReportRequest$Outbound = {
   source: "sales";
   period: ReportPeriod$Outbound;
-  dimensions?: Array<string | string> | undefined;
+  dimensions?: Array<any> | undefined;
   measures: Array<string>;
   dimension_filters?: SalesReportRequestDimensionFilters$Outbound | undefined;
   include_totals?: boolean | undefined;
@@ -297,14 +293,7 @@ export const SalesReportRequest$outboundSchema: z.ZodMiniType<
   z.object({
     source: z.literal("sales"),
     period: ReportPeriod$outboundSchema,
-    dimensions: z.optional(
-      z.array(
-        smartUnion([
-          SalesReportRequestDimensionEnum$outboundSchema,
-          z.string(),
-        ]),
-      ),
-    ),
+    dimensions: z.optional(z.array(z.any())),
     measures: z.array(SalesReportRequestMeasure$outboundSchema),
     dimensionFilters: z.optional(
       z.lazy(() => SalesReportRequestDimensionFilters$outboundSchema),
