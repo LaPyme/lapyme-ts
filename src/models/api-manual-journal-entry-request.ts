@@ -7,19 +7,17 @@ import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
 import { ClosedEnum } from "../types/enums.js";
 
-export const ApiManualJournalEntryRequestCurrency = {
+export const Currency = {
   Pes: "PES",
   Dol: "DOL",
   One: "001",
   Sixty: "060",
 } as const;
-export type ApiManualJournalEntryRequestCurrency = ClosedEnum<
-  typeof ApiManualJournalEntryRequestCurrency
->;
+export type Currency = ClosedEnum<typeof Currency>;
 
 export type ApiManualJournalEntryRequestLine = {
   accountId: string;
-  currency?: ApiManualJournalEntryRequestCurrency | undefined;
+  currency?: Currency | undefined;
   debit?: number | null | undefined;
   credit?: number | null | undefined;
   enteredDebit?: number | null | undefined;
@@ -41,9 +39,9 @@ export type ApiManualJournalEntryRequest = {
 };
 
 /** @internal */
-export const ApiManualJournalEntryRequestCurrency$outboundSchema: z.ZodMiniEnum<
-  typeof ApiManualJournalEntryRequestCurrency
-> = z.enum(ApiManualJournalEntryRequestCurrency);
+export const Currency$outboundSchema: z.ZodMiniEnum<typeof Currency> = z.enum(
+  Currency,
+);
 
 /** @internal */
 export type ApiManualJournalEntryRequestLine$Outbound = {
@@ -67,7 +65,7 @@ export const ApiManualJournalEntryRequestLine$outboundSchema: z.ZodMiniType<
 > = z.pipe(
   z.object({
     accountId: z.string(),
-    currency: z.optional(ApiManualJournalEntryRequestCurrency$outboundSchema),
+    currency: z.optional(Currency$outboundSchema),
     debit: z.optional(z.nullable(z.int())),
     credit: z.optional(z.nullable(z.int())),
     enteredDebit: z.optional(z.nullable(z.int())),

@@ -86,6 +86,10 @@ const lapyme = new Lapyme({
 async function run() {
   const result = await lapyme.reports.query({
     source: "inventory",
+    period: {
+      startDate: new Date("2026-03-01"),
+      endDate: new Date("2026-03-31"),
+    },
     dimensions: [
       "product",
       "warehouse",
@@ -120,6 +124,10 @@ const lapyme = new LapymeCore({
 async function run() {
   const res = await reportsQuery(lapyme, {
     source: "inventory",
+    period: {
+      startDate: new Date("2026-03-01"),
+      endDate: new Date("2026-03-31"),
+    },
     dimensions: [
       "product",
       "warehouse",
@@ -158,7 +166,7 @@ async function run() {
       endDate: new Date("2026-03-31"),
     },
     dimensions: [
-      "paymentContactName",
+      "payment_method",
     ],
     measures: [
       "paymentBalance",
@@ -195,7 +203,7 @@ async function run() {
       endDate: new Date("2026-03-31"),
     },
     dimensions: [
-      "paymentContactName",
+      "payment_method",
     ],
     measures: [
       "paymentBalance",

@@ -18,33 +18,44 @@ let value: ApiCustomerDetailResponse = {
     address: null,
     apartment: "<value>",
     city: "Russelfort",
+    deliveryCarrier: "<value>",
+    deliveryAddress: "<value>",
     taxId: "<id>",
     taxIdType: "<value>",
     taxCategory: "<value>",
     contactType: "<value>",
-    defaultPriceListId: "4e5d8f5f-9975-4f9d-b4b5-59f89bf3a605",
+    defaultPriceListId: "5d8f5f99-75f9-4d4b-b559-f89bf3a605d8",
     paymentTermId: "<id>",
     provinceId: "<id>",
-    isActive: false,
-    createdAt: new Date("2026-03-07T07:59:34.891Z"),
-    updatedAt: new Date("2024-03-07T14:57:22.321Z"),
-    country: "Gabon",
-    postalCode: "44453",
-    assignedSalespersonId: "494130bc-711a-4301-993c-cf06dda22818",
+    isActive: true,
+    createdAt: new Date("2026-06-15T05:41:05.729Z"),
+    updatedAt: new Date("2024-12-19T23:43:33.485Z"),
+    country: "Anguilla",
+    postalCode: "45342",
+    assignedSalespersonId: "4130bc71-1a30-4193-bccf-06dda228184f",
     defaultGananciasRegimen: "<value>",
     assignedSalesperson: {
-      id: "b6535c1f-d498-47d7-8820-878768de14f0",
-      fullName: "Austin Ernser",
+      id: "cfb6535c-1fd4-4987-bd78-20878768de14",
+      fullName: null,
     },
-    defaultPriceList: {
-      id: "7b92c076-15c8-462c-a45d-c1c88870aac3",
-      name: "<value>",
-    },
+    defaultPriceList: null,
     salesOverview: {
-      pendingBalance: 6093.53,
-      salesCount: 16507,
-      totalSales: 1995.84,
-      recentSales: [],
+      pendingBalance: 4940.24,
+      salesCount: 1600,
+      totalSales: 6333.61,
+      recentSales: [
+        {
+          id: "c3b90345-f3e8-4d5b-bea0-ebf7f5291157",
+          voucherType: "<value>",
+          invoiceStatus: "<value>",
+          invoiceDate: "<value>",
+          currency: "Malaysian Ringgit",
+          total: 4090.17,
+          formattedInvoiceNumber: "<value>",
+          originalSaleId: null,
+          createdAt: new Date("2025-04-09T18:14:55.376Z"),
+        },
+      ],
     },
   },
 };
@@ -55,4 +66,4 @@ let value: ApiCustomerDetailResponse = {
 | Field                                                                        | Type                                                                         | Required                                                                     | Description                                                                  |
 | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
 | `requestId`                                                                  | *string*                                                                     | :heavy_check_mark:                                                           | N/A                                                                          |
-| `data`                                                                       | [models.ApiSharedObject5bccea1792](../models/api-shared-object5bccea1792.md) | :heavy_check_mark:                                                           | N/A                                                                          |
+| `data`                                                                       | [models.ApiSharedObject9f00666c1c](../models/api-shared-object9f00666c1c.md) | :heavy_check_mark:                                                           | N/A                                                                          |
