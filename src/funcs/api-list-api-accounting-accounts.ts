@@ -99,6 +99,12 @@ async function $do(
 
   const query = encodeFormQuery({
     "include_inactive": payload?.include_inactive,
+    "is_active": payload?.is_active,
+    "is_inflation_adjustable": payload?.is_inflation_adjustable,
+    "is_postable": payload?.is_postable,
+    "parent_id": payload?.parent_id,
+    "system_role": payload?.system_role,
+    "type": payload?.type,
   });
 
   const headers = new Headers(compactMap({
