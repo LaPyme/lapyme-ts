@@ -16,16 +16,18 @@ let value: ApiCustomerListResponseData = {
   address: "375 Cliff Road",
   apartment: "<value>",
   city: "North Kaelacester",
+  deliveryCarrier: "<value>",
+  deliveryAddress: "<value>",
   taxId: "<id>",
   taxIdType: "<value>",
   taxCategory: "<value>",
-  contactType: "<value>",
-  defaultPriceListId: "06c414b1-40a8-4a09-b085-3fd5e43d6b18",
+  contactType: null,
+  defaultPriceListId: "c414b140-a8a0-4908-953f-d5e43d6b18f7",
   paymentTermId: "<id>",
-  provinceId: "<id>",
+  provinceId: null,
   isActive: true,
-  createdAt: new Date("2026-05-29T22:07:34.236Z"),
-  updatedAt: new Date("2024-01-17T16:34:11.247Z"),
+  createdAt: new Date("2026-04-30T06:48:01.183Z"),
+  updatedAt: new Date("2026-08-25T09:53:05.534Z"),
 };
 ```
 
@@ -43,6 +45,8 @@ let value: ApiCustomerListResponseData = {
 | `address`                                                                                     | *string*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `apartment`                                                                                   | *string*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `city`                                                                                        | *string*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
+| `deliveryCarrier`                                                                             | *string*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
+| `deliveryAddress`                                                                             | *string*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `taxId`                                                                                       | *string*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `taxIdType`                                                                                   | *string*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `taxCategory`                                                                                 | *string*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
