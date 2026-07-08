@@ -7,6 +7,10 @@ import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
 import { ClosedEnum } from "../types/enums.js";
 import {
+  ApiSharedEnum70385a22ba,
+  ApiSharedEnum70385a22ba$outboundSchema,
+} from "./api-shared-enum70385a22ba.js";
+import {
   ApiSharedObject6dbe49c4ef,
   ApiSharedObject6dbe49c4ef$Outbound,
   ApiSharedObject6dbe49c4ef$outboundSchema,
@@ -91,28 +95,29 @@ export type ApiProductMutationRequestUnitOfMeasure = ClosedEnum<
   typeof ApiProductMutationRequestUnitOfMeasure
 >;
 
-export const ApiProductMutationRequestCurrency = {
-  Pes: "PES",
-  Dol: "DOL",
-} as const;
-export type ApiProductMutationRequestCurrency = ClosedEnum<
-  typeof ApiProductMutationRequestCurrency
->;
-
 export type ApiProductMutationRequest = {
   name: string;
   description?: string | null | undefined;
   categoryId?: string | null | undefined;
   visibility?: ApiProductMutationRequestVisibility | undefined;
+  /**
+   * External product image URL reference. La Pyme displays it best effort and does not copy, ingest, or host the image.
+   */
   imageUrl?: string | null | undefined;
   productType?: ApiProductMutationRequestProductType | undefined;
   sku: string;
   barcode?: string | null | undefined;
   unitOfMeasure?: ApiProductMutationRequestUnitOfMeasure | undefined;
-  currency?: ApiProductMutationRequestCurrency | undefined;
+  currency?: ApiSharedEnum70385a22ba | undefined;
   cost?: number | undefined;
+  /**
+   * Manual sale price in cents. Mutually exclusive with markup_percentage; send price for manual pricing or markup_percentage for markup pricing.
+   */
   price?: number | undefined;
   promotionalPrice?: number | null | undefined;
+  /**
+   * Markup percentage used to calculate the sale price from cost, tax, and organization rounding rules. Mutually exclusive with price; send null to switch back to manual pricing.
+   */
   markupPercentage?: number | null | undefined;
   taxRateId?: number | undefined;
   isExempt?: boolean | undefined;
@@ -138,11 +143,6 @@ export const ApiProductMutationRequestUnitOfMeasure$outboundSchema:
   z.ZodMiniEnum<typeof ApiProductMutationRequestUnitOfMeasure> = z.enum(
     ApiProductMutationRequestUnitOfMeasure,
   );
-
-/** @internal */
-export const ApiProductMutationRequestCurrency$outboundSchema: z.ZodMiniEnum<
-  typeof ApiProductMutationRequestCurrency
-> = z.enum(ApiProductMutationRequestCurrency);
 
 /** @internal */
 export type ApiProductMutationRequest$Outbound = {
@@ -193,10 +193,7 @@ export const ApiProductMutationRequest$outboundSchema: z.ZodMiniType<
       ApiProductMutationRequestUnitOfMeasure$outboundSchema,
       "07",
     ),
-    currency: z._default(
-      ApiProductMutationRequestCurrency$outboundSchema,
-      "PES",
-    ),
+    currency: z._default(ApiSharedEnum70385a22ba$outboundSchema, "PES"),
     cost: z._default(z.int(), 0),
     price: z.optional(z.int()),
     promotionalPrice: z.optional(z.nullable(z.int())),
