@@ -27,29 +27,25 @@ import {
   ApiSharedEnumf0d69c3d87$outboundSchema,
 } from "./api-shared-enumf0d69c3d87.js";
 import {
+  ApiSharedObject65e544dba2,
+  ApiSharedObject65e544dba2$Outbound,
+  ApiSharedObject65e544dba2$outboundSchema,
+} from "./api-shared-object65e544dba2.js";
+import {
   ApiSharedObject95929ea589,
   ApiSharedObject95929ea589$Outbound,
   ApiSharedObject95929ea589$outboundSchema,
 } from "./api-shared-object95929ea589.js";
 import {
+  ApiSharedObjectbea003a73d,
+  ApiSharedObjectbea003a73d$Outbound,
+  ApiSharedObjectbea003a73d$outboundSchema,
+} from "./api-shared-objectbea003a73d.js";
+import {
   ApiSharedObjectfb7405a472,
   ApiSharedObjectfb7405a472$Outbound,
   ApiSharedObjectfb7405a472$outboundSchema,
 } from "./api-shared-objectfb7405a472.js";
-
-export type ApiPurchaseTransactionRequestItem = {
-  productId?: string | undefined;
-  name?: string | undefined;
-  quantity: number;
-  unitCost: number;
-  subtotal?: number | undefined;
-  total?: number | undefined;
-  taxRateId?: number | undefined;
-  isExempt?: boolean | undefined;
-  discountPercentage?: number | undefined;
-  purchaseOrderItemId?: string | undefined;
-  vatCategory?: ApiSharedEnum822a963f55 | null | undefined;
-};
 
 export const ApiPurchaseTransactionRequestStatus = {
   Draft: "draft",
@@ -105,7 +101,7 @@ export type ApiPurchaseTransactionRequest = {
   warehouseId?: string | null | undefined;
   productsReceived?: boolean | undefined;
   updateProductVariantCost?: boolean | undefined;
-  items?: Array<ApiPurchaseTransactionRequestItem> | undefined;
+  items?: Array<ApiSharedObject65e544dba2> | undefined;
   subtotal?: number | undefined;
   taxAmount?: number | undefined;
   total?: number | undefined;
@@ -114,6 +110,7 @@ export type ApiPurchaseTransactionRequest = {
   nonTaxedAmount?: number | undefined;
   baseAmount?: number | undefined;
   vatBreakdown?: Array<ApiSharedObjectfb7405a472> | undefined;
+  manualAccountAllocations?: ApiSharedObjectbea003a73d | undefined;
   notes?: string | undefined;
   currency: ApiSharedEnum6cfb146157;
   exchangeRate?: number | undefined;
@@ -121,62 +118,6 @@ export type ApiPurchaseTransactionRequest = {
   vatCategory?: ApiSharedEnum822a963f55 | null | undefined;
   status?: ApiPurchaseTransactionRequestStatus | undefined;
 };
-
-/** @internal */
-export type ApiPurchaseTransactionRequestItem$Outbound = {
-  product_id?: string | undefined;
-  name?: string | undefined;
-  quantity: number;
-  unit_cost: number;
-  subtotal?: number | undefined;
-  total?: number | undefined;
-  tax_rate_id?: number | undefined;
-  is_exempt?: boolean | undefined;
-  discount_percentage?: number | undefined;
-  purchase_order_item_id?: string | undefined;
-  vat_category?: string | null | undefined;
-};
-
-/** @internal */
-export const ApiPurchaseTransactionRequestItem$outboundSchema: z.ZodMiniType<
-  ApiPurchaseTransactionRequestItem$Outbound,
-  ApiPurchaseTransactionRequestItem
-> = z.pipe(
-  z.object({
-    productId: z.optional(z.string()),
-    name: z.optional(z.string()),
-    quantity: z.number(),
-    unitCost: z.int(),
-    subtotal: z.optional(z.int()),
-    total: z.optional(z.int()),
-    taxRateId: z.optional(z.int()),
-    isExempt: z.optional(z.boolean()),
-    discountPercentage: z.optional(z.number()),
-    purchaseOrderItemId: z.optional(z.string()),
-    vatCategory: z.optional(z.nullable(ApiSharedEnum822a963f55$outboundSchema)),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      productId: "product_id",
-      unitCost: "unit_cost",
-      taxRateId: "tax_rate_id",
-      isExempt: "is_exempt",
-      discountPercentage: "discount_percentage",
-      purchaseOrderItemId: "purchase_order_item_id",
-      vatCategory: "vat_category",
-    });
-  }),
-);
-
-export function apiPurchaseTransactionRequestItemToJSON(
-  apiPurchaseTransactionRequestItem: ApiPurchaseTransactionRequestItem,
-): string {
-  return JSON.stringify(
-    ApiPurchaseTransactionRequestItem$outboundSchema.parse(
-      apiPurchaseTransactionRequestItem,
-    ),
-  );
-}
 
 /** @internal */
 export const ApiPurchaseTransactionRequestStatus$outboundSchema: z.ZodMiniEnum<
@@ -208,7 +149,7 @@ export type ApiPurchaseTransactionRequest$Outbound = {
   warehouse_id?: string | null | undefined;
   products_received?: boolean | undefined;
   update_product_variant_cost?: boolean | undefined;
-  items?: Array<ApiPurchaseTransactionRequestItem$Outbound> | undefined;
+  items?: Array<ApiSharedObject65e544dba2$Outbound> | undefined;
   subtotal?: number | undefined;
   tax_amount?: number | undefined;
   total?: number | undefined;
@@ -217,6 +158,7 @@ export type ApiPurchaseTransactionRequest$Outbound = {
   non_taxed_amount?: number | undefined;
   base_amount?: number | undefined;
   vat_breakdown?: Array<ApiSharedObjectfb7405a472$Outbound> | undefined;
+  manual_account_allocations?: ApiSharedObjectbea003a73d$Outbound | undefined;
   notes?: string | undefined;
   currency: string;
   exchange_rate?: number | undefined;
@@ -269,9 +211,7 @@ export const ApiPurchaseTransactionRequest$outboundSchema: z.ZodMiniType<
     warehouseId: z.optional(z.nullable(z.string())),
     productsReceived: z.optional(z.boolean()),
     updateProductVariantCost: z.optional(z.boolean()),
-    items: z.optional(z.array(z.lazy(() =>
-      ApiPurchaseTransactionRequestItem$outboundSchema
-    ))),
+    items: z.optional(z.array(ApiSharedObject65e544dba2$outboundSchema)),
     subtotal: z.optional(z.int()),
     taxAmount: z.optional(z.int()),
     total: z.optional(z.int()),
@@ -280,6 +220,9 @@ export const ApiPurchaseTransactionRequest$outboundSchema: z.ZodMiniType<
     nonTaxedAmount: z.optional(z.int()),
     baseAmount: z.optional(z.int()),
     vatBreakdown: z.optional(z.array(ApiSharedObjectfb7405a472$outboundSchema)),
+    manualAccountAllocations: z.optional(
+      ApiSharedObjectbea003a73d$outboundSchema,
+    ),
     notes: z.optional(z.string()),
     currency: ApiSharedEnum6cfb146157$outboundSchema,
     exchangeRate: z.optional(z.number()),
@@ -315,6 +258,7 @@ export const ApiPurchaseTransactionRequest$outboundSchema: z.ZodMiniType<
       nonTaxedAmount: "non_taxed_amount",
       baseAmount: "base_amount",
       vatBreakdown: "vat_breakdown",
+      manualAccountAllocations: "manual_account_allocations",
       exchangeRate: "exchange_rate",
       pdfPath: "pdf_path",
       vatCategory: "vat_category",
