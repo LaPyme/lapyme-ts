@@ -84,7 +84,7 @@ run();
 
 ## create
 
-Crea un producto, servicio, combo o kit con su información comercial y de inventario.
+Crea un producto simple, servicio, combo o kit, o un producto con hasta tres opciones y 250 variantes. En la creación con variantes, cada variante define su combinación, SKU, precios y stock inicial.
 
 ### Example Usage
 
@@ -101,7 +101,15 @@ async function run() {
     idempotencyKey: "<value>",
     body: {
       name: "<value>",
+      visibility: "both",
+      productType: "product",
       sku: "<value>",
+      unitOfMeasure: "07",
+      currency: "PES",
+      cost: 0,
+      taxRateId: 5,
+      isExempt: false,
+      isActive: true,
     },
   });
 
@@ -130,7 +138,15 @@ async function run() {
     idempotencyKey: "<value>",
     body: {
       name: "<value>",
+      visibility: "both",
+      productType: "product",
       sku: "<value>",
+      unitOfMeasure: "07",
+      currency: "PES",
+      cost: 0,
+      taxRateId: 5,
+      isExempt: false,
+      isActive: true,
     },
   });
   if (res.ok) {
