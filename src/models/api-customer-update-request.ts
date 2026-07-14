@@ -33,6 +33,8 @@ export type ApiCustomerUpdateRequest = {
   address?: string | null | undefined;
   apartment?: string | null | undefined;
   postalCode?: string | null | undefined;
+  deliveryCarrier?: string | null | undefined;
+  deliveryAddress?: string | null | undefined;
   assignedSalespersonId?: string | null | undefined;
   defaultPriceListId?: string | null | undefined;
   paymentTermId?: ApiSharedEnumd34af90520 | null | undefined;
@@ -55,6 +57,8 @@ export type ApiCustomerUpdateRequest$Outbound = {
   address?: string | null | undefined;
   apartment?: string | null | undefined;
   postal_code?: string | null | undefined;
+  delivery_carrier?: string | null | undefined;
+  delivery_address?: string | null | undefined;
   assigned_salesperson_id?: string | null | undefined;
   default_price_list_id?: string | null | undefined;
   payment_term_id?: string | null | undefined;
@@ -81,6 +85,8 @@ export const ApiCustomerUpdateRequest$outboundSchema: z.ZodMiniType<
     address: z.optional(z.nullable(z.string())),
     apartment: z.optional(z.nullable(z.string())),
     postalCode: z.optional(z.nullable(z.string())),
+    deliveryCarrier: z.optional(z.nullable(z.string())),
+    deliveryAddress: z.optional(z.nullable(z.string())),
     assignedSalespersonId: z.optional(z.nullable(z.string())),
     defaultPriceListId: z.optional(z.nullable(z.string())),
     paymentTermId: z.optional(
@@ -95,6 +101,8 @@ export const ApiCustomerUpdateRequest$outboundSchema: z.ZodMiniType<
       taxIdType: "tax_id_type",
       taxCategory: "tax_category",
       postalCode: "postal_code",
+      deliveryCarrier: "delivery_carrier",
+      deliveryAddress: "delivery_address",
       assignedSalespersonId: "assigned_salesperson_id",
       defaultPriceListId: "default_price_list_id",
       paymentTermId: "payment_term_id",
