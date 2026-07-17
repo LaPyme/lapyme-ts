@@ -11,11 +11,15 @@ let value: ApiSharedObject6e43ba6466 = {
   receivedQuantity: 3982.32,
   expectedUnitCost: 827219,
   product: {
-    id: "d461c768-a690-4144-952a-3d8d4113b6cb",
+    id: "55b6a2fe-81b8-4c36-9bd9-0a3a4f4c6acb",
     name: "<value>",
     sku: "<value>",
     productType: "service",
-    variantOptions: {},
+    variantOptions: {
+      "key": "<value>",
+      "key1": "<value>",
+      "key2": "<value>",
+    },
     optionNames: [
       "<value 1>",
     ],

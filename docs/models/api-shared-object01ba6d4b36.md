@@ -11,15 +11,15 @@ let value: ApiSharedObject01ba6d4b36 = {
   totalSales: 1628.35,
   recentSales: [
     {
-      id: "8c1ace56-161b-4c3f-9aa0-2744636683de",
+      id: "c3b90345-f3e8-4d5b-bea0-ebf7f5291157",
       voucherType: "<value>",
       invoiceStatus: "<value>",
       invoiceDate: "<value>",
-      currency: "Kwacha",
-      total: 3189.05,
+      currency: "Malaysian Ringgit",
+      total: 4090.17,
       formattedInvoiceNumber: "<value>",
-      originalSaleId: "<id>",
-      createdAt: new Date("2026-05-19T21:58:17.161Z"),
+      originalSaleId: null,
+      createdAt: new Date("2025-04-09T18:14:55.376Z"),
     },
   ],
 };
