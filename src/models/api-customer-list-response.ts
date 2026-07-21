@@ -25,6 +25,8 @@ export type ApiCustomerListResponseData = {
   address: string | null;
   apartment: string | null;
   city: string | null;
+  deliveryCarrier: string | null;
+  deliveryAddress: string | null;
   taxId: string | null;
   taxIdType: string | null;
   taxCategory: string | null;
@@ -68,6 +70,8 @@ export const ApiCustomerListResponseData$inboundSchema: z.ZodMiniType<
     address: types.nullable(types.string()),
     apartment: types.nullable(types.string()),
     city: types.nullable(types.string()),
+    delivery_carrier: types.nullable(types.string()),
+    delivery_address: types.nullable(types.string()),
     tax_id: types.nullable(types.string()),
     tax_id_type: types.nullable(types.string()),
     tax_category: types.nullable(types.string()),
@@ -82,6 +86,8 @@ export const ApiCustomerListResponseData$inboundSchema: z.ZodMiniType<
   z.transform((v) => {
     return remap$(v, {
       "company_name": "companyName",
+      "delivery_carrier": "deliveryCarrier",
+      "delivery_address": "deliveryAddress",
       "tax_id": "taxId",
       "tax_id_type": "taxIdType",
       "tax_category": "taxCategory",

@@ -11,5 +11,5 @@ let value: InventoryReportRequestDimensionEnum = "warehouse";
 ## Values
 
 ```typescript
-"product" | "productName" | "variant" | "variantSku" | "category" | "subcategory" | "defaultSupplierName" | "productType" | "warehouse" | "currency"
+"date" | "week" | "weekOfYear" | "month" | "monthOfYear" | "dayOfWeek" | "year" | "quarter" | "product" | "productName" | "variant" | "variantSku" | "category" | "subcategory" | "defaultSupplierName" | "productType" | "warehouse" | "currency"
 ```

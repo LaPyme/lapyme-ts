@@ -6,7 +6,11 @@
 import { ListApiProductsResponse } from "lapyme/models/operations";
 
 let value: ListApiProductsResponse = {
-  headers: {},
+  headers: {
+    "key": [
+      "<value 1>",
+    ],
+  },
   result: {
     requestId: "<id>",
     data: [
@@ -24,25 +28,25 @@ let value: ListApiProductsResponse = {
         cost: 4169.96,
         price: 11.65,
         taxRate: {
-          id: 9545.45,
-          value: 8570.91,
+          id: 6059.87,
+          value: 8886.91,
         },
         defaultSupplier: {
-          id: "e2939b22-6734-418f-802e-69ca6e74fd88",
+          id: "37ba6994-31a0-4859-8f3d-6fb82691199d",
           name: "<value>",
         },
         productType: "kit",
-        isActive: true,
+        isActive: false,
         organizationSlug: "<value>",
-        createdAt: new Date("2025-01-03T08:44:42.602Z"),
-        updatedAt: new Date("2025-02-15T09:21:59.181Z"),
+        createdAt: new Date("2026-09-19T21:54:34.572Z"),
+        updatedAt: new Date("2024-06-17T15:51:10.779Z"),
         object: "product",
       },
     ],
-    hasMore: true,
+    hasMore: false,
     nextCursor: "<value>",
     object: "list",
-    url: "https://descriptive-analogy.com",
+    url: "https://self-assured-contrail.com",
   },
 };
 ```
