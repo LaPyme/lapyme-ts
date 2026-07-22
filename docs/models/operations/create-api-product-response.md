@@ -6,54 +6,58 @@
 import { CreateApiProductResponse } from "lapyme/models/operations";
 
 let value: CreateApiProductResponse = {
-  headers: {},
+  headers: {
+    "key": [
+      "<value 1>",
+      "<value 2>",
+    ],
+  },
   result: {
     requestId: "<id>",
     data: {
       product: {
-        id: "466902fc-c58e-4e6b-8002-706e5660907a",
+        id: "4be7e44d-e025-41cb-a98f-12d48698b5e5",
         name: "<value>",
-        description: "construe discourse similar jogging onset",
-        category: {
-          id: "266530ce-75cf-40a4-81e8-226c43eeb6d9",
-          name: "<value>",
-        },
+        description: "vice junior scoff zowie scoff powerfully psst",
+        category: null,
         sku: "<value>",
         barcode: "<value>",
-        currency: "Venezuelan bolívar",
-        cost: 2129.23,
-        price: 8568.58,
+        currency: "Rwanda Franc",
+        cost: 3628.32,
+        price: 8210.33,
         taxRate: {
-          id: 9545.45,
-          value: 8570.91,
+          id: 6059.87,
+          value: 8886.91,
         },
         defaultSupplier: {
-          id: "e2939b22-6734-418f-802e-69ca6e74fd88",
+          id: "37ba6994-31a0-4859-8f3d-6fb82691199d",
           name: "<value>",
         },
         productType: "combo",
         isActive: true,
         organizationSlug: "<value>",
-        createdAt: new Date("2024-07-31T07:25:38.915Z"),
-        updatedAt: new Date("2025-07-23T22:16:38.063Z"),
+        createdAt: new Date("2025-01-07T13:40:48.583Z"),
+        updatedAt: new Date("2024-11-12T07:43:55.295Z"),
         object: "product",
-        variantGroupId: "bf32ac26-3e27-4830-aa84-bdd32992e378",
+        variantGroupId: "733bd0ec-4a0b-4478-8b0e-90aa06fbe28f",
         variantOptions: {
           "key": "<value>",
           "key1": "<value>",
+          "key2": "<value>",
         },
         isExempt: false,
+        metafields: [],
         stockSummary: {
-          totalQuantity: 3450.16,
-          warehouseCount: 107596,
+          totalQuantity: 5243.39,
+          warehouseCount: 382132,
           byWarehouse: [
             {
-              warehouseId: "8355b424-e8f1-4b19-a424-22b1798decfe",
+              warehouseId: "999b4c64-3938-44ca-958c-f3b39718b070",
               warehouseName: "<value>",
-              quantity: 1678.21,
-              onHand: 2292.22,
-              reservedQuantity: 4791.26,
-              incomingQuantity: 4053.93,
+              quantity: 5028.12,
+              onHand: 2731.26,
+              reservedQuantity: 855.99,
+              incomingQuantity: 9009.11,
             },
           ],
         },
@@ -62,7 +66,6 @@ let value: CreateApiProductResponse = {
     },
     warnings: [
       "<value 1>",
-      "<value 2>",
     ],
   },
 };

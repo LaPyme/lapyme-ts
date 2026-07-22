@@ -17,7 +17,8 @@ let value: ApiSupplierListResponseData = {
   taxIdType: "<value>",
   taxCategory: "<value>",
   paymentTermId: null,
-  isActive: null,
+  paymentTermDays: null,
+  isActive: true,
 };
 ```
 
@@ -36,4 +37,5 @@ let value: ApiSupplierListResponseData = {
 | `taxIdType`        | *string*           | :heavy_check_mark: | N/A                |
 | `taxCategory`      | *string*           | :heavy_check_mark: | N/A                |
 | `paymentTermId`    | *string*           | :heavy_check_mark: | N/A                |
+| `paymentTermDays`  | *number*           | :heavy_check_mark: | N/A                |
 | `isActive`         | *boolean*          | :heavy_check_mark: | N/A                |

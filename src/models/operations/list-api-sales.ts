@@ -45,7 +45,7 @@ export type ListApiSalesRequest = {
    */
   limit?: number | undefined;
   /**
-   * Texto de búsqueda por cliente, CUIT, número de comprobante o ID de integración
+   * Texto de búsqueda por cliente, CUIT, número de comprobante, ID de integración, producto, SKU, código de barras o variante
    */
   query?: string | undefined;
   /**

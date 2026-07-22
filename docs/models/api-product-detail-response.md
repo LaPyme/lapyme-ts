@@ -21,11 +21,11 @@ let value: ApiProductDetailResponse = {
     cost: 5023.57,
     price: 9776.7,
     taxRate: {
-      id: 9545.45,
-      value: 8570.91,
+      id: 6059.87,
+      value: 8886.91,
     },
     defaultSupplier: {
-      id: "e2939b22-6734-418f-802e-69ca6e74fd88",
+      id: "37ba6994-31a0-4859-8f3d-6fb82691199d",
       name: "<value>",
     },
     productType: "service",
@@ -41,17 +41,23 @@ let value: ApiProductDetailResponse = {
       "key2": "<value>",
     },
     isExempt: true,
+    metafields: [
+      {
+        key: "<key>",
+        value: "<value>",
+      },
+    ],
     stockSummary: {
-      totalQuantity: 3450.16,
-      warehouseCount: 107596,
+      totalQuantity: 5243.39,
+      warehouseCount: 382132,
       byWarehouse: [
         {
-          warehouseId: "8355b424-e8f1-4b19-a424-22b1798decfe",
+          warehouseId: "999b4c64-3938-44ca-958c-f3b39718b070",
           warehouseName: "<value>",
-          quantity: 1678.21,
-          onHand: 2292.22,
-          reservedQuantity: 4791.26,
-          incomingQuantity: 4053.93,
+          quantity: 5028.12,
+          onHand: 2731.26,
+          reservedQuantity: 855.99,
+          incomingQuantity: 9009.11,
         },
       ],
     },
@@ -64,4 +70,4 @@ let value: ApiProductDetailResponse = {
 | Field                                                                        | Type                                                                         | Required                                                                     | Description                                                                  |
 | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
 | `requestId`                                                                  | *string*                                                                     | :heavy_check_mark:                                                           | N/A                                                                          |
-| `data`                                                                       | [models.ApiSharedObjectd371740910](../models/api-shared-objectd371740910.md) | :heavy_check_mark:                                                           | N/A                                                                          |
+| `data`                                                                       | [models.ApiSharedObjectc99e480838](../models/api-shared-objectc99e480838.md) | :heavy_check_mark:                                                           | N/A                                                                          |

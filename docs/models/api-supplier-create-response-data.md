@@ -18,11 +18,12 @@ let value: ApiSupplierCreateResponseData = {
     taxIdType: "<value>",
     taxCategory: "<value>",
     paymentTermId: "<id>",
+    paymentTermDays: 100217,
     isActive: true,
-    country: "Gibraltar",
+    country: "Chad",
     provinceId: "<id>",
-    city: "Fort Bernardton",
-    address: "38500 E 3rd Street",
+    city: "North Camrynland",
+    address: "600 E 3rd Street",
     apartment: "<value>",
     postalCode: "53435-1128",
     createdAt: new Date("2025-09-17T03:40:21.450Z"),
@@ -36,5 +37,5 @@ let value: ApiSupplierCreateResponseData = {
 
 | Field                                                                        | Type                                                                         | Required                                                                     | Description                                                                  |
 | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| `supplier`                                                                   | [models.ApiSharedObjectac822ca2fd](../models/api-shared-objectac822ca2fd.md) | :heavy_check_mark:                                                           | N/A                                                                          |
+| `supplier`                                                                   | [models.ApiSharedObject7034e0d593](../models/api-shared-object7034e0d593.md) | :heavy_check_mark:                                                           | N/A                                                                          |
 | `idempotentReplay`                                                           | *boolean*                                                                    | :heavy_check_mark:                                                           | N/A                                                                          |

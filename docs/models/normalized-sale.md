@@ -8,35 +8,34 @@ import { NormalizedSale } from "lapyme/models";
 let value: NormalizedSale = {
   customerId: "df84791a-3210-47ed-b232-dd9f69cc9234",
   customerTaxCategoryOverride: "<value>",
-  voucherType: 828730,
-  pointOfSaleId: "8d4135bd-549b-4427-b678-0896bf12d383",
-  registerId: "6111e54d-c5cf-4e38-8275-36095504a376",
-  operatorId: "355b7a5d-e33e-4659-b1d0-8d4aaa7dec57",
-  invoiceDate: new Date("2025-09-06"),
-  dueDate: new Date("2026-09-30"),
-  serviceFrom: new Date("2025-08-06"),
-  serviceTo: new Date("2024-11-05"),
-  currency: "DOL",
-  exchangeRate: 4724.71,
-  sameCurrencyPayment: true,
+  voucherType: 5363.61,
+  pointOfSaleId: "d4135bd5-49b4-4276-b780-896bf12d383c",
+  registerId: "111e54dc-5cfe-4382-a753-6095504a3761",
+  operatorId: "55b7a5de-33e6-4591-ad08-d4aaa7dec57e",
+  invoiceDate: new Date("2026-09-30"),
+  dueDate: new Date("2025-12-09"),
+  serviceFrom: new Date("2025-07-01"),
+  serviceTo: new Date("2025-08-08"),
+  currency: "PES",
+  exchangeRate: 1672.45,
+  sameCurrencyPayment: false,
   notes: "<value>",
-  subtotal: 610118,
-  taxAmount: 592817,
-  total: 118518,
-  exemptAmount: 259926,
-  nonTaxedAmount: 359686,
-  tributesAmount: 55225,
-  nationalPerceptionAmount: 513198,
-  grossIncomePerceptionAmount: 799774,
+  subtotal: 592817,
+  taxAmount: 118518,
+  total: 259926,
+  exemptAmount: 359686,
+  nonTaxedAmount: 55225,
+  tributesAmount: 513198,
+  nationalPerceptionAmount: 799774,
+  grossIncomePerceptionAmount: 141086,
   grossIncomeTaxBreakdown: [],
-  municipalPerceptionAmount: 288742,
-  internalTributeAmount: 14685,
-  uncategorizedVatPerceptionAmount: 992142,
-  otherTributeAmount: 649650,
-  discountType: "percentage",
-  discountValue: 2374.99,
-  discountAmount: 770571,
-  roundingAdjustment: 689920,
+  municipalPerceptionAmount: 14685,
+  internalTributeAmount: 992142,
+  uncategorizedVatPerceptionAmount: 649650,
+  otherTributeAmount: 481065,
+  discountType: "amount",
+  discountValue: 7705.71,
+  discountAmount: 689920,
   balance: 5855.06,
   isFullAmountPending: true,
   items: [
@@ -66,17 +65,20 @@ let value: NormalizedSale = {
   ],
   paymentMethods: [
     {
-      methodId: "ad149a58-f75a-4c6e-8bfa-6f8b9d218c82",
-      amount: 901329,
-      description:
-        "coincide hm onto depot doubtfully excitedly square aha scary plugin",
+      methodId: "ae006673-b6b7-4a0d-9819-06929677cdaf",
+      amount: 186311,
+      description: "miserably oof throughout subsidy er floodlight",
       reference: "<value>",
-      feeAmount: 761591,
-      terminalId: null,
+      feeAmount: 229932,
+      terminalId: "8514dae7-5282-4b11-8e2d-ef058a36bb27",
       cardBatchNumber: "<value>",
       cardCouponNumber: "<value>",
       cardInstallmentPlanCode: "<value>",
       cardBrand: "<value>",
+      cashSource: {
+        type: "safe",
+        id: "d6fcb9e4-63c1-459b-9c2f-ed437ee521e3",
+      },
     },
   ],
 };
@@ -88,7 +90,7 @@ let value: NormalizedSale = {
 | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
 | `customerId`                                                                   | *string*                                                                       | :heavy_check_mark:                                                             | N/A                                                                            |
 | `customerTaxCategoryOverride`                                                  | *string*                                                                       | :heavy_check_mark:                                                             | N/A                                                                            |
-| `voucherType`                                                                  | *number*                                                                       | :heavy_check_mark:                                                             | N/A                                                                            |
+| `voucherType`                                                                  | *any*                                                                          | :heavy_check_mark:                                                             | N/A                                                                            |
 | `pointOfSaleId`                                                                | *string*                                                                       | :heavy_check_mark:                                                             | N/A                                                                            |
 | `registerId`                                                                   | *string*                                                                       | :heavy_check_mark:                                                             | N/A                                                                            |
 | `operatorId`                                                                   | *string*                                                                       | :heavy_check_mark:                                                             | N/A                                                                            |
@@ -116,8 +118,7 @@ let value: NormalizedSale = {
 | `discountType`                                                                 | [models.ApiSharedEnum539fdceccc](../models/api-shared-enum539fdceccc.md)       | :heavy_check_mark:                                                             | N/A                                                                            |
 | `discountValue`                                                                | *number*                                                                       | :heavy_check_mark:                                                             | N/A                                                                            |
 | `discountAmount`                                                               | *number*                                                                       | :heavy_check_mark:                                                             | N/A                                                                            |
-| `roundingAdjustment`                                                           | *number*                                                                       | :heavy_check_mark:                                                             | N/A                                                                            |
 | `balance`                                                                      | *number*                                                                       | :heavy_check_mark:                                                             | N/A                                                                            |
 | `isFullAmountPending`                                                          | *boolean*                                                                      | :heavy_check_mark:                                                             | N/A                                                                            |
 | `items`                                                                        | [models.ApiSharedObject55e2bcf4a7](../models/api-shared-object55e2bcf4a7.md)[] | :heavy_check_mark:                                                             | N/A                                                                            |
-| `paymentMethods`                                                               | [models.ApiSharedObject43ed7be04f](../models/api-shared-object43ed7be04f.md)[] | :heavy_check_mark:                                                             | N/A                                                                            |
+| `paymentMethods`                                                               | [models.ApiSharedObjecte4ddc41067](../models/api-shared-objecte4ddc41067.md)[] | :heavy_check_mark:                                                             | N/A                                                                            |

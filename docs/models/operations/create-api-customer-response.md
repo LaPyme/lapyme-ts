@@ -6,7 +6,20 @@
 import { CreateApiCustomerResponse } from "lapyme/models/operations";
 
 let value: CreateApiCustomerResponse = {
-  headers: {},
+  headers: {
+    "key": [
+      "<value 1>",
+    ],
+    "key1": [
+      "<value 1>",
+      "<value 2>",
+    ],
+    "key2": [
+      "<value 1>",
+      "<value 2>",
+      "<value 3>",
+    ],
+  },
   result: {
     requestId: "<id>",
     data: {
@@ -21,41 +34,43 @@ let value: CreateApiCustomerResponse = {
         address: "26418 Stephania Crest",
         apartment: "<value>",
         city: null,
+        deliveryCarrier: "<value>",
+        deliveryAddress: "<value>",
         taxId: "<id>",
         taxIdType: "<value>",
         taxCategory: "<value>",
         contactType: "<value>",
-        defaultPriceListId: "3ef44204-a2a9-4306-bdfa-2cd2629d9cf9",
+        defaultPriceListId: "f44204a2-a930-46df-aa2c-d2629d9cf9ec",
         paymentTermId: "<id>",
+        paymentTermDays: null,
         provinceId: "<id>",
         isActive: true,
-        createdAt: new Date("2026-12-06T15:52:02.232Z"),
-        updatedAt: new Date("2025-03-06T21:49:30.709Z"),
-        country: "Sint Maarten",
-        postalCode: "34952-0442",
-        assignedSalespersonId: "4f2f5f7e-813a-42a4-b570-acbad72b0137",
+        createdAt: new Date("2026-06-05T18:23:40.404Z"),
+        updatedAt: new Date("2026-01-21T09:33:02.217Z"),
+        country: "Gabon",
+        postalCode: "52044-2239",
+        assignedSalespersonId: "f5f7e813-a2a4-4570-aacb-ad72b0137ccf",
         defaultGananciasRegimen: "<value>",
         assignedSalesperson: {
-          id: "b6535c1f-d498-47d7-8820-878768de14f0",
-          fullName: "Austin Ernser",
+          id: "35c1fd49-87d7-4820-a878-768de14f02c8",
+          fullName: "Anna Koss",
         },
         defaultPriceList: {
-          id: "7b92c076-15c8-462c-a45d-c1c88870aac3",
+          id: "2c07615c-862c-445d-8c1c-88870aac3b90",
           name: "<value>",
         },
         salesOverview: {
-          pendingBalance: 6093.53,
-          salesCount: 16507,
-          totalSales: 1995.84,
+          pendingBalance: 2511.31,
+          salesCount: 358505,
+          totalSales: 9809.45,
           recentSales: [],
         },
       },
-      idempotentReplay: true,
+      idempotentReplay: false,
     },
     warnings: [
       "<value 1>",
       "<value 2>",
-      "<value 3>",
     ],
   },
 };
