@@ -7,10 +7,7 @@ import { ListApiCustomersResponse } from "lapyme/models/operations";
 
 let value: ListApiCustomersResponse = {
   headers: {
-    "key": [
-      "<value 1>",
-      "<value 2>",
-    ],
+    "key": [],
   },
   result: {
     requestId: "<id>",
@@ -27,22 +24,25 @@ let value: ListApiCustomersResponse = {
         address: null,
         apartment: "<value>",
         city: "East Cleo",
+        deliveryCarrier: "<value>",
+        deliveryAddress: "<value>",
         taxId: "<id>",
         taxIdType: "<value>",
         taxCategory: "<value>",
         contactType: "<value>",
-        defaultPriceListId: "704cd4d0-0ead-4f05-8d63-3a40ee71fb8d",
-        paymentTermId: null,
+        defaultPriceListId: null,
+        paymentTermId: "<id>",
+        paymentTermDays: 857550,
         provinceId: "<id>",
-        isActive: false,
-        createdAt: new Date("2024-03-20T23:15:47.099Z"),
-        updatedAt: new Date("2025-07-08T04:07:38.854Z"),
+        isActive: true,
+        createdAt: new Date("2024-01-18T05:31:49.690Z"),
+        updatedAt: new Date("2026-10-10T11:33:50.767Z"),
       },
     ],
-    hasMore: true,
+    hasMore: false,
     nextCursor: "<value>",
     object: "list",
-    url: "https://brilliant-distinction.net/",
+    url: "https://apprehensive-fuel.org",
   },
 };
 ```

@@ -19,11 +19,11 @@ let value: ApiProductListResponseData = {
   cost: 5709.68,
   price: 8092.19,
   taxRate: {
-    id: 9545.45,
-    value: 8570.91,
+    id: 6059.87,
+    value: 8886.91,
   },
   defaultSupplier: {
-    id: "e2939b22-6734-418f-802e-69ca6e74fd88",
+    id: "37ba6994-31a0-4859-8f3d-6fb82691199d",
     name: "<value>",
   },
   productType: "product",

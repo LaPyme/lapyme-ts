@@ -9,9 +9,9 @@ import { safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import {
-  ApiSharedObjecta6cd4a0a4e,
-  ApiSharedObjecta6cd4a0a4e$inboundSchema,
-} from "./api-shared-objecta6cd4a0a4e.js";
+  ApiSharedObject92f376ac7c,
+  ApiSharedObject92f376ac7c$inboundSchema,
+} from "./api-shared-object92f376ac7c.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type AffectedProduct = {
@@ -28,7 +28,7 @@ export type Receipt = {
 
 export type ApiPurchaseOrderReceiptResponseData = {
   receipt: Receipt;
-  purchaseOrder: ApiSharedObjecta6cd4a0a4e;
+  purchaseOrder: ApiSharedObject92f376ac7c;
   idempotentReplay: boolean;
 };
 
@@ -97,7 +97,7 @@ export const ApiPurchaseOrderReceiptResponseData$inboundSchema: z.ZodMiniType<
 > = z.pipe(
   z.object({
     receipt: z.lazy(() => Receipt$inboundSchema),
-    purchase_order: ApiSharedObjecta6cd4a0a4e$inboundSchema,
+    purchase_order: ApiSharedObject92f376ac7c$inboundSchema,
     idempotent_replay: types.boolean(),
   }),
   z.transform((v) => {

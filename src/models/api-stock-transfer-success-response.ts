@@ -9,13 +9,13 @@ import { safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import {
-  ApiSharedEnumc66b046f05,
-  ApiSharedEnumc66b046f05$inboundSchema,
-} from "./api-shared-enumc66b046f05.js";
+  ApiSharedEnum736f0d077b,
+  ApiSharedEnum736f0d077b$inboundSchema,
+} from "./api-shared-enum736f0d077b.js";
 import {
-  ApiSharedObject13f8ed82da,
-  ApiSharedObject13f8ed82da$inboundSchema,
-} from "./api-shared-object13f8ed82da.js";
+  ApiSharedObject2365cf4435,
+  ApiSharedObject2365cf4435$inboundSchema,
+} from "./api-shared-object2365cf4435.js";
 import {
   ApiSharedObject8aeeceaf0f,
   ApiSharedObject8aeeceaf0f$inboundSchema,
@@ -35,14 +35,14 @@ export type Transfer = {
   formattedTransferNumber: string | null;
   transferDate: Date;
   notes: string | null;
-  status: ApiSharedEnumc66b046f05;
+  status: ApiSharedEnum736f0d077b;
   createdAt: Date;
   updatedAt: Date;
   createdBy: string;
   updatedBy: string | null;
   sourceWarehouse: ApiSharedObject8aeeceaf0f;
   targetWarehouse: ApiSharedObject8aeeceaf0f;
-  items: Array<ApiSharedObject13f8ed82da>;
+  items: Array<ApiSharedObject2365cf4435>;
 };
 
 export type ApiStockTransferSuccessResponseData = {
@@ -67,14 +67,14 @@ export const Transfer$inboundSchema: z.ZodMiniType<Transfer, unknown> = z.pipe(
     formatted_transfer_number: types.nullable(types.string()),
     transfer_date: types.date(),
     notes: types.nullable(types.string()),
-    status: ApiSharedEnumc66b046f05$inboundSchema,
+    status: ApiSharedEnum736f0d077b$inboundSchema,
     created_at: types.date(),
     updated_at: types.date(),
     created_by: types.string(),
     updated_by: types.nullable(types.string()),
     source_warehouse: ApiSharedObject8aeeceaf0f$inboundSchema,
     target_warehouse: ApiSharedObject8aeeceaf0f$inboundSchema,
-    items: z.array(ApiSharedObject13f8ed82da$inboundSchema),
+    items: z.array(ApiSharedObject2365cf4435$inboundSchema),
   }),
   z.transform((v) => {
     return remap$(v, {

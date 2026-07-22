@@ -8,7 +8,8 @@ import { GetApiPurchaseOrderByIdResponse } from "lapyme/models/operations";
 let value: GetApiPurchaseOrderByIdResponse = {
   headers: {
     "key": [],
-    "key1": [
+    "key1": [],
+    "key2": [
       "<value 1>",
       "<value 2>",
       "<value 3>",
@@ -26,30 +27,53 @@ let value: GetApiPurchaseOrderByIdResponse = {
       expectedDate: null,
       currency: "Pataca",
       supplier: {
-        id: "ebacdb2a-1c5e-4eee-a30f-5983b0f8c084",
+        id: "a45a7fd5-160a-41a7-baa2-5367b011b0b2",
         name: "<value>",
         description:
-          "fairly which pro upliftingly but super whereas guacamole between",
-        email: "Monserrat_Kovacek@yahoo.com",
-        phone: "1-498-218-0382 x3346",
+          "cod stable snow our famously switchboard as from likewise stiff",
+        email: null,
+        phone: "802.394.0907",
         taxIdType: "<value>",
         taxId: "<id>",
-        taxCategory: "<value>",
+        taxCategory: null,
         paymentTermId: "<id>",
-        address: "298 Goldner Views",
+        paymentTermDays: 198666,
+        address: null,
         apartment: "<value>",
-        city: "South Marcelinofurt",
+        city: "Port Werner",
         province: "<value>",
-        postalCode: "46341",
+        postalCode: "65289",
       },
       warehouse: {
-        id: "1d81895d-9d7f-44ea-9636-e0e6181dee4f",
+        id: "cb58faea-196f-4cef-8904-b7b7e4f63e46",
         name: "<value>",
       },
-      createdAt: new Date("2026-05-06T11:30:52.684Z"),
-      warehouseId: "26f43006-9dbb-4033-8332-b7eb47bae627",
+      createdAt: new Date("2026-03-27T15:33:20.950Z"),
+      warehouseId: "acdb2a1c-5eee-4e30-bf59-83b0f8c0848a",
       notes: "<value>",
-      items: [],
+      items: [
+        {
+          id: "d8043432-f71d-4fa4-a003-b0b2207e252c",
+          orderedQuantity: 2660.34,
+          receivedQuantity: 3453.08,
+          expectedUnitCost: 429535,
+          product: {
+            id: "577bd322-476c-4496-99b7-68ba81e5a8b0",
+            name: "<value>",
+            sku: "<value>",
+            productType: "combo",
+            variantOptions: {
+              "key": "<value>",
+              "key1": "<value>",
+            },
+            optionNames: [
+              "<value 1>",
+              "<value 2>",
+              "<value 3>",
+            ],
+          },
+        },
+      ],
     },
   },
 };

@@ -6,7 +6,17 @@
 import { GetApiCustomerByIdResponse } from "lapyme/models/operations";
 
 let value: GetApiCustomerByIdResponse = {
-  headers: {},
+  headers: {
+    "key": [
+      "<value 1>",
+      "<value 2>",
+    ],
+    "key1": [
+      "<value 1>",
+      "<value 2>",
+    ],
+    "key2": [],
+  },
   result: {
     requestId: "<id>",
     data: {
@@ -20,32 +30,32 @@ let value: GetApiCustomerByIdResponse = {
       address: null,
       apartment: "<value>",
       city: "Russelfort",
+      deliveryCarrier: "<value>",
+      deliveryAddress: "<value>",
       taxId: "<id>",
       taxIdType: "<value>",
       taxCategory: "<value>",
       contactType: "<value>",
-      defaultPriceListId: "4e5d8f5f-9975-4f9d-b4b5-59f89bf3a605",
+      defaultPriceListId: "5d8f5f99-75f9-4d4b-b559-f89bf3a605d8",
       paymentTermId: "<id>",
-      provinceId: "<id>",
-      isActive: false,
-      createdAt: new Date("2026-03-07T07:59:34.891Z"),
-      updatedAt: new Date("2024-03-07T14:57:22.321Z"),
-      country: "Gabon",
-      postalCode: "44453",
-      assignedSalespersonId: "494130bc-711a-4301-993c-cf06dda22818",
+      paymentTermDays: 726581,
+      provinceId: null,
+      isActive: true,
+      createdAt: new Date("2025-03-07T18:25:52.356Z"),
+      updatedAt: new Date("2024-02-02T15:39:44.731Z"),
+      country: "Ireland",
+      postalCode: "34252-1207",
+      assignedSalespersonId: "711a3019-3ccf-406d-bda2-28184fcd2007",
       defaultGananciasRegimen: "<value>",
-      assignedSalesperson: {
-        id: "b6535c1f-d498-47d7-8820-878768de14f0",
-        fullName: "Austin Ernser",
-      },
+      assignedSalesperson: null,
       defaultPriceList: {
-        id: "7b92c076-15c8-462c-a45d-c1c88870aac3",
+        id: "2c07615c-862c-445d-8c1c-88870aac3b90",
         name: "<value>",
       },
       salesOverview: {
-        pendingBalance: 6093.53,
-        salesCount: 16507,
-        totalSales: 1995.84,
+        pendingBalance: 2511.31,
+        salesCount: 358505,
+        totalSales: 9809.45,
         recentSales: [],
       },
     },
