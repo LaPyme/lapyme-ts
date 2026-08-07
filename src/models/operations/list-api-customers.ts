@@ -6,16 +6,9 @@
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
 import { safeParse } from "../../lib/schemas.js";
-import { ClosedEnum } from "../../types/enums.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import * as models from "../index.js";
-
-export const Status = {
-  Active: "active",
-  Inactive: "inactive",
-} as const;
-export type Status = ClosedEnum<typeof Status>;
 
 export type ListApiCustomersRequest = {
   /**
@@ -41,18 +34,13 @@ export type ListApiCustomersRequest = {
   /**
    * Estado lógico del cliente. Puede repetirse o enviarse separado por comas.
    */
-  status?: Array<Status> | undefined;
+  status?: Array<models.ApiSharedEnumd952d5ce8e> | undefined;
 };
 
 export type ListApiCustomersResponse = {
   headers: { [k: string]: Array<string> };
   result: models.ApiCustomerListResponse;
 };
-
-/** @internal */
-export const Status$outboundSchema: z.ZodMiniEnum<typeof Status> = z.enum(
-  Status,
-);
 
 /** @internal */
 export type ListApiCustomersRequest$Outbound = {
@@ -75,7 +63,7 @@ export const ListApiCustomersRequest$outboundSchema: z.ZodMiniType<
     query: z.optional(z.string()),
     search: z.optional(z.string()),
     isActive: z.optional(z.boolean()),
-    status: z.optional(z.array(Status$outboundSchema)),
+    status: z.optional(z.array(models.ApiSharedEnumd952d5ce8e$outboundSchema)),
   }),
   z.transform((v) => {
     return remap$(v, {
