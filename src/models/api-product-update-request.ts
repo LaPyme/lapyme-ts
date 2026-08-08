@@ -20,16 +20,14 @@ import {
   ApiSharedObject6dbe49c4ef$outboundSchema,
 } from "./api-shared-object6dbe49c4ef.js";
 
-export const ApiProductUpdateRequestVisibility = {
+export const Visibility = {
   Both: "both",
   Sales: "sales",
   Purchases: "purchases",
 } as const;
-export type ApiProductUpdateRequestVisibility = ClosedEnum<
-  typeof ApiProductUpdateRequestVisibility
->;
+export type Visibility = ClosedEnum<typeof Visibility>;
 
-export const ApiProductUpdateRequestUnitOfMeasure = {
+export const UnitOfMeasure = {
   Ten: "10",
   Eleven: "11",
   Twelve: "12",
@@ -85,24 +83,31 @@ export const ApiProductUpdateRequestUnitOfMeasure = {
   Eight: "08",
   Nine: "09",
 } as const;
-export type ApiProductUpdateRequestUnitOfMeasure = ClosedEnum<
-  typeof ApiProductUpdateRequestUnitOfMeasure
->;
+export type UnitOfMeasure = ClosedEnum<typeof UnitOfMeasure>;
 
 export type ApiProductUpdateRequest = {
   name?: string | undefined;
   description?: string | null | undefined;
   categoryId?: string | null | undefined;
-  visibility?: ApiProductUpdateRequestVisibility | undefined;
+  visibility?: Visibility | undefined;
+  /**
+   * External product image URL reference. La Pyme displays it best effort and does not copy, ingest, or host the image.
+   */
   imageUrl?: string | null | undefined;
   productType?: ApiSharedEnumff49232140 | undefined;
   sku?: string | undefined;
   barcode?: string | null | undefined;
-  unitOfMeasure?: ApiProductUpdateRequestUnitOfMeasure | undefined;
+  unitOfMeasure?: UnitOfMeasure | undefined;
   currency?: ApiSharedEnum6cfb146157 | undefined;
   cost?: number | undefined;
+  /**
+   * Manual sale price in cents. Mutually exclusive with markup_percentage; send price for manual pricing or markup_percentage for markup pricing.
+   */
   price?: number | undefined;
   promotionalPrice?: number | null | undefined;
+  /**
+   * Markup percentage used to calculate the sale price from cost, tax, and organization rounding rules. Mutually exclusive with price; send null to switch back to manual pricing.
+   */
   markupPercentage?: number | null | undefined;
   taxRateId?: number | undefined;
   isExempt?: boolean | undefined;
@@ -114,14 +119,12 @@ export type ApiProductUpdateRequest = {
 };
 
 /** @internal */
-export const ApiProductUpdateRequestVisibility$outboundSchema: z.ZodMiniEnum<
-  typeof ApiProductUpdateRequestVisibility
-> = z.enum(ApiProductUpdateRequestVisibility);
+export const Visibility$outboundSchema: z.ZodMiniEnum<typeof Visibility> = z
+  .enum(Visibility);
 
 /** @internal */
-export const ApiProductUpdateRequestUnitOfMeasure$outboundSchema: z.ZodMiniEnum<
-  typeof ApiProductUpdateRequestUnitOfMeasure
-> = z.enum(ApiProductUpdateRequestUnitOfMeasure);
+export const UnitOfMeasure$outboundSchema: z.ZodMiniEnum<typeof UnitOfMeasure> =
+  z.enum(UnitOfMeasure);
 
 /** @internal */
 export type ApiProductUpdateRequest$Outbound = {
@@ -157,14 +160,12 @@ export const ApiProductUpdateRequest$outboundSchema: z.ZodMiniType<
     name: z.optional(z.string()),
     description: z.optional(z.nullable(z.string())),
     categoryId: z.optional(z.nullable(z.string())),
-    visibility: z.optional(ApiProductUpdateRequestVisibility$outboundSchema),
+    visibility: z.optional(Visibility$outboundSchema),
     imageUrl: z.optional(z.nullable(z.string())),
     productType: z.optional(ApiSharedEnumff49232140$outboundSchema),
     sku: z.optional(z.string()),
     barcode: z.optional(z.nullable(z.string())),
-    unitOfMeasure: z.optional(
-      ApiProductUpdateRequestUnitOfMeasure$outboundSchema,
-    ),
+    unitOfMeasure: z.optional(UnitOfMeasure$outboundSchema),
     currency: z.optional(ApiSharedEnum6cfb146157$outboundSchema),
     cost: z.optional(z.int()),
     price: z.optional(z.int()),

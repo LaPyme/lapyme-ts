@@ -23,9 +23,8 @@ let value: Sale = {
   nonTaxedAmount: 563132,
   tributesAmount: 403025,
   discountAmount: 447651,
-  roundingAdjustment: 771661,
-  balance: 7123.88,
-  createdAt: new Date("2024-07-25T10:57:15.638Z"),
+  balance: 7716.61,
+  createdAt: new Date("2026-02-19T18:39:18.979Z"),
 };
 ```
 
@@ -50,6 +49,5 @@ let value: Sale = {
 | `nonTaxedAmount`                                                                              | *number*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `tributesAmount`                                                                              | *number*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `discountAmount`                                                                              | *number*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
-| `roundingAdjustment`                                                                          | *number*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `balance`                                                                                     | *number*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `createdAt`                                                                                   | [Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date) | :heavy_check_mark:                                                                            | N/A                                                                                           |
