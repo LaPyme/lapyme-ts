@@ -17,30 +17,64 @@ let value: ApiPurchaseOrderDetailResponse = {
     expectedDate: null,
     currency: "Pataca",
     supplier: {
-      id: "ebacdb2a-1c5e-4eee-a30f-5983b0f8c084",
+      id: "a45a7fd5-160a-41a7-baa2-5367b011b0b2",
       name: "<value>",
       description:
-        "fairly which pro upliftingly but super whereas guacamole between",
-      email: "Monserrat_Kovacek@yahoo.com",
-      phone: "1-498-218-0382 x3346",
+        "cod stable snow our famously switchboard as from likewise stiff",
+      email: null,
+      phone: "802.394.0907",
       taxIdType: "<value>",
       taxId: "<id>",
-      taxCategory: "<value>",
+      taxCategory: null,
       paymentTermId: "<id>",
-      address: "298 Goldner Views",
+      paymentTermDays: 198666,
+      address: null,
       apartment: "<value>",
-      city: "South Marcelinofurt",
+      city: "Port Werner",
       province: "<value>",
-      postalCode: "46341",
+      postalCode: "65289",
     },
     warehouse: {
-      id: "1d81895d-9d7f-44ea-9636-e0e6181dee4f",
+      id: "411cb537-c985-4745-80aa-04cfaf19d969",
       name: "<value>",
     },
-    createdAt: new Date("2026-05-06T11:30:52.684Z"),
-    warehouseId: "26f43006-9dbb-4033-8332-b7eb47bae627",
+    createdAt: new Date("2026-03-27T15:33:20.950Z"),
+    tags: [
+      {
+        object: "tag",
+        id: "d17aba97-5a39-49b6-b021-2a82b75ca998",
+        scope: "purchase_order",
+        name: "<value>",
+        slug: "<value>",
+        color: "yellow",
+        description: "natural huzzah heavenly",
+        archivedAt: new Date("2024-12-06T02:21:59.305Z"),
+        createdAt: new Date("2024-02-28T10:14:14.640Z"),
+        updatedAt: new Date("2025-08-18T02:43:21.277Z"),
+      },
+    ],
+    warehouseId: "cdb2a1c5-eeee-430f-a598-3b0f8c0848ac",
     notes: "<value>",
-    items: [],
+    items: [
+      {
+        id: "eb4c1681-4e2a-40e9-9dc5-2f10a367aa68",
+        orderedQuantity: 8275.54,
+        receivedQuantity: 2939.45,
+        expectedUnitCost: 517221,
+        product: {
+          id: "af6c2da5-90f0-459c-a84f-b366f78187f1",
+          name: "<value>",
+          sku: "<value>",
+          productType: null,
+          variantOptions: {
+            "key": "<value>",
+          },
+          optionNames: [
+            "<value 1>",
+          ],
+        },
+      },
+    ],
   },
 };
 ```
@@ -50,4 +84,4 @@ let value: ApiPurchaseOrderDetailResponse = {
 | Field                                                                        | Type                                                                         | Required                                                                     | Description                                                                  |
 | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
 | `requestId`                                                                  | *string*                                                                     | :heavy_check_mark:                                                           | N/A                                                                          |
-| `data`                                                                       | [models.ApiSharedObjecta6cd4a0a4e](../models/api-shared-objecta6cd4a0a4e.md) | :heavy_check_mark:                                                           | N/A                                                                          |
+| `data`                                                                       | [models.ApiSharedObject3ebe26c85a](../models/api-shared-object3ebe26c85a.md) | :heavy_check_mark:                                                           | N/A                                                                          |
