@@ -7,6 +7,10 @@ import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
 import { ClosedEnum } from "../types/enums.js";
 import {
+  ApiSharedEnum459535dab3,
+  ApiSharedEnum459535dab3$outboundSchema,
+} from "./api-shared-enum459535dab3.js";
+import {
   ApiSharedEnum4e55733f20,
   ApiSharedEnum4e55733f20$outboundSchema,
 } from "./api-shared-enum4e55733f20.js";
@@ -56,6 +60,20 @@ export type ApiSaleTransactionRequestItem = {
   costCenter3Id?: string | undefined;
 };
 
+/**
+ * Origen de efectivo para pagos cash. No combinar con registerId o safeId.
+ */
+export type CashSource = {
+  /**
+   * Tipo de origen de efectivo: caja operativa o caja fuerte.
+   */
+  type: ApiSharedEnum459535dab3;
+  /**
+   * ID de la caja o caja fuerte.
+   */
+  id: string;
+};
+
 export type PaymentMethod = {
   methodId: string;
   amount: number;
@@ -67,15 +85,35 @@ export type PaymentMethod = {
   cardCouponNumber?: string | undefined;
   cardInstallmentPlanCode?: string | undefined;
   cardBrand?: string | undefined;
+  /**
+   * ID de caja para pagos en efectivo. Usá cashSource en integraciones nuevas.
+   */
+  registerId?: string | undefined;
+  /**
+   * ID de caja fuerte para pagos en efectivo. Usá cashSource en integraciones nuevas.
+   */
+  safeId?: string | undefined;
+  /**
+   * Origen de efectivo para pagos cash. No combinar con registerId o safeId.
+   */
+  cashSource?: CashSource | undefined;
 };
 
 export type ApiSaleTransactionRequest = {
   customerId?: string | undefined;
   customerTaxCategoryOverride?: string | undefined;
-  voucherType: number;
+  voucherType: any;
   pointOfSaleId: string;
   registerId?: string | undefined;
   operatorId?: string | undefined;
+  /**
+   * Fuente de integracion externa para buscar/conciliar la venta. Debe enviarse junto con integrationId.
+   */
+  integrationSource?: string | undefined;
+  /**
+   * ID de referencia externa visible en la venta. Debe enviarse junto con integrationSource; no se deriva del header Idempotency-Key.
+   */
+  integrationId?: string | undefined;
   invoiceDate: Date;
   dueDate?: Date | undefined;
   serviceFrom?: Date | undefined;
@@ -101,7 +139,6 @@ export type ApiSaleTransactionRequest = {
   internalTributeAmount?: number | undefined;
   uncategorizedVatPerceptionAmount?: number | undefined;
   otherTributeAmount?: number | undefined;
-  roundingAdjustment?: number | undefined;
   paymentMethods?: Array<PaymentMethod> | undefined;
   isFullAmountPending?: boolean | undefined;
 };
@@ -185,6 +222,25 @@ export function apiSaleTransactionRequestItemToJSON(
 }
 
 /** @internal */
+export type CashSource$Outbound = {
+  type: string;
+  id: string;
+};
+
+/** @internal */
+export const CashSource$outboundSchema: z.ZodMiniType<
+  CashSource$Outbound,
+  CashSource
+> = z.object({
+  type: ApiSharedEnum459535dab3$outboundSchema,
+  id: z.string(),
+});
+
+export function cashSourceToJSON(cashSource: CashSource): string {
+  return JSON.stringify(CashSource$outboundSchema.parse(cashSource));
+}
+
+/** @internal */
 export type PaymentMethod$Outbound = {
   method_id: string;
   amount: number;
@@ -196,6 +252,9 @@ export type PaymentMethod$Outbound = {
   card_coupon_number?: string | undefined;
   card_installment_plan_code?: string | undefined;
   card_brand?: string | undefined;
+  register_id?: string | undefined;
+  safe_id?: string | undefined;
+  cash_source?: CashSource$Outbound | undefined;
 };
 
 /** @internal */
@@ -214,6 +273,9 @@ export const PaymentMethod$outboundSchema: z.ZodMiniType<
     cardCouponNumber: z.optional(z.string()),
     cardInstallmentPlanCode: z.optional(z.string()),
     cardBrand: z.optional(z.string()),
+    registerId: z.optional(z.string()),
+    safeId: z.optional(z.string()),
+    cashSource: z.optional(z.lazy(() => CashSource$outboundSchema)),
   }),
   z.transform((v) => {
     return remap$(v, {
@@ -224,6 +286,9 @@ export const PaymentMethod$outboundSchema: z.ZodMiniType<
       cardCouponNumber: "card_coupon_number",
       cardInstallmentPlanCode: "card_installment_plan_code",
       cardBrand: "card_brand",
+      registerId: "register_id",
+      safeId: "safe_id",
+      cashSource: "cash_source",
     });
   }),
 );
@@ -236,10 +301,12 @@ export function paymentMethodToJSON(paymentMethod: PaymentMethod): string {
 export type ApiSaleTransactionRequest$Outbound = {
   customer_id?: string | undefined;
   customer_tax_category_override?: string | undefined;
-  voucher_type: number;
+  voucher_type: any;
   point_of_sale_id: string;
   register_id?: string | undefined;
   operator_id?: string | undefined;
+  integration_source?: string | undefined;
+  integration_id?: string | undefined;
   invoice_date: string;
   due_date?: string | undefined;
   service_from?: string | undefined;
@@ -267,7 +334,6 @@ export type ApiSaleTransactionRequest$Outbound = {
   internal_tribute_amount?: number | undefined;
   uncategorized_vat_perception_amount?: number | undefined;
   other_tribute_amount?: number | undefined;
-  rounding_adjustment?: number | undefined;
   payment_methods?: Array<PaymentMethod$Outbound> | undefined;
   is_full_amount_pending?: boolean | undefined;
 };
@@ -280,10 +346,12 @@ export const ApiSaleTransactionRequest$outboundSchema: z.ZodMiniType<
   z.object({
     customerId: z.optional(z.string()),
     customerTaxCategoryOverride: z.optional(z.string()),
-    voucherType: z.int(),
+    voucherType: z.any(),
     pointOfSaleId: z.string(),
     registerId: z.optional(z.string()),
     operatorId: z.optional(z.string()),
+    integrationSource: z.optional(z.string()),
+    integrationId: z.optional(z.string()),
     invoiceDate: z.pipe(
       z.date(),
       z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
@@ -325,7 +393,6 @@ export const ApiSaleTransactionRequest$outboundSchema: z.ZodMiniType<
     internalTributeAmount: z.optional(z.int()),
     uncategorizedVatPerceptionAmount: z.optional(z.int()),
     otherTributeAmount: z.optional(z.int()),
-    roundingAdjustment: z.optional(z.int()),
     paymentMethods: z.optional(z.array(z.lazy(() =>
       PaymentMethod$outboundSchema
     ))),
@@ -339,6 +406,8 @@ export const ApiSaleTransactionRequest$outboundSchema: z.ZodMiniType<
       pointOfSaleId: "point_of_sale_id",
       registerId: "register_id",
       operatorId: "operator_id",
+      integrationSource: "integration_source",
+      integrationId: "integration_id",
       invoiceDate: "invoice_date",
       dueDate: "due_date",
       serviceFrom: "service_from",
@@ -359,7 +428,6 @@ export const ApiSaleTransactionRequest$outboundSchema: z.ZodMiniType<
       internalTributeAmount: "internal_tribute_amount",
       uncategorizedVatPerceptionAmount: "uncategorized_vat_perception_amount",
       otherTributeAmount: "other_tribute_amount",
-      roundingAdjustment: "rounding_adjustment",
       paymentMethods: "payment_methods",
       isFullAmountPending: "is_full_amount_pending",
     });
