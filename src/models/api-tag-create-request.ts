@@ -5,16 +5,16 @@
 
 import * as z from "zod/v4-mini";
 import {
+  ApiSharedEnum09f8155a9a,
+  ApiSharedEnum09f8155a9a$outboundSchema,
+} from "./api-shared-enum09f8155a9a.js";
+import {
   ApiSharedEnum599647cb76,
   ApiSharedEnum599647cb76$outboundSchema,
 } from "./api-shared-enum599647cb76.js";
-import {
-  ApiSharedEnuma1951b6358,
-  ApiSharedEnuma1951b6358$outboundSchema,
-} from "./api-shared-enuma1951b6358.js";
 
 export type ApiTagCreateRequest = {
-  scope: ApiSharedEnuma1951b6358;
+  scope: ApiSharedEnum09f8155a9a;
   name: string;
   color?: ApiSharedEnum599647cb76 | null | undefined;
   description?: string | null | undefined;
@@ -33,7 +33,7 @@ export const ApiTagCreateRequest$outboundSchema: z.ZodMiniType<
   ApiTagCreateRequest$Outbound,
   ApiTagCreateRequest
 > = z.object({
-  scope: ApiSharedEnuma1951b6358$outboundSchema,
+  scope: ApiSharedEnum09f8155a9a$outboundSchema,
   name: z.string(),
   color: z.optional(z.nullable(ApiSharedEnum599647cb76$outboundSchema)),
   description: z.optional(z.nullable(z.string())),
