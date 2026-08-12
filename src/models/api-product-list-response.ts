@@ -21,6 +21,10 @@ import {
   ApiSharedEnumff49232140$inboundSchema,
 } from "./api-shared-enumff49232140.js";
 import {
+  ApiSharedObject8a94344083,
+  ApiSharedObject8a94344083$inboundSchema,
+} from "./api-shared-object8a94344083.js";
+import {
   ApiSharedObject8aeeceaf0f,
   ApiSharedObject8aeeceaf0f$inboundSchema,
 } from "./api-shared-object8aeeceaf0f.js";
@@ -41,6 +45,10 @@ export type ApiProductListResponseData = {
   category: ApiSharedObject8aeeceaf0f | null;
   sku: string;
   barcode: string | null;
+  /**
+   * External product image URL reference. La Pyme displays it best effort and does not copy, ingest, or host the image.
+   */
+  imageUrl: string | null;
   currency: string;
   cost: number;
   price: number;
@@ -55,6 +63,7 @@ export type ApiProductListResponseData = {
   priceSource?: ApiSharedEnumfe93f70a59 | undefined;
   appliedPriceList?: ApiSharedObjectfc277c542a | undefined;
   object: "product";
+  tags: Array<ApiSharedObject8a94344083>;
 };
 
 export type ApiProductListResponse = {
@@ -84,6 +93,7 @@ export const ApiProductListResponseData$inboundSchema: z.ZodMiniType<
     category: types.nullable(ApiSharedObject8aeeceaf0f$inboundSchema),
     sku: types.string(),
     barcode: types.nullable(types.string()),
+    image_url: types.nullable(types.string()),
     currency: types.string(),
     cost: types.number(),
     price: types.number(),
@@ -98,9 +108,11 @@ export const ApiProductListResponseData$inboundSchema: z.ZodMiniType<
     price_source: types.optional(ApiSharedEnumfe93f70a59$inboundSchema),
     applied_price_list: types.optional(ApiSharedObjectfc277c542a$inboundSchema),
     object: types.literal("product"),
+    tags: z.array(ApiSharedObject8a94344083$inboundSchema),
   }),
   z.transform((v) => {
     return remap$(v, {
+      "image_url": "imageUrl",
       "tax_rate": "taxRate",
       "default_supplier": "defaultSupplier",
       "product_type": "productType",
