@@ -13,17 +13,18 @@ let value: NormalizedPurchase = {
   accountDate: "<value>",
   dueDate: "<value>",
   paymentTermId: "days_15",
-  importDocumentRole: "customs_dispatch_reversal",
-  importSourcePurchaseId: "7abbff3d-142a-478a-8e1b-925596c73439",
-  importNationalizationStatus: "pending_nationalization",
-  customsDispatchNumber: null,
-  warehouseId: "5c3e8991-6934-4b63-b306-6ac7285832fc",
-  productsReceived: true,
+  paymentTermDays: 949969,
+  importDocumentRole: "customs_dispatch",
+  importSourcePurchaseId: "bbff3d14-2a78-4ae1-8b92-5596c7343921",
+  importNationalizationStatus: null,
+  customsDispatchNumber: "<value>",
+  warehouseId: "c3e89916-934b-4633-9066-ac7285832fce",
+  productsReceived: false,
   updateProductVariantCost: false,
   currency: "DOL",
-  exchangeRate: 7057.23,
-  subtotal: 548070,
-  taxAmount: 16680,
+  exchangeRate: 2847.14,
+  subtotal: 661968,
+  taxAmount: null,
   total: 214005,
   discount: 280520,
   exemptAmount: 172985,
@@ -37,7 +38,32 @@ let value: NormalizedPurchase = {
   otherTaxAmount: null,
   notes: "<value>",
   pdfPath: "<value>",
-  items: [],
+  manualAccountAllocations: {},
+  items: [
+    {
+      productId: "202ab2e5-5165-43e5-9550-c29815430426",
+      productName: null,
+      sku: "<value>",
+      name: "<value>",
+      quantity: 6456.6,
+      unitCost: 258881,
+      subtotal: 336656,
+      total: 919753,
+      taxRateId: 923124,
+      isExempt: true,
+      discountPercentage: 5340.75,
+      purchaseOrderItemId: "ce3b9ccc-78cd-45ed-9a72-4a7f7daee21c",
+      vatCategory: "fixed_assets",
+      accountId: "90e810e3-7492-43d2-80c5-715e41655997",
+      accountName: "<value>",
+      costCenter1Id: null,
+      costCenter1Name: "<value>",
+      costCenter2Id: null,
+      costCenter2Name: "<value>",
+      costCenter3Id: null,
+      costCenter3Name: "<value>",
+    },
+  ],
 };
 ```
 
@@ -52,6 +78,7 @@ let value: NormalizedPurchase = {
 | `accountDate`                                                                  | *string*                                                                       | :heavy_check_mark:                                                             | Fecha contable de la compra en formato YYYY-MM-DD.                             |
 | `dueDate`                                                                      | *string*                                                                       | :heavy_check_mark:                                                             | Fecha de vencimiento en formato YYYY-MM-DD.                                    |
 | `paymentTermId`                                                                | [models.ApiSharedEnumd34af90520](../models/api-shared-enumd34af90520.md)       | :heavy_check_mark:                                                             | N/A                                                                            |
+| `paymentTermDays`                                                              | *number*                                                                       | :heavy_check_mark:                                                             | N/A                                                                            |
 | `importDocumentRole`                                                           | [models.ApiSharedEnum9e7af09974](../models/api-shared-enum9e7af09974.md)       | :heavy_check_mark:                                                             | Rol del comprobante dentro del flujo de importacion.                           |
 | `importSourcePurchaseId`                                                       | *string*                                                                       | :heavy_check_mark:                                                             | ID de la factura comercial asociada al despacho aduanero.                      |
 | `importNationalizationStatus`                                                  | [models.ApiSharedEnumf0d69c3d87](../models/api-shared-enumf0d69c3d87.md)       | :heavy_check_mark:                                                             | Estado de nacionalizacion de la factura comercial de importacion.              |
@@ -76,4 +103,5 @@ let value: NormalizedPurchase = {
 | `otherTaxAmount`                                                               | *number*                                                                       | :heavy_check_mark:                                                             | N/A                                                                            |
 | `notes`                                                                        | *string*                                                                       | :heavy_check_mark:                                                             | N/A                                                                            |
 | `pdfPath`                                                                      | *string*                                                                       | :heavy_check_mark:                                                             | N/A                                                                            |
-| `items`                                                                        | [models.ApiSharedObjectedd0c22535](../models/api-shared-objectedd0c22535.md)[] | :heavy_check_mark:                                                             | N/A                                                                            |
+| `manualAccountAllocations`                                                     | Record<string, *string*>                                                       | :heavy_check_mark:                                                             | N/A                                                                            |
+| `items`                                                                        | [models.ApiSharedObjectbf19ed87b4](../models/api-shared-objectbf19ed87b4.md)[] | :heavy_check_mark:                                                             | N/A                                                                            |
