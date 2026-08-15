@@ -1,6 +1,6 @@
 # SalesReportRequestDimensionFilters
 
-Filtros por dimensión. Cada clave debe ser una dimensión filtrable para la fuente. También acepta product_metafield:<key> para campos personalizados select de producto. El valor es un array de IDs o valores a incluir.
+Filtros por dimensión. Cada clave debe ser una dimensión filtrable para la fuente. También acepta product_metafield:<key> para campos personalizados select de producto y contact_metafield:<key> para campos personalizados select de contacto cuando la fuente lo soporta. El valor es un array de IDs o valores a incluir.
 
 ## Example Usage
 
@@ -36,7 +36,12 @@ let value: SalesReportRequestDimensionFilters = {};
 | `currency`               | *string*[]               | :heavy_minus_sign:       | N/A                      |
 | `paymentStatus`          | *string*[]               | :heavy_minus_sign:       | N/A                      |
 | `caeStatus`              | *string*[]               | :heavy_minus_sign:       | N/A                      |
+| `invoiceStatus`          | *string*[]               | :heavy_minus_sign:       | N/A                      |
 | `formattedInvoiceNumber` | *string*[]               | :heavy_minus_sign:       | N/A                      |
-| `paymentMethod`          | *string*[]               | :heavy_minus_sign:       | N/A                      |
 | `taxRate`                | *string*[]               | :heavy_minus_sign:       | N/A                      |
 | `saleLineType`           | *string*[]               | :heavy_minus_sign:       | N/A                      |
+| `customerStatus`         | *string*[]               | :heavy_minus_sign:       | N/A                      |
+| `productStatus`          | *string*[]               | :heavy_minus_sign:       | N/A                      |
+| `warehouseStatus`        | *string*[]               | :heavy_minus_sign:       | N/A                      |
+| `pointOfSaleStatus`      | *string*[]               | :heavy_minus_sign:       | N/A                      |
+| `registerStatus`         | *string*[]               | :heavy_minus_sign:       | N/A                      |
