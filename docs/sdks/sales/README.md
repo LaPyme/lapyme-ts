@@ -83,7 +83,7 @@ run();
 
 ## create
 
-Registra una venta y devuelve la operación creada junto con sus efectos fiscales, de stock, pagos y contabilidad.
+Registra una venta y devuelve la operación creada junto con sus efectos fiscales, de stock, pagos y contabilidad. Idempotency-Key solo protege reintentos; si necesitás guardar una referencia externa visible, enviá integration_source e integration_id en el cuerpo.
 
 ### Example Usage: created
 
@@ -228,6 +228,8 @@ async function run() {
       customerId: "550e8400-e29b-41d4-a716-446655440101",
       voucherType: 6,
       pointOfSaleId: "550e8400-e29b-41d4-a716-446655440002",
+      integrationSource: "ERP",
+      integrationId: "SO-10045",
       invoiceDate: new Date("2026-04-18"),
       dueDate: new Date("2026-04-18"),
       currency: "PES",
@@ -244,6 +246,10 @@ async function run() {
         {
           methodId: "550e8400-e29b-41d4-a716-446655440301",
           amount: 25000,
+          cashSource: {
+            type: "register",
+            id: "550e8400-e29b-41d4-a716-446655440701",
+          },
         },
       ],
     },
@@ -276,6 +282,8 @@ async function run() {
       customerId: "550e8400-e29b-41d4-a716-446655440101",
       voucherType: 6,
       pointOfSaleId: "550e8400-e29b-41d4-a716-446655440002",
+      integrationSource: "ERP",
+      integrationId: "SO-10045",
       invoiceDate: new Date("2026-04-18"),
       dueDate: new Date("2026-04-18"),
       currency: "PES",
@@ -292,6 +300,10 @@ async function run() {
         {
           methodId: "550e8400-e29b-41d4-a716-446655440301",
           amount: 25000,
+          cashSource: {
+            type: "register",
+            id: "550e8400-e29b-41d4-a716-446655440701",
+          },
         },
       ],
     },
