@@ -34,7 +34,7 @@ export class Products extends ClientSDK {
    * Crear producto
    *
    * @remarks
-   * Crea un producto, servicio, combo o kit con su información comercial y de inventario.
+   * Crea un producto simple, servicio, combo o kit, o un producto con hasta tres opciones y 250 variantes. En la creación con variantes, cada variante define su combinación, SKU, precios y stock inicial.
    */
   async create(
     request: operations.CreateApiProductRequest,

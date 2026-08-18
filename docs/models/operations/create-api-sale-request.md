@@ -8,16 +8,11 @@ import { CreateApiSaleRequest } from "lapyme/models/operations";
 let value: CreateApiSaleRequest = {
   idempotencyKey: "<value>",
   body: {
-    voucherType: 821807,
-    pointOfSaleId: "7dc1850a-d657-4b90-bf9a-99303425331f",
-    invoiceDate: new Date("2024-01-09"),
+    voucherType: 4793.8,
+    pointOfSaleId: "dc1850ad-657b-490f-89a9-9303425331fe",
+    invoiceDate: new Date("2025-08-08"),
     currency: "DOL",
-    items: [
-      {
-        quantity: 462.52,
-        unitPrice: 173178,
-      },
-    ],
+    items: [],
   },
 };
 ```
