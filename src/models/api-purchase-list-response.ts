@@ -13,6 +13,10 @@ import {
   ApiSharedEnum8d46e1ec20$inboundSchema,
 } from "./api-shared-enum8d46e1ec20.js";
 import {
+  ApiSharedObject8a94344083,
+  ApiSharedObject8a94344083$inboundSchema,
+} from "./api-shared-object8a94344083.js";
+import {
   ApiSharedObjectf28d5cf256,
   ApiSharedObjectf28d5cf256$inboundSchema,
 } from "./api-shared-objectf28d5cf256.js";
@@ -45,6 +49,7 @@ export type ApiPurchaseListResponseData = {
   supplierInvoiceNumber: string | null;
   createdAt: Date;
   supplier: ApiSharedObjectf28d5cf256 | null;
+  tags: Array<ApiSharedObject8a94344083>;
 };
 
 export type ApiPurchaseListResponse = {
@@ -82,6 +87,7 @@ export const ApiPurchaseListResponseData$inboundSchema: z.ZodMiniType<
     supplier_invoice_number: types.nullable(types.string()),
     created_at: types.date(),
     supplier: types.nullable(ApiSharedObjectf28d5cf256$inboundSchema),
+    tags: z.array(ApiSharedObject8a94344083$inboundSchema),
   }),
   z.transform((v) => {
     return remap$(v, {
