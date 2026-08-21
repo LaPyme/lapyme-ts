@@ -29,6 +29,10 @@ import {
   ApiSharedObject3c43192c61$inboundSchema,
 } from "./api-shared-object3c43192c61.js";
 import {
+  ApiSharedObjectbf19ed87b4,
+  ApiSharedObjectbf19ed87b4$inboundSchema,
+} from "./api-shared-objectbf19ed87b4.js";
+import {
   ApiSharedObjectc671832641,
   ApiSharedObjectc671832641$inboundSchema,
 } from "./api-shared-objectc671832641.js";
@@ -36,10 +40,6 @@ import {
   ApiSharedObjectdafaa4a9ee,
   ApiSharedObjectdafaa4a9ee$inboundSchema,
 } from "./api-shared-objectdafaa4a9ee.js";
-import {
-  ApiSharedObjectedd0c22535,
-  ApiSharedObjectedd0c22535$inboundSchema,
-} from "./api-shared-objectedd0c22535.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type NormalizedPurchase = {
@@ -62,6 +62,7 @@ export type NormalizedPurchase = {
    */
   dueDate: string | null;
   paymentTermId: ApiSharedEnumd34af90520 | null;
+  paymentTermDays: number | null;
   /**
    * Rol del comprobante dentro del flujo de importacion.
    */
@@ -98,7 +99,8 @@ export type NormalizedPurchase = {
   otherTaxAmount: number | null;
   notes: string | null;
   pdfPath: string | null;
-  items: Array<ApiSharedObjectedd0c22535>;
+  manualAccountAllocations: { [k: string]: string };
+  items: Array<ApiSharedObjectbf19ed87b4>;
 };
 
 export type ApiPurchaseTransactionSuccessResponseProjectedEffects = {
@@ -133,6 +135,7 @@ export const NormalizedPurchase$inboundSchema: z.ZodMiniType<
     account_date: types.nullable(types.string()),
     due_date: types.nullable(types.string()),
     payment_term_id: types.nullable(ApiSharedEnumd34af90520$inboundSchema),
+    payment_term_days: types.nullable(types.number()),
     import_document_role: types.nullable(ApiSharedEnum9e7af09974$inboundSchema),
     import_source_purchase_id: types.nullable(types.string()),
     import_nationalization_status: types.nullable(
@@ -159,7 +162,8 @@ export const NormalizedPurchase$inboundSchema: z.ZodMiniType<
     other_tax_amount: types.nullable(types.number()),
     notes: types.nullable(types.string()),
     pdf_path: types.nullable(types.string()),
-    items: z.array(ApiSharedObjectedd0c22535$inboundSchema),
+    manual_account_allocations: z.record(z.string(), types.string()),
+    items: z.array(ApiSharedObjectbf19ed87b4$inboundSchema),
   }),
   z.transform((v) => {
     return remap$(v, {
@@ -170,6 +174,7 @@ export const NormalizedPurchase$inboundSchema: z.ZodMiniType<
       "account_date": "accountDate",
       "due_date": "dueDate",
       "payment_term_id": "paymentTermId",
+      "payment_term_days": "paymentTermDays",
       "import_document_role": "importDocumentRole",
       "import_source_purchase_id": "importSourcePurchaseId",
       "import_nationalization_status": "importNationalizationStatus",
@@ -189,6 +194,7 @@ export const NormalizedPurchase$inboundSchema: z.ZodMiniType<
       "internal_tax_amount": "internalTaxAmount",
       "other_tax_amount": "otherTaxAmount",
       "pdf_path": "pdfPath",
+      "manual_account_allocations": "manualAccountAllocations",
     });
   }),
 );
