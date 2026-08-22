@@ -23,6 +23,20 @@ let value: ApiPurchaseListResponseData = {
     id: "fd77c624-8fc6-42ba-a044-fd4ea2b29db8",
     name: "<value>",
   },
+  tags: [
+    {
+      object: "tag",
+      id: "d17aba97-5a39-49b6-b021-2a82b75ca998",
+      scope: "purchase_order",
+      name: "<value>",
+      slug: "<value>",
+      color: "yellow",
+      description: "natural huzzah heavenly",
+      archivedAt: new Date("2024-12-06T02:21:59.305Z"),
+      createdAt: new Date("2024-02-28T10:14:14.640Z"),
+      updatedAt: new Date("2025-08-18T02:43:21.277Z"),
+    },
+  ],
 };
 ```
 
@@ -44,3 +58,4 @@ let value: ApiPurchaseListResponseData = {
 | `supplierInvoiceNumber`                                                                       | *string*                                                                                      | :heavy_check_mark:                                                                            | Numero de comprobante del proveedor. Hasta 120 caracteres.                                    |
 | `createdAt`                                                                                   | [Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date) | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `supplier`                                                                                    | [models.ApiSharedObjectf28d5cf256](../models/api-shared-objectf28d5cf256.md)                  | :heavy_check_mark:                                                                            | N/A                                                                                           |
+| `tags`                                                                                        | [models.ApiSharedObject8a94344083](../models/api-shared-object8a94344083.md)[]                | :heavy_check_mark:                                                                            | N/A                                                                                           |
