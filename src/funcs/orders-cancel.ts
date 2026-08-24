@@ -30,6 +30,9 @@ import { Result } from "../types/fp.js";
 
 /**
  * Cancelar pedido
+ *
+ * @remarks
+ * Cancela un pedido elegible y devuelve el estado persistido después de aplicar sus efectos de cancelación.
  */
 export function ordersCancel(
   client: LapymeCore,
