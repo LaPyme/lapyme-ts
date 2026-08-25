@@ -36,7 +36,7 @@ export type ReportQueryResponseDateBasis = OpenEnum<
   typeof ReportQueryResponseDateBasis
 >;
 
-export type Metadata = {
+export type ReportQueryResponseMetadata = {
   source: ApiSharedEnum07ee8fd91e;
   dimensions: Array<string>;
   measures: Array<string>;
@@ -50,7 +50,7 @@ export type ReportQueryResponseData = {
    * Aggregated totals for all rows. Present only when `includeTotals: true` is sent.
    */
   totals: { [k: string]: number } | null;
-  metadata: Metadata;
+  metadata: ReportQueryResponseMetadata;
 };
 
 export type ReportQueryResponse = {
@@ -110,7 +110,10 @@ export const ReportQueryResponseDateBasis$inboundSchema: z.ZodMiniType<
 > = openEnums.inboundSchema(ReportQueryResponseDateBasis);
 
 /** @internal */
-export const Metadata$inboundSchema: z.ZodMiniType<Metadata, unknown> = z.pipe(
+export const ReportQueryResponseMetadata$inboundSchema: z.ZodMiniType<
+  ReportQueryResponseMetadata,
+  unknown
+> = z.pipe(
   z.object({
     source: ApiSharedEnum07ee8fd91e$inboundSchema,
     dimensions: z.array(types.string()),
@@ -127,13 +130,13 @@ export const Metadata$inboundSchema: z.ZodMiniType<Metadata, unknown> = z.pipe(
   }),
 );
 
-export function metadataFromJSON(
+export function reportQueryResponseMetadataFromJSON(
   jsonString: string,
-): SafeParseResult<Metadata, SDKValidationError> {
+): SafeParseResult<ReportQueryResponseMetadata, SDKValidationError> {
   return safeParse(
     jsonString,
-    (x) => Metadata$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'Metadata' from JSON`,
+    (x) => ReportQueryResponseMetadata$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ReportQueryResponseMetadata' from JSON`,
   );
 }
 
@@ -144,7 +147,7 @@ export const ReportQueryResponseData$inboundSchema: z.ZodMiniType<
 > = z.object({
   rows: z.array(z.lazy(() => Row$inboundSchema)),
   totals: types.nullable(z.record(z.string(), types.number())),
-  metadata: z.lazy(() => Metadata$inboundSchema),
+  metadata: z.lazy(() => ReportQueryResponseMetadata$inboundSchema),
 });
 
 export function reportQueryResponseDataFromJSON(

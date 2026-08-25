@@ -39,31 +39,66 @@ let value: ApiOrderDetailResponse = {
       },
     ],
     pendingPreparationWarehouseId: "9a3998fe-a4a0-4b44-a943-36fea01a3326",
+    preparationGroups: [
+      {
+        id: "0161b458-7546-48e0-96ce-e8a835d0be4c",
+        status: "open",
+        warehouseId: "c143f3dc-be40-422e-9c3b-e36ec45ecdf8",
+        warehouseName: null,
+        deliveryMethod: "pickup",
+        requestedAt: new Date("2025-04-17T04:45:48.986Z"),
+        startedAt: new Date("2025-08-04T08:03:25.563Z"),
+        closedAt: new Date("2025-05-02T05:51:43.538Z"),
+        cancelledAt: new Date("2025-12-06T00:04:16.536Z"),
+        notes: "<value>",
+        lines: [
+          {
+            id: "0d9a5512-a86c-43a6-9f84-ae1caf124b49",
+            orderLineId: "99f766d8-c073-4e9a-b7d4-4da26583e985",
+            productId: "18ab144a-35f0-4dfa-858e-45ea0927e6d7",
+            productName: "<value>",
+            sku: "<value>",
+            quantity: 579153,
+            fulfilledQuantity: 475821,
+            cancelledQuantity: 446755,
+            pendingQuantity: 344893,
+          },
+        ],
+      },
+    ],
     preparations: [
       {
         object: "order_preparation",
-        id: "f6908528-73ce-4abd-91b3-5d7ead30af7c",
-        preparedAt: new Date("2026-02-02T18:45:16.857Z"),
+        id: "69085287-3cea-4bd1-ab35-d7ead30af7c4",
+        preparedAt: new Date("2024-01-27T00:37:52.127Z"),
         warehouseName: "<value>",
-        deliveryMethod: "shipping",
-        remitoDeliveryId: "72455419-7189-4a74-9508-9ddd55756ff2",
+        deliveryMethod: "pickup",
+        remitoDeliveryId: "24554197-189a-4745-a089-ddd55756ff24",
         formattedRemitoNumber: "<value>",
-        lines: [],
+        lines: [
+          {
+            id: "9d9a409e-ff52-4288-a076-441e3aca3969",
+            orderLineId: "519bfd32-d5a7-4f40-a51f-377ecebd9e93",
+            productId: null,
+            productName: "<value>",
+            sku: "<value>",
+            variantOptions: {
+              "key": "<value>",
+              "key1": "<value>",
+              "key2": "<value>",
+            },
+            optionNames: [
+              "<value 1>",
+            ],
+            quantity: 623861,
+            orderedQuantity: 354203,
+            unitPrice: 256258,
+            discountPercentage: 7238.05,
+          },
+        ],
       },
     ],
-    invoices: [
-      {
-        object: "order_invoice",
-        id: "9d9a409e-ff52-4288-a076-441e3aca3969",
-        formattedInvoiceNumber: "<value>",
-        invoiceDate: "<value>",
-        createdAt: new Date("2024-04-12T16:54:27.438Z"),
-        invoiceStatus: "pending",
-        itemsCount: 707786,
-        totalUnits: 996321,
-        total: 837254,
-      },
-    ],
+    invoices: [],
   },
 };
 ```
@@ -73,4 +108,4 @@ let value: ApiOrderDetailResponse = {
 | Field                                                                        | Type                                                                         | Required                                                                     | Description                                                                  |
 | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
 | `requestId`                                                                  | *string*                                                                     | :heavy_check_mark:                                                           | N/A                                                                          |
-| `data`                                                                       | [models.ApiSharedObject1cf33bb430](../models/api-shared-object1cf33bb430.md) | :heavy_check_mark:                                                           | N/A                                                                          |
+| `data`                                                                       | [models.ApiSharedObject711786f766](../models/api-shared-object711786f766.md) | :heavy_check_mark:                                                           | N/A                                                                          |

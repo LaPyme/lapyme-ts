@@ -102,6 +102,9 @@ export class Orders extends ClientSDK {
 
   /**
    * Cancelar pedido
+   *
+   * @remarks
+   * Cancela un pedido elegible y devuelve el estado persistido después de aplicar sus efectos de cancelación.
    */
   async cancel(
     request: operations.CancelApiOrderRequest,
@@ -116,6 +119,9 @@ export class Orders extends ClientSDK {
 
   /**
    * Desarchivar pedido
+   *
+   * @remarks
+   * Restaura un pedido archivado y devuelve el estado persistido resultante.
    */
   async unarchive(
     request: operations.UnarchiveApiOrderRequest,
