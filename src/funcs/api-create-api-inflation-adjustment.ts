@@ -30,6 +30,9 @@ import { Result } from "../types/fp.js";
 
 /**
  * Crear ajuste por inflación
+ *
+ * @remarks
+ * Crea de forma idempotente el asiento de ajuste por inflación para el período solicitado.
  */
 export function apiCreateAPIInflationAdjustment(
   client: LapymeCore,

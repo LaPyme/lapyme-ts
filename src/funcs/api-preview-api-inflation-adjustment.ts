@@ -31,6 +31,9 @@ import { Result } from "../types/fp.js";
 
 /**
  * Previsualizar ajuste por inflación
+ *
+ * @remarks
+ * Calcula una previsualización del ajuste por inflación sin crear el asiento contable.
  */
 export function apiPreviewAPIInflationAdjustment(
   client: LapymeCore,
