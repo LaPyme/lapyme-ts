@@ -38,6 +38,8 @@ let value: QueryApiReportResponse = {
         measures: [
           "<value 1>",
         ],
+        reportingCurrency: "PES",
+        rateBasis: "functional_ars",
       },
     },
   },

@@ -18,6 +18,7 @@ export type ApiPriceListMutationRequest = {
   isAutomatic?: boolean | undefined;
   automaticPricingMode?: AutomaticPricingMode | undefined;
   adjustmentPercentage?: number | null | undefined;
+  sourcePriceListId?: string | null | undefined;
   defaultEconomicActivity?: string | null | undefined;
   taxInclusive?: boolean | undefined;
 };
@@ -33,6 +34,7 @@ export type ApiPriceListMutationRequest$Outbound = {
   is_automatic: boolean;
   automatic_pricing_mode: string;
   adjustment_percentage?: number | null | undefined;
+  source_price_list_id?: string | null | undefined;
   default_economic_activity?: string | null | undefined;
   tax_inclusive: boolean;
 };
@@ -50,6 +52,7 @@ export const ApiPriceListMutationRequest$outboundSchema: z.ZodMiniType<
       "base_price_adjustment",
     ),
     adjustmentPercentage: z.optional(z.nullable(z.number())),
+    sourcePriceListId: z.optional(z.nullable(z.string())),
     defaultEconomicActivity: z.optional(z.nullable(z.string())),
     taxInclusive: z._default(z.boolean(), true),
   }),
@@ -58,6 +61,7 @@ export const ApiPriceListMutationRequest$outboundSchema: z.ZodMiniType<
       isAutomatic: "is_automatic",
       automaticPricingMode: "automatic_pricing_mode",
       adjustmentPercentage: "adjustment_percentage",
+      sourcePriceListId: "source_price_list_id",
       defaultEconomicActivity: "default_economic_activity",
       taxInclusive: "tax_inclusive",
     });

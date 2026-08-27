@@ -17,43 +17,41 @@ let value: ApiProductDetailResponse = {
     },
     sku: "<value>",
     barcode: "<value>",
-    currency: "Trinidad and Tobago Dollar",
-    cost: 5023.57,
-    price: 9776.7,
+    imageUrl: "https://woeful-jogging.biz",
+    currency: "Won",
+    cost: 9842.81,
+    price: 5092.57,
     taxRate: {
-      id: 9545.45,
-      value: 8570.91,
+      id: 7340.09,
+      value: 6496.5,
     },
     defaultSupplier: {
-      id: "e2939b22-6734-418f-802e-69ca6e74fd88",
+      id: "99431a08-59f3-4d6f-9b82-691199d39354",
       name: "<value>",
     },
-    productType: "service",
+    productType: "product",
+    visibility: "system",
     isActive: true,
     organizationSlug: "<value>",
-    createdAt: new Date("2026-12-14T18:31:18.269Z"),
-    updatedAt: new Date("2025-07-12T03:29:39.613Z"),
+    createdAt: new Date("2026-10-15T20:28:07.734Z"),
+    updatedAt: new Date("2026-01-16T09:33:12.917Z"),
     object: "product",
-    variantGroupId: "80c4ea2a-2181-4f02-a8ad-2c884928ee3f",
+    tags: [],
+    variantGroupId: "a2181f02-8ad2-4c88-9492-8ee3fbfd2b18",
     variantOptions: {
       "key": "<value>",
-      "key1": "<value>",
-      "key2": "<value>",
     },
-    isExempt: true,
+    isExempt: false,
+    metafields: [
+      {
+        key: "<key>",
+        value: "<value>",
+      },
+    ],
     stockSummary: {
-      totalQuantity: 3450.16,
-      warehouseCount: 107596,
-      byWarehouse: [
-        {
-          warehouseId: "8355b424-e8f1-4b19-a424-22b1798decfe",
-          warehouseName: "<value>",
-          quantity: 1678.21,
-          onHand: 2292.22,
-          reservedQuantity: 4791.26,
-          incomingQuantity: 4053.93,
-        },
-      ],
+      totalQuantity: 5756.46,
+      warehouseCount: 166111,
+      byWarehouse: [],
     },
   },
 };
@@ -64,4 +62,4 @@ let value: ApiProductDetailResponse = {
 | Field                                                                        | Type                                                                         | Required                                                                     | Description                                                                  |
 | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
 | `requestId`                                                                  | *string*                                                                     | :heavy_check_mark:                                                           | N/A                                                                          |
-| `data`                                                                       | [models.ApiSharedObjectd371740910](../models/api-shared-objectd371740910.md) | :heavy_check_mark:                                                           | N/A                                                                          |
+| `data`                                                                       | [models.ApiSharedObjectfc4c402ca1](../models/api-shared-objectfc4c402ca1.md) | :heavy_check_mark:                                                           | N/A                                                                          |

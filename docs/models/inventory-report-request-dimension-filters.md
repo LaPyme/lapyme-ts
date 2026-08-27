@@ -1,6 +1,6 @@
 # InventoryReportRequestDimensionFilters
 
-Filtros por dimensión. Cada clave debe ser una dimensión filtrable para la fuente. También acepta product_metafield:<key> para campos personalizados select de producto. El valor es un array de IDs o valores a incluir.
+Filtros por dimensión. Cada clave debe ser una dimensión filtrable para la fuente. También acepta product_metafield:<key> para campos personalizados select de producto y contact_metafield:<key> para campos personalizados select de contacto cuando la fuente lo soporta. El valor es un array de IDs o valores a incluir.
 
 ## Example Usage
 
@@ -21,6 +21,8 @@ let value: InventoryReportRequestDimensionFilters = {};
 | `subcategory`         | *string*[]            | :heavy_minus_sign:    | N/A                   |
 | `defaultSupplierName` | *string*[]            | :heavy_minus_sign:    | N/A                   |
 | `productType`         | *string*[]            | :heavy_minus_sign:    | N/A                   |
-| `warehouse`           | *string*[]            | :heavy_minus_sign:    | N/A                   |
 | `currency`            | *string*[]            | :heavy_minus_sign:    | N/A                   |
+| `warehouse`           | *string*[]            | :heavy_minus_sign:    | N/A                   |
+| `productStatus`       | *string*[]            | :heavy_minus_sign:    | N/A                   |
+| `warehouseStatus`     | *string*[]            | :heavy_minus_sign:    | N/A                   |
 | `saleLineType`        | *string*[]            | :heavy_minus_sign:    | N/A                   |

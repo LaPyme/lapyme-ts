@@ -26,12 +26,26 @@ let value: ApiPurchaseListResponse = {
         id: "fd77c624-8fc6-42ba-a044-fd4ea2b29db8",
         name: "<value>",
       },
+      tags: [
+        {
+          object: "tag",
+          id: "c4a0b478-b0e9-40aa-a06f-be28f0ddf586",
+          scope: "purchase",
+          name: "<value>",
+          slug: "<value>",
+          color: "teal",
+          description: "norm youthful ugh drive victoriously",
+          archivedAt: new Date("2026-10-03T04:47:37.645Z"),
+          createdAt: new Date("2026-03-15T05:11:35.797Z"),
+          updatedAt: new Date("2025-02-21T13:32:00.515Z"),
+        },
+      ],
     },
   ],
   hasMore: false,
   nextCursor: "<value>",
   object: "list",
-  url: "https://massive-breastplate.com/",
+  url: "https://calculating-chasuble.net",
 };
 ```
 

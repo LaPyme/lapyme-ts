@@ -28,14 +28,16 @@ let value: ReportQueryResponseData = {
     measures: [
       "<value 1>",
     ],
+    reportingCurrency: "PES",
+    rateBasis: "functional_ars",
   },
 };
 ```
 
 ## Fields
 
-| Field                                                                            | Type                                                                             | Required                                                                         | Description                                                                      |
-| -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
-| `rows`                                                                           | [models.Row](../models/row.md)[]                                                 | :heavy_check_mark:                                                               | N/A                                                                              |
-| `totals`                                                                         | Record<string, *number*>                                                         | :heavy_check_mark:                                                               | Aggregated totals for all rows. Present only when `includeTotals: true` is sent. |
-| `metadata`                                                                       | [models.Metadata](../models/metadata.md)                                         | :heavy_check_mark:                                                               | N/A                                                                              |
+| Field                                                                             | Type                                                                              | Required                                                                          | Description                                                                       |
+| --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| `rows`                                                                            | [models.Row](../models/row.md)[]                                                  | :heavy_check_mark:                                                                | N/A                                                                               |
+| `totals`                                                                          | Record<string, *number*>                                                          | :heavy_check_mark:                                                                | Aggregated totals for all rows. Present only when `includeTotals: true` is sent.  |
+| `metadata`                                                                        | [models.ReportQueryResponseMetadata](../models/report-query-response-metadata.md) | :heavy_check_mark:                                                                | N/A                                                                               |

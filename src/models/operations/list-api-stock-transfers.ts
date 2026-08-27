@@ -38,7 +38,7 @@ export type ListApiStockTransfersRequest = {
   /**
    * Estados de la transferencia. Puede repetirse o enviarse separada por comas.
    */
-  statuses?: Array<models.ApiSharedEnumc66b046f05> | undefined;
+  statuses?: Array<models.ApiSharedEnum736f0d077b> | undefined;
   /**
    * Depósito de origen
    */
@@ -86,7 +86,7 @@ export const ListApiStockTransfersRequest$outboundSchema: z.ZodMiniType<
       z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
     )),
     statuses: z.optional(
-      z.array(models.ApiSharedEnumc66b046f05$outboundSchema),
+      z.array(models.ApiSharedEnum736f0d077b$outboundSchema),
     ),
     sourceWarehouseId: z.optional(z.string()),
     targetWarehouseId: z.optional(z.string()),

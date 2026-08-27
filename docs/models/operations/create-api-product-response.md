@@ -6,63 +6,77 @@
 import { CreateApiProductResponse } from "lapyme/models/operations";
 
 let value: CreateApiProductResponse = {
-  headers: {},
+  headers: {
+    "key": [
+      "<value 1>",
+      "<value 2>",
+    ],
+  },
   result: {
     requestId: "<id>",
     data: {
       product: {
-        id: "466902fc-c58e-4e6b-8002-706e5660907a",
+        id: "4be7e44d-e025-41cb-a98f-12d48698b5e5",
         name: "<value>",
-        description: "construe discourse similar jogging onset",
-        category: {
-          id: "266530ce-75cf-40a4-81e8-226c43eeb6d9",
-          name: "<value>",
-        },
+        description: "vice junior scoff zowie scoff powerfully psst",
+        category: null,
         sku: "<value>",
         barcode: "<value>",
-        currency: "Venezuelan bolívar",
-        cost: 2129.23,
-        price: 8568.58,
+        imageUrl: "https://sunny-nightlife.org/",
+        currency: "Denar",
+        cost: 2104.67,
+        price: 4639.09,
         taxRate: {
-          id: 9545.45,
-          value: 8570.91,
+          id: 7340.09,
+          value: 6496.5,
         },
         defaultSupplier: {
-          id: "e2939b22-6734-418f-802e-69ca6e74fd88",
+          id: "99431a08-59f3-4d6f-9b82-691199d39354",
           name: "<value>",
         },
-        productType: "combo",
-        isActive: true,
+        productType: "product",
+        visibility: "both",
+        isActive: false,
         organizationSlug: "<value>",
-        createdAt: new Date("2024-07-31T07:25:38.915Z"),
-        updatedAt: new Date("2025-07-23T22:16:38.063Z"),
+        createdAt: new Date("2026-07-20T09:29:09.875Z"),
+        updatedAt: new Date("2024-03-03T10:59:33.677Z"),
         object: "product",
-        variantGroupId: "bf32ac26-3e27-4830-aa84-bdd32992e378",
+        tags: [
+          {
+            object: "tag",
+            id: "c4a0b478-b0e9-40aa-a06f-be28f0ddf586",
+            scope: "purchase",
+            name: "<value>",
+            slug: "<value>",
+            color: "teal",
+            description: "norm youthful ugh drive victoriously",
+            archivedAt: new Date("2026-10-03T04:47:37.645Z"),
+            createdAt: new Date("2026-03-15T05:11:35.797Z"),
+            updatedAt: new Date("2025-02-21T13:32:00.515Z"),
+          },
+        ],
+        variantGroupId: "e290396b-35a8-4ca8-9353-449182ecbb3b",
         variantOptions: {
           "key": "<value>",
           "key1": "<value>",
         },
         isExempt: false,
+        metafields: [
+          {
+            key: "<key>",
+            value: "<value>",
+          },
+        ],
         stockSummary: {
-          totalQuantity: 3450.16,
-          warehouseCount: 107596,
-          byWarehouse: [
-            {
-              warehouseId: "8355b424-e8f1-4b19-a424-22b1798decfe",
-              warehouseName: "<value>",
-              quantity: 1678.21,
-              onHand: 2292.22,
-              reservedQuantity: 4791.26,
-              incomingQuantity: 4053.93,
-            },
-          ],
+          totalQuantity: 5756.46,
+          warehouseCount: 166111,
+          byWarehouse: [],
         },
       },
       idempotentReplay: true,
     },
     warnings: [
       "<value 1>",
-      "<value 2>",
     ],
   },
 };
