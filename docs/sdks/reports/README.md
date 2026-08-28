@@ -30,6 +30,7 @@ async function run() {
     measures: [
       "paymentSplitCount",
     ],
+    reportingCurrency: "PES",
   });
 
   console.log(result);
@@ -62,6 +63,7 @@ async function run() {
     measures: [
       "paymentSplitCount",
     ],
+    reportingCurrency: "PES",
   });
   if (res.ok) {
     const { value: result } = res;
@@ -86,6 +88,10 @@ const lapyme = new Lapyme({
 async function run() {
   const result = await lapyme.reports.query({
     source: "inventory",
+    period: {
+      startDate: new Date("2026-03-01"),
+      endDate: new Date("2026-03-31"),
+    },
     dimensions: [
       "product",
       "warehouse",
@@ -94,6 +100,7 @@ async function run() {
       "daysOfInventoryRemaining",
       "endingInventoryUnits",
     ],
+    reportingCurrency: "PES",
     dateBasis: "commercial",
   });
 
@@ -120,6 +127,10 @@ const lapyme = new LapymeCore({
 async function run() {
   const res = await reportsQuery(lapyme, {
     source: "inventory",
+    period: {
+      startDate: new Date("2026-03-01"),
+      endDate: new Date("2026-03-31"),
+    },
     dimensions: [
       "product",
       "warehouse",
@@ -128,6 +139,7 @@ async function run() {
       "daysOfInventoryRemaining",
       "endingInventoryUnits",
     ],
+    reportingCurrency: "PES",
     dateBasis: "commercial",
   });
   if (res.ok) {
@@ -158,13 +170,14 @@ async function run() {
       endDate: new Date("2026-03-31"),
     },
     dimensions: [
-      "paymentContactName",
+      "payment_method",
     ],
     measures: [
       "paymentBalance",
       "paymentNetCashflow",
       "avgPaymentAmount",
     ],
+    reportingCurrency: "PES",
   });
 
   console.log(result);
@@ -195,13 +208,14 @@ async function run() {
       endDate: new Date("2026-03-31"),
     },
     dimensions: [
-      "paymentContactName",
+      "payment_method",
     ],
     measures: [
       "paymentBalance",
       "paymentNetCashflow",
       "avgPaymentAmount",
     ],
+    reportingCurrency: "PES",
   });
   if (res.ok) {
     const { value: result } = res;
@@ -237,6 +251,7 @@ async function run() {
       "uniqueSuppliers",
       "purchaseCount",
     ],
+    reportingCurrency: "PES",
   });
 
   console.log(result);
@@ -273,6 +288,7 @@ async function run() {
       "uniqueSuppliers",
       "purchaseCount",
     ],
+    reportingCurrency: "PES",
   });
   if (res.ok) {
     const { value: result } = res;
@@ -310,6 +326,7 @@ async function run() {
       "count",
     ],
     includeTotals: true,
+    reportingCurrency: "PES",
     dateBasis: "commercial",
   });
 
@@ -349,6 +366,7 @@ async function run() {
       "count",
     ],
     includeTotals: true,
+    reportingCurrency: "PES",
     dateBasis: "commercial",
   });
   if (res.ok) {
@@ -379,6 +397,7 @@ async function run() {
       endDate: new Date("2026-03-31"),
     },
     measures: [],
+    reportingCurrency: "PES",
   });
 
   console.log(result);
@@ -409,6 +428,7 @@ async function run() {
       endDate: new Date("2026-03-31"),
     },
     measures: [],
+    reportingCurrency: "PES",
   });
   if (res.ok) {
     const { value: result } = res;
