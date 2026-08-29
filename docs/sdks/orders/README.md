@@ -426,7 +426,7 @@ run();
 
 ## cancel
 
-Cancelar pedido
+Cancela un pedido elegible y devuelve el estado persistido después de aplicar sus efectos de cancelación.
 
 ### Example Usage
 
@@ -502,7 +502,7 @@ run();
 
 ## unarchive
 
-Desarchivar pedido
+Restaura un pedido archivado y devuelve el estado persistido resultante.
 
 ### Example Usage
 

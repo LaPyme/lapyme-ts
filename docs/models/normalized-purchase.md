@@ -13,30 +13,38 @@ let value: NormalizedPurchase = {
   accountDate: "<value>",
   dueDate: "<value>",
   paymentTermId: "days_15",
-  importDocumentRole: "customs_dispatch_reversal",
-  importSourcePurchaseId: "7abbff3d-142a-478a-8e1b-925596c73439",
-  importNationalizationStatus: "pending_nationalization",
-  customsDispatchNumber: null,
-  warehouseId: "5c3e8991-6934-4b63-b306-6ac7285832fc",
-  productsReceived: true,
-  updateProductVariantCost: false,
+  paymentTermDays: 949969,
+  importDocumentRole: "customs_dispatch",
+  importSourcePurchaseId: "bbff3d14-2a78-4ae1-8b92-5596c7343921",
+  importNationalizationStatus: null,
+  customsDispatchNumber: "<value>",
+  warehouseId: "c3e89916-934b-4633-9066-ac7285832fce",
+  productsReceived: false,
+  productsReturned: false,
+  inventoryEffect: "return_to_supplier",
+  updateProductVariantCost: true,
   currency: "DOL",
-  exchangeRate: 7057.23,
-  subtotal: 548070,
-  taxAmount: 16680,
-  total: 214005,
-  discount: 280520,
-  exemptAmount: 172985,
-  nonTaxedAmount: 682876,
-  baseAmount: 371626,
-  vatPerceptionAmount: 971509,
-  nationalTaxAmount: 838184,
-  grossIncomeTaxAmount: 708295,
-  municipalTaxAmount: null,
-  internalTaxAmount: 381289,
-  otherTaxAmount: null,
+  exchangeRate: 6619.68,
+  subtotal: null,
+  taxAmount: 214005,
+  total: 280520,
+  discount: 172985,
+  exemptAmount: 682876,
+  nonTaxedAmount: 371626,
+  baseAmount: 971509,
+  vatPerceptionAmount: 838184,
+  nationalTaxAmount: 708295,
+  grossIncomeTaxAmount: null,
+  municipalTaxAmount: 381289,
+  internalTaxAmount: null,
+  otherTaxAmount: 911479,
   notes: "<value>",
   pdfPath: "<value>",
+  manualAccountAllocations: {
+    "key": "<value>",
+    "key1": "<value>",
+    "key2": "<value>",
+  },
   items: [],
 };
 ```
@@ -52,12 +60,15 @@ let value: NormalizedPurchase = {
 | `accountDate`                                                                  | *string*                                                                       | :heavy_check_mark:                                                             | Fecha contable de la compra en formato YYYY-MM-DD.                             |
 | `dueDate`                                                                      | *string*                                                                       | :heavy_check_mark:                                                             | Fecha de vencimiento en formato YYYY-MM-DD.                                    |
 | `paymentTermId`                                                                | [models.ApiSharedEnumd34af90520](../models/api-shared-enumd34af90520.md)       | :heavy_check_mark:                                                             | N/A                                                                            |
+| `paymentTermDays`                                                              | *number*                                                                       | :heavy_check_mark:                                                             | N/A                                                                            |
 | `importDocumentRole`                                                           | [models.ApiSharedEnum9e7af09974](../models/api-shared-enum9e7af09974.md)       | :heavy_check_mark:                                                             | Rol del comprobante dentro del flujo de importacion.                           |
 | `importSourcePurchaseId`                                                       | *string*                                                                       | :heavy_check_mark:                                                             | ID de la factura comercial asociada al despacho aduanero.                      |
 | `importNationalizationStatus`                                                  | [models.ApiSharedEnumf0d69c3d87](../models/api-shared-enumf0d69c3d87.md)       | :heavy_check_mark:                                                             | Estado de nacionalizacion de la factura comercial de importacion.              |
 | `customsDispatchNumber`                                                        | *string*                                                                       | :heavy_check_mark:                                                             | Numero de despacho aduanero informado por el proveedor. Hasta 32 caracteres.   |
 | `warehouseId`                                                                  | *string*                                                                       | :heavy_check_mark:                                                             | N/A                                                                            |
 | `productsReceived`                                                             | *boolean*                                                                      | :heavy_check_mark:                                                             | N/A                                                                            |
+| `productsReturned`                                                             | *boolean*                                                                      | :heavy_check_mark:                                                             | N/A                                                                            |
+| `inventoryEffect`                                                              | [models.ApiSharedEnumde48b709b2](../models/api-shared-enumde48b709b2.md)       | :heavy_check_mark:                                                             | N/A                                                                            |
 | `updateProductVariantCost`                                                     | *boolean*                                                                      | :heavy_check_mark:                                                             | N/A                                                                            |
 | `currency`                                                                     | [models.ApiSharedEnum6cfb146157](../models/api-shared-enum6cfb146157.md)       | :heavy_check_mark:                                                             | N/A                                                                            |
 | `exchangeRate`                                                                 | *number*                                                                       | :heavy_check_mark:                                                             | N/A                                                                            |
@@ -76,4 +87,5 @@ let value: NormalizedPurchase = {
 | `otherTaxAmount`                                                               | *number*                                                                       | :heavy_check_mark:                                                             | N/A                                                                            |
 | `notes`                                                                        | *string*                                                                       | :heavy_check_mark:                                                             | N/A                                                                            |
 | `pdfPath`                                                                      | *string*                                                                       | :heavy_check_mark:                                                             | N/A                                                                            |
-| `items`                                                                        | [models.ApiSharedObjectedd0c22535](../models/api-shared-objectedd0c22535.md)[] | :heavy_check_mark:                                                             | N/A                                                                            |
+| `manualAccountAllocations`                                                     | Record<string, *string*>                                                       | :heavy_check_mark:                                                             | N/A                                                                            |
+| `items`                                                                        | [models.ApiSharedObjectbf19ed87b4](../models/api-shared-objectbf19ed87b4.md)[] | :heavy_check_mark:                                                             | N/A                                                                            |

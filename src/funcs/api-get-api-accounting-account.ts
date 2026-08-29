@@ -30,6 +30,9 @@ import { Result } from "../types/fp.js";
 
 /**
  * Obtener cuenta contable
+ *
+ * @remarks
+ * Devuelve una cuenta contable visible de la organización autenticada por su ID.
  */
 export function apiGetAPIAccountingAccount(
   client: LapymeCore,
