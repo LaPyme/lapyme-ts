@@ -26,6 +26,7 @@ let value: ApiOrderListResponseData = {
   invoicingStatus: "partially_invoiced",
   notes: "<value>",
   createdAt: new Date("2024-12-27T03:05:35.726Z"),
+  updatedAt: new Date("2024-06-30T17:03:12.672Z"),
   createdByName: "<value>",
 };
 ```
@@ -54,4 +55,5 @@ let value: ApiOrderListResponseData = {
 | `invoicingStatus`                                                                             | [models.ApiSharedEnum2f67ddf0e8](../models/api-shared-enum2f67ddf0e8.md)                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `notes`                                                                                       | *string*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `createdAt`                                                                                   | [Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date) | :heavy_check_mark:                                                                            | N/A                                                                                           |
+| `updatedAt`                                                                                   | [Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date) | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `createdByName`                                                                               | *string*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |

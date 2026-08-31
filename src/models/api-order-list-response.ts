@@ -51,6 +51,7 @@ export type ApiOrderListResponseData = {
   invoicingStatus: ApiSharedEnum2f67ddf0e8;
   notes: string | null;
   createdAt: Date;
+  updatedAt: Date;
   createdByName: string;
 };
 
@@ -95,6 +96,7 @@ export const ApiOrderListResponseData$inboundSchema: z.ZodMiniType<
     invoicing_status: ApiSharedEnum2f67ddf0e8$inboundSchema,
     notes: types.nullable(types.string()),
     created_at: types.date(),
+    updated_at: types.date(),
     created_by_name: types.string(),
   }),
   z.transform((v) => {
@@ -113,6 +115,7 @@ export const ApiOrderListResponseData$inboundSchema: z.ZodMiniType<
       "preparation_status": "preparationStatus",
       "invoicing_status": "invoicingStatus",
       "created_at": "createdAt",
+      "updated_at": "updatedAt",
       "created_by_name": "createdByName",
     });
   }),

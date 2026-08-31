@@ -25,10 +25,6 @@ import {
   ApiSharedObject3563932f8e$inboundSchema,
 } from "./api-shared-object3563932f8e.js";
 import {
-  ApiSharedObject43ed7be04f,
-  ApiSharedObject43ed7be04f$inboundSchema,
-} from "./api-shared-object43ed7be04f.js";
-import {
   ApiSharedObject55e2bcf4a7,
   ApiSharedObject55e2bcf4a7$inboundSchema,
 } from "./api-shared-object55e2bcf4a7.js";
@@ -52,10 +48,15 @@ import {
   ApiSharedObjectc671832641,
   ApiSharedObjectc671832641$inboundSchema,
 } from "./api-shared-objectc671832641.js";
+import {
+  ApiSharedObjecte4ddc41067,
+  ApiSharedObjecte4ddc41067$inboundSchema,
+} from "./api-shared-objecte4ddc41067.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type Sale = {
   saleId: string;
+  invoicePdf: string | null;
   customerId: string | null;
   voucherType: string;
   pointOfSaleId: string;
@@ -72,7 +73,6 @@ export type Sale = {
   nonTaxedAmount: number;
   tributesAmount: number;
   discountAmount: number;
-  roundingAdjustment: number;
   balance: number;
   createdAt: Date;
 };
@@ -80,7 +80,7 @@ export type Sale = {
 export type NormalizedSale = {
   customerId: string | null;
   customerTaxCategoryOverride: string | null;
-  voucherType: number;
+  voucherType: any;
   pointOfSaleId: string;
   registerId: string | null;
   operatorId: string | null;
@@ -108,11 +108,10 @@ export type NormalizedSale = {
   discountType: ApiSharedEnum539fdceccc | null;
   discountValue: number | null;
   discountAmount: number;
-  roundingAdjustment: number;
   balance: number;
   isFullAmountPending: boolean;
   items: Array<ApiSharedObject55e2bcf4a7>;
-  paymentMethods: Array<ApiSharedObject43ed7be04f>;
+  paymentMethods: Array<ApiSharedObjecte4ddc41067>;
 };
 
 export type ApiSaleTransactionSuccessResponseProjectedEffects = {
@@ -139,6 +138,7 @@ export type ApiSaleTransactionSuccessResponse = {
 export const Sale$inboundSchema: z.ZodMiniType<Sale, unknown> = z.pipe(
   z.object({
     sale_id: types.string(),
+    invoice_pdf: types.nullable(types.string()),
     customer_id: types.nullable(types.string()),
     voucher_type: types.string(),
     point_of_sale_id: types.string(),
@@ -155,13 +155,13 @@ export const Sale$inboundSchema: z.ZodMiniType<Sale, unknown> = z.pipe(
     non_taxed_amount: types.number(),
     tributes_amount: types.number(),
     discount_amount: types.number(),
-    rounding_adjustment: types.number(),
     balance: types.number(),
     created_at: types.date(),
   }),
   z.transform((v) => {
     return remap$(v, {
       "sale_id": "saleId",
+      "invoice_pdf": "invoicePdf",
       "customer_id": "customerId",
       "voucher_type": "voucherType",
       "point_of_sale_id": "pointOfSaleId",
@@ -175,7 +175,6 @@ export const Sale$inboundSchema: z.ZodMiniType<Sale, unknown> = z.pipe(
       "non_taxed_amount": "nonTaxedAmount",
       "tributes_amount": "tributesAmount",
       "discount_amount": "discountAmount",
-      "rounding_adjustment": "roundingAdjustment",
       "created_at": "createdAt",
     });
   }),
@@ -199,7 +198,7 @@ export const NormalizedSale$inboundSchema: z.ZodMiniType<
   z.object({
     customer_id: types.nullable(types.string()),
     customer_tax_category_override: types.nullable(types.string()),
-    voucher_type: types.number(),
+    voucher_type: z.any(),
     point_of_sale_id: types.string(),
     register_id: types.nullable(types.string()),
     operator_id: types.nullable(types.string()),
@@ -229,11 +228,10 @@ export const NormalizedSale$inboundSchema: z.ZodMiniType<
     discount_type: types.nullable(ApiSharedEnum539fdceccc$inboundSchema),
     discount_value: types.nullable(types.number()),
     discount_amount: types.number(),
-    rounding_adjustment: types.number(),
     balance: types.number(),
     is_full_amount_pending: types.boolean(),
     items: z.array(ApiSharedObject55e2bcf4a7$inboundSchema),
-    payment_methods: z.array(ApiSharedObject43ed7be04f$inboundSchema),
+    payment_methods: z.array(ApiSharedObjecte4ddc41067$inboundSchema),
   }),
   z.transform((v) => {
     return remap$(v, {
@@ -263,7 +261,6 @@ export const NormalizedSale$inboundSchema: z.ZodMiniType<
       "discount_type": "discountType",
       "discount_value": "discountValue",
       "discount_amount": "discountAmount",
-      "rounding_adjustment": "roundingAdjustment",
       "is_full_amount_pending": "isFullAmountPending",
       "payment_methods": "paymentMethods",
     });

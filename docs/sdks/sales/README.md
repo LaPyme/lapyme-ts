@@ -83,7 +83,7 @@ run();
 
 ## create
 
-Registra una venta y devuelve la operación creada junto con sus efectos fiscales, de stock, pagos y contabilidad.
+Registra una venta y devuelve sus efectos fiscales, de stock, pagos y contabilidad. Enviá Lapyme-Version: 2026-08-20 para usar el contrato estricto: total es obligatorio, unit_price es neto para comprobantes A y final para comprobantes a consumidor final, y los importes derivados se calculan una sola vez. Omitir el header conserva el contrato histórico de forma deprecada. Idempotency-Key solo protege reintentos; si necesitás guardar una referencia externa visible, enviá integration_source e integration_id en el cuerpo.
 
 ### Example Usage: created
 
@@ -104,6 +104,7 @@ async function run() {
       invoiceDate: new Date("2024-09-19"),
       currency: "DOL",
       items: [],
+      total: 150662,
     },
   });
 
@@ -136,6 +137,90 @@ async function run() {
       invoiceDate: new Date("2024-09-19"),
       currency: "DOL",
       items: [],
+      total: 150662,
+    },
+  });
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("salesCreate failed:", res.error);
+  }
+}
+
+run();
+```
+### Example Usage: custom_invoice_a_net_price
+
+<!-- UsageSnippet language="typescript" operationID="createApiSale" method="post" path="/api/v1/sales" example="custom_invoice_a_net_price" -->
+```typescript
+import { Lapyme } from "lapyme";
+
+const lapyme = new Lapyme({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const result = await lapyme.sales.create({
+    idempotencyKey: "<value>",
+    body: {
+      customerId: "550e8400-e29b-41d4-a716-446655440101",
+      voucherType: 1,
+      pointOfSaleId: "550e8400-e29b-41d4-a716-446655440002",
+      invoiceDate: new Date("2026-08-21"),
+      currency: "PES",
+      items: [
+        {
+          name: "Servicio técnico",
+          productType: "service",
+          taxRateId: 5,
+          quantity: 1,
+          unitPrice: 10000,
+        },
+      ],
+      total: 12100,
+    },
+  });
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { LapymeCore } from "lapyme/core.js";
+import { salesCreate } from "lapyme/funcs/sales-create.js";
+
+// Use `LapymeCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const lapyme = new LapymeCore({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const res = await salesCreate(lapyme, {
+    idempotencyKey: "<value>",
+    body: {
+      customerId: "550e8400-e29b-41d4-a716-446655440101",
+      voucherType: 1,
+      pointOfSaleId: "550e8400-e29b-41d4-a716-446655440002",
+      invoiceDate: new Date("2026-08-21"),
+      currency: "PES",
+      items: [
+        {
+          name: "Servicio técnico",
+          productType: "service",
+          taxRateId: 5,
+          quantity: 1,
+          unitPrice: 10000,
+        },
+      ],
+      total: 12100,
     },
   });
   if (res.ok) {
@@ -167,6 +252,7 @@ async function run() {
       invoiceDate: new Date("2024-09-19"),
       currency: "DOL",
       items: [],
+      total: 150662,
     },
   });
 
@@ -199,6 +285,171 @@ async function run() {
       invoiceDate: new Date("2024-09-19"),
       currency: "DOL",
       items: [],
+      total: 150662,
+    },
+  });
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("salesCreate failed:", res.error);
+  }
+}
+
+run();
+```
+### Example Usage: product_invoice_a_net_price
+
+<!-- UsageSnippet language="typescript" operationID="createApiSale" method="post" path="/api/v1/sales" example="product_invoice_a_net_price" -->
+```typescript
+import { Lapyme } from "lapyme";
+
+const lapyme = new Lapyme({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const result = await lapyme.sales.create({
+    idempotencyKey: "<value>",
+    body: {
+      customerId: "550e8400-e29b-41d4-a716-446655440101",
+      voucherType: 1,
+      pointOfSaleId: "550e8400-e29b-41d4-a716-446655440002",
+      invoiceDate: new Date("2026-08-21"),
+      currency: "PES",
+      items: [
+        {
+          productId: "9c692e8b-0f9a-4f7c-8b99-061a2eb188ae",
+          warehouseId: "550e8400-e29b-41d4-a716-446655440010",
+          taxRateId: 5,
+          quantity: 1,
+          unitPrice: 10000,
+        },
+      ],
+      total: 12100,
+    },
+  });
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { LapymeCore } from "lapyme/core.js";
+import { salesCreate } from "lapyme/funcs/sales-create.js";
+
+// Use `LapymeCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const lapyme = new LapymeCore({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const res = await salesCreate(lapyme, {
+    idempotencyKey: "<value>",
+    body: {
+      customerId: "550e8400-e29b-41d4-a716-446655440101",
+      voucherType: 1,
+      pointOfSaleId: "550e8400-e29b-41d4-a716-446655440002",
+      invoiceDate: new Date("2026-08-21"),
+      currency: "PES",
+      items: [
+        {
+          productId: "9c692e8b-0f9a-4f7c-8b99-061a2eb188ae",
+          warehouseId: "550e8400-e29b-41d4-a716-446655440010",
+          taxRateId: 5,
+          quantity: 1,
+          unitPrice: 10000,
+        },
+      ],
+      total: 12100,
+    },
+  });
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("salesCreate failed:", res.error);
+  }
+}
+
+run();
+```
+### Example Usage: product_invoice_b_final_price
+
+<!-- UsageSnippet language="typescript" operationID="createApiSale" method="post" path="/api/v1/sales" example="product_invoice_b_final_price" -->
+```typescript
+import { Lapyme } from "lapyme";
+
+const lapyme = new Lapyme({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const result = await lapyme.sales.create({
+    idempotencyKey: "<value>",
+    body: {
+      voucherType: 6,
+      pointOfSaleId: "550e8400-e29b-41d4-a716-446655440002",
+      invoiceDate: new Date("2026-08-21"),
+      currency: "PES",
+      items: [
+        {
+          productId: "9c692e8b-0f9a-4f7c-8b99-061a2eb188ae",
+          warehouseId: "550e8400-e29b-41d4-a716-446655440010",
+          taxRateId: 5,
+          quantity: 1,
+          unitPrice: 12100,
+        },
+      ],
+      total: 12100,
+    },
+  });
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { LapymeCore } from "lapyme/core.js";
+import { salesCreate } from "lapyme/funcs/sales-create.js";
+
+// Use `LapymeCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const lapyme = new LapymeCore({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const res = await salesCreate(lapyme, {
+    idempotencyKey: "<value>",
+    body: {
+      voucherType: 6,
+      pointOfSaleId: "550e8400-e29b-41d4-a716-446655440002",
+      invoiceDate: new Date("2026-08-21"),
+      currency: "PES",
+      items: [
+        {
+          productId: "9c692e8b-0f9a-4f7c-8b99-061a2eb188ae",
+          warehouseId: "550e8400-e29b-41d4-a716-446655440010",
+          taxRateId: 5,
+          quantity: 1,
+          unitPrice: 12100,
+        },
+      ],
+      total: 12100,
     },
   });
   if (res.ok) {
@@ -240,6 +491,7 @@ async function run() {
           unitPrice: 12500,
         },
       ],
+      total: 340501,
       paymentMethods: [
         {
           methodId: "550e8400-e29b-41d4-a716-446655440301",
@@ -288,6 +540,7 @@ async function run() {
           unitPrice: 12500,
         },
       ],
+      total: 182085,
       paymentMethods: [
         {
           methodId: "550e8400-e29b-41d4-a716-446655440301",
@@ -334,6 +587,7 @@ async function run() {
           unitPrice: 10000,
         },
       ],
+      total: 353049,
       isFullAmountPending: true,
     },
   });
@@ -376,7 +630,91 @@ async function run() {
           unitPrice: 10000,
         },
       ],
+      total: 135561,
       isFullAmountPending: true,
+    },
+  });
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("salesCreate failed:", res.error);
+  }
+}
+
+run();
+```
+### Example Usage: total_mismatch
+
+<!-- UsageSnippet language="typescript" operationID="createApiSale" method="post" path="/api/v1/sales" example="total_mismatch" -->
+```typescript
+import { Lapyme } from "lapyme";
+
+const lapyme = new Lapyme({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const result = await lapyme.sales.create({
+    idempotencyKey: "<value>",
+    body: {
+      customerId: "550e8400-e29b-41d4-a716-446655440101",
+      voucherType: 1,
+      pointOfSaleId: "550e8400-e29b-41d4-a716-446655440002",
+      invoiceDate: new Date("2026-08-21"),
+      currency: "PES",
+      items: [
+        {
+          name: "Servicio técnico",
+          productType: "service",
+          taxRateId: 5,
+          quantity: 1,
+          unitPrice: 10000,
+        },
+      ],
+      total: 10000,
+    },
+  });
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { LapymeCore } from "lapyme/core.js";
+import { salesCreate } from "lapyme/funcs/sales-create.js";
+
+// Use `LapymeCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const lapyme = new LapymeCore({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const res = await salesCreate(lapyme, {
+    idempotencyKey: "<value>",
+    body: {
+      customerId: "550e8400-e29b-41d4-a716-446655440101",
+      voucherType: 1,
+      pointOfSaleId: "550e8400-e29b-41d4-a716-446655440002",
+      invoiceDate: new Date("2026-08-21"),
+      currency: "PES",
+      items: [
+        {
+          name: "Servicio técnico",
+          productType: "service",
+          taxRateId: 5,
+          quantity: 1,
+          unitPrice: 10000,
+        },
+      ],
+      total: 10000,
     },
   });
   if (res.ok) {
@@ -405,12 +743,11 @@ run();
 
 ### Errors
 
-| Error Type                | Status Code               | Content Type              |
-| ------------------------- | ------------------------- | ------------------------- |
-| errors.ApiErrorEnvelope   | 400, 401, 403, 409, 412   | application/json          |
-| errors.ApiErrorEnvelope   | 429                       | application/json          |
-| errors.ApiErrorEnvelope   | 500                       | application/json          |
-| errors.LapymeDefaultError | 4XX, 5XX                  | \*/\*                     |
+| Error Type                        | Status Code                       | Content Type                      |
+| --------------------------------- | --------------------------------- | --------------------------------- |
+| errors.ApiErrorEnvelope           | 400, 401, 403, 409, 412, 422, 429 | application/json                  |
+| errors.ApiErrorEnvelope           | 500                               | application/json                  |
+| errors.LapymeDefaultError         | 4XX, 5XX                          | \*/\*                             |
 
 ## getSaleById
 

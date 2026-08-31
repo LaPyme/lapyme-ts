@@ -8,8 +8,8 @@ import { CreateApiInflationAdjustmentRequest } from "lapyme/models/operations";
 let value: CreateApiInflationAdjustmentRequest = {
   idempotencyKey: "<value>",
   body: {
-    occurredAt: new Date("2026-08-04"),
-    lines: [],
+    periodStart: new Date("2026-08-04"),
+    closingDate: new Date("2025-03-17"),
   },
 };
 ```

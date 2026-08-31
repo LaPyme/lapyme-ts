@@ -6,18 +6,7 @@
 import { ListApiOrdersResponse } from "lapyme/models/operations";
 
 let value: ListApiOrdersResponse = {
-  headers: {
-    "key": [],
-    "key1": [
-      "<value 1>",
-      "<value 2>",
-      "<value 3>",
-    ],
-    "key2": [
-      "<value 1>",
-      "<value 2>",
-    ],
-  },
+  headers: {},
   result: {
     requestId: "<id>",
     data: [
@@ -42,13 +31,14 @@ let value: ListApiOrdersResponse = {
         invoicingStatus: "partially_invoiced",
         notes: "<value>",
         createdAt: new Date("2025-01-28T20:17:37.951Z"),
+        updatedAt: new Date("2024-12-07T10:58:01.560Z"),
         createdByName: "<value>",
       },
     ],
     hasMore: true,
     nextCursor: "<value>",
     object: "list",
-    url: "https://jagged-lieu.net",
+    url: "https://monstrous-promise.org/",
   },
 };
 ```
