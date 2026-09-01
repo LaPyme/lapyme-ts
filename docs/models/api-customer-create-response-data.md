@@ -17,33 +17,63 @@ let value: ApiCustomerCreateResponseData = {
     address: "26418 Stephania Crest",
     apartment: "<value>",
     city: null,
+    deliveryCarrier: "<value>",
+    deliveryAddress: "<value>",
     taxId: "<id>",
     taxIdType: "<value>",
     taxCategory: "<value>",
     contactType: "<value>",
-    defaultPriceListId: "3ef44204-a2a9-4306-bdfa-2cd2629d9cf9",
+    defaultPriceListId: "f44204a2-a930-46df-aa2c-d2629d9cf9ec",
     paymentTermId: "<id>",
+    paymentTermDays: null,
     provinceId: "<id>",
     isActive: true,
-    createdAt: new Date("2026-12-06T15:52:02.232Z"),
-    updatedAt: new Date("2025-03-06T21:49:30.709Z"),
-    country: "Sint Maarten",
-    postalCode: "34952-0442",
-    assignedSalespersonId: "4f2f5f7e-813a-42a4-b570-acbad72b0137",
+    createdAt: new Date("2026-06-05T18:23:40.404Z"),
+    updatedAt: new Date("2026-01-21T09:33:02.217Z"),
+    tags: [
+      {
+        object: "tag",
+        id: "9b4c6439-384c-4a58-9cf3-b39718b07048",
+        scope: "customer",
+        name: "<value>",
+        slug: "<value>",
+        color: "indigo",
+        description:
+          "vacantly unless nautical alongside around optimistic for lasting sometimes",
+        archivedAt: new Date("2024-05-13T14:06:09.243Z"),
+        createdAt: new Date("2026-03-04T18:15:09.469Z"),
+        updatedAt: new Date("2026-05-06T00:20:31.712Z"),
+      },
+    ],
+    country: "Iraq",
+    postalCode: "20442-2391",
+    assignedSalespersonId: "5f7e813a-2a45-470a-9cba-d72b0137ccfb",
     defaultGananciasRegimen: "<value>",
     assignedSalesperson: {
-      id: "b6535c1f-d498-47d7-8820-878768de14f0",
-      fullName: "Austin Ernser",
+      id: "5c1fd498-7d78-4208-a787-68de14f02c89",
+      fullName: "Tiffany Predovic",
     },
     defaultPriceList: {
-      id: "7b92c076-15c8-462c-a45d-c1c88870aac3",
+      id: "c07615c8-62c4-45dc-91c8-8870aac3b903",
       name: "<value>",
     },
     salesOverview: {
-      pendingBalance: 6093.53,
-      salesCount: 16507,
-      totalSales: 1995.84,
-      recentSales: [],
+      pendingBalance: 3585.05,
+      salesCount: 980945,
+      totalSales: 2449.98,
+      recentSales: [
+        {
+          id: "8d5bea0e-bf7f-4529-a115-7d696c0662b7",
+          voucherType: "<value>",
+          invoiceStatus: "<value>",
+          invoiceDate: "<value>",
+          currency: "Swiss Franc",
+          total: 6467.05,
+          formattedInvoiceNumber: "<value>",
+          originalSaleId: "<id>",
+          createdAt: new Date("2024-09-07T07:40:56.051Z"),
+        },
+      ],
     },
   },
   idempotentReplay: true,
@@ -54,5 +84,5 @@ let value: ApiCustomerCreateResponseData = {
 
 | Field                                                                        | Type                                                                         | Required                                                                     | Description                                                                  |
 | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| `customer`                                                                   | [models.ApiSharedObject5bccea1792](../models/api-shared-object5bccea1792.md) | :heavy_check_mark:                                                           | N/A                                                                          |
+| `customer`                                                                   | [models.ApiSharedObject70cd0320c7](../models/api-shared-object70cd0320c7.md) | :heavy_check_mark:                                                           | N/A                                                                          |
 | `idempotentReplay`                                                           | *boolean*                                                                    | :heavy_check_mark:                                                           | N/A                                                                          |
