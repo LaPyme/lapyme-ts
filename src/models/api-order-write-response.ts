@@ -9,13 +9,13 @@ import { safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import {
-  ApiSharedObject1cf33bb430,
-  ApiSharedObject1cf33bb430$inboundSchema,
-} from "./api-shared-object1cf33bb430.js";
+  ApiSharedObject7ae43a0cb2,
+  ApiSharedObject7ae43a0cb2$inboundSchema,
+} from "./api-shared-object7ae43a0cb2.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type ApiOrderWriteResponseData = {
-  order: ApiSharedObject1cf33bb430;
+  order: ApiSharedObject7ae43a0cb2;
   idempotentReplay?: boolean | undefined;
   result?: any | undefined;
 };
@@ -32,7 +32,7 @@ export const ApiOrderWriteResponseData$inboundSchema: z.ZodMiniType<
   unknown
 > = z.pipe(
   z.object({
-    order: ApiSharedObject1cf33bb430$inboundSchema,
+    order: ApiSharedObject7ae43a0cb2$inboundSchema,
     idempotent_replay: types.optional(types.boolean()),
     result: types.optional(z.any()),
   }),
