@@ -11,7 +11,7 @@ let value: ApiCustomerPaymentListResponseData = {
   amount: 770493,
   balance: 19905,
   formattedPaymentNumber: "<value>",
-  currency: "DOL",
+  currency: "USD",
   paymentMethod: {
     id: "aba4ddb3-f142-4a77-aa1a-78e411d96988",
     name: "<value>",
@@ -43,7 +43,7 @@ let value: ApiCustomerPaymentListResponseData = {
 | `amount`                                                                                      | *number*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `balance`                                                                                     | *number*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `formattedPaymentNumber`                                                                      | *string*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
-| `currency`                                                                                    | [models.ApiSharedEnum6cfb146157](../models/api-shared-enum6cfb146157.md)                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
+| `currency`                                                                                    | [models.ApiSharedEnumffb4886f2b](../models/api-shared-enumffb4886f2b.md)                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `paymentMethod`                                                                               | [models.ApiSharedObject78bf4093ef](../models/api-shared-object78bf4093ef.md)                  | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `paymentMethodCount`                                                                          | *number*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `relatedEntity`                                                                               | [models.ApiSharedObjectf442c4288c](../models/api-shared-objectf442c4288c.md)                  | :heavy_check_mark:                                                                            | N/A                                                                                           |
