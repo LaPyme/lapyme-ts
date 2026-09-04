@@ -15,7 +15,7 @@ let value: ApiCustomerPaymentDetailResponseData = {
     paymentNumber: 790450,
     formattedPaymentNumber: "<value>",
     paymentDate: "<value>",
-    currency: "PES",
+    currency: "ARS",
     totalAmount: 783901,
     balance: 111225,
     createdAt: new Date("2024-05-01T06:17:09.879Z"),
@@ -28,4 +28,4 @@ let value: ApiCustomerPaymentDetailResponseData = {
 
 | Field                                                                        | Type                                                                         | Required                                                                     | Description                                                                  |
 | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| `customerPayment`                                                            | [models.ApiSharedObjectba6d1f3759](../models/api-shared-objectba6d1f3759.md) | :heavy_check_mark:                                                           | N/A                                                                          |
+| `customerPayment`                                                            | [models.ApiSharedObjectfabd7b2b2d](../models/api-shared-objectfabd7b2b2d.md) | :heavy_check_mark:                                                           | N/A                                                                          |

@@ -30,6 +30,9 @@ import { Result } from "../types/fp.js";
 
 /**
  * Listar centros de costo
+ *
+ * @remarks
+ * Lista centros de costo y permite filtrar por dimensión, posición y estado activo.
  */
 export function apiListAPICostCenters(
   client: LapymeCore,

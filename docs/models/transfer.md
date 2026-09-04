@@ -33,12 +33,21 @@ let value: Transfer = {
       productId: "d98c35a5-9776-4e86-ba81-9c49078f2157",
       quantity: 5536.45,
       receivedQuantity: 3970.32,
+      rejectedQuantity: 6610.77,
       product: {
-        id: "951a1e5d-31df-484a-a5b8-d026b7a1fe6c",
+        id: "061bf5d7-6906-4dd4-b818-c5372be1066b",
         name: "<value>",
         sku: "<value>",
-        variantOptions: {},
-        optionNames: [],
+        variantOptions: {
+          "key": "<value>",
+          "key1": "<value>",
+          "key2": "<value>",
+        },
+        optionNames: [
+          "<value 1>",
+          "<value 2>",
+          "<value 3>",
+        ],
       },
     },
   ],
@@ -57,11 +66,11 @@ let value: Transfer = {
 | `formattedTransferNumber`                                                                     | *string*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `transferDate`                                                                                | [Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date) | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `notes`                                                                                       | *string*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
-| `status`                                                                                      | [models.ApiSharedEnumc66b046f05](../models/api-shared-enumc66b046f05.md)                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
+| `status`                                                                                      | [models.ApiSharedEnum736f0d077b](../models/api-shared-enum736f0d077b.md)                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `createdAt`                                                                                   | [Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date) | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `updatedAt`                                                                                   | [Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date) | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `createdBy`                                                                                   | *string*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `updatedBy`                                                                                   | *string*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `sourceWarehouse`                                                                             | [models.ApiSharedObject8aeeceaf0f](../models/api-shared-object8aeeceaf0f.md)                  | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `targetWarehouse`                                                                             | [models.ApiSharedObject8aeeceaf0f](../models/api-shared-object8aeeceaf0f.md)                  | :heavy_check_mark:                                                                            | N/A                                                                                           |
-| `items`                                                                                       | [models.ApiSharedObject13f8ed82da](../models/api-shared-object13f8ed82da.md)[]                | :heavy_check_mark:                                                                            | N/A                                                                                           |
+| `items`                                                                                       | [models.ApiSharedObject9090c617d7](../models/api-shared-object9090c617d7.md)[]                | :heavy_check_mark:                                                                            | N/A                                                                                           |
