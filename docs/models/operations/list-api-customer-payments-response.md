@@ -16,7 +16,7 @@ let value: ListApiCustomerPaymentsResponse = {
         amount: 222486,
         balance: 873581,
         formattedPaymentNumber: "<value>",
-        currency: "PES",
+        currency: "ARS",
         paymentMethod: {
           id: "aba4ddb3-f142-4a77-aa1a-78e411d96988",
           name: "<value>",
