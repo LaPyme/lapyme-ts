@@ -135,7 +135,7 @@ const lapyme = new Lapyme({
 });
 
 async function run() {
-  const result = await lapyme.suppliers.list({});
+  const result = await lapyme.api.getApiOrganization();
 
   console.log(result);
 }
@@ -165,7 +165,7 @@ const lapyme = new Lapyme({
 });
 
 async function run() {
-  const result = await lapyme.suppliers.list({});
+  const result = await lapyme.api.getApiOrganization();
 
   console.log(result);
 }
@@ -183,13 +183,59 @@ run();
 
 ### [Api](docs/sdks/api/README.md)
 
+* [getApiOrganization](docs/sdks/api/README.md#getapiorganization) - Obtener la organización autenticada
+* [listApiBankAccounts](docs/sdks/api/README.md#listapibankaccounts) - Listar cuentas bancarias
+* [getApiBankAccount](docs/sdks/api/README.md#getapibankaccount) - Obtener una cuenta bancaria
+* [listApiTreasuryBalances](docs/sdks/api/README.md#listapitreasurybalances) - Listar saldos de tesorería
+* [listApiTreasuryMovements](docs/sdks/api/README.md#listapitreasurymovements) - Listar movimientos de tesorería
+* [listApiFundsTransfers](docs/sdks/api/README.md#listapifundstransfers) - Listar transferencias de fondos
+* [createApiFundsTransfer](docs/sdks/api/README.md#createapifundstransfer) - Crear una transferencia de fondos
+* [getApiFundsTransfer](docs/sdks/api/README.md#getapifundstransfer) - Obtener una transferencia de fondos
+* [listApiTaxRates](docs/sdks/api/README.md#listapitaxrates) - Listar alícuotas impositivas
+* [listApiVoucherTypes](docs/sdks/api/README.md#listapivouchertypes) - Listar tipos de comprobante válidos
+* [listApiProductMetafieldDefinitions](docs/sdks/api/README.md#listapiproductmetafielddefinitions) - Listar definiciones de campos personalizados de productos
+* [patchApiProductMetafields](docs/sdks/api/README.md#patchapiproductmetafields) - Actualizar campos personalizados de un producto
+* [deleteApiPriceList](docs/sdks/api/README.md#deleteapipricelist) - Eliminar lista de precios
+* [listApiWebhookEventTypes](docs/sdks/api/README.md#listapiwebhookeventtypes) - Listar tipos de evento de webhook
+* [listApiWebhookEndpoints](docs/sdks/api/README.md#listapiwebhookendpoints) - Listar endpoints de webhook
+* [createApiWebhookEndpoint](docs/sdks/api/README.md#createapiwebhookendpoint) - Crear endpoint de webhook
+* [getApiWebhookEndpoint](docs/sdks/api/README.md#getapiwebhookendpoint) - Obtener endpoint de webhook
+* [updateApiWebhookEndpoint](docs/sdks/api/README.md#updateapiwebhookendpoint) - Actualizar endpoint de webhook
+* [pauseApiWebhookEndpoint](docs/sdks/api/README.md#pauseapiwebhookendpoint) - Pausar endpoint de webhook
+* [resumeApiWebhookEndpoint](docs/sdks/api/README.md#resumeapiwebhookendpoint) - Reanudar endpoint de webhook
+* [disableApiWebhookEndpoint](docs/sdks/api/README.md#disableapiwebhookendpoint) - Deshabilitar endpoint de webhook
+* [rotateSecretApiWebhookEndpoint](docs/sdks/api/README.md#rotatesecretapiwebhookendpoint) - Rotar secreto de webhook
+* [testApiWebhookEndpoint](docs/sdks/api/README.md#testapiwebhookendpoint) - Probar endpoint de webhook
+* [listApiQuotes](docs/sdks/api/README.md#listapiquotes) - Listar presupuestos
+* [createApiQuote](docs/sdks/api/README.md#createapiquote) - Crear presupuesto
+* [getApiQuoteById](docs/sdks/api/README.md#getapiquotebyid) - Obtener presupuesto por ID
+* [updateApiQuote](docs/sdks/api/README.md#updateapiquote) - Reemplazar presupuesto en borrador
+* [listApiDeliveryNotes](docs/sdks/api/README.md#listapideliverynotes) - Listar remitos
+* [createApiDeliveryNote](docs/sdks/api/README.md#createapideliverynote) - Crear remito
+* [getApiDeliveryNoteById](docs/sdks/api/README.md#getapideliverynotebyid) - Obtener remito por ID
+* [~~listApiRemitos~~](docs/sdks/api/README.md#listapiremitos) - Listar remitos (ruta anterior) :warning: **Deprecated**
+* [~~getApiRemitoById~~](docs/sdks/api/README.md#getapiremitobyid) - Obtener remito por ID (ruta anterior) :warning: **Deprecated**
+* [updateApiPurchase](docs/sdks/api/README.md#updateapipurchase) - Actualizar compra
+* [deleteApiPurchase](docs/sdks/api/README.md#deleteapipurchase) - Eliminar compra
+* [updateApiPurchaseOrder](docs/sdks/api/README.md#updateapipurchaseorder) - Actualizar orden de compra
+* [deleteApiDraftPurchaseOrder](docs/sdks/api/README.md#deleteapidraftpurchaseorder) - Eliminar orden de compra en borrador
 * [archiveApiOrder](docs/sdks/api/README.md#archiveapiorder) - Archivar pedido
 * [updateApiOrderPreparation](docs/sdks/api/README.md#updateapiorderpreparation) - Actualizar preparación pendiente
 * [createApiOrderPreparation](docs/sdks/api/README.md#createapiorderpreparation) - Marcar líneas como preparadas
 * [cancelApiOrderPreparation](docs/sdks/api/README.md#cancelapiorderpreparation) - Cancelar preparación
+* [downloadApiPurchaseDocument](docs/sdks/api/README.md#downloadapipurchasedocument) - Descargar documento de compra
 * [createApiOrderInvoice](docs/sdks/api/README.md#createapiorderinvoice) - Facturar pedido
+* [invoiceApiSale](docs/sdks/api/README.md#invoiceapisale) - Facturar una venta existente
+* [downloadApiSaleDocument](docs/sdks/api/README.md#downloadapisaledocument) - Descargar comprobante de venta
+* [createApiReturnCreditNote](docs/sdks/api/README.md#createapireturncreditnote) - Crear nota de crédito por devolución
+* [createApiStandaloneCreditNote](docs/sdks/api/README.md#createapistandalonecreditnote) - Crear nota de crédito independiente
+* [updateApiSupplierPayment](docs/sdks/api/README.md#updateapisupplierpayment) - Actualizar pago a proveedor
+* [listApiCashSources](docs/sdks/api/README.md#listapicashsources) - Listar cajas para efectivo
 * [listApiAccountingAccounts](docs/sdks/api/README.md#listapiaccountingaccounts) - Listar cuentas contables
+* [createApiAccountingAccount](docs/sdks/api/README.md#createapiaccountingaccount) - Crear cuenta contable
 * [getApiAccountingAccount](docs/sdks/api/README.md#getapiaccountingaccount) - Obtener cuenta contable
+* [updateApiAccountingAccount](docs/sdks/api/README.md#updateapiaccountingaccount) - Actualizar cuenta contable
+* [deactivateApiAccountingAccount](docs/sdks/api/README.md#deactivateapiaccountingaccount) - Desactivar cuenta contable
 * [listApiCostCenterDimensions](docs/sdks/api/README.md#listapicostcenterdimensions) - Listar dimensiones de centros de costo
 * [listApiCostCenters](docs/sdks/api/README.md#listapicostcenters) - Listar centros de costo
 * [getApiTrialBalance](docs/sdks/api/README.md#getapitrialbalance) - Obtener sumas y saldos
@@ -238,7 +284,7 @@ run();
 * [listOrders](docs/sdks/orders/README.md#listorders) - Listar pedidos
 * [createOrder](docs/sdks/orders/README.md#createorder) - Crear pedido
 * [getOrderById](docs/sdks/orders/README.md#getorderbyid) - Obtener pedido
-* [updateOrderNotes](docs/sdks/orders/README.md#updateordernotes) - Actualizar notas del pedido
+* [updateOrderNotes](docs/sdks/orders/README.md#updateordernotes) - Editar pedido
 * [deleteArchived](docs/sdks/orders/README.md#deletearchived) - Eliminar pedido archivado
 * [cancel](docs/sdks/orders/README.md#cancel) - Cancelar pedido
 * [unarchive](docs/sdks/orders/README.md#unarchive) - Desarchivar pedido
@@ -366,26 +412,70 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 
 - [`apiArchiveAPIOrder`](docs/sdks/api/README.md#archiveapiorder) - Archivar pedido
 - [`apiCancelAPIOrderPreparation`](docs/sdks/api/README.md#cancelapiorderpreparation) - Cancelar preparación
+- [`apiCreateAPIAccountingAccount`](docs/sdks/api/README.md#createapiaccountingaccount) - Crear cuenta contable
+- [`apiCreateAPIDeliveryNote`](docs/sdks/api/README.md#createapideliverynote) - Crear remito
+- [`apiCreateAPIFundsTransfer`](docs/sdks/api/README.md#createapifundstransfer) - Crear una transferencia de fondos
 - [`apiCreateAPIInflationAdjustment`](docs/sdks/api/README.md#createapiinflationadjustment) - Crear ajuste por inflación
 - [`apiCreateAPIManualJournalEntry`](docs/sdks/api/README.md#createapimanualjournalentry) - Crear asiento manual
 - [`apiCreateAPIOrderInvoice`](docs/sdks/api/README.md#createapiorderinvoice) - Facturar pedido
 - [`apiCreateAPIOrderPreparation`](docs/sdks/api/README.md#createapiorderpreparation) - Marcar líneas como preparadas
+- [`apiCreateAPIQuote`](docs/sdks/api/README.md#createapiquote) - Crear presupuesto
+- [`apiCreateAPIReturnCreditNote`](docs/sdks/api/README.md#createapireturncreditnote) - Crear nota de crédito por devolución
+- [`apiCreateAPIStandaloneCreditNote`](docs/sdks/api/README.md#createapistandalonecreditnote) - Crear nota de crédito independiente
+- [`apiCreateAPIWebhookEndpoint`](docs/sdks/api/README.md#createapiwebhookendpoint) - Crear endpoint de webhook
+- [`apiDeactivateAPIAccountingAccount`](docs/sdks/api/README.md#deactivateapiaccountingaccount) - Desactivar cuenta contable
+- [`apiDeleteAPIDraftPurchaseOrder`](docs/sdks/api/README.md#deleteapidraftpurchaseorder) - Eliminar orden de compra en borrador
 - [`apiDeleteAPIManualJournalEntry`](docs/sdks/api/README.md#deleteapimanualjournalentry) - Eliminar asiento manual
+- [`apiDeleteAPIPriceList`](docs/sdks/api/README.md#deleteapipricelist) - Eliminar lista de precios
+- [`apiDeleteAPIPurchase`](docs/sdks/api/README.md#deleteapipurchase) - Eliminar compra
+- [`apiDisableAPIWebhookEndpoint`](docs/sdks/api/README.md#disableapiwebhookendpoint) - Deshabilitar endpoint de webhook
+- [`apiDownloadAPIPurchaseDocument`](docs/sdks/api/README.md#downloadapipurchasedocument) - Descargar documento de compra
+- [`apiDownloadAPISaleDocument`](docs/sdks/api/README.md#downloadapisaledocument) - Descargar comprobante de venta
 - [`apiGetAPIAccountingAccount`](docs/sdks/api/README.md#getapiaccountingaccount) - Obtener cuenta contable
 - [`apiGetAPIAccountingJournalEntry`](docs/sdks/api/README.md#getapiaccountingjournalentry) - Obtener asiento contable
 - [`apiGetAPIAccountLedger`](docs/sdks/api/README.md#getapiaccountledger) - Obtener mayor de cuenta
+- [`apiGetAPIBankAccount`](docs/sdks/api/README.md#getapibankaccount) - Obtener una cuenta bancaria
 - [`apiGetAPIComparativeIncomeStatement`](docs/sdks/api/README.md#getapicomparativeincomestatement) - Obtener estado de resultados comparativo
+- [`apiGetAPIDeliveryNoteById`](docs/sdks/api/README.md#getapideliverynotebyid) - Obtener remito por ID
+- [`apiGetAPIFundsTransfer`](docs/sdks/api/README.md#getapifundstransfer) - Obtener una transferencia de fondos
 - [`apiGetAPIIncomeStatement`](docs/sdks/api/README.md#getapiincomestatement) - Obtener estado de resultados
 - [`apiGetAPIIncomeStatementByCostCenter`](docs/sdks/api/README.md#getapiincomestatementbycostcenter) - Obtener estado de resultados por centro de costo
+- [`apiGetAPIOrganization`](docs/sdks/api/README.md#getapiorganization) - Obtener la organización autenticada
+- [`apiGetAPIQuoteById`](docs/sdks/api/README.md#getapiquotebyid) - Obtener presupuesto por ID
 - [`apiGetAPITrialBalance`](docs/sdks/api/README.md#getapitrialbalance) - Obtener sumas y saldos
+- [`apiGetAPIWebhookEndpoint`](docs/sdks/api/README.md#getapiwebhookendpoint) - Obtener endpoint de webhook
+- [`apiInvoiceAPISale`](docs/sdks/api/README.md#invoiceapisale) - Facturar una venta existente
 - [`apiListAPIAccountingAccounts`](docs/sdks/api/README.md#listapiaccountingaccounts) - Listar cuentas contables
 - [`apiListAPIAccountingJournalEntries`](docs/sdks/api/README.md#listapiaccountingjournalentries) - Listar asientos contables
+- [`apiListAPIBankAccounts`](docs/sdks/api/README.md#listapibankaccounts) - Listar cuentas bancarias
+- [`apiListAPICashSources`](docs/sdks/api/README.md#listapicashsources) - Listar cajas para efectivo
 - [`apiListAPICostCenterDimensions`](docs/sdks/api/README.md#listapicostcenterdimensions) - Listar dimensiones de centros de costo
 - [`apiListAPICostCenters`](docs/sdks/api/README.md#listapicostcenters) - Listar centros de costo
+- [`apiListAPIDeliveryNotes`](docs/sdks/api/README.md#listapideliverynotes) - Listar remitos
+- [`apiListAPIFundsTransfers`](docs/sdks/api/README.md#listapifundstransfers) - Listar transferencias de fondos
+- [`apiListAPIProductMetafieldDefinitions`](docs/sdks/api/README.md#listapiproductmetafielddefinitions) - Listar definiciones de campos personalizados de productos
+- [`apiListAPIQuotes`](docs/sdks/api/README.md#listapiquotes) - Listar presupuestos
 - [`apiListAPISummarizedJournal`](docs/sdks/api/README.md#listapisummarizedjournal) - Listar libro diario resumido
+- [`apiListAPITaxRates`](docs/sdks/api/README.md#listapitaxrates) - Listar alícuotas impositivas
+- [`apiListAPITreasuryBalances`](docs/sdks/api/README.md#listapitreasurybalances) - Listar saldos de tesorería
+- [`apiListAPITreasuryMovements`](docs/sdks/api/README.md#listapitreasurymovements) - Listar movimientos de tesorería
+- [`apiListAPIVoucherTypes`](docs/sdks/api/README.md#listapivouchertypes) - Listar tipos de comprobante válidos
+- [`apiListAPIWebhookEndpoints`](docs/sdks/api/README.md#listapiwebhookendpoints) - Listar endpoints de webhook
+- [`apiListAPIWebhookEventTypes`](docs/sdks/api/README.md#listapiwebhookeventtypes) - Listar tipos de evento de webhook
+- [`apiPatchAPIProductMetafields`](docs/sdks/api/README.md#patchapiproductmetafields) - Actualizar campos personalizados de un producto
+- [`apiPauseAPIWebhookEndpoint`](docs/sdks/api/README.md#pauseapiwebhookendpoint) - Pausar endpoint de webhook
 - [`apiPreviewAPIInflationAdjustment`](docs/sdks/api/README.md#previewapiinflationadjustment) - Previsualizar ajuste por inflación
+- [`apiResumeAPIWebhookEndpoint`](docs/sdks/api/README.md#resumeapiwebhookendpoint) - Reanudar endpoint de webhook
+- [`apiRotateSecretAPIWebhookEndpoint`](docs/sdks/api/README.md#rotatesecretapiwebhookendpoint) - Rotar secreto de webhook
+- [`apiTestAPIWebhookEndpoint`](docs/sdks/api/README.md#testapiwebhookendpoint) - Probar endpoint de webhook
+- [`apiUpdateAPIAccountingAccount`](docs/sdks/api/README.md#updateapiaccountingaccount) - Actualizar cuenta contable
 - [`apiUpdateAPIManualJournalEntry`](docs/sdks/api/README.md#updateapimanualjournalentry) - Reemplazar asiento manual
 - [`apiUpdateAPIOrderPreparation`](docs/sdks/api/README.md#updateapiorderpreparation) - Actualizar preparación pendiente
+- [`apiUpdateAPIPurchase`](docs/sdks/api/README.md#updateapipurchase) - Actualizar compra
+- [`apiUpdateAPIPurchaseOrder`](docs/sdks/api/README.md#updateapipurchaseorder) - Actualizar orden de compra
+- [`apiUpdateAPIQuote`](docs/sdks/api/README.md#updateapiquote) - Reemplazar presupuesto en borrador
+- [`apiUpdateAPISupplierPayment`](docs/sdks/api/README.md#updateapisupplierpayment) - Actualizar pago a proveedor
+- [`apiUpdateAPIWebhookEndpoint`](docs/sdks/api/README.md#updateapiwebhookendpoint) - Actualizar endpoint de webhook
 - [`categoriesCreate`](docs/sdks/categories/README.md#create) - Crear categoría
 - [`categoriesGet`](docs/sdks/categories/README.md#get) - Listar categorías
 - [`categoriesGetById`](docs/sdks/categories/README.md#getbyid) - Obtener categoría
@@ -407,7 +497,7 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`ordersGetOrderById`](docs/sdks/orders/README.md#getorderbyid) - Obtener pedido
 - [`ordersListOrders`](docs/sdks/orders/README.md#listorders) - Listar pedidos
 - [`ordersUnarchive`](docs/sdks/orders/README.md#unarchive) - Desarchivar pedido
-- [`ordersUpdateOrderNotes`](docs/sdks/orders/README.md#updateordernotes) - Actualizar notas del pedido
+- [`ordersUpdateOrderNotes`](docs/sdks/orders/README.md#updateordernotes) - Editar pedido
 - [`paymentMethodsCreate`](docs/sdks/paymentmethods/README.md#create) - Crear método de pago
 - [`paymentMethodsGet`](docs/sdks/paymentmethods/README.md#get) - Obtener método de pago
 - [`paymentMethodsList`](docs/sdks/paymentmethods/README.md#list) - Listar métodos de pago
@@ -460,6 +550,8 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`warehousesGetWarehouseById`](docs/sdks/warehouses/README.md#getwarehousebyid) - Obtener depósito por ID
 - [`warehousesList`](docs/sdks/warehouses/README.md#list) - Listar depósitos
 - [`warehousesUpdateWarehouse`](docs/sdks/warehouses/README.md#updatewarehouse) - Actualizar depósito
+- ~~[`apiGetAPIRemitoById`](docs/sdks/api/README.md#getapiremitobyid)~~ - Obtener remito por ID (ruta anterior) :warning: **Deprecated**
+- ~~[`apiListAPIRemitos`](docs/sdks/api/README.md#listapiremitos)~~ - Listar remitos (ruta anterior) :warning: **Deprecated**
 
 </details>
 <!-- End Standalone functions [standalone-funcs] -->
@@ -478,7 +570,7 @@ const lapyme = new Lapyme({
 });
 
 async function run() {
-  const result = await lapyme.suppliers.list({}, {
+  const result = await lapyme.api.getApiOrganization({
     retries: {
       strategy: "backoff",
       backoff: {
@@ -517,7 +609,7 @@ const lapyme = new Lapyme({
 });
 
 async function run() {
-  const result = await lapyme.suppliers.list({});
+  const result = await lapyme.api.getApiOrganization();
 
   console.log(result);
 }
@@ -552,7 +644,7 @@ const lapyme = new Lapyme({
 
 async function run() {
   try {
-    const result = await lapyme.suppliers.list({});
+    const result = await lapyme.api.getApiOrganization();
 
     console.log(result);
   } catch (error) {
@@ -614,7 +706,7 @@ const lapyme = new Lapyme({
 });
 
 async function run() {
-  const result = await lapyme.suppliers.list({});
+  const result = await lapyme.api.getApiOrganization();
 
   console.log(result);
 }
@@ -707,3 +799,5 @@ Pin the SDK to a specific package version in production applications. This keeps
 Open an issue or PR with the integration you are building, a minimal repro, and
 the expected SDK behavior. We prioritize changes that make common La Pyme API
 workflows easier to build and safer to operate.
+
+<!-- Placeholder for Future Speakeasy SDK Sections -->
