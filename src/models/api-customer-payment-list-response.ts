@@ -9,13 +9,13 @@ import { safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import {
-  ApiSharedEnum6cfb146157,
-  ApiSharedEnum6cfb146157$inboundSchema,
-} from "./api-shared-enum6cfb146157.js";
-import {
   ApiSharedEnum8d46e1ec20,
   ApiSharedEnum8d46e1ec20$inboundSchema,
 } from "./api-shared-enum8d46e1ec20.js";
+import {
+  ApiSharedEnumffb4886f2b,
+  ApiSharedEnumffb4886f2b$inboundSchema,
+} from "./api-shared-enumffb4886f2b.js";
 import {
   ApiSharedObject0fb80a7625,
   ApiSharedObject0fb80a7625$inboundSchema,
@@ -36,7 +36,7 @@ export type ApiCustomerPaymentListResponseData = {
   amount: number;
   balance: number;
   formattedPaymentNumber: string | null;
-  currency: ApiSharedEnum6cfb146157;
+  currency: ApiSharedEnumffb4886f2b;
   paymentMethod: ApiSharedObject78bf4093ef | null;
   paymentMethodCount: number;
   relatedEntity: ApiSharedObjectf442c4288c | null;
@@ -72,7 +72,7 @@ export const ApiCustomerPaymentListResponseData$inboundSchema: z.ZodMiniType<
     amount: types.number(),
     balance: types.number(),
     formatted_payment_number: types.nullable(types.string()),
-    currency: ApiSharedEnum6cfb146157$inboundSchema,
+    currency: ApiSharedEnumffb4886f2b$inboundSchema,
     payment_method: types.nullable(ApiSharedObject78bf4093ef$inboundSchema),
     payment_method_count: types.number(),
     related_entity: types.nullable(ApiSharedObjectf442c4288c$inboundSchema),
