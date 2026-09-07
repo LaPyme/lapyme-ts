@@ -33,9 +33,9 @@ export type ListApiSalesAmountAttribute = ClosedEnum<
 
 export type ListApiSalesRequest = {
   /**
-   * Comma-separated top-level sale sections to include. Omit for the endpoint default. List default: id, document, customer, amounts, reversesVoucher, integration, audit. Detail default: id, document, customer, amounts, items, payments, applications, fiscal, reversesVoucher, integration, audit.
+   * Comma-separated top-level sale sections to include. Omit for the endpoint default. List default: id, document, customer, amounts, reversesVoucher, integration, audit, tags. Detail default: id, invoicePdf, document, customer, amounts, items, payments, applications, fiscal, reversesVoucher, integration, audit, tags.
    */
-  fields?: Array<models.ApiSharedEnumd1f2fb458d> | undefined;
+  fields?: Array<models.ApiSharedEnum2b4695150d> | undefined;
   /**
    * Valor de next_cursor recibido en la respuesta anterior
    */
@@ -45,13 +45,9 @@ export type ListApiSalesRequest = {
    */
   limit?: number | undefined;
   /**
-   * Texto de búsqueda por cliente, CUIT, número de comprobante o ID de integración
+   * Texto de búsqueda por cliente, CUIT, número de comprobante, ID de integración, producto, SKU, código de barras o variante
    */
   query?: string | undefined;
-  /**
-   * Alias de query
-   */
-  search?: string | undefined;
   /**
    * Filtra por cliente
    */
@@ -130,7 +126,6 @@ export type ListApiSalesRequest$Outbound = {
   cursor?: string | undefined;
   limit: number;
   query?: string | undefined;
-  search?: string | undefined;
   customer_id?: string | undefined;
   date_from?: string | undefined;
   date_to?: string | undefined;
@@ -153,11 +148,10 @@ export const ListApiSalesRequest$outboundSchema: z.ZodMiniType<
   ListApiSalesRequest
 > = z.pipe(
   z.object({
-    fields: z.optional(z.array(models.ApiSharedEnumd1f2fb458d$outboundSchema)),
+    fields: z.optional(z.array(models.ApiSharedEnum2b4695150d$outboundSchema)),
     cursor: z.optional(z.string()),
     limit: z._default(z.int(), 50),
     query: z.optional(z.string()),
-    search: z.optional(z.string()),
     customerId: z.optional(z.string()),
     dateFrom: z.optional(z.pipe(
       z.date(),

@@ -11,5 +11,5 @@ let value: ApiProductMutationRequestProductType = "product";
 ## Values
 
 ```typescript
-"product" | "service" | "combo" | "kit"
+"product" | "service" | "kit"
 ```
