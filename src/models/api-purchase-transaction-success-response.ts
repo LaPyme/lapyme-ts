@@ -9,10 +9,6 @@ import { safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import {
-  ApiSharedEnum6cfb146157,
-  ApiSharedEnum6cfb146157$inboundSchema,
-} from "./api-shared-enum6cfb146157.js";
-import {
   ApiSharedEnum9e7af09974,
   ApiSharedEnum9e7af09974$inboundSchema,
 } from "./api-shared-enum9e7af09974.js";
@@ -21,25 +17,33 @@ import {
   ApiSharedEnumd34af90520$inboundSchema,
 } from "./api-shared-enumd34af90520.js";
 import {
+  ApiSharedEnumde48b709b2,
+  ApiSharedEnumde48b709b2$inboundSchema,
+} from "./api-shared-enumde48b709b2.js";
+import {
   ApiSharedEnumf0d69c3d87,
   ApiSharedEnumf0d69c3d87$inboundSchema,
 } from "./api-shared-enumf0d69c3d87.js";
 import {
-  ApiSharedObject3c43192c61,
-  ApiSharedObject3c43192c61$inboundSchema,
-} from "./api-shared-object3c43192c61.js";
+  ApiSharedEnumffb4886f2b,
+  ApiSharedEnumffb4886f2b$inboundSchema,
+} from "./api-shared-enumffb4886f2b.js";
+import {
+  ApiSharedObjectb451a3d8de,
+  ApiSharedObjectb451a3d8de$inboundSchema,
+} from "./api-shared-objectb451a3d8de.js";
+import {
+  ApiSharedObjectbf19ed87b4,
+  ApiSharedObjectbf19ed87b4$inboundSchema,
+} from "./api-shared-objectbf19ed87b4.js";
+import {
+  ApiSharedObjectc482130d79,
+  ApiSharedObjectc482130d79$inboundSchema,
+} from "./api-shared-objectc482130d79.js";
 import {
   ApiSharedObjectc671832641,
   ApiSharedObjectc671832641$inboundSchema,
 } from "./api-shared-objectc671832641.js";
-import {
-  ApiSharedObjectdafaa4a9ee,
-  ApiSharedObjectdafaa4a9ee$inboundSchema,
-} from "./api-shared-objectdafaa4a9ee.js";
-import {
-  ApiSharedObjectedd0c22535,
-  ApiSharedObjectedd0c22535$inboundSchema,
-} from "./api-shared-objectedd0c22535.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type NormalizedPurchase = {
@@ -62,6 +66,7 @@ export type NormalizedPurchase = {
    */
   dueDate: string | null;
   paymentTermId: ApiSharedEnumd34af90520 | null;
+  paymentTermDays: number | null;
   /**
    * Rol del comprobante dentro del flujo de importacion.
    */
@@ -80,8 +85,10 @@ export type NormalizedPurchase = {
   customsDispatchNumber: string | null;
   warehouseId: string | null;
   productsReceived: boolean;
+  productsReturned: boolean;
+  inventoryEffect: ApiSharedEnumde48b709b2;
   updateProductVariantCost: boolean;
-  currency: ApiSharedEnum6cfb146157;
+  currency: ApiSharedEnumffb4886f2b;
   exchangeRate: number;
   subtotal: number | null;
   taxAmount: number | null;
@@ -98,12 +105,13 @@ export type NormalizedPurchase = {
   otherTaxAmount: number | null;
   notes: string | null;
   pdfPath: string | null;
-  items: Array<ApiSharedObjectedd0c22535>;
+  manualAccountAllocations: { [k: string]: string };
+  items: Array<ApiSharedObjectbf19ed87b4>;
 };
 
 export type ApiPurchaseTransactionSuccessResponseProjectedEffects = {
-  inventory: ApiSharedObjectdafaa4a9ee;
-  accounting: ApiSharedObject3c43192c61;
+  inventory: ApiSharedObjectb451a3d8de;
+  accounting: ApiSharedObjectc482130d79;
 };
 
 export type ApiPurchaseTransactionSuccessResponseData = {
@@ -133,6 +141,7 @@ export const NormalizedPurchase$inboundSchema: z.ZodMiniType<
     account_date: types.nullable(types.string()),
     due_date: types.nullable(types.string()),
     payment_term_id: types.nullable(ApiSharedEnumd34af90520$inboundSchema),
+    payment_term_days: types.nullable(types.number()),
     import_document_role: types.nullable(ApiSharedEnum9e7af09974$inboundSchema),
     import_source_purchase_id: types.nullable(types.string()),
     import_nationalization_status: types.nullable(
@@ -141,8 +150,10 @@ export const NormalizedPurchase$inboundSchema: z.ZodMiniType<
     customs_dispatch_number: types.nullable(types.string()),
     warehouse_id: types.nullable(types.string()),
     products_received: types.boolean(),
+    products_returned: types.boolean(),
+    inventory_effect: ApiSharedEnumde48b709b2$inboundSchema,
     update_product_variant_cost: types.boolean(),
-    currency: ApiSharedEnum6cfb146157$inboundSchema,
+    currency: ApiSharedEnumffb4886f2b$inboundSchema,
     exchange_rate: types.number(),
     subtotal: types.nullable(types.number()),
     tax_amount: types.nullable(types.number()),
@@ -159,7 +170,8 @@ export const NormalizedPurchase$inboundSchema: z.ZodMiniType<
     other_tax_amount: types.nullable(types.number()),
     notes: types.nullable(types.string()),
     pdf_path: types.nullable(types.string()),
-    items: z.array(ApiSharedObjectedd0c22535$inboundSchema),
+    manual_account_allocations: z.record(z.string(), types.string()),
+    items: z.array(ApiSharedObjectbf19ed87b4$inboundSchema),
   }),
   z.transform((v) => {
     return remap$(v, {
@@ -170,12 +182,15 @@ export const NormalizedPurchase$inboundSchema: z.ZodMiniType<
       "account_date": "accountDate",
       "due_date": "dueDate",
       "payment_term_id": "paymentTermId",
+      "payment_term_days": "paymentTermDays",
       "import_document_role": "importDocumentRole",
       "import_source_purchase_id": "importSourcePurchaseId",
       "import_nationalization_status": "importNationalizationStatus",
       "customs_dispatch_number": "customsDispatchNumber",
       "warehouse_id": "warehouseId",
       "products_received": "productsReceived",
+      "products_returned": "productsReturned",
+      "inventory_effect": "inventoryEffect",
       "update_product_variant_cost": "updateProductVariantCost",
       "exchange_rate": "exchangeRate",
       "tax_amount": "taxAmount",
@@ -189,6 +204,7 @@ export const NormalizedPurchase$inboundSchema: z.ZodMiniType<
       "internal_tax_amount": "internalTaxAmount",
       "other_tax_amount": "otherTaxAmount",
       "pdf_path": "pdfPath",
+      "manual_account_allocations": "manualAccountAllocations",
     });
   }),
 );
@@ -209,8 +225,8 @@ export const ApiPurchaseTransactionSuccessResponseProjectedEffects$inboundSchema
     ApiPurchaseTransactionSuccessResponseProjectedEffects,
     unknown
   > = z.object({
-    inventory: ApiSharedObjectdafaa4a9ee$inboundSchema,
-    accounting: ApiSharedObject3c43192c61$inboundSchema,
+    inventory: ApiSharedObjectb451a3d8de$inboundSchema,
+    accounting: ApiSharedObjectc482130d79$inboundSchema,
   });
 
 export function apiPurchaseTransactionSuccessResponseProjectedEffectsFromJSON(

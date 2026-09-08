@@ -24,10 +24,6 @@ export type ListApiStockTransfersRequest = {
    */
   query?: string | undefined;
   /**
-   * Alias de query
-   */
-  search?: string | undefined;
-  /**
    * Fecha inicial
    */
   dateFrom?: Date | undefined;
@@ -38,7 +34,7 @@ export type ListApiStockTransfersRequest = {
   /**
    * Estados de la transferencia. Puede repetirse o enviarse separada por comas.
    */
-  statuses?: Array<models.ApiSharedEnumc66b046f05> | undefined;
+  statuses?: Array<models.ApiSharedEnum736f0d077b> | undefined;
   /**
    * Depósito de origen
    */
@@ -59,7 +55,6 @@ export type ListApiStockTransfersRequest$Outbound = {
   cursor?: string | undefined;
   limit: number;
   query?: string | undefined;
-  search?: string | undefined;
   date_from?: string | undefined;
   date_to?: string | undefined;
   statuses?: Array<string> | undefined;
@@ -76,7 +71,6 @@ export const ListApiStockTransfersRequest$outboundSchema: z.ZodMiniType<
     cursor: z.optional(z.string()),
     limit: z._default(z.int(), 50),
     query: z.optional(z.string()),
-    search: z.optional(z.string()),
     dateFrom: z.optional(z.pipe(
       z.date(),
       z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
@@ -86,7 +80,7 @@ export const ListApiStockTransfersRequest$outboundSchema: z.ZodMiniType<
       z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
     )),
     statuses: z.optional(
-      z.array(models.ApiSharedEnumc66b046f05$outboundSchema),
+      z.array(models.ApiSharedEnum736f0d077b$outboundSchema),
     ),
     sourceWarehouseId: z.optional(z.string()),
     targetWarehouseId: z.optional(z.string()),

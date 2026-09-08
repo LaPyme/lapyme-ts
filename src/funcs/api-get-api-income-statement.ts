@@ -30,6 +30,9 @@ import { Result } from "../types/fp.js";
 
 /**
  * Obtener estado de resultados
+ *
+ * @remarks
+ * Calcula el estado de resultados para un período en la moneda de reporte solicitada.
  */
 export function apiGetAPIIncomeStatement(
   client: LapymeCore,
@@ -95,11 +98,13 @@ async function $do(
   const path = pathToFunc("/api/v1/accounting/income-statement")();
 
   const query = encodeFormQuery({
-    "cost_center1_ids": payload?.cost_center1_ids,
-    "cost_center2_ids": payload?.cost_center2_ids,
-    "cost_center3_ids": payload?.cost_center3_ids,
+    "cost_center_1_ids": payload?.cost_center_1_ids,
+    "cost_center_2_ids": payload?.cost_center_2_ids,
+    "cost_center_3_ids": payload?.cost_center_3_ids,
     "date_from": payload?.date_from,
     "date_to": payload?.date_to,
+    "period_preset": payload?.period_preset,
+    "reporting_currency": payload?.reporting_currency,
   });
 
   const headers = new Headers(compactMap({
