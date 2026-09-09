@@ -9,9 +9,9 @@ import { safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import {
-  ApiSharedObject136b444e9e,
-  ApiSharedObject136b444e9e$inboundSchema,
-} from "./api-shared-object136b444e9e.js";
+  ApiSharedObject5785340ece,
+  ApiSharedObject5785340ece$inboundSchema,
+} from "./api-shared-object5785340ece.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type ApiJournalEntriesListResponseData = {
@@ -27,7 +27,7 @@ export type ApiJournalEntriesListResponseData = {
   exchangeRate: number | null;
   createdAt: Date;
   updatedAt: Date;
-  lines: Array<ApiSharedObject136b444e9e>;
+  lines: Array<ApiSharedObject5785340ece>;
 };
 
 export type ApiJournalEntriesListResponse = {
@@ -57,7 +57,7 @@ export const ApiJournalEntriesListResponseData$inboundSchema: z.ZodMiniType<
     exchange_rate: types.nullable(types.number()),
     created_at: types.date(),
     updated_at: types.date(),
-    lines: z.array(ApiSharedObject136b444e9e$inboundSchema),
+    lines: z.array(ApiSharedObject5785340ece$inboundSchema),
   }),
   z.transform((v) => {
     return remap$(v, {

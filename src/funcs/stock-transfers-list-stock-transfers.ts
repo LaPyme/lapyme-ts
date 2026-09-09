@@ -103,7 +103,6 @@ async function $do(
     "date_to": payload?.date_to,
     "limit": payload?.limit,
     "query": payload?.query,
-    "search": payload?.search,
     "source_warehouse_id": payload?.source_warehouse_id,
     "statuses": payload?.statuses,
     "target_warehouse_id": payload?.target_warehouse_id,

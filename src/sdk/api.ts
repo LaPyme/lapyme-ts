@@ -5,26 +5,72 @@
 
 import { apiArchiveAPIOrder } from "../funcs/api-archive-api-order.js";
 import { apiCancelAPIOrderPreparation } from "../funcs/api-cancel-api-order-preparation.js";
+import { apiCreateAPIAccountingAccount } from "../funcs/api-create-api-accounting-account.js";
+import { apiCreateAPIDeliveryNote } from "../funcs/api-create-api-delivery-note.js";
+import { apiCreateAPIFundsTransfer } from "../funcs/api-create-api-funds-transfer.js";
 import { apiCreateAPIInflationAdjustment } from "../funcs/api-create-api-inflation-adjustment.js";
 import { apiCreateAPIManualJournalEntry } from "../funcs/api-create-api-manual-journal-entry.js";
 import { apiCreateAPIOrderInvoice } from "../funcs/api-create-api-order-invoice.js";
 import { apiCreateAPIOrderPreparation } from "../funcs/api-create-api-order-preparation.js";
+import { apiCreateAPIQuote } from "../funcs/api-create-api-quote.js";
+import { apiCreateAPIReturnCreditNote } from "../funcs/api-create-api-return-credit-note.js";
+import { apiCreateAPIStandaloneCreditNote } from "../funcs/api-create-api-standalone-credit-note.js";
+import { apiCreateAPIWebhookEndpoint } from "../funcs/api-create-api-webhook-endpoint.js";
+import { apiDeactivateAPIAccountingAccount } from "../funcs/api-deactivate-api-accounting-account.js";
+import { apiDeleteAPIDraftPurchaseOrder } from "../funcs/api-delete-api-draft-purchase-order.js";
 import { apiDeleteAPIManualJournalEntry } from "../funcs/api-delete-api-manual-journal-entry.js";
+import { apiDeleteAPIPriceList } from "../funcs/api-delete-api-price-list.js";
+import { apiDeleteAPIPurchase } from "../funcs/api-delete-api-purchase.js";
+import { apiDisableAPIWebhookEndpoint } from "../funcs/api-disable-api-webhook-endpoint.js";
+import { apiDownloadAPIPurchaseDocument } from "../funcs/api-download-api-purchase-document.js";
+import { apiDownloadAPISaleDocument } from "../funcs/api-download-api-sale-document.js";
 import { apiGetAPIAccountLedger } from "../funcs/api-get-api-account-ledger.js";
 import { apiGetAPIAccountingAccount } from "../funcs/api-get-api-accounting-account.js";
 import { apiGetAPIAccountingJournalEntry } from "../funcs/api-get-api-accounting-journal-entry.js";
+import { apiGetAPIBankAccount } from "../funcs/api-get-api-bank-account.js";
 import { apiGetAPIComparativeIncomeStatement } from "../funcs/api-get-api-comparative-income-statement.js";
+import { apiGetAPIDeliveryNoteById } from "../funcs/api-get-api-delivery-note-by-id.js";
+import { apiGetAPIFundsTransfer } from "../funcs/api-get-api-funds-transfer.js";
 import { apiGetAPIIncomeStatementByCostCenter } from "../funcs/api-get-api-income-statement-by-cost-center.js";
 import { apiGetAPIIncomeStatement } from "../funcs/api-get-api-income-statement.js";
+import { apiGetAPIOrganization } from "../funcs/api-get-api-organization.js";
+import { apiGetAPIQuoteById } from "../funcs/api-get-api-quote-by-id.js";
+import { apiGetAPIRemitoById } from "../funcs/api-get-api-remito-by-id.js";
 import { apiGetAPITrialBalance } from "../funcs/api-get-api-trial-balance.js";
+import { apiGetAPIWebhookEndpoint } from "../funcs/api-get-api-webhook-endpoint.js";
+import { apiInvoiceAPISale } from "../funcs/api-invoice-api-sale.js";
 import { apiListAPIAccountingAccounts } from "../funcs/api-list-api-accounting-accounts.js";
 import { apiListAPIAccountingJournalEntries } from "../funcs/api-list-api-accounting-journal-entries.js";
+import { apiListAPIBankAccounts } from "../funcs/api-list-api-bank-accounts.js";
+import { apiListAPICashSources } from "../funcs/api-list-api-cash-sources.js";
 import { apiListAPICostCenterDimensions } from "../funcs/api-list-api-cost-center-dimensions.js";
 import { apiListAPICostCenters } from "../funcs/api-list-api-cost-centers.js";
+import { apiListAPIDeliveryNotes } from "../funcs/api-list-api-delivery-notes.js";
+import { apiListAPIFundsTransfers } from "../funcs/api-list-api-funds-transfers.js";
+import { apiListAPIProductMetafieldDefinitions } from "../funcs/api-list-api-product-metafield-definitions.js";
+import { apiListAPIQuotes } from "../funcs/api-list-api-quotes.js";
+import { apiListAPIRemitos } from "../funcs/api-list-api-remitos.js";
 import { apiListAPISummarizedJournal } from "../funcs/api-list-api-summarized-journal.js";
+import { apiListAPITaxRates } from "../funcs/api-list-api-tax-rates.js";
+import { apiListAPITreasuryBalances } from "../funcs/api-list-api-treasury-balances.js";
+import { apiListAPITreasuryMovements } from "../funcs/api-list-api-treasury-movements.js";
+import { apiListAPIVoucherTypes } from "../funcs/api-list-api-voucher-types.js";
+import { apiListAPIWebhookEndpoints } from "../funcs/api-list-api-webhook-endpoints.js";
+import { apiListAPIWebhookEventTypes } from "../funcs/api-list-api-webhook-event-types.js";
+import { apiPatchAPIProductMetafields } from "../funcs/api-patch-api-product-metafields.js";
+import { apiPauseAPIWebhookEndpoint } from "../funcs/api-pause-api-webhook-endpoint.js";
 import { apiPreviewAPIInflationAdjustment } from "../funcs/api-preview-api-inflation-adjustment.js";
+import { apiResumeAPIWebhookEndpoint } from "../funcs/api-resume-api-webhook-endpoint.js";
+import { apiRotateSecretAPIWebhookEndpoint } from "../funcs/api-rotate-secret-api-webhook-endpoint.js";
+import { apiTestAPIWebhookEndpoint } from "../funcs/api-test-api-webhook-endpoint.js";
+import { apiUpdateAPIAccountingAccount } from "../funcs/api-update-api-accounting-account.js";
 import { apiUpdateAPIManualJournalEntry } from "../funcs/api-update-api-manual-journal-entry.js";
 import { apiUpdateAPIOrderPreparation } from "../funcs/api-update-api-order-preparation.js";
+import { apiUpdateAPIPurchaseOrder } from "../funcs/api-update-api-purchase-order.js";
+import { apiUpdateAPIPurchase } from "../funcs/api-update-api-purchase.js";
+import { apiUpdateAPIQuote } from "../funcs/api-update-api-quote.js";
+import { apiUpdateAPISupplierPayment } from "../funcs/api-update-api-supplier-payment.js";
+import { apiUpdateAPIWebhookEndpoint } from "../funcs/api-update-api-webhook-endpoint.js";
 import { ClientSDK, RequestOptions } from "../lib/sdks.js";
 import * as models from "../models/index.js";
 import * as operations from "../models/operations/index.js";
@@ -32,7 +78,622 @@ import { unwrapAsync } from "../types/fp.js";
 
 export class Api extends ClientSDK {
   /**
+   * Obtener la organización autenticada
+   *
+   * @remarks
+   * Devuelve una proyección segura de identidad fiscal y defaults operativos. No incluye settings internos, CBU, billing, límites, permisos ni credenciales de integraciones.
+   */
+  async getApiOrganization(
+    options?: RequestOptions,
+  ): Promise<operations.GetApiOrganizationResponse> {
+    return unwrapAsync(apiGetAPIOrganization(
+      this,
+      options,
+    ));
+  }
+
+  /**
+   * Listar cuentas bancarias
+   *
+   * @remarks
+   * Lista referencias de cuentas bancarias para integraciones de tesorería y pagos. No expone IDs contables internos ni permite administrar la configuración.
+   */
+  async listApiBankAccounts(
+    request?: operations.ListApiBankAccountsRequest | undefined,
+    options?: RequestOptions,
+  ): Promise<operations.ListApiBankAccountsResponse> {
+    return unwrapAsync(apiListAPIBankAccounts(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Obtener una cuenta bancaria
+   *
+   * @remarks
+   * Devuelve la configuración pública de una cuenta bancaria sin exponer su cuenta contable interna. Los saldos se consultan por separado.
+   */
+  async getApiBankAccount(
+    request: operations.GetApiBankAccountRequest,
+    options?: RequestOptions,
+  ): Promise<operations.GetApiBankAccountResponse> {
+    return unwrapAsync(apiGetAPIBankAccount(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Listar saldos de tesorería
+   *
+   * @remarks
+   * Lista saldos funcionales en ARS derivados del diario contable para cuentas bancarias, cajas registradoras y cajas fuertes denominadas en ARS. Las fuentes USD quedan fuera hasta que exista un contrato canónico de importes nativos y contables.
+   */
+  async listApiTreasuryBalances(
+    request?: operations.ListApiTreasuryBalancesRequest | undefined,
+    options?: RequestOptions,
+  ): Promise<operations.ListApiTreasuryBalancesResponse> {
+    return unwrapAsync(apiListAPITreasuryBalances(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Listar movimientos de tesorería
+   *
+   * @remarks
+   * Lista movimientos funcionales en ARS respaldados por el diario para fuentes denominadas en ARS. Un importe positivo aumenta el saldo y uno negativo lo reduce; las fuentes USD no se publican todavía.
+   */
+  async listApiTreasuryMovements(
+    request?: operations.ListApiTreasuryMovementsRequest | undefined,
+    options?: RequestOptions,
+  ): Promise<operations.ListApiTreasuryMovementsResponse> {
+    return unwrapAsync(apiListAPITreasuryMovements(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Listar transferencias de fondos
+   *
+   * @remarks
+   * Lista transferencias ARS visibles en orden determinista por fecha de negocio, creación e ID. El filtro de saldo requiere balance_type y balance_id y coincide con cualquiera de las dos puntas.
+   */
+  async listApiFundsTransfers(
+    request?: operations.ListApiFundsTransfersRequest | undefined,
+    options?: RequestOptions,
+  ): Promise<operations.ListApiFundsTransfersResponse> {
+    return unwrapAsync(apiListAPIFundsTransfers(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Crear una transferencia de fondos
+   *
+   * @remarks
+   * Mueve un importe entero en centavos entre dos saldos ARS visibles y devuelve el hecho confirmado con sus dos efectos contables. La operación es atómica, permite saldo negativo y exige Idempotency-Key.
+   */
+  async createApiFundsTransfer(
+    request: operations.CreateApiFundsTransferRequest,
+    options?: RequestOptions,
+  ): Promise<operations.CreateApiFundsTransferResponse> {
+    return unwrapAsync(apiCreateAPIFundsTransfer(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Obtener una transferencia de fondos
+   *
+   * @remarks
+   * Devuelve una transferencia ARS visible y exactamente dos efectos contables firmados, ordenados origen y destino, vinculados a movimientos de tesorería.
+   */
+  async getApiFundsTransfer(
+    request: operations.GetApiFundsTransferRequest,
+    options?: RequestOptions,
+  ): Promise<operations.GetApiFundsTransferResponse> {
+    return unwrapAsync(apiGetAPIFundsTransfer(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Listar alícuotas impositivas
+   *
+   * @remarks
+   * Lista los códigos estatutarios de IVA aceptados por los campos públicos tax_rate_id. El code es el identificador legal estable; no es un UUID de recurso de la organización.
+   */
+  async listApiTaxRates(
+    request?: operations.ListApiTaxRatesRequest | undefined,
+    options?: RequestOptions,
+  ): Promise<operations.ListApiTaxRatesResponse> {
+    return unwrapAsync(apiListAPITaxRates(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Listar tipos de comprobante válidos
+   *
+   * @remarks
+   * Devuelve candidatos contextuales para una venta o compra. La selección usa la configuración fiscal canónica de la organización y vuelve a validarse al escribir. Para ventas con total_amount, currency es obligatorio; USD también requiere exchange_rate en ARS por USD.
+   */
+  async listApiVoucherTypes(
+    request: operations.ListApiVoucherTypesRequest,
+    options?: RequestOptions,
+  ): Promise<operations.ListApiVoucherTypesResponse> {
+    return unwrapAsync(apiListAPIVoucherTypes(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Listar definiciones de campos personalizados de productos
+   *
+   * @remarks
+   * Devuelve las definiciones no sistémicas disponibles para productos. Las definiciones select incluyen todos los valores configurados u observados, deduplicados y con su cantidad de productos. Los valores de texto libre no se enumeran. La disponibilidad depende de que los campos personalizados estén habilitados para la organización.
+   */
+  async listApiProductMetafieldDefinitions(
+    options?: RequestOptions,
+  ): Promise<operations.ListApiProductMetafieldDefinitionsResponse> {
+    return unwrapAsync(apiListAPIProductMetafieldDefinitions(
+      this,
+      options,
+    ));
+  }
+
+  /**
+   * Actualizar campos personalizados de un producto
+   *
+   * @remarks
+   * Actualiza solo las claves enviadas. Un string asigna el valor y null lo elimina. Los valores pertenecen al grupo y se comparten entre variantes. La disponibilidad depende de que los campos personalizados estén habilitados para la organización.
+   */
+  async patchApiProductMetafields(
+    request: operations.PatchApiProductMetafieldsRequest,
+    options?: RequestOptions,
+  ): Promise<operations.PatchApiProductMetafieldsResponse> {
+    return unwrapAsync(apiPatchAPIProductMetafields(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Eliminar lista de precios
+   *
+   * @remarks
+   * Elimina una lista de precios existente.
+   */
+  async deleteApiPriceList(
+    request: operations.DeleteApiPriceListRequest,
+    options?: RequestOptions,
+  ): Promise<operations.DeleteApiPriceListResponse> {
+    return unwrapAsync(apiDeleteAPIPriceList(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Listar tipos de evento de webhook
+   *
+   * @remarks
+   * Lista eventos suscribibles con el recurso, scopes de lectura y versiones de payload requeridos.
+   */
+  async listApiWebhookEventTypes(
+    request?: operations.ListApiWebhookEventTypesRequest | undefined,
+    options?: RequestOptions,
+  ): Promise<operations.ListApiWebhookEventTypesResponse> {
+    return unwrapAsync(apiListAPIWebhookEventTypes(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Listar endpoints de webhook
+   *
+   * @remarks
+   * Lista endpoints visibles para la credencial. Por defecto incluye activos y pausados, no deshabilitados.
+   */
+  async listApiWebhookEndpoints(
+    request?: operations.ListApiWebhookEndpointsRequest | undefined,
+    options?: RequestOptions,
+  ): Promise<operations.ListApiWebhookEndpointsResponse> {
+    return unwrapAsync(apiListAPIWebhookEndpoints(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Crear endpoint de webhook
+   *
+   * @remarks
+   * Crea un endpoint activo y devuelve su signing_secret una sola vez. Requiere los scopes de lectura de todos los eventos habilitados.
+   */
+  async createApiWebhookEndpoint(
+    request: operations.CreateApiWebhookEndpointRequest,
+    options?: RequestOptions,
+  ): Promise<operations.CreateApiWebhookEndpointResponse> {
+    return unwrapAsync(apiCreateAPIWebhookEndpoint(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Obtener endpoint de webhook
+   *
+   * @remarks
+   * Devuelve un endpoint visible sin material secreto ni IDs internos de grants.
+   */
+  async getApiWebhookEndpoint(
+    request: operations.GetApiWebhookEndpointRequest,
+    options?: RequestOptions,
+  ): Promise<operations.GetApiWebhookEndpointResponse> {
+    return unwrapAsync(apiGetAPIWebhookEndpoint(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Actualizar endpoint de webhook
+   *
+   * @remarks
+   * Actualiza label, URL, eventos o versión. El status es de solo lectura y se cambia mediante acciones nombradas.
+   */
+  async updateApiWebhookEndpoint(
+    request: operations.UpdateApiWebhookEndpointRequest,
+    options?: RequestOptions,
+  ): Promise<operations.UpdateApiWebhookEndpointResponse> {
+    return unwrapAsync(apiUpdateAPIWebhookEndpoint(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Pausar endpoint de webhook
+   *
+   * @remarks
+   * Pausa un endpoint activo sin descartar sus entregas en cola.
+   */
+  async pauseApiWebhookEndpoint(
+    request: operations.PauseApiWebhookEndpointRequest,
+    options?: RequestOptions,
+  ): Promise<operations.PauseApiWebhookEndpointResponse> {
+    return unwrapAsync(apiPauseAPIWebhookEndpoint(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Reanudar endpoint de webhook
+   *
+   * @remarks
+   * Reanuda un endpoint pausado después de revalidar los scopes de sus eventos persistidos.
+   */
+  async resumeApiWebhookEndpoint(
+    request: operations.ResumeApiWebhookEndpointRequest,
+    options?: RequestOptions,
+  ): Promise<operations.ResumeApiWebhookEndpointResponse> {
+    return unwrapAsync(apiResumeAPIWebhookEndpoint(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Deshabilitar endpoint de webhook
+   *
+   * @remarks
+   * Deshabilita permanentemente el endpoint y cancela entregas pendientes o reintentables.
+   */
+  async disableApiWebhookEndpoint(
+    request: operations.DisableApiWebhookEndpointRequest,
+    options?: RequestOptions,
+  ): Promise<operations.DisableApiWebhookEndpointResponse> {
+    return unwrapAsync(apiDisableAPIWebhookEndpoint(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Rotar secreto de webhook
+   *
+   * @remarks
+   * Reemplaza el secreto inmediatamente y devuelve el nuevo signing_secret una sola vez.
+   */
+  async rotateSecretApiWebhookEndpoint(
+    request: operations.RotateSecretApiWebhookEndpointRequest,
+    options?: RequestOptions,
+  ): Promise<operations.RotateSecretApiWebhookEndpointResponse> {
+    return unwrapAsync(apiRotateSecretAPIWebhookEndpoint(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Probar endpoint de webhook
+   *
+   * @remarks
+   * Crea una entrega durable y sintética webhook.test para un endpoint activo o pausado.
+   */
+  async testApiWebhookEndpoint(
+    request: operations.TestApiWebhookEndpointRequest,
+    options?: RequestOptions,
+  ): Promise<operations.TestApiWebhookEndpointResponse> {
+    return unwrapAsync(apiTestAPIWebhookEndpoint(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Listar presupuestos
+   *
+   * @remarks
+   * Lista presupuestos de la organización en orden estable por creación e ID descendentes. Permite búsqueda y filtros por cliente y estado.
+   */
+  async listApiQuotes(
+    request?: operations.ListApiQuotesRequest | undefined,
+    options?: RequestOptions,
+  ): Promise<operations.ListApiQuotesResponse> {
+    return unwrapAsync(apiListAPIQuotes(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Crear presupuesto
+   *
+   * @remarks
+   * Crea un presupuesto en borrador. La API asigna el número, calcula importes y administra la reserva opcional. Requiere Idempotency-Key.
+   */
+  async createApiQuote(
+    request: operations.CreateApiQuoteRequest,
+    options?: RequestOptions,
+  ): Promise<operations.CreateApiQuoteResponse> {
+    return unwrapAsync(apiCreateAPIQuote(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Obtener presupuesto por ID
+   *
+   * @remarks
+   * Devuelve el presupuesto con sus líneas, importes persistidos, reserva activa y estado de ciclo de vida.
+   */
+  async getApiQuoteById(
+    request: operations.GetApiQuoteByIdRequest,
+    options?: RequestOptions,
+  ): Promise<operations.GetApiQuoteByIdResponse> {
+    return unwrapAsync(apiGetAPIQuoteById(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Reemplazar presupuesto en borrador
+   *
+   * @remarks
+   * Reemplaza todos los datos mutables de un presupuesto en borrador, recalcula sus importes y ajusta su reserva en una transacción. Requiere Idempotency-Key.
+   */
+  async updateApiQuote(
+    request: operations.UpdateApiQuoteRequest,
+    options?: RequestOptions,
+  ): Promise<operations.UpdateApiQuoteResponse> {
+    return unwrapAsync(apiUpdateAPIQuote(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Listar remitos
+   *
+   * @remarks
+   * Lista los remitos de la organización autenticada con paginación estable por cursor y filtros opcionales por venta, cliente, búsqueda y fecha.
+   */
+  async listApiDeliveryNotes(
+    request?: operations.ListApiDeliveryNotesRequest | undefined,
+    options?: RequestOptions,
+  ): Promise<operations.ListApiDeliveryNotesResponse> {
+    return unwrapAsync(apiListAPIDeliveryNotes(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Crear remito
+   *
+   * @remarks
+   * Crea un remito a partir de una venta existente de la organización o de datos independientes. Si el origen es una venta, toma de ella el cliente, punto de venta, artículos, cantidades, productos y depósitos. La creación es independiente de la facturación y mantiene la regla de un solo remito por venta.
+   */
+  async createApiDeliveryNote(
+    request: operations.CreateApiDeliveryNoteRequest,
+    options?: RequestOptions,
+  ): Promise<operations.CreateApiDeliveryNoteResponse> {
+    return unwrapAsync(apiCreateAPIDeliveryNote(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Obtener remito por ID
+   *
+   * @remarks
+   * Devuelve el detalle completo de un remito de la organización, incluidos su origen, cliente, punto de venta, datos logísticos y artículos.
+   */
+  async getApiDeliveryNoteById(
+    request: operations.GetApiDeliveryNoteByIdRequest,
+    options?: RequestOptions,
+  ): Promise<operations.GetApiDeliveryNoteByIdResponse> {
+    return unwrapAsync(apiGetAPIDeliveryNoteById(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Listar remitos (ruta anterior)
+   *
+   * @remarks
+   * Ruta de compatibilidad deprecada. Lista remitos de la organización. Migrá a GET /api/v1/delivery-notes.
+   *
+   * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
+   */
+  async listApiRemitos(
+    request?: operations.ListApiRemitosRequest | undefined,
+    options?: RequestOptions,
+  ): Promise<operations.ListApiRemitosResponse> {
+    return unwrapAsync(apiListAPIRemitos(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Obtener remito por ID (ruta anterior)
+   *
+   * @remarks
+   * Ruta de compatibilidad deprecada. Devuelve el detalle de un remito. Migrá a GET /api/v1/delivery-notes/{delivery_note_id}.
+   *
+   * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
+   */
+  async getApiRemitoById(
+    request: operations.GetApiRemitoByIdRequest,
+    options?: RequestOptions,
+  ): Promise<operations.GetApiRemitoByIdResponse> {
+    return unwrapAsync(apiGetAPIRemitoById(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Actualizar compra
+   *
+   * @remarks
+   * Actualiza una compra existente y devuelve el detalle persistido. El campo items es requerido y reemplaza los renglones de la compra. Requiere Idempotency-Key.
+   */
+  async updateApiPurchase(
+    request: operations.UpdateApiPurchaseRequest,
+    options?: RequestOptions,
+  ): Promise<operations.UpdateApiPurchaseResponse> {
+    return unwrapAsync(apiUpdateAPIPurchase(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Eliminar compra
+   *
+   * @remarks
+   * Elimina una compra existente. Puede revertir stock directo con undo_stock=true. Requiere Idempotency-Key.
+   */
+  async deleteApiPurchase(
+    request: operations.DeleteApiPurchaseRequest,
+    options?: RequestOptions,
+  ): Promise<operations.DeleteApiPurchaseResponse> {
+    return unwrapAsync(apiDeleteAPIPurchase(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Actualizar orden de compra
+   *
+   * @remarks
+   * Actualiza una orden de compra editable y devuelve el detalle persistido. Requiere Idempotency-Key.
+   */
+  async updateApiPurchaseOrder(
+    request: operations.UpdateApiPurchaseOrderRequest,
+    options?: RequestOptions,
+  ): Promise<operations.UpdateApiPurchaseOrderResponse> {
+    return unwrapAsync(apiUpdateAPIPurchaseOrder(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Eliminar orden de compra en borrador
+   *
+   * @remarks
+   * Elimina una orden de compra solo si todavía está en estado borrador.
+   */
+  async deleteApiDraftPurchaseOrder(
+    request: operations.DeleteApiDraftPurchaseOrderRequest,
+    options?: RequestOptions,
+  ): Promise<operations.DeleteApiDraftPurchaseOrderResponse> {
+    return unwrapAsync(apiDeleteAPIDraftPurchaseOrder(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
    * Archivar pedido
+   *
+   * @remarks
+   * Archiva un pedido elegible y permite registrar un motivo opcional sin modificar sus líneas ni importes.
    */
   async archiveApiOrder(
     request: operations.ArchiveApiOrderRequest,
@@ -49,7 +710,7 @@ export class Api extends ClientSDK {
    * Actualizar preparación pendiente
    *
    * @remarks
-   * Marca el pedido como en preparación o cambia el depósito de unidades pendientes.
+   * Marca un grupo de preparación como en preparación o cambia el depósito de sus unidades pendientes.
    */
   async updateApiOrderPreparation(
     request: operations.UpdateApiOrderPreparationRequest,
@@ -66,7 +727,7 @@ export class Api extends ClientSDK {
    * Marcar líneas como preparadas
    *
    * @remarks
-   * Crea una preparación de líneas del pedido y requiere Idempotency-Key.
+   * Registra cantidades preparadas para un grupo del pedido y requiere Idempotency-Key.
    */
   async createApiOrderPreparation(
     request: operations.CreateApiOrderPreparationRequest,
@@ -81,12 +742,32 @@ export class Api extends ClientSDK {
 
   /**
    * Cancelar preparación
+   *
+   * @remarks
+   * Cancela una preparación existente del pedido y permite registrar un motivo opcional.
    */
   async cancelApiOrderPreparation(
     request: operations.CancelApiOrderPreparationRequest,
     options?: RequestOptions,
   ): Promise<operations.CancelApiOrderPreparationResponse> {
     return unwrapAsync(apiCancelAPIOrderPreparation(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Descargar documento de compra
+   *
+   * @remarks
+   * Revalida la API key, el scope purchases:read, la organización y la procedencia del documento. Responde 302 hacia una URL firmada de cinco minutos para el PDF o imagen original. Seguí el redirect y no persistas el Location.
+   */
+  async downloadApiPurchaseDocument(
+    request: operations.DownloadApiPurchaseDocumentRequest,
+    options?: RequestOptions,
+  ): Promise<operations.DownloadApiPurchaseDocumentResponse | undefined> {
+    return unwrapAsync(apiDownloadAPIPurchaseDocument(
       this,
       request,
       options,
@@ -111,6 +792,108 @@ export class Api extends ClientSDK {
   }
 
   /**
+   * Facturar una venta existente
+   *
+   * @remarks
+   * Factura la venta existente identificada por saleId sin crear otra venta. Usá esta ruta para ventas importadas que ya existen en La Pyme. Requiere Idempotency-Key.
+   */
+  async invoiceApiSale(
+    request: operations.InvoiceApiSaleRequest,
+    options?: RequestOptions,
+  ): Promise<operations.InvoiceApiSaleResponse> {
+    return unwrapAsync(apiInvoiceAPISale(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Descargar comprobante de venta
+   *
+   * @remarks
+   * Revalida la API key, el scope sales:read, la organización, el estado del PDF y su procedencia. Responde 302 hacia una URL firmada de cinco minutos. Seguí el redirect y no persistas el Location. Un PDF pendiente responde 409 retryable con Retry-After; uno fallido responde 409 no retryable.
+   */
+  async downloadApiSaleDocument(
+    request: operations.DownloadApiSaleDocumentRequest,
+    options?: RequestOptions,
+  ): Promise<operations.DownloadApiSaleDocumentResponse | undefined> {
+    return unwrapAsync(apiDownloadAPISaleDocument(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Crear nota de crédito por devolución
+   *
+   * @remarks
+   * Crea una nota de crédito vinculada a una venta existente. Usá este endpoint cuando tenés un sale_id de La Pyme y querés devolver parcial o totalmente sus renglones.
+   */
+  async createApiReturnCreditNote(
+    request: operations.CreateApiReturnCreditNoteRequest,
+    options?: RequestOptions,
+  ): Promise<operations.CreateApiReturnCreditNoteResponse> {
+    return unwrapAsync(apiCreateAPIReturnCreditNote(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Crear nota de crédito independiente
+   *
+   * @remarks
+   * Crea una nota de crédito independiente, asociada a un comprobante externo o a un período asociado explícitamente soportado. No usar para devoluciones de ventas internas: en ese caso usá /api/v1/sales/{sale_id}/returns.
+   */
+  async createApiStandaloneCreditNote(
+    request: operations.CreateApiStandaloneCreditNoteRequest,
+    options?: RequestOptions,
+  ): Promise<operations.CreateApiStandaloneCreditNoteResponse> {
+    return unwrapAsync(apiCreateAPIStandaloneCreditNote(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Actualizar pago a proveedor
+   *
+   * @remarks
+   * Actualiza un pago a proveedor existente y devuelve el detalle persistido. Requiere Idempotency-Key.
+   */
+  async updateApiSupplierPayment(
+    request: operations.UpdateApiSupplierPaymentRequest,
+    options?: RequestOptions,
+  ): Promise<operations.UpdateApiSupplierPaymentResponse> {
+    return unwrapAsync(apiUpdateAPISupplierPayment(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Listar cajas para efectivo
+   *
+   * @remarks
+   * Lista las cajas operativas y cajas fuertes accesibles para registrar pagos en efectivo en ventas.
+   */
+  async listApiCashSources(
+    request?: operations.ListApiCashSourcesRequest | undefined,
+    options?: RequestOptions,
+  ): Promise<operations.ListApiCashSourcesResponse> {
+    return unwrapAsync(apiListAPICashSources(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
    * Listar cuentas contables
    *
    * @remarks
@@ -128,7 +911,27 @@ export class Api extends ClientSDK {
   }
 
   /**
+   * Crear cuenta contable
+   *
+   * @remarks
+   * Crea una cuenta contable y permite configurar system_role e is_inflation_adjustable en el recurso cuenta.
+   */
+  async createApiAccountingAccount(
+    request: operations.CreateApiAccountingAccountRequest,
+    options?: RequestOptions,
+  ): Promise<operations.CreateApiAccountingAccountResponse> {
+    return unwrapAsync(apiCreateAPIAccountingAccount(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
    * Obtener cuenta contable
+   *
+   * @remarks
+   * Devuelve una cuenta contable visible de la organización autenticada por su ID.
    */
   async getApiAccountingAccount(
     request: operations.GetApiAccountingAccountRequest,
@@ -142,7 +945,44 @@ export class Api extends ClientSDK {
   }
 
   /**
+   * Actualizar cuenta contable
+   *
+   * @remarks
+   * Actualiza parcialmente metadatos y configuración de una cuenta contable, incluyendo system_role e is_inflation_adjustable.
+   */
+  async updateApiAccountingAccount(
+    request: operations.UpdateApiAccountingAccountRequest,
+    options?: RequestOptions,
+  ): Promise<operations.UpdateApiAccountingAccountResponse> {
+    return unwrapAsync(apiUpdateAPIAccountingAccount(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Desactivar cuenta contable
+   *
+   * @remarks
+   * Desactiva una cuenta contable sin borrar sus referencias históricas. Si la cuenta tenía system_role, el rol se limpia para mantener válida la configuración.
+   */
+  async deactivateApiAccountingAccount(
+    request: operations.DeactivateApiAccountingAccountRequest,
+    options?: RequestOptions,
+  ): Promise<operations.DeactivateApiAccountingAccountResponse> {
+    return unwrapAsync(apiDeactivateAPIAccountingAccount(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
    * Listar dimensiones de centros de costo
+   *
+   * @remarks
+   * Lista las dimensiones de centros de costo disponibles y permite incluir dimensiones inactivas.
    */
   async listApiCostCenterDimensions(
     request?: operations.ListApiCostCenterDimensionsRequest | undefined,
@@ -157,6 +997,9 @@ export class Api extends ClientSDK {
 
   /**
    * Listar centros de costo
+   *
+   * @remarks
+   * Lista centros de costo y permite filtrar por dimensión, posición y estado activo.
    */
   async listApiCostCenters(
     request?: operations.ListApiCostCentersRequest | undefined,
@@ -171,6 +1014,9 @@ export class Api extends ClientSDK {
 
   /**
    * Obtener sumas y saldos
+   *
+   * @remarks
+   * Calcula sumas y saldos para el período y los filtros contables solicitados.
    */
   async getApiTrialBalance(
     request?: operations.GetApiTrialBalanceRequest | undefined,
@@ -185,6 +1031,9 @@ export class Api extends ClientSDK {
 
   /**
    * Obtener estado de resultados
+   *
+   * @remarks
+   * Calcula el estado de resultados para un período en la moneda de reporte solicitada.
    */
   async getApiIncomeStatement(
     request?: operations.GetApiIncomeStatementRequest | undefined,
@@ -199,6 +1048,9 @@ export class Api extends ClientSDK {
 
   /**
    * Obtener estado de resultados comparativo
+   *
+   * @remarks
+   * Compara el estado de resultados de dos períodos con los mismos criterios de moneda y agrupación.
    */
   async getApiComparativeIncomeStatement(
     request?: operations.GetApiComparativeIncomeStatementRequest | undefined,
@@ -213,6 +1065,9 @@ export class Api extends ClientSDK {
 
   /**
    * Obtener estado de resultados por centro de costo
+   *
+   * @remarks
+   * Calcula el estado de resultados agrupado por la posición de centro de costo solicitada.
    */
   async getApiIncomeStatementByCostCenter(
     request?: operations.GetApiIncomeStatementByCostCenterRequest | undefined,
@@ -227,6 +1082,9 @@ export class Api extends ClientSDK {
 
   /**
    * Listar libro diario resumido
+   *
+   * @remarks
+   * Lista asientos del libro diario en formato resumido con filtros y paginación por cursor.
    */
   async listApiSummarizedJournal(
     request?: operations.ListApiSummarizedJournalRequest | undefined,
@@ -241,6 +1099,9 @@ export class Api extends ClientSDK {
 
   /**
    * Previsualizar ajuste por inflación
+   *
+   * @remarks
+   * Calcula en el servidor una previsualización mensual auditable. La clasificación configurada se usa cuando no se envía un reemplazo; los saldos iniciales requieren un cierre anterior vigente o meses de origen explícitos. Los reemplazos de índices oficiales requieren un motivo.
    */
   async previewApiInflationAdjustment(
     request: models.ApiInflationAdjustmentPreviewRequest,
@@ -255,6 +1116,9 @@ export class Api extends ClientSDK {
 
   /**
    * Crear ajuste por inflación
+   *
+   * @remarks
+   * Recalcula y crea de forma idempotente el asiento mensual para el período solicitado. Los importes se calculan en el servidor y no se aceptan líneas calculadas por el cliente.
    */
   async createApiInflationAdjustment(
     request: operations.CreateApiInflationAdjustmentRequest,
@@ -322,7 +1186,7 @@ export class Api extends ClientSDK {
    * Reemplazar asiento manual
    *
    * @remarks
-   * Reemplaza completamente un asiento manual editable. Los asientos generados devuelven conflicto.
+   * Reemplaza un asiento manual editable y conserva las líneas identificadas por id. Si una línea imputada cambia financieramente, la primera solicitud devuelve allocations_require_unapply; repetí con un nuevo Idempotency-Key y unapply_allocated_lines=true para desimputar y editar en una sola transacción. Los asientos generados devuelven conflicto.
    */
   async updateApiManualJournalEntry(
     request: operations.UpdateApiManualJournalEntryRequest,

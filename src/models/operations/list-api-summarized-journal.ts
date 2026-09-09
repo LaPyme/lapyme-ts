@@ -6,16 +6,34 @@
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
 import { safeParse } from "../../lib/schemas.js";
+import { ClosedEnum } from "../../types/enums.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import * as models from "../index.js";
 
+export const SortOrder = {
+  Newest: "newest",
+  Oldest: "oldest",
+} as const;
+export type SortOrder = ClosedEnum<typeof SortOrder>;
+
 export type ListApiSummarizedJournalRequest = {
+  /**
+   * Fecha inicial del período. Obligatoria junto con date_to si no se envía period_preset.
+   */
   dateFrom?: Date | undefined;
+  /**
+   * Fecha final inclusiva del período. Obligatoria junto con date_from si no se envía period_preset.
+   */
   dateTo?: Date | undefined;
-  costCenter1Ids?: Array<string> | undefined;
-  costCenter2Ids?: Array<string> | undefined;
-  costCenter3Ids?: Array<string> | undefined;
+  /**
+   * Atajo de período resuelto por la API a date_from/date_to en horario de Argentina. No enviarlo junto con date_from/date_to.
+   */
+  periodPreset?: models.ApiSharedEnumab9ba78640 | undefined;
+  cursor?: string | undefined;
+  limit?: number | undefined;
+  sourceTypes?: Array<string> | undefined;
+  sortOrder?: SortOrder | undefined;
 };
 
 export type ListApiSummarizedJournalResponse = {
@@ -24,12 +42,19 @@ export type ListApiSummarizedJournalResponse = {
 };
 
 /** @internal */
+export const SortOrder$outboundSchema: z.ZodMiniEnum<typeof SortOrder> = z.enum(
+  SortOrder,
+);
+
+/** @internal */
 export type ListApiSummarizedJournalRequest$Outbound = {
   date_from?: string | undefined;
   date_to?: string | undefined;
-  cost_center1_ids?: Array<string> | undefined;
-  cost_center2_ids?: Array<string> | undefined;
-  cost_center3_ids?: Array<string> | undefined;
+  period_preset?: string | undefined;
+  cursor?: string | undefined;
+  limit: number;
+  source_types?: Array<string> | undefined;
+  sort_order: string;
 };
 
 /** @internal */
@@ -46,17 +71,19 @@ export const ListApiSummarizedJournalRequest$outboundSchema: z.ZodMiniType<
       z.date(),
       z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
     )),
-    costCenter1Ids: z.optional(z.array(z.string())),
-    costCenter2Ids: z.optional(z.array(z.string())),
-    costCenter3Ids: z.optional(z.array(z.string())),
+    periodPreset: z.optional(models.ApiSharedEnumab9ba78640$outboundSchema),
+    cursor: z.optional(z.string()),
+    limit: z._default(z.int(), 50),
+    sourceTypes: z.optional(z.array(z.string())),
+    sortOrder: z._default(SortOrder$outboundSchema, "oldest"),
   }),
   z.transform((v) => {
     return remap$(v, {
       dateFrom: "date_from",
       dateTo: "date_to",
-      costCenter1Ids: "cost_center1_ids",
-      costCenter2Ids: "cost_center2_ids",
-      costCenter3Ids: "cost_center3_ids",
+      periodPreset: "period_preset",
+      sourceTypes: "source_types",
+      sortOrder: "sort_order",
     });
   }),
 );
