@@ -9,7 +9,7 @@ let value: CreateApiPurchaseRequest = {
   idempotencyKey: "<value>",
   body: {
     voucherType: 601343,
-    currency: "PES",
+    currency: "ARS",
   },
 };
 ```

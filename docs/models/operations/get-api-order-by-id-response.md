@@ -6,7 +6,22 @@
 import { GetApiOrderByIdResponse } from "lapyme/models/operations";
 
 let value: GetApiOrderByIdResponse = {
-  headers: {},
+  headers: {
+    "key": [
+      "<value 1>",
+      "<value 2>",
+      "<value 3>",
+    ],
+    "key1": [
+      "<value 1>",
+      "<value 2>",
+      "<value 3>",
+    ],
+    "key2": [
+      "<value 1>",
+      "<value 2>",
+    ],
+  },
   result: {
     requestId: "<id>",
     data: {
@@ -24,48 +39,59 @@ let value: GetApiOrderByIdResponse = {
       subtotal: 827815,
       taxAmount: 910296,
       total: 983409,
-      currency: "PES",
+      currency: "ARS",
       orderStatus: "open",
       preparationStatus: "cancelled",
       invoicingStatus: "invoiced",
       notes: "<value>",
       createdAt: new Date("2024-12-29T05:45:52.637Z"),
+      updatedAt: new Date("2024-03-02T20:27:48.789Z"),
       createdByName: "<value>",
-      createdBy: "02e4277b-8ccb-4bfb-965f-978eda866a6a",
-      lineItems: [],
-      activeWarehouses: [
+      createdBy: "2e4277b8-ccbb-4fb6-95f9-78eda866a6a6",
+      lineItems: [
         {
           id: "34e909ec-68c3-4541-acb5-119ac04243bc",
-          name: "<value>",
-          isDefault: true,
+          lineNumber: 241081,
+          productId: "9a3998fe-a4a0-4b44-a943-36fea01a3326",
+          productName: "<value>",
+          sku: "<value>",
+          orderedQuantity: 605196,
+          allocatedQuantity: 952223,
+          fulfilledQuantity: 429357,
+          invoicedQuantity: 618022,
+          cancelledQuantity: 9976,
+          unitPrice: 545812,
+          taxRateId: 331362,
+          discountAmount: 509268,
+          discountPercentage: 2208.38,
+          subtotal: 809637,
         },
       ],
-      pendingPreparationWarehouseId: "9a3998fe-a4a0-4b44-a943-36fea01a3326",
-      preparations: [
+      activeWarehouses: [
         {
-          object: "order_preparation",
-          id: "f6908528-73ce-4abd-91b3-5d7ead30af7c",
-          preparedAt: new Date("2026-02-02T18:45:16.857Z"),
+          id: "f701d204-c699-4362-88cf-63c56a0607fc",
+          name: "<value>",
+          isDefault: false,
+        },
+      ],
+      pendingPreparationWarehouseId: "bd1b35d7-ead3-40af-87c4-b0f724554197",
+      preparationGroups: [
+        {
+          id: "9a745089-ddd5-4575-b6ff-2494d9d9a409",
+          status: "cancelled",
+          warehouseId: "f5228807-6441-4e3a-bca3-969a519bfd32",
           warehouseName: "<value>",
-          deliveryMethod: "shipping",
-          remitoDeliveryId: "72455419-7189-4a74-9508-9ddd55756ff2",
-          formattedRemitoNumber: "<value>",
+          deliveryMethod: "local_delivery",
+          requestedAt: new Date("2025-05-01T15:45:45.663Z"),
+          startedAt: new Date("2024-11-20T01:44:19.535Z"),
+          closedAt: null,
+          cancelledAt: new Date("2024-03-19T21:33:09.502Z"),
+          notes: "<value>",
           lines: [],
         },
       ],
-      invoices: [
-        {
-          object: "order_invoice",
-          id: "9d9a409e-ff52-4288-a076-441e3aca3969",
-          formattedInvoiceNumber: "<value>",
-          invoiceDate: "<value>",
-          createdAt: new Date("2024-04-12T16:54:27.438Z"),
-          invoiceStatus: "pending",
-          itemsCount: 707786,
-          totalUnits: 996321,
-          total: 837254,
-        },
-      ],
+      preparations: [],
+      invoices: [],
     },
   },
 };

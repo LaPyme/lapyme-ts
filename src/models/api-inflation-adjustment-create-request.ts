@@ -5,58 +5,41 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
-
-export type ApiInflationAdjustmentCreateRequestLine = {
-  accountId: string;
-  adjustmentAmount: number;
-};
+import {
+  ApiSharedObject0e307df43a,
+  ApiSharedObject0e307df43a$Outbound,
+  ApiSharedObject0e307df43a$outboundSchema,
+} from "./api-shared-object0e307df43a.js";
+import {
+  ApiSharedObject50f90cd0ce,
+  ApiSharedObject50f90cd0ce$Outbound,
+  ApiSharedObject50f90cd0ce$outboundSchema,
+} from "./api-shared-object50f90cd0ce.js";
+import {
+  ApiSharedObjectcd635e5b25,
+  ApiSharedObjectcd635e5b25$Outbound,
+  ApiSharedObjectcd635e5b25$outboundSchema,
+} from "./api-shared-objectcd635e5b25.js";
 
 export type ApiInflationAdjustmentCreateRequest = {
-  occurredAt: Date;
+  periodStart: Date;
+  closingDate: Date;
+  treatmentsConfirmed?: boolean | undefined;
+  accountTreatments?: Array<ApiSharedObject0e307df43a> | undefined;
+  openingBalanceBases?: Array<ApiSharedObjectcd635e5b25> | undefined;
+  indexOverrides?: Array<ApiSharedObject50f90cd0ce> | undefined;
   description?: string | null | undefined;
-  lines: Array<ApiInflationAdjustmentCreateRequestLine>;
 };
-
-/** @internal */
-export type ApiInflationAdjustmentCreateRequestLine$Outbound = {
-  account_id: string;
-  adjustment_amount: number;
-};
-
-/** @internal */
-export const ApiInflationAdjustmentCreateRequestLine$outboundSchema:
-  z.ZodMiniType<
-    ApiInflationAdjustmentCreateRequestLine$Outbound,
-    ApiInflationAdjustmentCreateRequestLine
-  > = z.pipe(
-    z.object({
-      accountId: z.string(),
-      adjustmentAmount: z.int(),
-    }),
-    z.transform((v) => {
-      return remap$(v, {
-        accountId: "account_id",
-        adjustmentAmount: "adjustment_amount",
-      });
-    }),
-  );
-
-export function apiInflationAdjustmentCreateRequestLineToJSON(
-  apiInflationAdjustmentCreateRequestLine:
-    ApiInflationAdjustmentCreateRequestLine,
-): string {
-  return JSON.stringify(
-    ApiInflationAdjustmentCreateRequestLine$outboundSchema.parse(
-      apiInflationAdjustmentCreateRequestLine,
-    ),
-  );
-}
 
 /** @internal */
 export type ApiInflationAdjustmentCreateRequest$Outbound = {
-  occurred_at: string;
+  period_start: string;
+  closing_date: string;
+  treatments_confirmed?: boolean | undefined;
+  account_treatments?: Array<ApiSharedObject0e307df43a$Outbound> | undefined;
+  opening_balance_bases?: Array<ApiSharedObjectcd635e5b25$Outbound> | undefined;
+  index_overrides?: Array<ApiSharedObject50f90cd0ce$Outbound> | undefined;
   description?: string | null | undefined;
-  lines: Array<ApiInflationAdjustmentCreateRequestLine$Outbound>;
 };
 
 /** @internal */
@@ -65,18 +48,34 @@ export const ApiInflationAdjustmentCreateRequest$outboundSchema: z.ZodMiniType<
   ApiInflationAdjustmentCreateRequest
 > = z.pipe(
   z.object({
-    occurredAt: z.pipe(
+    periodStart: z.pipe(
       z.date(),
       z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
     ),
-    description: z.optional(z.nullable(z.string())),
-    lines: z.array(
-      z.lazy(() => ApiInflationAdjustmentCreateRequestLine$outboundSchema),
+    closingDate: z.pipe(
+      z.date(),
+      z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
     ),
+    treatmentsConfirmed: z.optional(z.boolean()),
+    accountTreatments: z.optional(
+      z.array(ApiSharedObject0e307df43a$outboundSchema),
+    ),
+    openingBalanceBases: z.optional(
+      z.array(ApiSharedObjectcd635e5b25$outboundSchema),
+    ),
+    indexOverrides: z.optional(
+      z.array(ApiSharedObject50f90cd0ce$outboundSchema),
+    ),
+    description: z.optional(z.nullable(z.string())),
   }),
   z.transform((v) => {
     return remap$(v, {
-      occurredAt: "occurred_at",
+      periodStart: "period_start",
+      closingDate: "closing_date",
+      treatmentsConfirmed: "treatments_confirmed",
+      accountTreatments: "account_treatments",
+      openingBalanceBases: "opening_balance_bases",
+      indexOverrides: "index_overrides",
     });
   }),
 );
