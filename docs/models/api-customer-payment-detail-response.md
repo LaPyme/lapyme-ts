@@ -17,7 +17,7 @@ let value: ApiCustomerPaymentDetailResponse = {
       paymentNumber: 790450,
       formattedPaymentNumber: "<value>",
       paymentDate: "<value>",
-      currency: "PES",
+      currency: "ARS",
       totalAmount: 783901,
       balance: 111225,
       createdAt: new Date("2024-05-01T06:17:09.879Z"),

@@ -114,7 +114,6 @@ async function $do(
       "point_of_sale_ids": payload?.point_of_sale_ids,
       "query": payload?.query,
       "register_ids": payload?.register_ids,
-      "search": payload?.search,
       "seller_ids": payload?.seller_ids,
       "voucher_types": payload?.voucher_types,
     }),

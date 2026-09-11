@@ -30,6 +30,9 @@ import { Result } from "../types/fp.js";
 
 /**
  * Desarchivar pedido
+ *
+ * @remarks
+ * Restaura un pedido archivado y devuelve el estado persistido resultante.
  */
 export function ordersUnarchive(
   client: LapymeCore,
