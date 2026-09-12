@@ -34,7 +34,7 @@ export class Products extends ClientSDK {
    * Crear producto
    *
    * @remarks
-   * Crea un producto, servicio, combo o kit con su información comercial y de inventario.
+   * Crea un producto simple, servicio o kit; un producto con hasta tres opciones y 250 variantes; o un combo con su composición completa y no vacía. La creación de un combo persiste producto, precio y componentes de forma atómica.
    */
   async create(
     request: operations.CreateApiProductRequest,
@@ -68,7 +68,7 @@ export class Products extends ClientSDK {
    * Actualizar producto
    *
    * @remarks
-   * Actualiza un producto y devuelve el detalle persistido.
+   * Actualiza un producto y devuelve el detalle persistido. La actualización de un combo requiere Idempotency-Key para deduplicar reintentos.
    */
   async update(
     request: operations.UpdateApiProductRequest,

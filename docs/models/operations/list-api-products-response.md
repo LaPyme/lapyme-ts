@@ -6,7 +6,9 @@
 import { ListApiProductsResponse } from "lapyme/models/operations";
 
 let value: ListApiProductsResponse = {
-  headers: {},
+  headers: {
+    "key": [],
+  },
   result: {
     requestId: "<id>",
     data: [
@@ -20,29 +22,46 @@ let value: ListApiProductsResponse = {
         },
         sku: "<value>",
         barcode: "<value>",
-        currency: "Lek",
-        cost: 4169.96,
-        price: 11.65,
+        imageUrl: null,
+        currency: "Jordanian Dinar",
+        cost: 11.65,
+        price: 9545.45,
         taxRate: {
-          id: 9545.45,
-          value: 8570.91,
+          id: 7340.09,
+          value: 6496.5,
         },
         defaultSupplier: {
-          id: "e2939b22-6734-418f-802e-69ca6e74fd88",
+          id: "99431a08-59f3-4d6f-9b82-691199d39354",
           name: "<value>",
         },
         productType: "kit",
+        visibility: "system",
         isActive: true,
         organizationSlug: "<value>",
-        createdAt: new Date("2025-01-03T08:44:42.602Z"),
-        updatedAt: new Date("2025-02-15T09:21:59.181Z"),
+        createdAt: new Date("2025-10-10T09:48:40.601Z"),
+        updatedAt: new Date("2024-09-29T01:23:20.724Z"),
         object: "product",
+        tags: [
+          {
+            object: "tag",
+            id: "9b4c6439-384c-4a58-9cf3-b39718b07048",
+            scope: "customer",
+            name: "<value>",
+            slug: "<value>",
+            color: "indigo",
+            description:
+              "vacantly unless nautical alongside around optimistic for lasting sometimes",
+            archivedAt: new Date("2024-05-13T14:06:09.243Z"),
+            createdAt: new Date("2026-03-04T18:15:09.469Z"),
+            updatedAt: new Date("2026-05-06T00:20:31.712Z"),
+          },
+        ],
       },
     ],
-    hasMore: true,
+    hasMore: false,
     nextCursor: "<value>",
     object: "list",
-    url: "https://descriptive-analogy.com",
+    url: "https://hurtful-issue.biz/",
   },
 };
 ```

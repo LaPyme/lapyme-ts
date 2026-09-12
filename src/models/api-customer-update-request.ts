@@ -6,13 +6,13 @@
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
 import {
-  ApiSharedEnum250b15b651,
-  ApiSharedEnum250b15b651$outboundSchema,
-} from "./api-shared-enum250b15b651.js";
-import {
   ApiSharedEnumbb2864ecea,
   ApiSharedEnumbb2864ecea$outboundSchema,
 } from "./api-shared-enumbb2864ecea.js";
+import {
+  ApiSharedEnumcb6fc950ce,
+  ApiSharedEnumcb6fc950ce$outboundSchema,
+} from "./api-shared-enumcb6fc950ce.js";
 import {
   ApiSharedEnumd34af90520,
   ApiSharedEnumd34af90520$outboundSchema,
@@ -24,8 +24,14 @@ export type ApiCustomerUpdateRequest = {
   description?: string | null | undefined;
   email?: string | null | undefined;
   phone?: string | null | undefined;
+  /**
+   * Documento sin guiones, o "0" cuando tax_id_type es "Otro"
+   */
   taxId?: string | null | undefined;
-  taxIdType?: ApiSharedEnum250b15b651 | null | undefined;
+  /**
+   * "Otro" requiere tax_id="0" y categoría efectiva Consumidor Final
+   */
+  taxIdType?: ApiSharedEnumcb6fc950ce | null | undefined;
   taxCategory?: ApiSharedEnumbb2864ecea | null | undefined;
   country?: string | null | undefined;
   province?: string | null | undefined;
@@ -33,9 +39,12 @@ export type ApiCustomerUpdateRequest = {
   address?: string | null | undefined;
   apartment?: string | null | undefined;
   postalCode?: string | null | undefined;
+  deliveryCarrier?: string | null | undefined;
+  deliveryAddress?: string | null | undefined;
   assignedSalespersonId?: string | null | undefined;
   defaultPriceListId?: string | null | undefined;
   paymentTermId?: ApiSharedEnumd34af90520 | null | undefined;
+  paymentTermDays?: number | null | undefined;
   isActive?: boolean | undefined;
 };
 
@@ -55,9 +64,12 @@ export type ApiCustomerUpdateRequest$Outbound = {
   address?: string | null | undefined;
   apartment?: string | null | undefined;
   postal_code?: string | null | undefined;
+  delivery_carrier?: string | null | undefined;
+  delivery_address?: string | null | undefined;
   assigned_salesperson_id?: string | null | undefined;
   default_price_list_id?: string | null | undefined;
   payment_term_id?: string | null | undefined;
+  payment_term_days?: number | null | undefined;
   is_active?: boolean | undefined;
 };
 
@@ -73,7 +85,7 @@ export const ApiCustomerUpdateRequest$outboundSchema: z.ZodMiniType<
     email: z.optional(z.nullable(z.string())),
     phone: z.optional(z.nullable(z.string())),
     taxId: z.optional(z.nullable(z.string())),
-    taxIdType: z.optional(z.nullable(ApiSharedEnum250b15b651$outboundSchema)),
+    taxIdType: z.optional(z.nullable(ApiSharedEnumcb6fc950ce$outboundSchema)),
     taxCategory: z.optional(z.nullable(ApiSharedEnumbb2864ecea$outboundSchema)),
     country: z.optional(z.nullable(z.string())),
     province: z.optional(z.nullable(z.string())),
@@ -81,11 +93,14 @@ export const ApiCustomerUpdateRequest$outboundSchema: z.ZodMiniType<
     address: z.optional(z.nullable(z.string())),
     apartment: z.optional(z.nullable(z.string())),
     postalCode: z.optional(z.nullable(z.string())),
+    deliveryCarrier: z.optional(z.nullable(z.string())),
+    deliveryAddress: z.optional(z.nullable(z.string())),
     assignedSalespersonId: z.optional(z.nullable(z.string())),
     defaultPriceListId: z.optional(z.nullable(z.string())),
     paymentTermId: z.optional(
       z.nullable(ApiSharedEnumd34af90520$outboundSchema),
     ),
+    paymentTermDays: z.optional(z.nullable(z.int())),
     isActive: z.optional(z.boolean()),
   }),
   z.transform((v) => {
@@ -95,9 +110,12 @@ export const ApiCustomerUpdateRequest$outboundSchema: z.ZodMiniType<
       taxIdType: "tax_id_type",
       taxCategory: "tax_category",
       postalCode: "postal_code",
+      deliveryCarrier: "delivery_carrier",
+      deliveryAddress: "delivery_address",
       assignedSalespersonId: "assigned_salesperson_id",
       defaultPriceListId: "default_price_list_id",
       paymentTermId: "payment_term_id",
+      paymentTermDays: "payment_term_days",
       isActive: "is_active",
     });
   }),
