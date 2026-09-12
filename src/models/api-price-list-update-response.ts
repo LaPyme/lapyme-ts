@@ -9,13 +9,13 @@ import { safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import {
-  ApiSharedObject16ba66a421,
-  ApiSharedObject16ba66a421$inboundSchema,
-} from "./api-shared-object16ba66a421.js";
+  ApiSharedObject812fa01669,
+  ApiSharedObject812fa01669$inboundSchema,
+} from "./api-shared-object812fa01669.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type ApiPriceListUpdateResponseData = {
-  priceList: ApiSharedObject16ba66a421;
+  priceList: ApiSharedObject812fa01669;
   shouldSyncPrices: boolean;
 };
 
@@ -31,7 +31,7 @@ export const ApiPriceListUpdateResponseData$inboundSchema: z.ZodMiniType<
   unknown
 > = z.pipe(
   z.object({
-    price_list: ApiSharedObject16ba66a421$inboundSchema,
+    price_list: ApiSharedObject812fa01669$inboundSchema,
     should_sync_prices: types.boolean(),
   }),
   z.transform((v) => {

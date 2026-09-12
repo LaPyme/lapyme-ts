@@ -12,6 +12,10 @@ import {
   ApiSharedEnum8d46e1ec20,
   ApiSharedEnum8d46e1ec20$inboundSchema,
 } from "./api-shared-enum8d46e1ec20.js";
+import {
+  ApiSharedObject8a94344083,
+  ApiSharedObject8a94344083$inboundSchema,
+} from "./api-shared-object8a94344083.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type ApiCustomerListResponseData = {
@@ -25,16 +29,20 @@ export type ApiCustomerListResponseData = {
   address: string | null;
   apartment: string | null;
   city: string | null;
+  deliveryCarrier: string | null;
+  deliveryAddress: string | null;
   taxId: string | null;
   taxIdType: string | null;
   taxCategory: string | null;
   contactType: string | null;
   defaultPriceListId: string | null;
   paymentTermId: string | null;
+  paymentTermDays: number | null;
   provinceId: string | null;
   isActive: boolean | null;
   createdAt: Date;
   updatedAt: Date;
+  tags: Array<ApiSharedObject8a94344083>;
 };
 
 export type ApiCustomerListResponse = {
@@ -68,26 +76,33 @@ export const ApiCustomerListResponseData$inboundSchema: z.ZodMiniType<
     address: types.nullable(types.string()),
     apartment: types.nullable(types.string()),
     city: types.nullable(types.string()),
+    delivery_carrier: types.nullable(types.string()),
+    delivery_address: types.nullable(types.string()),
     tax_id: types.nullable(types.string()),
     tax_id_type: types.nullable(types.string()),
     tax_category: types.nullable(types.string()),
     contact_type: types.nullable(types.string()),
     default_price_list_id: types.nullable(types.string()),
     payment_term_id: types.nullable(types.string()),
+    payment_term_days: types.nullable(types.number()),
     province_id: types.nullable(types.string()),
     is_active: types.nullable(types.boolean()),
     created_at: types.date(),
     updated_at: types.date(),
+    tags: z.array(ApiSharedObject8a94344083$inboundSchema),
   }),
   z.transform((v) => {
     return remap$(v, {
       "company_name": "companyName",
+      "delivery_carrier": "deliveryCarrier",
+      "delivery_address": "deliveryAddress",
       "tax_id": "taxId",
       "tax_id_type": "taxIdType",
       "tax_category": "taxCategory",
       "contact_type": "contactType",
       "default_price_list_id": "defaultPriceListId",
       "payment_term_id": "paymentTermId",
+      "payment_term_days": "paymentTermDays",
       "province_id": "provinceId",
       "is_active": "isActive",
       "created_at": "createdAt",

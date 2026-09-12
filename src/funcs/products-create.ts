@@ -32,7 +32,7 @@ import { Result } from "../types/fp.js";
  * Crear producto
  *
  * @remarks
- * Crea un producto, servicio, combo o kit con su información comercial y de inventario.
+ * Crea un producto simple, servicio o kit; un producto con hasta tres opciones y 250 variantes; o un combo con su composición completa y no vacía. La creación de un combo persiste producto, precio y componentes de forma atómica.
  */
 export function productsCreate(
   client: LapymeCore,
