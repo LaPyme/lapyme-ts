@@ -6,13 +6,18 @@
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
 import { ClosedEnum } from "../types/enums.js";
+import { smartUnion } from "../types/smart-union.js";
+import {
+  ApiSharedEnum6440f2bcc2,
+  ApiSharedEnum6440f2bcc2$outboundSchema,
+} from "./api-shared-enum6440f2bcc2.js";
 import {
   ReportPeriod,
   ReportPeriod$Outbound,
   ReportPeriod$outboundSchema,
 } from "./report-period.js";
 
-export const PaymentsReportRequestDimension = {
+export const PaymentsReportRequestDimensionEnum = {
   Date: "date",
   Week: "week",
   WeekOfYear: "weekOfYear",
@@ -27,6 +32,7 @@ export const PaymentsReportRequestDimension = {
   PaymentContactTaxCategory: "paymentContactTaxCategory",
   PaymentContactProvince: "paymentContactProvince",
   PaymentContactCity: "paymentContactCity",
+  CreatedBy: "createdBy",
   PointOfSale: "pointOfSale",
   Register: "register",
   PosSession: "posSession",
@@ -39,9 +45,13 @@ export const PaymentsReportRequestDimension = {
   PaymentMethod: "paymentMethod",
   PaymentMethodType: "paymentMethodType",
 } as const;
-export type PaymentsReportRequestDimension = ClosedEnum<
-  typeof PaymentsReportRequestDimension
+export type PaymentsReportRequestDimensionEnum = ClosedEnum<
+  typeof PaymentsReportRequestDimensionEnum
 >;
+
+export type PaymentsReportRequestDimensionUnion =
+  | PaymentsReportRequestDimensionEnum
+  | string;
 
 export const PaymentsReportRequestMeasure = {
   PaymentCollectedTotal: "paymentCollectedTotal",
@@ -61,7 +71,7 @@ export type PaymentsReportRequestMeasure = ClosedEnum<
 >;
 
 /**
- * Filtros por dimensión. Cada clave debe ser una dimensión filtrable para la fuente. El valor es un array de IDs o valores a incluir.
+ * Filtros por dimensión. Cada clave debe ser una dimensión filtrable para la fuente. También acepta product_metafield:<key> para campos personalizados select de producto y contact_metafield:<key> para campos personalizados select de contacto cuando la fuente lo soporta. El valor es un array de IDs o valores a incluir.
  */
 export type PaymentsReportRequestDimensionFilters = {
   paymentContact?: Array<string> | undefined;
@@ -69,6 +79,7 @@ export type PaymentsReportRequestDimensionFilters = {
   paymentContactTaxCategory?: Array<string> | undefined;
   paymentContactProvince?: Array<string> | undefined;
   paymentContactCity?: Array<string> | undefined;
+  createdBy?: Array<string> | undefined;
   pointOfSale?: Array<string> | undefined;
   register?: Array<string> | undefined;
   posSession?: Array<string> | undefined;
@@ -80,33 +91,61 @@ export type PaymentsReportRequestDimensionFilters = {
   formattedPaymentNumber?: Array<string> | undefined;
   paymentMethod?: Array<string> | undefined;
   paymentMethodType?: Array<string> | undefined;
+  paymentContactStatus?: Array<string> | undefined;
+  pointOfSaleStatus?: Array<string> | undefined;
+  registerStatus?: Array<string> | undefined;
+  safeStatus?: Array<string> | undefined;
+  paymentMethodStatus?: Array<string> | undefined;
 };
 
 export type PaymentsReportRequest = {
   source: "payments";
   period: ReportPeriod;
   /**
-   * Dimensiones de agrupación. Máximo 4.
+   * Dimensiones de agrupación. Máximo 12. Acepta contact_metafield:<key> para campos personalizados select de contacto.
    */
-  dimensions?: Array<PaymentsReportRequestDimension> | undefined;
+  dimensions?: Array<PaymentsReportRequestDimensionEnum | string> | undefined;
   /**
    * Medidas a calcular. Al menos una.
    */
   measures: Array<PaymentsReportRequestMeasure>;
   /**
-   * Filtros por dimensión. Cada clave debe ser una dimensión filtrable para la fuente. El valor es un array de IDs o valores a incluir.
+   * Filtros por dimensión. Cada clave debe ser una dimensión filtrable para la fuente. También acepta product_metafield:<key> para campos personalizados select de producto y contact_metafield:<key> para campos personalizados select de contacto cuando la fuente lo soporta. El valor es un array de IDs o valores a incluir.
    */
   dimensionFilters?: PaymentsReportRequestDimensionFilters | undefined;
   /**
    * Si es true, la respuesta incluye totales agregados en el campo `totals`.
    */
   includeTotals?: boolean | undefined;
+  /**
+   * Currency used for all monetary measures in the report.
+   */
+  reportingCurrency?: ApiSharedEnum6440f2bcc2 | undefined;
 };
 
 /** @internal */
-export const PaymentsReportRequestDimension$outboundSchema: z.ZodMiniEnum<
-  typeof PaymentsReportRequestDimension
-> = z.enum(PaymentsReportRequestDimension);
+export const PaymentsReportRequestDimensionEnum$outboundSchema: z.ZodMiniEnum<
+  typeof PaymentsReportRequestDimensionEnum
+> = z.enum(PaymentsReportRequestDimensionEnum);
+
+/** @internal */
+export type PaymentsReportRequestDimensionUnion$Outbound = string | string;
+
+/** @internal */
+export const PaymentsReportRequestDimensionUnion$outboundSchema: z.ZodMiniType<
+  PaymentsReportRequestDimensionUnion$Outbound,
+  PaymentsReportRequestDimensionUnion
+> = smartUnion([PaymentsReportRequestDimensionEnum$outboundSchema, z.string()]);
+
+export function paymentsReportRequestDimensionUnionToJSON(
+  paymentsReportRequestDimensionUnion: PaymentsReportRequestDimensionUnion,
+): string {
+  return JSON.stringify(
+    PaymentsReportRequestDimensionUnion$outboundSchema.parse(
+      paymentsReportRequestDimensionUnion,
+    ),
+  );
+}
 
 /** @internal */
 export const PaymentsReportRequestMeasure$outboundSchema: z.ZodMiniEnum<
@@ -120,6 +159,7 @@ export type PaymentsReportRequestDimensionFilters$Outbound = {
   payment_contact_tax_category?: Array<string> | undefined;
   payment_contact_province?: Array<string> | undefined;
   payment_contact_city?: Array<string> | undefined;
+  created_by?: Array<string> | undefined;
   point_of_sale?: Array<string> | undefined;
   register?: Array<string> | undefined;
   pos_session?: Array<string> | undefined;
@@ -131,6 +171,11 @@ export type PaymentsReportRequestDimensionFilters$Outbound = {
   formatted_payment_number?: Array<string> | undefined;
   payment_method?: Array<string> | undefined;
   payment_method_type?: Array<string> | undefined;
+  payment_contact_status?: Array<string> | undefined;
+  point_of_sale_status?: Array<string> | undefined;
+  register_status?: Array<string> | undefined;
+  safe_status?: Array<string> | undefined;
+  payment_method_status?: Array<string> | undefined;
 };
 
 /** @internal */
@@ -145,6 +190,7 @@ export const PaymentsReportRequestDimensionFilters$outboundSchema:
       paymentContactTaxCategory: z.optional(z.array(z.string())),
       paymentContactProvince: z.optional(z.array(z.string())),
       paymentContactCity: z.optional(z.array(z.string())),
+      createdBy: z.optional(z.array(z.string())),
       pointOfSale: z.optional(z.array(z.string())),
       register: z.optional(z.array(z.string())),
       posSession: z.optional(z.array(z.string())),
@@ -156,6 +202,11 @@ export const PaymentsReportRequestDimensionFilters$outboundSchema:
       formattedPaymentNumber: z.optional(z.array(z.string())),
       paymentMethod: z.optional(z.array(z.string())),
       paymentMethodType: z.optional(z.array(z.string())),
+      paymentContactStatus: z.optional(z.array(z.string())),
+      pointOfSaleStatus: z.optional(z.array(z.string())),
+      registerStatus: z.optional(z.array(z.string())),
+      safeStatus: z.optional(z.array(z.string())),
+      paymentMethodStatus: z.optional(z.array(z.string())),
     }),
     z.transform((v) => {
       return remap$(v, {
@@ -164,6 +215,7 @@ export const PaymentsReportRequestDimensionFilters$outboundSchema:
         paymentContactTaxCategory: "payment_contact_tax_category",
         paymentContactProvince: "payment_contact_province",
         paymentContactCity: "payment_contact_city",
+        createdBy: "created_by",
         pointOfSale: "point_of_sale",
         posSession: "pos_session",
         paymentType: "payment_type",
@@ -172,6 +224,11 @@ export const PaymentsReportRequestDimensionFilters$outboundSchema:
         formattedPaymentNumber: "formatted_payment_number",
         paymentMethod: "payment_method",
         paymentMethodType: "payment_method_type",
+        paymentContactStatus: "payment_contact_status",
+        pointOfSaleStatus: "point_of_sale_status",
+        registerStatus: "register_status",
+        safeStatus: "safe_status",
+        paymentMethodStatus: "payment_method_status",
       });
     }),
   );
@@ -190,12 +247,13 @@ export function paymentsReportRequestDimensionFiltersToJSON(
 export type PaymentsReportRequest$Outbound = {
   source: "payments";
   period: ReportPeriod$Outbound;
-  dimensions?: Array<string> | undefined;
+  dimensions?: Array<string | string> | undefined;
   measures: Array<string>;
   dimension_filters?:
     | PaymentsReportRequestDimensionFilters$Outbound
     | undefined;
   include_totals?: boolean | undefined;
+  reporting_currency: string;
 };
 
 /** @internal */
@@ -207,18 +265,28 @@ export const PaymentsReportRequest$outboundSchema: z.ZodMiniType<
     source: z.literal("payments"),
     period: ReportPeriod$outboundSchema,
     dimensions: z.optional(
-      z.array(PaymentsReportRequestDimension$outboundSchema),
+      z.array(
+        smartUnion([
+          PaymentsReportRequestDimensionEnum$outboundSchema,
+          z.string(),
+        ]),
+      ),
     ),
     measures: z.array(PaymentsReportRequestMeasure$outboundSchema),
     dimensionFilters: z.optional(
       z.lazy(() => PaymentsReportRequestDimensionFilters$outboundSchema),
     ),
     includeTotals: z.optional(z.boolean()),
+    reportingCurrency: z._default(
+      ApiSharedEnum6440f2bcc2$outboundSchema,
+      "ARS",
+    ),
   }),
   z.transform((v) => {
     return remap$(v, {
       dimensionFilters: "dimension_filters",
       includeTotals: "include_totals",
+      reportingCurrency: "reporting_currency",
     });
   }),
 );

@@ -9,7 +9,7 @@ let value: ApiTagCreateResponseData = {
   tag: {
     object: "tag",
     id: "cb30a291-3737-40d0-a7c8-d2fc3523a4b7",
-    scope: "product",
+    scope: "sale",
     name: "<value>",
     slug: "<value>",
     color: "blue",
@@ -26,5 +26,5 @@ let value: ApiTagCreateResponseData = {
 
 | Field                                                                        | Type                                                                         | Required                                                                     | Description                                                                  |
 | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| `tag`                                                                        | [models.ApiSharedObject0c53a4e5c2](../models/api-shared-object0c53a4e5c2.md) | :heavy_check_mark:                                                           | N/A                                                                          |
+| `tag`                                                                        | [models.ApiSharedObject8a94344083](../models/api-shared-object8a94344083.md) | :heavy_check_mark:                                                           | N/A                                                                          |
 | `idempotentReplay`                                                           | *boolean*                                                                    | :heavy_check_mark:                                                           | N/A                                                                          |

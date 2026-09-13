@@ -13,8 +13,9 @@ let value: ApiPriceListDetailResponse = {
     isAutomatic: true,
     automaticPricingMode: "base_price_adjustment",
     adjustmentPercentage: 777.56,
+    sourcePriceListId: "c6ce5028-6ee0-4bd9-af26-d417c9f40547",
     taxInclusive: true,
-    createdAt: new Date("2026-04-27T09:09:47.845Z"),
+    createdAt: new Date("2024-11-24T14:50:35.379Z"),
     object: "price_list",
   },
 };
@@ -25,4 +26,4 @@ let value: ApiPriceListDetailResponse = {
 | Field                                                                        | Type                                                                         | Required                                                                     | Description                                                                  |
 | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
 | `requestId`                                                                  | *string*                                                                     | :heavy_check_mark:                                                           | N/A                                                                          |
-| `data`                                                                       | [models.ApiSharedObject16ba66a421](../models/api-shared-object16ba66a421.md) | :heavy_check_mark:                                                           | N/A                                                                          |
+| `data`                                                                       | [models.ApiSharedObject812fa01669](../models/api-shared-object812fa01669.md) | :heavy_check_mark:                                                           | N/A                                                                          |

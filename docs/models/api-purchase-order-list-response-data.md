@@ -19,10 +19,11 @@ let value: ApiPurchaseOrderListResponseData = {
     name: "<value>",
   },
   warehouse: {
-    id: "1d81895d-9d7f-44ea-9636-e0e6181dee4f",
+    id: "73701df9-cc25-4f39-89d3-0ecc1c8cf71d",
     name: "<value>",
   },
   createdAt: new Date("2025-09-24T08:29:13.102Z"),
+  tags: [],
 };
 ```
 
@@ -41,3 +42,4 @@ let value: ApiPurchaseOrderListResponseData = {
 | `supplier`                                                                                    | [models.ApiSharedObject8aeeceaf0f](../models/api-shared-object8aeeceaf0f.md)                  | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `warehouse`                                                                                   | [models.ApiSharedObject8aeeceaf0f](../models/api-shared-object8aeeceaf0f.md)                  | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `createdAt`                                                                                   | [Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date) | :heavy_check_mark:                                                                            | N/A                                                                                           |
+| `tags`                                                                                        | [models.ApiSharedObject8a94344083](../models/api-shared-object8a94344083.md)[]                | :heavy_check_mark:                                                                            | N/A                                                                                           |
