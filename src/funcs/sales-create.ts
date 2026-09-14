@@ -32,7 +32,7 @@ import { Result } from "../types/fp.js";
  * Crear venta
  *
  * @remarks
- * Registra una venta y devuelve la operación creada junto con sus efectos fiscales, de stock, pagos y contabilidad.
+ * Registra una venta y devuelve sus efectos fiscales, de stock, pagos y contabilidad. Enviá Lapyme-Version: 2026-08-20 para usar el contrato estricto: total es obligatorio, unit_price es neto para comprobantes A y final para comprobantes a consumidor final, y los importes derivados se calculan una sola vez. Omitir el header conserva el contrato histórico de forma deprecada. Idempotency-Key solo protege reintentos; si necesitás guardar una referencia externa visible, enviá integration_source e integration_id en el cuerpo.
  */
 export function salesCreate(
   client: LapymeCore,
@@ -99,6 +99,11 @@ async function $do(
     "Idempotency-Key": encodeSimple(
       "Idempotency-Key",
       payload["Idempotency-Key"],
+      { explode: false, charEncoding: "none" },
+    ),
+    "Lapyme-Version": encodeSimple(
+      "Lapyme-Version",
+      payload["Lapyme-Version"],
       { explode: false, charEncoding: "none" },
     ),
     "X-Request-Id": encodeSimple("X-Request-Id", payload["X-Request-Id"], {
@@ -180,11 +185,15 @@ async function $do(
     | SDKValidationError
   >(
     M.json(200, operations.CreateApiSaleResponse$inboundSchema, {
+      hdrs: true,
       key: "Result",
     }),
-    M.jsonErr([400, 401, 403, 409, 412], errors.ApiErrorEnvelope$inboundSchema),
-    M.jsonErr(429, errors.ApiErrorEnvelope$inboundSchema, { hdrs: true }),
-    M.jsonErr(500, errors.ApiErrorEnvelope$inboundSchema),
+    M.jsonErr(
+      [400, 401, 403, 409, 412, 422, 429],
+      errors.ApiErrorEnvelope$inboundSchema,
+      { hdrs: true },
+    ),
+    M.jsonErr(500, errors.ApiErrorEnvelope$inboundSchema, { hdrs: true }),
     M.fail("4XX"),
     M.fail("5XX"),
   )(response, req, { extraFields: responseFields });

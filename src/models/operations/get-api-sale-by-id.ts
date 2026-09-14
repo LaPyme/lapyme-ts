@@ -16,9 +16,9 @@ export type GetApiSaleByIdRequest = {
    */
   saleId: string;
   /**
-   * Comma-separated top-level sale sections to include. Omit for the endpoint default. List default: id, document, customer, amounts, reversesVoucher, integration, audit. Detail default: id, document, customer, amounts, items, payments, applications, fiscal, reversesVoucher, integration, audit.
+   * Comma-separated top-level sale sections to include. Omit for the endpoint default. List default: id, document, customer, amounts, reversesVoucher, integration, audit, tags. Detail default: id, invoicePdf, document, customer, amounts, items, payments, applications, fiscal, reversesVoucher, integration, audit, tags.
    */
-  fields?: Array<models.ApiSharedEnumd1f2fb458d> | undefined;
+  fields?: Array<models.ApiSharedEnum2b4695150d> | undefined;
 };
 
 export type GetApiSaleByIdResponse = {
@@ -39,7 +39,7 @@ export const GetApiSaleByIdRequest$outboundSchema: z.ZodMiniType<
 > = z.pipe(
   z.object({
     saleId: z.string(),
-    fields: z.optional(z.array(models.ApiSharedEnumd1f2fb458d$outboundSchema)),
+    fields: z.optional(z.array(models.ApiSharedEnum2b4695150d$outboundSchema)),
   }),
   z.transform((v) => {
     return remap$(v, {

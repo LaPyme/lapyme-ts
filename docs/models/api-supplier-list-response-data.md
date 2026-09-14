@@ -17,23 +17,41 @@ let value: ApiSupplierListResponseData = {
   taxIdType: "<value>",
   taxCategory: "<value>",
   paymentTermId: null,
-  isActive: null,
+  paymentTermDays: null,
+  isActive: true,
+  tags: [
+    {
+      object: "tag",
+      id: "9b4c6439-384c-4a58-9cf3-b39718b07048",
+      scope: "customer",
+      name: "<value>",
+      slug: "<value>",
+      color: "indigo",
+      description:
+        "vacantly unless nautical alongside around optimistic for lasting sometimes",
+      archivedAt: new Date("2024-05-13T14:06:09.243Z"),
+      createdAt: new Date("2026-03-04T18:15:09.469Z"),
+      updatedAt: new Date("2026-05-06T00:20:31.712Z"),
+    },
+  ],
 };
 ```
 
 ## Fields
 
-| Field              | Type               | Required           | Description        |
-| ------------------ | ------------------ | ------------------ | ------------------ |
-| `object`           | *"supplier"*       | :heavy_check_mark: | N/A                |
-| `id`               | *string*           | :heavy_check_mark: | N/A                |
-| `name`             | *string*           | :heavy_check_mark: | N/A                |
-| `companyName`      | *string*           | :heavy_check_mark: | N/A                |
-| `description`      | *string*           | :heavy_check_mark: | N/A                |
-| `email`            | *string*           | :heavy_check_mark: | N/A                |
-| `phone`            | *string*           | :heavy_check_mark: | N/A                |
-| `taxId`            | *string*           | :heavy_check_mark: | N/A                |
-| `taxIdType`        | *string*           | :heavy_check_mark: | N/A                |
-| `taxCategory`      | *string*           | :heavy_check_mark: | N/A                |
-| `paymentTermId`    | *string*           | :heavy_check_mark: | N/A                |
-| `isActive`         | *boolean*          | :heavy_check_mark: | N/A                |
+| Field                                                                          | Type                                                                           | Required                                                                       | Description                                                                    |
+| ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
+| `object`                                                                       | *"supplier"*                                                                   | :heavy_check_mark:                                                             | N/A                                                                            |
+| `id`                                                                           | *string*                                                                       | :heavy_check_mark:                                                             | N/A                                                                            |
+| `name`                                                                         | *string*                                                                       | :heavy_check_mark:                                                             | N/A                                                                            |
+| `companyName`                                                                  | *string*                                                                       | :heavy_check_mark:                                                             | N/A                                                                            |
+| `description`                                                                  | *string*                                                                       | :heavy_check_mark:                                                             | N/A                                                                            |
+| `email`                                                                        | *string*                                                                       | :heavy_check_mark:                                                             | N/A                                                                            |
+| `phone`                                                                        | *string*                                                                       | :heavy_check_mark:                                                             | N/A                                                                            |
+| `taxId`                                                                        | *string*                                                                       | :heavy_check_mark:                                                             | N/A                                                                            |
+| `taxIdType`                                                                    | *string*                                                                       | :heavy_check_mark:                                                             | N/A                                                                            |
+| `taxCategory`                                                                  | *string*                                                                       | :heavy_check_mark:                                                             | N/A                                                                            |
+| `paymentTermId`                                                                | *string*                                                                       | :heavy_check_mark:                                                             | N/A                                                                            |
+| `paymentTermDays`                                                              | *number*                                                                       | :heavy_check_mark:                                                             | N/A                                                                            |
+| `isActive`                                                                     | *boolean*                                                                      | :heavy_check_mark:                                                             | N/A                                                                            |
+| `tags`                                                                         | [models.ApiSharedObject8a94344083](../models/api-shared-object8a94344083.md)[] | :heavy_check_mark:                                                             | N/A                                                                            |

@@ -23,6 +23,21 @@ let value: ApiPurchaseListResponseData = {
     id: "fd77c624-8fc6-42ba-a044-fd4ea2b29db8",
     name: "<value>",
   },
+  tags: [
+    {
+      object: "tag",
+      id: "9b4c6439-384c-4a58-9cf3-b39718b07048",
+      scope: "customer",
+      name: "<value>",
+      slug: "<value>",
+      color: "indigo",
+      description:
+        "vacantly unless nautical alongside around optimistic for lasting sometimes",
+      archivedAt: new Date("2024-05-13T14:06:09.243Z"),
+      createdAt: new Date("2026-03-04T18:15:09.469Z"),
+      updatedAt: new Date("2026-05-06T00:20:31.712Z"),
+    },
+  ],
 };
 ```
 
@@ -44,3 +59,4 @@ let value: ApiPurchaseListResponseData = {
 | `supplierInvoiceNumber`                                                                       | *string*                                                                                      | :heavy_check_mark:                                                                            | Numero de comprobante del proveedor. Hasta 120 caracteres.                                    |
 | `createdAt`                                                                                   | [Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date) | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `supplier`                                                                                    | [models.ApiSharedObjectf28d5cf256](../models/api-shared-objectf28d5cf256.md)                  | :heavy_check_mark:                                                                            | N/A                                                                                           |
+| `tags`                                                                                        | [models.ApiSharedObject8a94344083](../models/api-shared-object8a94344083.md)[]                | :heavy_check_mark:                                                                            | N/A                                                                                           |

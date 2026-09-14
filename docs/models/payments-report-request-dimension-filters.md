@@ -1,6 +1,6 @@
 # PaymentsReportRequestDimensionFilters
 
-Filtros por dimensión. Cada clave debe ser una dimensión filtrable para la fuente. El valor es un array de IDs o valores a incluir.
+Filtros por dimensión. Cada clave debe ser una dimensión filtrable para la fuente. También acepta product_metafield:<key> para campos personalizados select de producto y contact_metafield:<key> para campos personalizados select de contacto cuando la fuente lo soporta. El valor es un array de IDs o valores a incluir.
 
 ## Example Usage
 
@@ -19,6 +19,7 @@ let value: PaymentsReportRequestDimensionFilters = {};
 | `paymentContactTaxCategory` | *string*[]                  | :heavy_minus_sign:          | N/A                         |
 | `paymentContactProvince`    | *string*[]                  | :heavy_minus_sign:          | N/A                         |
 | `paymentContactCity`        | *string*[]                  | :heavy_minus_sign:          | N/A                         |
+| `createdBy`                 | *string*[]                  | :heavy_minus_sign:          | N/A                         |
 | `pointOfSale`               | *string*[]                  | :heavy_minus_sign:          | N/A                         |
 | `register`                  | *string*[]                  | :heavy_minus_sign:          | N/A                         |
 | `posSession`                | *string*[]                  | :heavy_minus_sign:          | N/A                         |
@@ -30,3 +31,8 @@ let value: PaymentsReportRequestDimensionFilters = {};
 | `formattedPaymentNumber`    | *string*[]                  | :heavy_minus_sign:          | N/A                         |
 | `paymentMethod`             | *string*[]                  | :heavy_minus_sign:          | N/A                         |
 | `paymentMethodType`         | *string*[]                  | :heavy_minus_sign:          | N/A                         |
+| `paymentContactStatus`      | *string*[]                  | :heavy_minus_sign:          | N/A                         |
+| `pointOfSaleStatus`         | *string*[]                  | :heavy_minus_sign:          | N/A                         |
+| `registerStatus`            | *string*[]                  | :heavy_minus_sign:          | N/A                         |
+| `safeStatus`                | *string*[]                  | :heavy_minus_sign:          | N/A                         |
+| `paymentMethodStatus`       | *string*[]                  | :heavy_minus_sign:          | N/A                         |

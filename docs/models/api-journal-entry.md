@@ -35,7 +35,7 @@ let value: ApiJournalEntry = {
       currency: "Metical",
       contact: {
         object: "contact",
-        id: "c3575bb6-9682-436e-ba0c-8edfd5668521",
+        id: "0fe93b3f-7306-4f11-a90c-b27bde286070",
         name: "<value>",
       },
       costCenters: {
@@ -64,4 +64,4 @@ let value: ApiJournalEntry = {
 | `exchangeRate`                                                                                | *number*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `createdAt`                                                                                   | [Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date) | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `updatedAt`                                                                                   | [Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date) | :heavy_check_mark:                                                                            | N/A                                                                                           |
-| `lines`                                                                                       | [models.ApiSharedObject136b444e9e](../models/api-shared-object136b444e9e.md)[]                | :heavy_check_mark:                                                                            | N/A                                                                                           |
+| `lines`                                                                                       | [models.ApiSharedObject5785340ece](../models/api-shared-object5785340ece.md)[]                | :heavy_check_mark:                                                                            | N/A                                                                                           |
