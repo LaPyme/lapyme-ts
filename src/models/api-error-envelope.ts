@@ -9,10 +9,7 @@ import * as openEnums from "../types/enums.js";
 import { OpenEnum } from "../types/enums.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
-import {
-  ApiSharedObjectc671832641,
-  ApiSharedObjectc671832641$inboundSchema,
-} from "./api-shared-objectc671832641.js";
+import { smartUnion } from "../types/smart-union.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export const Type = {
@@ -27,12 +24,21 @@ export const Type = {
 } as const;
 export type Type = OpenEnum<typeof Type>;
 
+export type Metadata = string | number | boolean;
+
+export type Detail = {
+  field?: string | undefined;
+  code: string;
+  message: string;
+  metadata?: { [k: string]: string | number | boolean | null } | undefined;
+};
+
 export type ErrorT = {
   type: Type;
   code: string;
   message: string;
   retryable: boolean;
-  details: Array<ApiSharedObjectc671832641>;
+  details: Array<Detail>;
 };
 
 /** @internal */
@@ -40,12 +46,51 @@ export const Type$inboundSchema: z.ZodMiniType<Type, unknown> = openEnums
   .inboundSchema(Type);
 
 /** @internal */
+export const Metadata$inboundSchema: z.ZodMiniType<Metadata, unknown> =
+  smartUnion([types.string(), types.number(), types.boolean()]);
+
+export function metadataFromJSON(
+  jsonString: string,
+): SafeParseResult<Metadata, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => Metadata$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'Metadata' from JSON`,
+  );
+}
+
+/** @internal */
+export const Detail$inboundSchema: z.ZodMiniType<Detail, unknown> = z.object({
+  field: types.optional(types.string()),
+  code: types.string(),
+  message: types.string(),
+  metadata: types.optional(
+    z.record(
+      z.string(),
+      types.nullable(
+        smartUnion([types.string(), types.number(), types.boolean()]),
+      ),
+    ),
+  ),
+});
+
+export function detailFromJSON(
+  jsonString: string,
+): SafeParseResult<Detail, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => Detail$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'Detail' from JSON`,
+  );
+}
+
+/** @internal */
 export const ErrorT$inboundSchema: z.ZodMiniType<ErrorT, unknown> = z.object({
   type: Type$inboundSchema,
   code: types.string(),
   message: types.string(),
   retryable: types.boolean(),
-  details: z.array(ApiSharedObjectc671832641$inboundSchema),
+  details: z.array(z.lazy(() => Detail$inboundSchema)),
 });
 
 export function errorFromJSON(

@@ -21,6 +21,9 @@ export type Direction = ClosedEnum<typeof Direction>;
 
 export type ApiStockMovementRequestItem = {
   productId: string;
+  /**
+   * Debe ser mayor a cero para movimientos delta. Las correcciones por reemplazo aceptan cualquier cantidad final finita, incluidos valores negativos.
+   */
   quantity: number;
 };
 
