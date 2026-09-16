@@ -12,6 +12,10 @@ import {
   ApiSharedEnum8d46e1ec20,
   ApiSharedEnum8d46e1ec20$inboundSchema,
 } from "./api-shared-enum8d46e1ec20.js";
+import {
+  ApiSharedObjected3905a55b,
+  ApiSharedObjected3905a55b$inboundSchema,
+} from "./api-shared-objected3905a55b.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type ApiSupplierListResponseData = {
@@ -26,7 +30,9 @@ export type ApiSupplierListResponseData = {
   taxIdType: string | null;
   taxCategory: string | null;
   paymentTermId: string | null;
+  paymentTermDays: number | null;
   isActive: boolean | null;
+  tags: Array<ApiSharedObjected3905a55b>;
 };
 
 export type ApiSupplierListResponse = {
@@ -61,7 +67,9 @@ export const ApiSupplierListResponseData$inboundSchema: z.ZodMiniType<
     tax_id_type: types.nullable(types.string()),
     tax_category: types.nullable(types.string()),
     payment_term_id: types.nullable(types.string()),
+    payment_term_days: types.nullable(types.number()),
     is_active: types.nullable(types.boolean()),
+    tags: z.array(ApiSharedObjected3905a55b$inboundSchema),
   }),
   z.transform((v) => {
     return remap$(v, {
@@ -70,6 +78,7 @@ export const ApiSupplierListResponseData$inboundSchema: z.ZodMiniType<
       "tax_id_type": "taxIdType",
       "tax_category": "taxCategory",
       "payment_term_id": "paymentTermId",
+      "payment_term_days": "paymentTermDays",
       "is_active": "isActive",
     });
   }),

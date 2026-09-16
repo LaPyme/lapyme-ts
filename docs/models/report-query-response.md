@@ -34,6 +34,8 @@ let value: ReportQueryResponse = {
       measures: [
         "<value 1>",
       ],
+      reportingCurrency: "ARS",
+      rateBasis: "functional_ars",
     },
   },
 };

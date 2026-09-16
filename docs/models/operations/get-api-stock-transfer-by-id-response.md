@@ -21,7 +21,7 @@ let value: GetApiStockTransferByIdResponse = {
       targetWarehouseId: "5283156d-d2df-46e8-85ae-839b3f4a8912",
       transferDate: new Date("2026-03-20T12:50:11.407Z"),
       notes: "<value>",
-      status: "completed",
+      status: "closed_with_difference",
       createdAt: new Date("2026-04-28T05:47:30.323Z"),
       updatedAt: new Date("2025-12-30T02:51:34.734Z"),
       createdBy: "812da217-0912-4faa-b34f-dc09b64999c6",
@@ -35,6 +35,7 @@ let value: GetApiStockTransferByIdResponse = {
         name: "<value>",
       },
       items: [],
+      tags: [],
     },
   },
 };
