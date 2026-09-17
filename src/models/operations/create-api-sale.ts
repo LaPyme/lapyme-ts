@@ -12,6 +12,10 @@ import * as models from "../index.js";
 
 export type CreateApiSaleRequest = {
   /**
+   * Versión fechada del contrato de creación de ventas. Usá 2026-08-20 en integraciones nuevas. Omitirla activa el comportamiento histórico deprecado.
+   */
+  lapymeVersion?: models.ApiSharedEnumf007ccd7a1 | undefined;
+  /**
    * Clave única para evitar duplicados al reintentar la misma creación de venta.
    */
   idempotencyKey: string;
@@ -29,6 +33,7 @@ export type CreateApiSaleResponse = {
 
 /** @internal */
 export type CreateApiSaleRequest$Outbound = {
+  "Lapyme-Version"?: string | undefined;
   "Idempotency-Key": string;
   "X-Request-Id"?: string | undefined;
   body: models.ApiSaleTransactionRequest$Outbound;
@@ -40,12 +45,14 @@ export const CreateApiSaleRequest$outboundSchema: z.ZodMiniType<
   CreateApiSaleRequest
 > = z.pipe(
   z.object({
+    lapymeVersion: z.optional(models.ApiSharedEnumf007ccd7a1$outboundSchema),
     idempotencyKey: z.string(),
     xRequestId: z.optional(z.string()),
     body: models.ApiSaleTransactionRequest$outboundSchema,
   }),
   z.transform((v) => {
     return remap$(v, {
+      lapymeVersion: "Lapyme-Version",
       idempotencyKey: "Idempotency-Key",
       xRequestId: "X-Request-Id",
     });

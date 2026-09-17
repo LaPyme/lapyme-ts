@@ -21,3 +21,6 @@ let value: GetApiAccountLedgerRequest = {
 | `dateTo`                       | [Date](../../types/rfcdate.md) | :heavy_minus_sign:             | N/A                            |
 | `sourceType`                   | *string*                       | :heavy_minus_sign:             | N/A                            |
 | `contactId`                    | *string*                       | :heavy_minus_sign:             | N/A                            |
+| `costCenter1Ids`               | *string*[]                     | :heavy_minus_sign:             | N/A                            |
+| `costCenter2Ids`               | *string*[]                     | :heavy_minus_sign:             | N/A                            |
+| `costCenter3Ids`               | *string*[]                     | :heavy_minus_sign:             | N/A                            |

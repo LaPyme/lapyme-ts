@@ -22,7 +22,7 @@ let value: CreateApiTagResponse = {
       tag: {
         object: "tag",
         id: "cb30a291-3737-40d0-a7c8-d2fc3523a4b7",
-        scope: "product",
+        scope: "sale",
         name: "<value>",
         slug: "<value>",
         color: "blue",

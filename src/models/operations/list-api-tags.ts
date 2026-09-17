@@ -14,7 +14,7 @@ export type ListApiTagsRequest = {
   /**
    * Scope del catálogo de etiquetas
    */
-  scope: models.ApiSharedEnuma1951b6358;
+  scope: models.ApiSharedEnum09f8155a9a;
   /**
    * Incluye etiquetas archivadas en la respuesta
    */
@@ -38,7 +38,7 @@ export const ListApiTagsRequest$outboundSchema: z.ZodMiniType<
   ListApiTagsRequest
 > = z.pipe(
   z.object({
-    scope: models.ApiSharedEnuma1951b6358$outboundSchema,
+    scope: models.ApiSharedEnum09f8155a9a$outboundSchema,
     includeArchived: z._default(z.boolean(), false),
   }),
   z.transform((v) => {
