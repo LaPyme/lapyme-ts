@@ -13,14 +13,37 @@ import {
   ApiSharedEnum8d46e1ec20$inboundSchema,
 } from "./api-shared-enum8d46e1ec20.js";
 import {
-  ApiSharedObjectf814978533,
-  ApiSharedObjectf814978533$inboundSchema,
-} from "./api-shared-objectf814978533.js";
+  ApiSharedObjectb708221d2f,
+  ApiSharedObjectb708221d2f$inboundSchema,
+} from "./api-shared-objectb708221d2f.js";
+import {
+  ApiSharedObjected3905a55b,
+  ApiSharedObjected3905a55b$inboundSchema,
+} from "./api-shared-objected3905a55b.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
+
+export type ApiSaleListResponseData = {
+  object?: "sale" | undefined;
+  id?: string | undefined;
+  invoicePdf?: string | null | undefined;
+  accounting?: ApiSharedObjectb708221d2f | undefined;
+  document?: { [k: string]: any } | undefined;
+  customer?: { [k: string]: any } | null | undefined;
+  amounts?: { [k: string]: any } | undefined;
+  items?: Array<{ [k: string]: any }> | undefined;
+  payments?: { [k: string]: any } | undefined;
+  applications?: { [k: string]: any } | undefined;
+  fiscal?: { [k: string]: any } | undefined;
+  integration?: { [k: string]: any } | undefined;
+  reversesVoucher?: { [k: string]: any } | null | undefined;
+  audit?: { [k: string]: any } | undefined;
+  tags?: Array<ApiSharedObjected3905a55b> | undefined;
+  [additionalProperties: string]: unknown;
+};
 
 export type ApiSaleListResponse = {
   requestId: string;
-  data: Array<ApiSharedObjectf814978533>;
+  data: Array<ApiSaleListResponseData>;
   hasMore: boolean;
   nextCursor: string | null;
   /**
@@ -34,13 +57,56 @@ export type ApiSaleListResponse = {
 };
 
 /** @internal */
+export const ApiSaleListResponseData$inboundSchema: z.ZodMiniType<
+  ApiSaleListResponseData,
+  unknown
+> = z.pipe(
+  z.catchall(
+    z.object({
+      object: types.optional(types.literal("sale")),
+      id: types.optional(types.string()),
+      invoice_pdf: z.optional(z.nullable(types.string())),
+      accounting: types.optional(ApiSharedObjectb708221d2f$inboundSchema),
+      document: types.optional(z.record(z.string(), z.any())),
+      customer: z.optional(z.nullable(z.record(z.string(), z.any()))),
+      amounts: types.optional(z.record(z.string(), z.any())),
+      items: types.optional(z.array(z.record(z.string(), z.any()))),
+      payments: types.optional(z.record(z.string(), z.any())),
+      applications: types.optional(z.record(z.string(), z.any())),
+      fiscal: types.optional(z.record(z.string(), z.any())),
+      integration: types.optional(z.record(z.string(), z.any())),
+      reverses_voucher: z.optional(z.nullable(z.record(z.string(), z.any()))),
+      audit: types.optional(z.record(z.string(), z.any())),
+      tags: types.optional(z.array(ApiSharedObjected3905a55b$inboundSchema)),
+    }),
+    z.any(),
+  ),
+  z.transform((v) => {
+    return remap$(v, {
+      "invoice_pdf": "invoicePdf",
+      "reverses_voucher": "reversesVoucher",
+    });
+  }),
+);
+
+export function apiSaleListResponseDataFromJSON(
+  jsonString: string,
+): SafeParseResult<ApiSaleListResponseData, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ApiSaleListResponseData$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ApiSaleListResponseData' from JSON`,
+  );
+}
+
+/** @internal */
 export const ApiSaleListResponse$inboundSchema: z.ZodMiniType<
   ApiSaleListResponse,
   unknown
 > = z.pipe(
   z.object({
     request_id: types.string(),
-    data: z.array(ApiSharedObjectf814978533$inboundSchema),
+    data: z.array(z.lazy(() => ApiSaleListResponseData$inboundSchema)),
     has_more: types.boolean(),
     next_cursor: types.nullable(types.string()),
     object: ApiSharedEnum8d46e1ec20$inboundSchema,
