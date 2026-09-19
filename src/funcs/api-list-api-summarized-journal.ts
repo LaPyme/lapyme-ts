@@ -30,6 +30,9 @@ import { Result } from "../types/fp.js";
 
 /**
  * Listar libro diario resumido
+ *
+ * @remarks
+ * Lista asientos del libro diario en formato resumido con filtros y paginación por cursor.
  */
 export function apiListAPISummarizedJournal(
   client: LapymeCore,
@@ -95,11 +98,13 @@ async function $do(
   const path = pathToFunc("/api/v1/accounting/summarized-journal")();
 
   const query = encodeFormQuery({
-    "cost_center1_ids": payload?.cost_center1_ids,
-    "cost_center2_ids": payload?.cost_center2_ids,
-    "cost_center3_ids": payload?.cost_center3_ids,
+    "cursor": payload?.cursor,
     "date_from": payload?.date_from,
     "date_to": payload?.date_to,
+    "limit": payload?.limit,
+    "period_preset": payload?.period_preset,
+    "sort_order": payload?.sort_order,
+    "source_types": payload?.source_types,
   });
 
   const headers = new Headers(compactMap({

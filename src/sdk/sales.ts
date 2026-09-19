@@ -33,7 +33,7 @@ export class Sales extends ClientSDK {
    * Crear venta
    *
    * @remarks
-   * Registra una venta y devuelve la operación creada junto con sus efectos fiscales, de stock, pagos y contabilidad.
+   * Registra una venta y devuelve sus efectos fiscales, de stock, pagos y contabilidad. Enviá Lapyme-Version: 2026-08-20 para usar el contrato estricto: total es obligatorio, unit_price es neto para comprobantes A y final para comprobantes a consumidor final, y los importes derivados se calculan una sola vez. Omitir el header conserva el contrato histórico de forma deprecada. Idempotency-Key solo protege reintentos; si necesitás guardar una referencia externa visible, enviá integration_source e integration_id en el cuerpo.
    */
   async create(
     request: operations.CreateApiSaleRequest,

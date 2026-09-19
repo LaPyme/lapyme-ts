@@ -6,13 +6,13 @@
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
 import {
-  ApiSharedEnum6cfb146157,
-  ApiSharedEnum6cfb146157$outboundSchema,
-} from "./api-shared-enum6cfb146157.js";
-import {
   ApiSharedEnumcc76b6d63a,
   ApiSharedEnumcc76b6d63a$outboundSchema,
 } from "./api-shared-enumcc76b6d63a.js";
+import {
+  ApiSharedEnumffb4886f2b,
+  ApiSharedEnumffb4886f2b$outboundSchema,
+} from "./api-shared-enumffb4886f2b.js";
 
 export type Totals = {
   subtotal: number;
@@ -36,7 +36,7 @@ export type ApiOrderCreateRequest = {
   assignedWarehouseId: string;
   deliveryMethod?: ApiSharedEnumcc76b6d63a | undefined;
   orderDate?: Date | undefined;
-  currency?: ApiSharedEnum6cfb146157 | undefined;
+  currency?: ApiSharedEnumffb4886f2b | undefined;
   notes?: string | undefined;
   discountAmount?: number | undefined;
   totals: Totals;
@@ -141,7 +141,7 @@ export const ApiOrderCreateRequest$outboundSchema: z.ZodMiniType<
     assignedWarehouseId: z.string(),
     deliveryMethod: z.optional(ApiSharedEnumcc76b6d63a$outboundSchema),
     orderDate: z.optional(z.pipe(z.date(), z.transform(v => v.toISOString()))),
-    currency: z.optional(ApiSharedEnum6cfb146157$outboundSchema),
+    currency: z.optional(ApiSharedEnumffb4886f2b$outboundSchema),
     notes: z.optional(z.string()),
     discountAmount: z.optional(z.int()),
     totals: z.lazy(() => Totals$outboundSchema),
