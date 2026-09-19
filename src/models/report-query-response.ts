@@ -14,6 +14,18 @@ import {
   ApiSharedEnum07ee8fd91e,
   ApiSharedEnum07ee8fd91e$inboundSchema,
 } from "./api-shared-enum07ee8fd91e.js";
+import {
+  ApiSharedEnumb7ecf4fc91,
+  ApiSharedEnumb7ecf4fc91$inboundSchema,
+} from "./api-shared-enumb7ecf4fc91.js";
+import {
+  ApiSharedEnumffb4886f2b,
+  ApiSharedEnumffb4886f2b$inboundSchema,
+} from "./api-shared-enumffb4886f2b.js";
+import {
+  ApiSharedObject5524465fb0,
+  ApiSharedObject5524465fb0$inboundSchema,
+} from "./api-shared-object5524465fb0.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type Row = {
@@ -36,12 +48,15 @@ export type ReportQueryResponseDateBasis = OpenEnum<
   typeof ReportQueryResponseDateBasis
 >;
 
-export type Metadata = {
+export type ReportQueryResponseMetadata = {
   source: ApiSharedEnum07ee8fd91e;
   dimensions: Array<string>;
   measures: Array<string>;
   period?: ReportQueryResponsePeriod | undefined;
   dateBasis?: ReportQueryResponseDateBasis | undefined;
+  resolvedFilters?: Array<ApiSharedObject5524465fb0> | undefined;
+  reportingCurrency: ApiSharedEnumffb4886f2b;
+  rateBasis: ApiSharedEnumb7ecf4fc91;
 };
 
 export type ReportQueryResponseData = {
@@ -50,7 +65,7 @@ export type ReportQueryResponseData = {
    * Aggregated totals for all rows. Present only when `includeTotals: true` is sent.
    */
   totals: { [k: string]: number } | null;
-  metadata: Metadata;
+  metadata: ReportQueryResponseMetadata;
 };
 
 export type ReportQueryResponse = {
@@ -110,7 +125,10 @@ export const ReportQueryResponseDateBasis$inboundSchema: z.ZodMiniType<
 > = openEnums.inboundSchema(ReportQueryResponseDateBasis);
 
 /** @internal */
-export const Metadata$inboundSchema: z.ZodMiniType<Metadata, unknown> = z.pipe(
+export const ReportQueryResponseMetadata$inboundSchema: z.ZodMiniType<
+  ReportQueryResponseMetadata,
+  unknown
+> = z.pipe(
   z.object({
     source: ApiSharedEnum07ee8fd91e$inboundSchema,
     dimensions: z.array(types.string()),
@@ -119,21 +137,29 @@ export const Metadata$inboundSchema: z.ZodMiniType<Metadata, unknown> = z.pipe(
       z.lazy(() => ReportQueryResponsePeriod$inboundSchema),
     ),
     date_basis: types.optional(ReportQueryResponseDateBasis$inboundSchema),
+    resolved_filters: types.optional(
+      z.array(ApiSharedObject5524465fb0$inboundSchema),
+    ),
+    reporting_currency: ApiSharedEnumffb4886f2b$inboundSchema,
+    rate_basis: ApiSharedEnumb7ecf4fc91$inboundSchema,
   }),
   z.transform((v) => {
     return remap$(v, {
       "date_basis": "dateBasis",
+      "resolved_filters": "resolvedFilters",
+      "reporting_currency": "reportingCurrency",
+      "rate_basis": "rateBasis",
     });
   }),
 );
 
-export function metadataFromJSON(
+export function reportQueryResponseMetadataFromJSON(
   jsonString: string,
-): SafeParseResult<Metadata, SDKValidationError> {
+): SafeParseResult<ReportQueryResponseMetadata, SDKValidationError> {
   return safeParse(
     jsonString,
-    (x) => Metadata$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'Metadata' from JSON`,
+    (x) => ReportQueryResponseMetadata$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ReportQueryResponseMetadata' from JSON`,
   );
 }
 
@@ -144,7 +170,7 @@ export const ReportQueryResponseData$inboundSchema: z.ZodMiniType<
 > = z.object({
   rows: z.array(z.lazy(() => Row$inboundSchema)),
   totals: types.nullable(z.record(z.string(), types.number())),
-  metadata: z.lazy(() => Metadata$inboundSchema),
+  metadata: z.lazy(() => ReportQueryResponseMetadata$inboundSchema),
 });
 
 export function reportQueryResponseDataFromJSON(
