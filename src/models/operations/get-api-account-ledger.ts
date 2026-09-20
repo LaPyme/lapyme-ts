@@ -18,6 +18,9 @@ export type GetApiAccountLedgerRequest = {
   dateTo?: Date | undefined;
   sourceType?: string | undefined;
   contactId?: string | undefined;
+  costCenter1Ids?: Array<string> | undefined;
+  costCenter2Ids?: Array<string> | undefined;
+  costCenter3Ids?: Array<string> | undefined;
 };
 
 export type GetApiAccountLedgerResponse = {
@@ -34,6 +37,9 @@ export type GetApiAccountLedgerRequest$Outbound = {
   date_to?: string | undefined;
   source_type?: string | undefined;
   contact_id?: string | undefined;
+  cost_center_1_ids?: Array<string> | undefined;
+  cost_center_2_ids?: Array<string> | undefined;
+  cost_center_3_ids?: Array<string> | undefined;
 };
 
 /** @internal */
@@ -55,6 +61,9 @@ export const GetApiAccountLedgerRequest$outboundSchema: z.ZodMiniType<
     )),
     sourceType: z.optional(z.string()),
     contactId: z.optional(z.string()),
+    costCenter1Ids: z.optional(z.array(z.string())),
+    costCenter2Ids: z.optional(z.array(z.string())),
+    costCenter3Ids: z.optional(z.array(z.string())),
   }),
   z.transform((v) => {
     return remap$(v, {
@@ -63,6 +72,9 @@ export const GetApiAccountLedgerRequest$outboundSchema: z.ZodMiniType<
       dateTo: "date_to",
       sourceType: "source_type",
       contactId: "contact_id",
+      costCenter1Ids: "cost_center_1_ids",
+      costCenter2Ids: "cost_center_2_ids",
+      costCenter3Ids: "cost_center_3_ids",
     });
   }),
 );
