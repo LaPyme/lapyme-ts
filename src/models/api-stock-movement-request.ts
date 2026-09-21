@@ -21,6 +21,9 @@ export type Direction = ClosedEnum<typeof Direction>;
 
 export type ApiStockMovementRequestItem = {
   productId: string;
+  /**
+   * Debe ser mayor a cero para movimientos delta. Las correcciones por reemplazo aceptan cualquier cantidad final finita, incluidos valores negativos.
+   */
   quantity: number;
 };
 
@@ -28,6 +31,9 @@ export type ApiStockMovementRequest = {
   warehouseId: string;
   mode: Mode;
   direction?: Direction | undefined;
+  /**
+   * Fecha ISO (YYYY-MM-DD) u hora ISO 8601 completa.
+   */
   operationDate: Date;
   reason: string;
   notes?: string | undefined;
@@ -94,7 +100,10 @@ export const ApiStockMovementRequest$outboundSchema: z.ZodMiniType<
     warehouseId: z.string(),
     mode: Mode$outboundSchema,
     direction: z.optional(Direction$outboundSchema),
-    operationDate: z.pipe(z.date(), z.transform(v => v.toISOString())),
+    operationDate: z.pipe(
+      z.date(),
+      z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
+    ),
     reason: z.string(),
     notes: z.optional(z.string()),
     items: z.array(z.lazy(() => ApiStockMovementRequestItem$outboundSchema)),
