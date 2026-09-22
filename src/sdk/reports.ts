@@ -14,7 +14,7 @@ export class Reports extends ClientSDK {
    * Consultar reporte
    *
    * @remarks
-   * Ejecuta una consulta analítica agrupada sobre ventas, compras, pagos o inventario. El campo `source` determina qué dimensiones y métricas están disponibles.
+   * Ejecuta una consulta analítica agrupada sobre ventas, compras, pagos, inventario o tesorería. El campo `source` determina qué dimensiones y métricas están disponibles. Las consultas de tesorería requieren además el scope `treasury:read`.
    */
   async query(
     request: models.ReportRequest,

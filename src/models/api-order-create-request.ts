@@ -6,14 +6,17 @@
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
 import {
-  ApiSharedEnum6cfb146157,
-  ApiSharedEnum6cfb146157$outboundSchema,
-} from "./api-shared-enum6cfb146157.js";
-import {
   ApiSharedEnumcc76b6d63a,
   ApiSharedEnumcc76b6d63a$outboundSchema,
 } from "./api-shared-enumcc76b6d63a.js";
+import {
+  ApiSharedEnumffb4886f2b,
+  ApiSharedEnumffb4886f2b$outboundSchema,
+} from "./api-shared-enumffb4886f2b.js";
 
+/**
+ * Opcional. Si se envía, se verifica contra los totales calculados y un desvío rechaza el pedido. Si se omite, se calculan a partir de las líneas.
+ */
 export type Totals = {
   subtotal: number;
   taxAmount: number;
@@ -35,11 +38,17 @@ export type ApiOrderCreateRequest = {
   customerId: string;
   assignedWarehouseId: string;
   deliveryMethod?: ApiSharedEnumcc76b6d63a | undefined;
+  /**
+   * Fecha ISO (YYYY-MM-DD) u hora ISO 8601 completa.
+   */
   orderDate?: Date | undefined;
-  currency?: ApiSharedEnum6cfb146157 | undefined;
+  currency?: ApiSharedEnumffb4886f2b | undefined;
   notes?: string | undefined;
   discountAmount?: number | undefined;
-  totals: Totals;
+  /**
+   * Opcional. Si se envía, se verifica contra los totales calculados y un desvío rechaza el pedido. Si se omite, se calculan a partir de las líneas.
+   */
+  totals?: Totals | undefined;
   lines: Array<ApiOrderCreateRequestLine>;
 };
 
@@ -127,7 +136,7 @@ export type ApiOrderCreateRequest$Outbound = {
   currency?: string | undefined;
   notes?: string | undefined;
   discount_amount?: number | undefined;
-  totals: Totals$Outbound;
+  totals?: Totals$Outbound | undefined;
   lines: Array<ApiOrderCreateRequestLine$Outbound>;
 };
 
@@ -140,11 +149,16 @@ export const ApiOrderCreateRequest$outboundSchema: z.ZodMiniType<
     customerId: z.string(),
     assignedWarehouseId: z.string(),
     deliveryMethod: z.optional(ApiSharedEnumcc76b6d63a$outboundSchema),
-    orderDate: z.optional(z.pipe(z.date(), z.transform(v => v.toISOString()))),
-    currency: z.optional(ApiSharedEnum6cfb146157$outboundSchema),
+    orderDate: z.optional(z.pipe(
+      z.date(),
+      z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
+    )),
+    currency: z.optional(ApiSharedEnumffb4886f2b$outboundSchema),
     notes: z.optional(z.string()),
     discountAmount: z.optional(z.int()),
-    totals: z.lazy(() => Totals$outboundSchema),
+    totals: z.optional(z.lazy(() =>
+      Totals$outboundSchema
+    )),
     lines: z.array(z.lazy(() => ApiOrderCreateRequestLine$outboundSchema)),
   }),
   z.transform((v) => {

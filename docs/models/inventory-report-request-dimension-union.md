@@ -6,7 +6,7 @@
 ### `models.InventoryReportRequestDimensionEnum`
 
 ```typescript
-const value: models.InventoryReportRequestDimensionEnum = "productType";
+const value: models.InventoryReportRequestDimensionEnum = "subcategory";
 ```
 
 ### `string`

@@ -9,21 +9,21 @@ import { safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import {
-  ApiSharedObject263c44dc2c,
-  ApiSharedObject263c44dc2c$inboundSchema,
-} from "./api-shared-object263c44dc2c.js";
+  ApiSharedObject18d478a65b,
+  ApiSharedObject18d478a65b$inboundSchema,
+} from "./api-shared-object18d478a65b.js";
 import {
-  ApiSharedObject6f6a8f3873,
-  ApiSharedObject6f6a8f3873$inboundSchema,
-} from "./api-shared-object6f6a8f3873.js";
+  ApiSharedObject92531b640f,
+  ApiSharedObject92531b640f$inboundSchema,
+} from "./api-shared-object92531b640f.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type ApiAccountLedgerResponseData = {
   object: "account_ledger";
-  account: ApiSharedObject6f6a8f3873;
+  account: ApiSharedObject18d478a65b;
   openingBalance: number;
   currency: string;
-  lines: Array<ApiSharedObject263c44dc2c>;
+  lines: Array<ApiSharedObject92531b640f>;
   closingBalance: number;
   hasMore: boolean;
   nextCursor: string | null;
@@ -41,10 +41,10 @@ export const ApiAccountLedgerResponseData$inboundSchema: z.ZodMiniType<
 > = z.pipe(
   z.object({
     object: types.literal("account_ledger"),
-    account: ApiSharedObject6f6a8f3873$inboundSchema,
+    account: ApiSharedObject18d478a65b$inboundSchema,
     opening_balance: types.number(),
     currency: types.string(),
-    lines: z.array(ApiSharedObject263c44dc2c$inboundSchema),
+    lines: z.array(ApiSharedObject92531b640f$inboundSchema),
     closing_balance: types.number(),
     has_more: types.boolean(),
     next_cursor: types.nullable(types.string()),
