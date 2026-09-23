@@ -28,6 +28,11 @@ import { Tags } from "./tags.js";
 import { Warehouses } from "./warehouses.js";
 
 export class Lapyme extends ClientSDK {
+  private _api?: Api;
+  get api(): Api {
+    return (this._api ??= new Api(this._options));
+  }
+
   private _suppliers?: Suppliers;
   get suppliers(): Suppliers {
     return (this._suppliers ??= new Suppliers(this._options));
@@ -88,11 +93,6 @@ export class Lapyme extends ClientSDK {
   private _orders?: Orders;
   get orders(): Orders {
     return (this._orders ??= new Orders(this._options));
-  }
-
-  private _api?: Api;
-  get api(): Api {
-    return (this._api ??= new Api(this._options));
   }
 
   private _stockMovements?: StockMovements;
