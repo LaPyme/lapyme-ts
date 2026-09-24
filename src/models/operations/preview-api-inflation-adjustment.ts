@@ -12,7 +12,7 @@ import * as models from "../index.js";
 
 export type PreviewApiInflationAdjustmentResponse = {
   headers: { [k: string]: Array<string> };
-  result: models.ApiSharedObject682bce59ac;
+  result: models.ApiSharedObject2787a7ea36;
 };
 
 /** @internal */
@@ -22,7 +22,7 @@ export const PreviewApiInflationAdjustmentResponse$inboundSchema: z.ZodMiniType<
 > = z.pipe(
   z.object({
     Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
-    Result: models.ApiSharedObject682bce59ac$inboundSchema,
+    Result: models.ApiSharedObject2787a7ea36$inboundSchema,
   }),
   z.transform((v) => {
     return remap$(v, {

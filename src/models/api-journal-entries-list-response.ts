@@ -9,9 +9,13 @@ import { safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import {
-  ApiSharedObject136b444e9e,
-  ApiSharedObject136b444e9e$inboundSchema,
-} from "./api-shared-object136b444e9e.js";
+  ApiSharedEnum4e8d9d097e,
+  ApiSharedEnum4e8d9d097e$inboundSchema,
+} from "./api-shared-enum4e8d9d097e.js";
+import {
+  ApiSharedObjectbed5d5812a,
+  ApiSharedObjectbed5d5812a$inboundSchema,
+} from "./api-shared-objectbed5d5812a.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type ApiJournalEntriesListResponseData = {
@@ -27,11 +31,12 @@ export type ApiJournalEntriesListResponseData = {
   exchangeRate: number | null;
   createdAt: Date;
   updatedAt: Date;
-  lines: Array<ApiSharedObject136b444e9e>;
+  lines: Array<ApiSharedObjectbed5d5812a>;
 };
 
 export type ApiJournalEntriesListResponse = {
   requestId: string;
+  effectiveScope: ApiSharedEnum4e8d9d097e;
   object: "list";
   url: string;
   data: Array<ApiJournalEntriesListResponseData>;
@@ -57,7 +62,7 @@ export const ApiJournalEntriesListResponseData$inboundSchema: z.ZodMiniType<
     exchange_rate: types.nullable(types.number()),
     created_at: types.date(),
     updated_at: types.date(),
-    lines: z.array(ApiSharedObject136b444e9e$inboundSchema),
+    lines: z.array(ApiSharedObjectbed5d5812a$inboundSchema),
   }),
   z.transform((v) => {
     return remap$(v, {
@@ -88,6 +93,7 @@ export const ApiJournalEntriesListResponse$inboundSchema: z.ZodMiniType<
 > = z.pipe(
   z.object({
     request_id: types.string(),
+    effective_scope: ApiSharedEnum4e8d9d097e$inboundSchema,
     object: types.literal("list"),
     url: types.string(),
     data: z.array(
@@ -99,6 +105,7 @@ export const ApiJournalEntriesListResponse$inboundSchema: z.ZodMiniType<
   z.transform((v) => {
     return remap$(v, {
       "request_id": "requestId",
+      "effective_scope": "effectiveScope",
       "has_more": "hasMore",
       "next_cursor": "nextCursor",
     });

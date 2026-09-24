@@ -11,8 +11,8 @@ let value: ApiPurchaseOrderRequest = {
   warehouseId: "bd63a574-58e3-4c8e-9591-462e2c673f79",
   items: [
     {
-      productId: "bf171e20-4fbb-4583-a055-adda86aa6496",
-      orderedQuantity: 3273.28,
+      productId: "31edbc21-b22c-4b3d-a2a9-24c9fb8a39c9",
+      orderedQuantity: 9712.05,
     },
   ],
 };

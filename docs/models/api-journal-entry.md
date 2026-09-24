@@ -21,28 +21,27 @@ let value: ApiJournalEntry = {
   lines: [
     {
       object: "journal_entry_line",
-      id: "0ab9df56-0615-4cda-b170-49c2b3686ce3",
+      id: "ce92e115-1c46-4426-aa0c-a7ee14c16a64",
       account: {
         object: "account",
-        id: "1405f938-71ea-4467-8644-fbf5f2cf8a44",
+        id: "405f9387-1ea4-4676-a44f-bf5f2cf8a440",
         code: "<value>",
         name: "<value>",
       },
-      debit: 438222,
-      credit: 88333,
-      enteredDebit: 74114,
-      enteredCredit: 437639,
-      currency: "Metical",
+      debit: 534697,
+      credit: 525694,
+      enteredDebit: 506880,
+      enteredCredit: 528911,
+      currency: "Bulgarian Lev",
       contact: {
         object: "contact",
-        id: "c3575bb6-9682-436e-ba0c-8edfd5668521",
-        name: "<value>",
+        id: null,
+        name: null,
       },
       costCenters: {
         "key": "<value>",
-        "key1": "<value>",
       },
-      description: null,
+      description: "reservation shrill sermon",
     },
   ],
 };
@@ -64,4 +63,4 @@ let value: ApiJournalEntry = {
 | `exchangeRate`                                                                                | *number*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `createdAt`                                                                                   | [Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date) | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `updatedAt`                                                                                   | [Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date) | :heavy_check_mark:                                                                            | N/A                                                                                           |
-| `lines`                                                                                       | [models.ApiSharedObject136b444e9e](../models/api-shared-object136b444e9e.md)[]                | :heavy_check_mark:                                                                            | N/A                                                                                           |
+| `lines`                                                                                       | [models.ApiSharedObjectbed5d5812a](../models/api-shared-objectbed5d5812a.md)[]                | :heavy_check_mark:                                                                            | N/A                                                                                           |

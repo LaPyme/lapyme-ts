@@ -39,6 +39,10 @@ export type ListApiAccountingJournalEntriesRequest = {
    * Fecha final del asiento
    */
   dateTo?: Date | undefined;
+  /**
+   * Circuito contable: principal, interno o ambos.
+   */
+  circuit?: models.ApiSharedEnum105c8a68f3 | undefined;
 };
 
 export type ListApiAccountingJournalEntriesResponse = {
@@ -55,6 +59,7 @@ export type ListApiAccountingJournalEntriesRequest$Outbound = {
   account_id?: string | undefined;
   date_from?: string | undefined;
   date_to?: string | undefined;
+  circuit: string;
 };
 
 /** @internal */
@@ -77,6 +82,7 @@ export const ListApiAccountingJournalEntriesRequest$outboundSchema:
         z.date(),
         z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
       )),
+      circuit: z._default(models.ApiSharedEnum105c8a68f3$outboundSchema, "all"),
     }),
     z.transform((v) => {
       return remap$(v, {

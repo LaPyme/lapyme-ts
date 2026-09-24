@@ -13,14 +13,14 @@ import {
   ApiSharedEnum8d46e1ec20$inboundSchema,
 } from "./api-shared-enum8d46e1ec20.js";
 import {
-  ApiSharedObjectd8582ce697,
-  ApiSharedObjectd8582ce697$inboundSchema,
-} from "./api-shared-objectd8582ce697.js";
+  ApiSharedObjectf86e1828bb,
+  ApiSharedObjectf86e1828bb$inboundSchema,
+} from "./api-shared-objectf86e1828bb.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type ApiCategoryListResponse = {
   requestId: string;
-  data: Array<ApiSharedObjectd8582ce697>;
+  data: Array<ApiSharedObjectf86e1828bb>;
   hasMore: boolean;
   nextCursor: string | null;
   /**
@@ -40,7 +40,7 @@ export const ApiCategoryListResponse$inboundSchema: z.ZodMiniType<
 > = z.pipe(
   z.object({
     request_id: types.string(),
-    data: z.array(ApiSharedObjectd8582ce697$inboundSchema),
+    data: z.array(ApiSharedObjectf86e1828bb$inboundSchema),
     has_more: types.boolean(),
     next_cursor: types.nullable(types.string()),
     object: ApiSharedEnum8d46e1ec20$inboundSchema,

@@ -6,13 +6,12 @@
 import { ListApiSummarizedJournalResponse } from "lapyme/models/operations";
 
 let value: ListApiSummarizedJournalResponse = {
-  headers: {
-    "key": [],
-  },
+  headers: {},
   result: {
     requestId: "<id>",
+    effectiveScope: "all",
     object: "list",
-    url: "https://unused-fedora.info",
+    url: "https://glorious-halt.biz",
     data: [],
     hasMore: true,
     nextCursor: "<value>",

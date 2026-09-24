@@ -24,15 +24,19 @@ export type ApiInventoryMovementListResponseData = {
   movementType: string;
   quantity: number;
   balance: number;
+  reservedBalance: number;
+  incomingBalance: number;
   quantityChange: number;
   reservedQuantityChange: number;
   incomingQuantityChange: number;
   reason: string | null;
   notes: string | null;
   createdAt: Date;
+  createdBy: string;
   createdByName: string | null;
   warehouseName: string | null;
   targetWarehouseName: string | null;
+  otherWarehouseName: string | null;
   referenceType: ApiSharedEnumed1129741e | null;
   referenceId: string | null;
   referenceLabel: string | null;
@@ -64,15 +68,19 @@ export const ApiInventoryMovementListResponseData$inboundSchema: z.ZodMiniType<
     movement_type: types.string(),
     quantity: types.number(),
     balance: types.number(),
+    reserved_balance: types.number(),
+    incoming_balance: types.number(),
     quantity_change: types.number(),
     reserved_quantity_change: types.number(),
     incoming_quantity_change: types.number(),
     reason: types.nullable(types.string()),
     notes: types.nullable(types.string()),
     created_at: types.date(),
+    created_by: types.string(),
     created_by_name: types.nullable(types.string()),
     warehouse_name: types.nullable(types.string()),
     target_warehouse_name: types.nullable(types.string()),
+    other_warehouse_name: types.nullable(types.string()),
     reference_type: types.nullable(ApiSharedEnumed1129741e$inboundSchema),
     reference_id: types.nullable(types.string()),
     reference_label: types.nullable(types.string()),
@@ -80,13 +88,17 @@ export const ApiInventoryMovementListResponseData$inboundSchema: z.ZodMiniType<
   z.transform((v) => {
     return remap$(v, {
       "movement_type": "movementType",
+      "reserved_balance": "reservedBalance",
+      "incoming_balance": "incomingBalance",
       "quantity_change": "quantityChange",
       "reserved_quantity_change": "reservedQuantityChange",
       "incoming_quantity_change": "incomingQuantityChange",
       "created_at": "createdAt",
+      "created_by": "createdBy",
       "created_by_name": "createdByName",
       "warehouse_name": "warehouseName",
       "target_warehouse_name": "targetWarehouseName",
+      "other_warehouse_name": "otherWarehouseName",
       "reference_type": "referenceType",
       "reference_id": "referenceId",
       "reference_label": "referenceLabel",

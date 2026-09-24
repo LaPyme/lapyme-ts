@@ -7,37 +7,24 @@ import { QueryApiReportResponse } from "lapyme/models/operations";
 
 let value: QueryApiReportResponse = {
   headers: {
-    "key": [],
+    "key": [
+      "<value 1>",
+    ],
   },
   result: {
     requestId: "<id>",
     data: {
-      rows: [
-        {
-          id: "<id>",
-          ids: [
-            "<value 1>",
-          ],
-          labels: [
-            "<value 1>",
-          ],
-          measures: {},
-        },
-      ],
-      totals: {
-        "key": 708.07,
-        "key1": 4600.88,
-        "key2": 7753.74,
-      },
+      rows: [],
+      totals: {},
       metadata: {
         source: "inventory",
         dimensions: [
           "<value 1>",
           "<value 2>",
         ],
-        measures: [
-          "<value 1>",
-        ],
+        measures: [],
+        reportingCurrency: "USD",
+        rateBasis: "treasury_functional_ars_accounting_value",
       },
     },
   },
@@ -46,7 +33,7 @@ let value: QueryApiReportResponse = {
 
 ## Fields
 
-| Field                                                               | Type                                                                | Required                                                            | Description                                                         |
-| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| `headers`                                                           | Record<string, *string*[]>                                          | :heavy_check_mark:                                                  | N/A                                                                 |
-| `result`                                                            | [models.ReportQueryResponse](../../models/report-query-response.md) | :heavy_check_mark:                                                  | N/A                                                                 |
+| Field                                   | Type                                    | Required                                | Description                             |
+| --------------------------------------- | --------------------------------------- | --------------------------------------- | --------------------------------------- |
+| `headers`                               | Record<string, *string*[]>              | :heavy_check_mark:                      | N/A                                     |
+| `result`                                | *operations.QueryApiReportResponseBody* | :heavy_check_mark:                      | N/A                                     |

@@ -11,25 +11,41 @@ import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import * as models from "../index.js";
 
 export type GetApiTrialBalanceRequest = {
+  /**
+   * Fecha inicial del período. Obligatoria junto con date_to si no se envía period_preset.
+   */
   dateFrom?: Date | undefined;
+  /**
+   * Fecha final inclusiva del período. Obligatoria junto con date_from si no se envía period_preset.
+   */
   dateTo?: Date | undefined;
+  /**
+   * Atajo de período resuelto por la API a date_from/date_to en horario de Argentina. No enviarlo junto con date_from/date_to.
+   */
+  periodPreset?: models.ApiSharedEnumab9ba78640 | undefined;
   costCenter1Ids?: Array<string> | undefined;
   costCenter2Ids?: Array<string> | undefined;
   costCenter3Ids?: Array<string> | undefined;
+  /**
+   * Circuito contable: principal, interno o ambos.
+   */
+  circuit?: models.ApiSharedEnum105c8a68f3 | undefined;
 };
 
 export type GetApiTrialBalanceResponse = {
   headers: { [k: string]: Array<string> };
-  result: models.ApiSharedObject682bce59ac;
+  result: models.ApiSharedObject2787a7ea36;
 };
 
 /** @internal */
 export type GetApiTrialBalanceRequest$Outbound = {
   date_from?: string | undefined;
   date_to?: string | undefined;
-  cost_center1_ids?: Array<string> | undefined;
-  cost_center2_ids?: Array<string> | undefined;
-  cost_center3_ids?: Array<string> | undefined;
+  period_preset?: string | undefined;
+  cost_center_1_ids?: Array<string> | undefined;
+  cost_center_2_ids?: Array<string> | undefined;
+  cost_center_3_ids?: Array<string> | undefined;
+  circuit: string;
 };
 
 /** @internal */
@@ -46,17 +62,20 @@ export const GetApiTrialBalanceRequest$outboundSchema: z.ZodMiniType<
       z.date(),
       z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
     )),
+    periodPreset: z.optional(models.ApiSharedEnumab9ba78640$outboundSchema),
     costCenter1Ids: z.optional(z.array(z.string())),
     costCenter2Ids: z.optional(z.array(z.string())),
     costCenter3Ids: z.optional(z.array(z.string())),
+    circuit: z._default(models.ApiSharedEnum105c8a68f3$outboundSchema, "all"),
   }),
   z.transform((v) => {
     return remap$(v, {
       dateFrom: "date_from",
       dateTo: "date_to",
-      costCenter1Ids: "cost_center1_ids",
-      costCenter2Ids: "cost_center2_ids",
-      costCenter3Ids: "cost_center3_ids",
+      periodPreset: "period_preset",
+      costCenter1Ids: "cost_center_1_ids",
+      costCenter2Ids: "cost_center_2_ids",
+      costCenter3Ids: "cost_center_3_ids",
     });
   }),
 );
@@ -76,7 +95,7 @@ export const GetApiTrialBalanceResponse$inboundSchema: z.ZodMiniType<
 > = z.pipe(
   z.object({
     Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
-    Result: models.ApiSharedObject682bce59ac$inboundSchema,
+    Result: models.ApiSharedObject2787a7ea36$inboundSchema,
   }),
   z.transform((v) => {
     return remap$(v, {
