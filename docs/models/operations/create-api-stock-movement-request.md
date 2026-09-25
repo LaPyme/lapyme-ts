@@ -10,7 +10,7 @@ let value: CreateApiStockMovementRequest = {
   body: {
     warehouseId: "b2827f35-ae6b-4f8e-a76a-3ea4504d750f",
     mode: "replace",
-    operationDate: new Date("2024-08-02T02:47:42.166Z"),
+    operationDate: new Date("2024-08-02"),
     reason: "<value>",
     items: [],
   },

@@ -12,6 +12,7 @@ let value: ApiProductBulkAdjustmentResponse = {
       object: "product_bulk_adjustment",
       updated: 29183,
       skipped: 415247,
+      skippedByReason: {},
     },
   },
   warnings: [
