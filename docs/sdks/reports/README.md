@@ -8,7 +8,7 @@
 
 ## query
 
-Ejecuta una consulta analítica agrupada sobre ventas, compras, pagos o inventario. El campo `source` determina qué dimensiones y métricas están disponibles.
+Ejecuta una consulta analítica agrupada sobre ventas, compras, pagos, inventario o tesorería. El campo `source` determina qué dimensiones y métricas están disponibles. Las consultas de tesorería requieren además el scope `treasury:read`. Usá `response_mode=assistant` para resolución de nombres, períodos predefinidos, comparaciones y paginación compatibles con run_report.
 
 ### Example Usage: default
 
@@ -30,6 +30,7 @@ async function run() {
     measures: [
       "paymentSplitCount",
     ],
+    reportingCurrency: "ARS",
   });
 
   console.log(result);
@@ -62,6 +63,7 @@ async function run() {
     measures: [
       "paymentSplitCount",
     ],
+    reportingCurrency: "ARS",
   });
   if (res.ok) {
     const { value: result } = res;
@@ -86,6 +88,10 @@ const lapyme = new Lapyme({
 async function run() {
   const result = await lapyme.reports.query({
     source: "inventory",
+    period: {
+      startDate: new Date("2026-03-01"),
+      endDate: new Date("2026-03-31"),
+    },
     dimensions: [
       "product",
       "warehouse",
@@ -94,6 +100,7 @@ async function run() {
       "daysOfInventoryRemaining",
       "endingInventoryUnits",
     ],
+    reportingCurrency: "ARS",
     dateBasis: "commercial",
   });
 
@@ -120,6 +127,10 @@ const lapyme = new LapymeCore({
 async function run() {
   const res = await reportsQuery(lapyme, {
     source: "inventory",
+    period: {
+      startDate: new Date("2026-03-01"),
+      endDate: new Date("2026-03-31"),
+    },
     dimensions: [
       "product",
       "warehouse",
@@ -128,6 +139,7 @@ async function run() {
       "daysOfInventoryRemaining",
       "endingInventoryUnits",
     ],
+    reportingCurrency: "ARS",
     dateBasis: "commercial",
   });
   if (res.ok) {
@@ -158,13 +170,14 @@ async function run() {
       endDate: new Date("2026-03-31"),
     },
     dimensions: [
-      "paymentContactName",
+      "payment_method",
     ],
     measures: [
       "paymentBalance",
       "paymentNetCashflow",
       "avgPaymentAmount",
     ],
+    reportingCurrency: "ARS",
   });
 
   console.log(result);
@@ -195,13 +208,14 @@ async function run() {
       endDate: new Date("2026-03-31"),
     },
     dimensions: [
-      "paymentContactName",
+      "payment_method",
     ],
     measures: [
       "paymentBalance",
       "paymentNetCashflow",
       "avgPaymentAmount",
     ],
+    reportingCurrency: "ARS",
   });
   if (res.ok) {
     const { value: result } = res;
@@ -237,6 +251,7 @@ async function run() {
       "uniqueSuppliers",
       "purchaseCount",
     ],
+    reportingCurrency: "ARS",
   });
 
   console.log(result);
@@ -273,6 +288,7 @@ async function run() {
       "uniqueSuppliers",
       "purchaseCount",
     ],
+    reportingCurrency: "ARS",
   });
   if (res.ok) {
     const { value: result } = res;
@@ -310,6 +326,7 @@ async function run() {
       "count",
     ],
     includeTotals: true,
+    reportingCurrency: "ARS",
     dateBasis: "commercial",
   });
 
@@ -349,6 +366,7 @@ async function run() {
       "count",
     ],
     includeTotals: true,
+    reportingCurrency: "ARS",
     dateBasis: "commercial",
   });
   if (res.ok) {
@@ -379,6 +397,7 @@ async function run() {
       endDate: new Date("2026-03-31"),
     },
     measures: [],
+    reportingCurrency: "ARS",
   });
 
   console.log(result);
@@ -409,6 +428,147 @@ async function run() {
       endDate: new Date("2026-03-31"),
     },
     measures: [],
+    reportingCurrency: "ARS",
+  });
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("reportsQuery failed:", res.error);
+  }
+}
+
+run();
+```
+### Example Usage: treasury_ending_balance_by_account
+
+<!-- UsageSnippet language="typescript" operationID="queryApiReport" method="post" path="/api/v1/reports/query" example="treasury_ending_balance_by_account" -->
+```typescript
+import { Lapyme } from "lapyme";
+
+const lapyme = new Lapyme({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const result = await lapyme.reports.query({
+    source: "treasury",
+    period: {
+      startDate: new Date("2026-03-01"),
+      endDate: new Date("2026-03-31"),
+    },
+    dimensions: [
+      "treasury_account",
+    ],
+    measures: [
+      "treasury_ending_balance",
+    ],
+    includeTotals: true,
+    reportingCurrency: "ARS",
+    treasuryCurrencyBasis: "functional_ars",
+  });
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { LapymeCore } from "lapyme/core.js";
+import { reportsQuery } from "lapyme/funcs/reports-query.js";
+
+// Use `LapymeCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const lapyme = new LapymeCore({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const res = await reportsQuery(lapyme, {
+    source: "treasury",
+    period: {
+      startDate: new Date("2026-03-01"),
+      endDate: new Date("2026-03-31"),
+    },
+    dimensions: [
+      "treasury_account",
+    ],
+    measures: [
+      "treasury_ending_balance",
+    ],
+    includeTotals: true,
+    reportingCurrency: "ARS",
+    treasuryCurrencyBasis: "functional_ars",
+  });
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("reportsQuery failed:", res.error);
+  }
+}
+
+run();
+```
+### Example Usage: treasury_original_currency_example
+
+<!-- UsageSnippet language="typescript" operationID="queryApiReport" method="post" path="/api/v1/reports/query" example="treasury_original_currency_example" -->
+```typescript
+import { Lapyme } from "lapyme";
+
+const lapyme = new Lapyme({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const result = await lapyme.reports.query({
+    source: "payments",
+    period: {
+      startDate: new Date("2026-01-01"),
+      endDate: new Date("2026-03-31"),
+    },
+    measures: [
+      "paymentNetCashflow",
+    ],
+    reportingCurrency: "ARS",
+  });
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { LapymeCore } from "lapyme/core.js";
+import { reportsQuery } from "lapyme/funcs/reports-query.js";
+
+// Use `LapymeCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const lapyme = new LapymeCore({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const res = await reportsQuery(lapyme, {
+    source: "payments",
+    period: {
+      startDate: new Date("2026-01-01"),
+      endDate: new Date("2026-03-31"),
+    },
+    measures: [
+      "paymentNetCashflow",
+    ],
+    reportingCurrency: "ARS",
   });
   if (res.ok) {
     const { value: result } = res;
@@ -425,7 +585,7 @@ run();
 
 | Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `request`                                                                                                                                                                      | [models.ReportRequest](../../models/report-request.md)                                                                                                                         | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `request`                                                                                                                                                                      | [operations.QueryApiReportRequest](../../models/operations/query-api-report-request.md)                                                                                        | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
 | `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
 | `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
 | `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |

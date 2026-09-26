@@ -5,16 +5,44 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
+import {
+  ApiSharedObject0e307df43a,
+  ApiSharedObject0e307df43a$Outbound,
+  ApiSharedObject0e307df43a$outboundSchema,
+} from "./api-shared-object0e307df43a.js";
+import {
+  ApiSharedObjectcd635e5b25,
+  ApiSharedObjectcd635e5b25$Outbound,
+  ApiSharedObjectcd635e5b25$outboundSchema,
+} from "./api-shared-objectcd635e5b25.js";
+import {
+  ApiSharedObjecte224c09452,
+  ApiSharedObjecte224c09452$Outbound,
+  ApiSharedObjecte224c09452$outboundSchema,
+} from "./api-shared-objecte224c09452.js";
 
 export type ApiInflationAdjustmentPreviewRequest = {
-  occurredAt: Date;
-  coefficient: number;
+  periodStart: Date;
+  closingDate: Date;
+  treatmentsConfirmed?: boolean | undefined;
+  accountTreatments?: Array<ApiSharedObject0e307df43a> | undefined;
+  openingBalanceBases?: Array<ApiSharedObjectcd635e5b25> | undefined;
+  indexOverrides?: Array<ApiSharedObjecte224c09452> | undefined;
+  /**
+   * Circuito contable que cubre el ajuste y donde se registra: `general` o el id de un circuito de la organización (ver `accounting_circuits` en GET /api/v1/organization). Omitilo para cubrir todos los circuitos y registrar el ajuste en General.
+   */
+  circuitId?: string | undefined;
 };
 
 /** @internal */
 export type ApiInflationAdjustmentPreviewRequest$Outbound = {
-  occurred_at: string;
-  coefficient: number;
+  period_start: string;
+  closing_date: string;
+  treatments_confirmed?: boolean | undefined;
+  account_treatments?: Array<ApiSharedObject0e307df43a$Outbound> | undefined;
+  opening_balance_bases?: Array<ApiSharedObjectcd635e5b25$Outbound> | undefined;
+  index_overrides?: Array<ApiSharedObjecte224c09452$Outbound> | undefined;
+  circuit_id?: string | undefined;
 };
 
 /** @internal */
@@ -23,15 +51,35 @@ export const ApiInflationAdjustmentPreviewRequest$outboundSchema: z.ZodMiniType<
   ApiInflationAdjustmentPreviewRequest
 > = z.pipe(
   z.object({
-    occurredAt: z.pipe(
+    periodStart: z.pipe(
       z.date(),
       z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
     ),
-    coefficient: z.number(),
+    closingDate: z.pipe(
+      z.date(),
+      z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
+    ),
+    treatmentsConfirmed: z.optional(z.boolean()),
+    accountTreatments: z.optional(
+      z.array(ApiSharedObject0e307df43a$outboundSchema),
+    ),
+    openingBalanceBases: z.optional(
+      z.array(ApiSharedObjectcd635e5b25$outboundSchema),
+    ),
+    indexOverrides: z.optional(
+      z.array(ApiSharedObjecte224c09452$outboundSchema),
+    ),
+    circuitId: z.optional(z.string()),
   }),
   z.transform((v) => {
     return remap$(v, {
-      occurredAt: "occurred_at",
+      periodStart: "period_start",
+      closingDate: "closing_date",
+      treatmentsConfirmed: "treatments_confirmed",
+      accountTreatments: "account_treatments",
+      openingBalanceBases: "opening_balance_bases",
+      indexOverrides: "index_overrides",
+      circuitId: "circuit_id",
     });
   }),
 );

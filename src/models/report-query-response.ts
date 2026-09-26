@@ -6,21 +6,48 @@
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
 import { safeParse } from "../lib/schemas.js";
-import * as openEnums from "../types/enums.js";
-import { OpenEnum } from "../types/enums.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import {
-  ApiSharedEnum07ee8fd91e,
-  ApiSharedEnum07ee8fd91e$inboundSchema,
-} from "./api-shared-enum07ee8fd91e.js";
+  ApiSharedEnum47bbbed3c1,
+  ApiSharedEnum47bbbed3c1$inboundSchema,
+} from "./api-shared-enum47bbbed3c1.js";
+import {
+  ApiSharedEnum59bd24ac3d,
+  ApiSharedEnum59bd24ac3d$inboundSchema,
+} from "./api-shared-enum59bd24ac3d.js";
+import {
+  ApiSharedEnum714ff181d6,
+  ApiSharedEnum714ff181d6$inboundSchema,
+} from "./api-shared-enum714ff181d6.js";
+import {
+  ApiSharedEnumb5a8e60557,
+  ApiSharedEnumb5a8e60557$inboundSchema,
+} from "./api-shared-enumb5a8e60557.js";
+import {
+  ApiSharedEnumd440d6785b,
+  ApiSharedEnumd440d6785b$inboundSchema,
+} from "./api-shared-enumd440d6785b.js";
+import {
+  ApiSharedEnume8f16939df,
+  ApiSharedEnume8f16939df$inboundSchema,
+} from "./api-shared-enume8f16939df.js";
+import {
+  ApiSharedEnumffb4886f2b,
+  ApiSharedEnumffb4886f2b$inboundSchema,
+} from "./api-shared-enumffb4886f2b.js";
+import {
+  ApiSharedObject5524465fb0,
+  ApiSharedObject5524465fb0$inboundSchema,
+} from "./api-shared-object5524465fb0.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type Row = {
   id: string;
   ids: Array<string>;
   labels: Array<string>;
-  measures: { [k: string]: number };
+  measures: { [k: string]: number | null };
+  measureQualities?: { [k: string]: ApiSharedEnum714ff181d6 } | undefined;
 };
 
 export type ReportQueryResponsePeriod = {
@@ -28,20 +55,18 @@ export type ReportQueryResponsePeriod = {
   endDate: string;
 };
 
-export const ReportQueryResponseDateBasis = {
-  Commercial: "commercial",
-  Fiscal: "fiscal",
-} as const;
-export type ReportQueryResponseDateBasis = OpenEnum<
-  typeof ReportQueryResponseDateBasis
->;
-
-export type Metadata = {
-  source: ApiSharedEnum07ee8fd91e;
+export type ReportQueryResponseMetadata = {
+  source: ApiSharedEnum47bbbed3c1;
   dimensions: Array<string>;
   measures: Array<string>;
   period?: ReportQueryResponsePeriod | undefined;
-  dateBasis?: ReportQueryResponseDateBasis | undefined;
+  dateBasis?: ApiSharedEnume8f16939df | undefined;
+  resolvedFilters?: Array<ApiSharedObject5524465fb0> | undefined;
+  reportingCurrency: ApiSharedEnumffb4886f2b;
+  rateBasis: ApiSharedEnumb5a8e60557;
+  treasuryCurrencyBasis?: ApiSharedEnum59bd24ac3d | undefined;
+  treasuryVisibilityScope?: ApiSharedEnumd440d6785b | undefined;
+  amountQualityByMeasure?: { [k: string]: ApiSharedEnum714ff181d6 } | undefined;
 };
 
 export type ReportQueryResponseData = {
@@ -49,8 +74,9 @@ export type ReportQueryResponseData = {
   /**
    * Aggregated totals for all rows. Present only when `includeTotals: true` is sent.
    */
-  totals: { [k: string]: number } | null;
-  metadata: Metadata;
+  totals: { [k: string]: number | null } | null;
+  totalAmountQuality?: { [k: string]: ApiSharedEnum714ff181d6 } | undefined;
+  metadata: ReportQueryResponseMetadata;
 };
 
 export type ReportQueryResponse = {
@@ -59,12 +85,22 @@ export type ReportQueryResponse = {
 };
 
 /** @internal */
-export const Row$inboundSchema: z.ZodMiniType<Row, unknown> = z.object({
-  id: types.string(),
-  ids: z.array(types.string()),
-  labels: z.array(types.string()),
-  measures: z.record(z.string(), types.number()),
-});
+export const Row$inboundSchema: z.ZodMiniType<Row, unknown> = z.pipe(
+  z.object({
+    id: types.string(),
+    ids: z.array(types.string()),
+    labels: z.array(types.string()),
+    measures: z.record(z.string(), types.nullable(types.number())),
+    measure_qualities: types.optional(
+      z.record(z.string(), ApiSharedEnum714ff181d6$inboundSchema),
+    ),
+  }),
+  z.transform((v) => {
+    return remap$(v, {
+      "measure_qualities": "measureQualities",
+    });
+  }),
+);
 
 export function rowFromJSON(
   jsonString: string,
@@ -104,36 +140,53 @@ export function reportQueryResponsePeriodFromJSON(
 }
 
 /** @internal */
-export const ReportQueryResponseDateBasis$inboundSchema: z.ZodMiniType<
-  ReportQueryResponseDateBasis,
+export const ReportQueryResponseMetadata$inboundSchema: z.ZodMiniType<
+  ReportQueryResponseMetadata,
   unknown
-> = openEnums.inboundSchema(ReportQueryResponseDateBasis);
-
-/** @internal */
-export const Metadata$inboundSchema: z.ZodMiniType<Metadata, unknown> = z.pipe(
+> = z.pipe(
   z.object({
-    source: ApiSharedEnum07ee8fd91e$inboundSchema,
+    source: ApiSharedEnum47bbbed3c1$inboundSchema,
     dimensions: z.array(types.string()),
     measures: z.array(types.string()),
     period: types.optional(
       z.lazy(() => ReportQueryResponsePeriod$inboundSchema),
     ),
-    date_basis: types.optional(ReportQueryResponseDateBasis$inboundSchema),
+    date_basis: types.optional(ApiSharedEnume8f16939df$inboundSchema),
+    resolved_filters: types.optional(
+      z.array(ApiSharedObject5524465fb0$inboundSchema),
+    ),
+    reporting_currency: ApiSharedEnumffb4886f2b$inboundSchema,
+    rate_basis: ApiSharedEnumb5a8e60557$inboundSchema,
+    treasury_currency_basis: types.optional(
+      ApiSharedEnum59bd24ac3d$inboundSchema,
+    ),
+    treasury_visibility_scope: types.optional(
+      ApiSharedEnumd440d6785b$inboundSchema,
+    ),
+    amount_quality_by_measure: types.optional(
+      z.record(z.string(), ApiSharedEnum714ff181d6$inboundSchema),
+    ),
   }),
   z.transform((v) => {
     return remap$(v, {
       "date_basis": "dateBasis",
+      "resolved_filters": "resolvedFilters",
+      "reporting_currency": "reportingCurrency",
+      "rate_basis": "rateBasis",
+      "treasury_currency_basis": "treasuryCurrencyBasis",
+      "treasury_visibility_scope": "treasuryVisibilityScope",
+      "amount_quality_by_measure": "amountQualityByMeasure",
     });
   }),
 );
 
-export function metadataFromJSON(
+export function reportQueryResponseMetadataFromJSON(
   jsonString: string,
-): SafeParseResult<Metadata, SDKValidationError> {
+): SafeParseResult<ReportQueryResponseMetadata, SDKValidationError> {
   return safeParse(
     jsonString,
-    (x) => Metadata$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'Metadata' from JSON`,
+    (x) => ReportQueryResponseMetadata$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ReportQueryResponseMetadata' from JSON`,
   );
 }
 
@@ -141,11 +194,23 @@ export function metadataFromJSON(
 export const ReportQueryResponseData$inboundSchema: z.ZodMiniType<
   ReportQueryResponseData,
   unknown
-> = z.object({
-  rows: z.array(z.lazy(() => Row$inboundSchema)),
-  totals: types.nullable(z.record(z.string(), types.number())),
-  metadata: z.lazy(() => Metadata$inboundSchema),
-});
+> = z.pipe(
+  z.object({
+    rows: z.array(z.lazy(() => Row$inboundSchema)),
+    totals: types.nullable(
+      z.record(z.string(), types.nullable(types.number())),
+    ),
+    total_amount_quality: types.optional(
+      z.record(z.string(), ApiSharedEnum714ff181d6$inboundSchema),
+    ),
+    metadata: z.lazy(() => ReportQueryResponseMetadata$inboundSchema),
+  }),
+  z.transform((v) => {
+    return remap$(v, {
+      "total_amount_quality": "totalAmountQuality",
+    });
+  }),
+);
 
 export function reportQueryResponseDataFromJSON(
   jsonString: string,

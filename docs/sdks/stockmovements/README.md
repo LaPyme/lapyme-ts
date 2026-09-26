@@ -8,7 +8,7 @@
 
 ## createStockMovement
 
-Registra un movimiento manual para ajustar stock de un producto o variante.
+Registra un movimiento manual para ajustar stock. En mode replace, items[].expected_quantity compara el stock disponible observado con el valor actual bajo bloqueo. Si falta, el reemplazo es incondicional. En mode delta, expected_quantity no se acepta. Para un combo, compará la cantidad disponible del combo.
 
 ### Example Usage
 
