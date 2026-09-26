@@ -6,8 +6,8 @@
 import { ApiSharedObjectdaa374f786 } from "lapyme/models";
 
 let value: ApiSharedObjectdaa374f786 = {
-  journalLineId: "21a6d871-fc20-4ea9-81a7-4038cd54b20e",
-  appliedAmount: 187055,
+  journalLineId: "aa6ff87f-359d-47a7-99e8-fa101a7edff9",
+  appliedAmount: 595996,
 };
 ```
 
