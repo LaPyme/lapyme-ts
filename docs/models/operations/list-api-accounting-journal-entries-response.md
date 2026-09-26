@@ -23,10 +23,14 @@ let value: ListApiAccountingJournalEntriesResponse = {
   },
   result: {
     requestId: "<id>",
+    effectiveScope: {
+      circuitId: "5643363b-d6a2-421b-a1bd-db42e516c729",
+      circuitName: "<value>",
+    },
     object: "list",
-    url: "https://unused-fedora.info",
+    url: "https://willing-ostrich.biz/",
     data: [],
-    hasMore: true,
+    hasMore: false,
     nextCursor: "<value>",
   },
 };

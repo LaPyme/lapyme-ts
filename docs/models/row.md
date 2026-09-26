@@ -21,9 +21,10 @@ let value: Row = {
 
 ## Fields
 
-| Field                    | Type                     | Required                 | Description              |
-| ------------------------ | ------------------------ | ------------------------ | ------------------------ |
-| `id`                     | *string*                 | :heavy_check_mark:       | N/A                      |
-| `ids`                    | *string*[]               | :heavy_check_mark:       | N/A                      |
-| `labels`                 | *string*[]               | :heavy_check_mark:       | N/A                      |
-| `measures`               | Record<string, *number*> | :heavy_check_mark:       | N/A                      |
+| Field                                                                                    | Type                                                                                     | Required                                                                                 | Description                                                                              |
+| ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `id`                                                                                     | *string*                                                                                 | :heavy_check_mark:                                                                       | N/A                                                                                      |
+| `ids`                                                                                    | *string*[]                                                                               | :heavy_check_mark:                                                                       | N/A                                                                                      |
+| `labels`                                                                                 | *string*[]                                                                               | :heavy_check_mark:                                                                       | N/A                                                                                      |
+| `measures`                                                                               | Record<string, *number*>                                                                 | :heavy_check_mark:                                                                       | N/A                                                                                      |
+| `measureQualities`                                                                       | Record<string, [models.ApiSharedEnum714ff181d6](../models/api-shared-enum714ff181d6.md)> | :heavy_minus_sign:                                                                       | N/A                                                                                      |

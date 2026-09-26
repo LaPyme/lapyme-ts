@@ -16,6 +16,10 @@ import {
   ApiSharedObject8aeeceaf0f,
   ApiSharedObject8aeeceaf0f$inboundSchema,
 } from "./api-shared-object8aeeceaf0f.js";
+import {
+  ApiSharedObjected3905a55b,
+  ApiSharedObjected3905a55b$inboundSchema,
+} from "./api-shared-objected3905a55b.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type ApiPurchaseOrderListResponseData = {
@@ -30,6 +34,7 @@ export type ApiPurchaseOrderListResponseData = {
   supplier: ApiSharedObject8aeeceaf0f | null;
   warehouse: ApiSharedObject8aeeceaf0f | null;
   createdAt: Date;
+  tags: Array<ApiSharedObjected3905a55b>;
 };
 
 export type ApiPurchaseOrderListResponse = {
@@ -54,6 +59,7 @@ export const ApiPurchaseOrderListResponseData$inboundSchema: z.ZodMiniType<
     supplier: types.nullable(ApiSharedObject8aeeceaf0f$inboundSchema),
     warehouse: types.nullable(ApiSharedObject8aeeceaf0f$inboundSchema),
     created_at: types.date(),
+    tags: z.array(ApiSharedObjected3905a55b$inboundSchema),
   }),
   z.transform((v) => {
     return remap$(v, {
