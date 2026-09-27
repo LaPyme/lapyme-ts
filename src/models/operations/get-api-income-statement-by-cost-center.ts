@@ -11,26 +11,47 @@ import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import * as models from "../index.js";
 
 export type GetApiIncomeStatementByCostCenterRequest = {
+  /**
+   * Fecha inicial del período. Obligatoria junto con date_to si no se envía period_preset.
+   */
   dateFrom?: Date | undefined;
+  /**
+   * Fecha final inclusiva del período. Obligatoria junto con date_from si no se envía period_preset.
+   */
   dateTo?: Date | undefined;
+  /**
+   * Atajo de período resuelto por la API a date_from/date_to en horario de Argentina. No enviarlo junto con date_from/date_to.
+   */
+  periodPreset?: models.ApiSharedEnumab9ba78640 | undefined;
   costCenter1Ids?: Array<string> | undefined;
   costCenter2Ids?: Array<string> | undefined;
   costCenter3Ids?: Array<string> | undefined;
+  /**
+   * Circuito contable del reporte: `general`, el id de un circuito de la organización (ver `accounting_circuits` en GET /api/v1/organization), o `all`. Omitido es `all`, todos los circuitos. Un id que no es de la organización devuelve 400 `circuit_not_found`.
+   */
+  circuitId?: string | undefined;
+  /**
+   * Moneda de presentación del estado de resultados. ARS devuelve importes en pesos argentinos; USD convierte los importes contables ARS a USD usando cotización BCRA por fecha de transacción.
+   */
+  reportingCurrency?: models.ApiSharedEnumc519f4ab77 | undefined;
   groupByCostCenterPosition?: number | undefined;
 };
 
 export type GetApiIncomeStatementByCostCenterResponse = {
   headers: { [k: string]: Array<string> };
-  result: models.ApiSharedObject682bce59ac;
+  result: models.ApiSharedObjectd42ffb0d95;
 };
 
 /** @internal */
 export type GetApiIncomeStatementByCostCenterRequest$Outbound = {
   date_from?: string | undefined;
   date_to?: string | undefined;
-  cost_center1_ids?: Array<string> | undefined;
-  cost_center2_ids?: Array<string> | undefined;
-  cost_center3_ids?: Array<string> | undefined;
+  period_preset?: string | undefined;
+  cost_center_1_ids?: Array<string> | undefined;
+  cost_center_2_ids?: Array<string> | undefined;
+  cost_center_3_ids?: Array<string> | undefined;
+  circuit_id: string;
+  reporting_currency: string;
   group_by_cost_center_position: number;
 };
 
@@ -49,18 +70,27 @@ export const GetApiIncomeStatementByCostCenterRequest$outboundSchema:
         z.date(),
         z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
       )),
+      periodPreset: z.optional(models.ApiSharedEnumab9ba78640$outboundSchema),
       costCenter1Ids: z.optional(z.array(z.string())),
       costCenter2Ids: z.optional(z.array(z.string())),
       costCenter3Ids: z.optional(z.array(z.string())),
+      circuitId: z._default(z.string(), "all"),
+      reportingCurrency: z._default(
+        models.ApiSharedEnumc519f4ab77$outboundSchema,
+        "ARS",
+      ),
       groupByCostCenterPosition: z._default(z.int(), 1),
     }),
     z.transform((v) => {
       return remap$(v, {
         dateFrom: "date_from",
         dateTo: "date_to",
-        costCenter1Ids: "cost_center1_ids",
-        costCenter2Ids: "cost_center2_ids",
-        costCenter3Ids: "cost_center3_ids",
+        periodPreset: "period_preset",
+        costCenter1Ids: "cost_center_1_ids",
+        costCenter2Ids: "cost_center_2_ids",
+        costCenter3Ids: "cost_center_3_ids",
+        circuitId: "circuit_id",
+        reportingCurrency: "reporting_currency",
         groupByCostCenterPosition: "group_by_cost_center_position",
       });
     }),
@@ -82,7 +112,7 @@ export const GetApiIncomeStatementByCostCenterResponse$inboundSchema:
   z.ZodMiniType<GetApiIncomeStatementByCostCenterResponse, unknown> = z.pipe(
     z.object({
       Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
-      Result: models.ApiSharedObject682bce59ac$inboundSchema,
+      Result: models.ApiSharedObjectd42ffb0d95$inboundSchema,
     }),
     z.transform((v) => {
       return remap$(v, {
