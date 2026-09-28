@@ -16,7 +16,7 @@ export type UpdateApiManualJournalEntryRequest = {
    * Clave estable para deduplicar reintentos de la misma operación.
    */
   idempotencyKey: string;
-  body: models.ApiManualJournalEntryRequest;
+  body: models.ApiManualJournalEntryUpdateRequest;
 };
 
 export type UpdateApiManualJournalEntryResponse = {
@@ -28,7 +28,7 @@ export type UpdateApiManualJournalEntryResponse = {
 export type UpdateApiManualJournalEntryRequest$Outbound = {
   journal_entry_id: string;
   "Idempotency-Key": string;
-  body: models.ApiManualJournalEntryRequest$Outbound;
+  body: models.ApiManualJournalEntryUpdateRequest$Outbound;
 };
 
 /** @internal */
@@ -39,7 +39,7 @@ export const UpdateApiManualJournalEntryRequest$outboundSchema: z.ZodMiniType<
   z.object({
     journalEntryId: z.string(),
     idempotencyKey: z.string(),
-    body: models.ApiManualJournalEntryRequest$outboundSchema,
+    body: models.ApiManualJournalEntryUpdateRequest$outboundSchema,
   }),
   z.transform((v) => {
     return remap$(v, {

@@ -16,17 +16,17 @@ let value: ApiTransferListResponse = {
       targetWarehouseId: "4c914a82-130d-4498-8d27-807bcf317991",
       transferDate: new Date("2025-08-03T21:51:29.364Z"),
       notes: "<value>",
-      status: "completed",
+      status: "closed_with_difference",
       createdAt: new Date("2025-01-15T13:17:37.936Z"),
       updatedAt: new Date("2025-06-25T16:37:41.562Z"),
       createdBy: "7601cd56-ba46-49fb-92a8-5de7f983d252",
       updatedBy: "25709a4f-ace4-4291-958d-05c67aad8dbb",
       sourceWarehouse: {
-        id: "bea67aa9-4cab-4290-aa26-8749e7435e10",
+        id: "7aa94cab-290a-4268-8749-e7435e10838d",
         name: "<value>",
       },
       targetWarehouse: {
-        id: "38d07e33-fb22-4193-8a9b-253b14e9cce9",
+        id: "e33fb221-93a9-4b25-83b1-4e9cce912575",
         name: "<value>",
       },
       items: [
@@ -35,21 +35,38 @@ let value: ApiTransferListResponse = {
           productId: "71d87c70-d6e4-4d8d-bd30-8229d33c08a6",
           quantity: 658.07,
           receivedQuantity: 3113.64,
+          rejectedQuantity: 6187.91,
           product: {
-            id: "951a1e5d-31df-484a-a5b8-d026b7a1fe6c",
+            id: "51a1e5d3-1df8-44a5-bb8d-026b7a1fe6ca",
             name: "<value>",
             sku: "<value>",
+            productType: "product",
             variantOptions: {},
-            optionNames: [],
+            optionNames: null,
           },
+        },
+      ],
+      tags: [
+        {
+          object: "tag",
+          id: "9b4c6439-384c-4a58-9cf3-b39718b07048",
+          scope: "customer",
+          name: "<value>",
+          slug: "<value>",
+          color: "indigo",
+          description:
+            "vacantly unless nautical alongside around optimistic for lasting sometimes",
+          archivedAt: new Date("2024-05-13T14:06:09.243Z"),
+          createdAt: new Date("2026-03-04T18:15:09.469Z"),
+          updatedAt: new Date("2026-05-06T00:20:31.712Z"),
         },
       ],
     },
   ],
-  hasMore: true,
-  nextCursor: "<value>",
+  hasMore: false,
+  nextCursor: null,
   object: "list",
-  url: "https://alarmed-shipper.name",
+  url: "https://nervous-wedding.net",
 };
 ```
 
@@ -58,7 +75,7 @@ let value: ApiTransferListResponse = {
 | Field                                                                          | Type                                                                           | Required                                                                       | Description                                                                    |
 | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
 | `requestId`                                                                    | *string*                                                                       | :heavy_check_mark:                                                             | N/A                                                                            |
-| `data`                                                                         | [models.ApiSharedObject4b29ca9c27](../models/api-shared-object4b29ca9c27.md)[] | :heavy_check_mark:                                                             | N/A                                                                            |
+| `data`                                                                         | [models.ApiSharedObject29aea9dac9](../models/api-shared-object29aea9dac9.md)[] | :heavy_check_mark:                                                             | N/A                                                                            |
 | `hasMore`                                                                      | *boolean*                                                                      | :heavy_check_mark:                                                             | N/A                                                                            |
 | `nextCursor`                                                                   | *string*                                                                       | :heavy_check_mark:                                                             | N/A                                                                            |
 | `object`                                                                       | [models.ApiSharedEnum8d46e1ec20](../models/api-shared-enum8d46e1ec20.md)       | :heavy_check_mark:                                                             | List-envelope discriminator.                                                   |

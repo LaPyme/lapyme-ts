@@ -30,6 +30,9 @@ import { Result } from "../types/fp.js";
 
 /**
  * Crear ajuste por inflación
+ *
+ * @remarks
+ * Recalcula y crea de forma idempotente el asiento mensual para el período solicitado. Los importes se calculan en el servidor y no se aceptan líneas calculadas por el cliente.
  */
 export function apiCreateAPIInflationAdjustment(
   client: LapymeCore,
@@ -176,9 +179,11 @@ async function $do(
     | UnexpectedClientError
     | SDKValidationError
   >(
-    M.json(201, operations.CreateApiInflationAdjustmentResponse$inboundSchema, {
-      key: "Result",
-    }),
+    M.json(
+      [200, 201],
+      operations.CreateApiInflationAdjustmentResponse$inboundSchema,
+      { key: "Result" },
+    ),
     M.jsonErr([400, 401, 403, 409], errors.ApiErrorEnvelope$inboundSchema),
     M.jsonErr(429, errors.ApiErrorEnvelope$inboundSchema, { hdrs: true }),
     M.jsonErr(500, errors.ApiErrorEnvelope$inboundSchema),

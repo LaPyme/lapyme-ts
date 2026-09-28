@@ -12,12 +12,14 @@ import {
 } from "./api-shared-object1dbe66a4f8.js";
 
 export type ApiOrderPreparationCreateRequest = {
+  preparationGroupId?: string | undefined;
   warehouseId?: string | undefined;
   items: Array<ApiSharedObject1dbe66a4f8>;
 };
 
 /** @internal */
 export type ApiOrderPreparationCreateRequest$Outbound = {
+  preparation_group_id?: string | undefined;
   warehouse_id?: string | undefined;
   items: Array<ApiSharedObject1dbe66a4f8$Outbound>;
 };
@@ -28,11 +30,13 @@ export const ApiOrderPreparationCreateRequest$outboundSchema: z.ZodMiniType<
   ApiOrderPreparationCreateRequest
 > = z.pipe(
   z.object({
+    preparationGroupId: z.optional(z.string()),
     warehouseId: z.optional(z.string()),
     items: z.array(ApiSharedObject1dbe66a4f8$outboundSchema),
   }),
   z.transform((v) => {
     return remap$(v, {
+      preparationGroupId: "preparation_group_id",
       warehouseId: "warehouse_id",
     });
   }),

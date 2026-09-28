@@ -10,10 +10,18 @@ import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
+export type SkippedByReason = {
+  compositePricing?: number | undefined;
+  zeroBaseForPercentage?: number | undefined;
+  negativeResult?: number | undefined;
+  unchanged?: number | undefined;
+};
+
 export type ProductBulkAdjustment = {
   object: "product_bulk_adjustment";
   updated: number;
   skipped: number;
+  skippedByReason: SkippedByReason;
 };
 
 export type ApiProductBulkAdjustmentResponseData = {
@@ -27,14 +35,52 @@ export type ApiProductBulkAdjustmentResponse = {
 };
 
 /** @internal */
+export const SkippedByReason$inboundSchema: z.ZodMiniType<
+  SkippedByReason,
+  unknown
+> = z.pipe(
+  z.object({
+    composite_pricing: types.optional(types.number()),
+    zero_base_for_percentage: types.optional(types.number()),
+    negative_result: types.optional(types.number()),
+    unchanged: types.optional(types.number()),
+  }),
+  z.transform((v) => {
+    return remap$(v, {
+      "composite_pricing": "compositePricing",
+      "zero_base_for_percentage": "zeroBaseForPercentage",
+      "negative_result": "negativeResult",
+    });
+  }),
+);
+
+export function skippedByReasonFromJSON(
+  jsonString: string,
+): SafeParseResult<SkippedByReason, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => SkippedByReason$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'SkippedByReason' from JSON`,
+  );
+}
+
+/** @internal */
 export const ProductBulkAdjustment$inboundSchema: z.ZodMiniType<
   ProductBulkAdjustment,
   unknown
-> = z.object({
-  object: types.literal("product_bulk_adjustment"),
-  updated: types.number(),
-  skipped: types.number(),
-});
+> = z.pipe(
+  z.object({
+    object: types.literal("product_bulk_adjustment"),
+    updated: types.number(),
+    skipped: types.number(),
+    skipped_by_reason: z.lazy(() => SkippedByReason$inboundSchema),
+  }),
+  z.transform((v) => {
+    return remap$(v, {
+      "skipped_by_reason": "skippedByReason",
+    });
+  }),
+);
 
 export function productBulkAdjustmentFromJSON(
   jsonString: string,
