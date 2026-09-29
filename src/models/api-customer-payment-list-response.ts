@@ -9,25 +9,25 @@ import { safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import {
-  ApiSharedEnum6cfb146157,
-  ApiSharedEnum6cfb146157$inboundSchema,
-} from "./api-shared-enum6cfb146157.js";
-import {
   ApiSharedEnum8d46e1ec20,
   ApiSharedEnum8d46e1ec20$inboundSchema,
 } from "./api-shared-enum8d46e1ec20.js";
 import {
-  ApiSharedObject0fb80a7625,
-  ApiSharedObject0fb80a7625$inboundSchema,
-} from "./api-shared-object0fb80a7625.js";
+  ApiSharedEnumffb4886f2b,
+  ApiSharedEnumffb4886f2b$inboundSchema,
+} from "./api-shared-enumffb4886f2b.js";
 import {
-  ApiSharedObject78bf4093ef,
-  ApiSharedObject78bf4093ef$inboundSchema,
-} from "./api-shared-object78bf4093ef.js";
+  ApiSharedObject7e70bcc878,
+  ApiSharedObject7e70bcc878$inboundSchema,
+} from "./api-shared-object7e70bcc878.js";
 import {
-  ApiSharedObjectf442c4288c,
-  ApiSharedObjectf442c4288c$inboundSchema,
-} from "./api-shared-objectf442c4288c.js";
+  ApiSharedObjectaf3c3f0696,
+  ApiSharedObjectaf3c3f0696$inboundSchema,
+} from "./api-shared-objectaf3c3f0696.js";
+import {
+  ApiSharedObjecteb6efa80ed,
+  ApiSharedObjecteb6efa80ed$inboundSchema,
+} from "./api-shared-objecteb6efa80ed.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type ApiCustomerPaymentListResponseData = {
@@ -36,11 +36,11 @@ export type ApiCustomerPaymentListResponseData = {
   amount: number;
   balance: number;
   formattedPaymentNumber: string | null;
-  currency: ApiSharedEnum6cfb146157;
-  paymentMethod: ApiSharedObject78bf4093ef | null;
+  currency: ApiSharedEnumffb4886f2b;
+  paymentMethod: ApiSharedObjectaf3c3f0696 | null;
   paymentMethodCount: number;
-  relatedEntity: ApiSharedObjectf442c4288c | null;
-  createdBy: ApiSharedObject0fb80a7625 | null;
+  relatedEntity: ApiSharedObjecteb6efa80ed | null;
+  createdBy: ApiSharedObject7e70bcc878 | null;
   createdAt: Date;
   createdAtCursor: string;
   updatedAt: Date;
@@ -72,11 +72,11 @@ export const ApiCustomerPaymentListResponseData$inboundSchema: z.ZodMiniType<
     amount: types.number(),
     balance: types.number(),
     formatted_payment_number: types.nullable(types.string()),
-    currency: ApiSharedEnum6cfb146157$inboundSchema,
-    payment_method: types.nullable(ApiSharedObject78bf4093ef$inboundSchema),
+    currency: ApiSharedEnumffb4886f2b$inboundSchema,
+    payment_method: types.nullable(ApiSharedObjectaf3c3f0696$inboundSchema),
     payment_method_count: types.number(),
-    related_entity: types.nullable(ApiSharedObjectf442c4288c$inboundSchema),
-    created_by: types.nullable(ApiSharedObject0fb80a7625$inboundSchema),
+    related_entity: types.nullable(ApiSharedObjecteb6efa80ed$inboundSchema),
+    created_by: types.nullable(ApiSharedObject7e70bcc878$inboundSchema),
     created_at: types.date(),
     created_at_cursor: types.string(),
     updated_at: types.date(),
