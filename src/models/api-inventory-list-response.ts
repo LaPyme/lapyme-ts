@@ -21,13 +21,13 @@ import {
   ApiSharedObject5884d24e45$inboundSchema,
 } from "./api-shared-object5884d24e45.js";
 import {
+  ApiSharedObject743a1706af,
+  ApiSharedObject743a1706af$inboundSchema,
+} from "./api-shared-object743a1706af.js";
+import {
   ApiSharedObject8aeeceaf0f,
   ApiSharedObject8aeeceaf0f$inboundSchema,
 } from "./api-shared-object8aeeceaf0f.js";
-import {
-  ApiSharedObjectadcf6da6ce,
-  ApiSharedObjectadcf6da6ce$inboundSchema,
-} from "./api-shared-objectadcf6da6ce.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type ApiInventoryListResponseItem = {
@@ -43,7 +43,7 @@ export type ApiInventoryListResponseItem = {
 };
 
 export type ApiInventoryListResponseData = {
-  warehouse: ApiSharedObjectadcf6da6ce;
+  warehouse: ApiSharedObject743a1706af;
   items: Array<ApiInventoryListResponseItem>;
 };
 
@@ -104,7 +104,7 @@ export const ApiInventoryListResponseData$inboundSchema: z.ZodMiniType<
   ApiInventoryListResponseData,
   unknown
 > = z.object({
-  warehouse: ApiSharedObjectadcf6da6ce$inboundSchema,
+  warehouse: ApiSharedObject743a1706af$inboundSchema,
   items: z.array(z.lazy(() => ApiInventoryListResponseItem$inboundSchema)),
 });
 
