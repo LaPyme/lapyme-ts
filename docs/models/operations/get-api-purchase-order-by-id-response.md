@@ -6,14 +6,7 @@
 import { GetApiPurchaseOrderByIdResponse } from "lapyme/models/operations";
 
 let value: GetApiPurchaseOrderByIdResponse = {
-  headers: {
-    "key": [],
-    "key1": [
-      "<value 1>",
-      "<value 2>",
-      "<value 3>",
-    ],
-  },
+  headers: {},
   result: {
     requestId: "<id>",
     data: {
@@ -26,30 +19,64 @@ let value: GetApiPurchaseOrderByIdResponse = {
       expectedDate: null,
       currency: "Pataca",
       supplier: {
-        id: "ebacdb2a-1c5e-4eee-a30f-5983b0f8c084",
+        id: "a45a7fd5-160a-41a7-baa2-5367b011b0b2",
         name: "<value>",
         description:
-          "fairly which pro upliftingly but super whereas guacamole between",
-        email: "Monserrat_Kovacek@yahoo.com",
-        phone: "1-498-218-0382 x3346",
+          "cod stable snow our famously switchboard as from likewise stiff",
+        email: null,
+        phone: "802.394.0907",
         taxIdType: "<value>",
         taxId: "<id>",
-        taxCategory: "<value>",
+        taxCategory: null,
         paymentTermId: "<id>",
-        address: "298 Goldner Views",
+        paymentTermDays: 198666,
+        address: null,
         apartment: "<value>",
-        city: "South Marcelinofurt",
+        city: "Port Werner",
         province: "<value>",
-        postalCode: "46341",
+        postalCode: "65289",
       },
       warehouse: {
-        id: "1d81895d-9d7f-44ea-9636-e0e6181dee4f",
+        id: "73701df9-cc25-4f39-89d3-0ecc1c8cf71d",
         name: "<value>",
       },
-      createdAt: new Date("2026-05-06T11:30:52.684Z"),
-      warehouseId: "26f43006-9dbb-4033-8332-b7eb47bae627",
+      createdAt: new Date("2026-03-27T15:33:20.950Z"),
+      tags: [
+        {
+          object: "tag",
+          id: "b4c64393-84ca-458c-8f3b-39718b070484",
+          scope: "transfer",
+          name: "<value>",
+          slug: "<value>",
+          color: "pink",
+          description: "delectable astride downright",
+          archivedAt: new Date("2024-08-12T06:34:32.349Z"),
+          createdAt: new Date("2024-10-25T15:17:34.484Z"),
+          updatedAt: new Date("2024-11-10T16:15:42.311Z"),
+        },
+      ],
+      warehouseId: "db2a1c5e-eee3-40f5-a983-b0f8c0848ac9",
       notes: "<value>",
-      items: [],
+      items: [
+        {
+          id: "b4c16814-e2a0-4e9d-bc52-f10a367aa686",
+          orderedQuantity: 7716.56,
+          receivedQuantity: 5172.21,
+          expectedUnitCost: 943658,
+          product: {
+            id: "6c2da590-f059-4c84-8fb3-66f78187f1b7",
+            name: "<value>",
+            sku: "<value>",
+            productType: "combo",
+            variantOptions: {
+              "key": "<value>",
+            },
+            optionNames: [
+              "<value 1>",
+            ],
+          },
+        },
+      ],
     },
   },
 };

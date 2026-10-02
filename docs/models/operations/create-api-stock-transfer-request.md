@@ -9,11 +9,11 @@ let value: CreateApiStockTransferRequest = {
   body: {
     sourceWarehouseId: "57667fdf-f052-4e11-92a1-9857b3999634",
     targetWarehouseId: "cb086687-dd6e-46b3-8186-678e57618100",
-    transferDate: new Date("2026-01-30T13:46:21.446Z"),
+    transferDate: "<value>",
     items: [
       {
-        productId: "4155ec37-ac00-4446-b0b3-cf468634f5d7",
-        quantity: 325341,
+        productId: "f4155ec3-7ac0-4044-960b-3cf468634f5d",
+        quantity: 796548,
       },
     ],
   },
