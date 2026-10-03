@@ -24,7 +24,6 @@ import * as errors from "../models/errors/index.js";
 import { LapymeError } from "../models/errors/lapyme-error.js";
 import { ResponseValidationError } from "../models/errors/response-validation-error.js";
 import { SDKValidationError } from "../models/errors/sdk-validation-error.js";
-import * as models from "../models/index.js";
 import * as operations from "../models/operations/index.js";
 import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
@@ -33,11 +32,11 @@ import { Result } from "../types/fp.js";
  * Consultar reporte
  *
  * @remarks
- * Ejecuta una consulta analítica agrupada sobre ventas, compras, pagos o inventario. El campo `source` determina qué dimensiones y métricas están disponibles.
+ * Ejecuta una consulta analítica agrupada sobre ventas, compras, pagos, inventario o tesorería. El campo `source` determina qué dimensiones y métricas están disponibles. Las consultas de tesorería requieren además el scope `treasury:read`. Usá `response_mode=assistant` para resolución de nombres, períodos predefinidos, comparaciones y paginación compatibles con run_report.
  */
 export function reportsQuery(
   client: LapymeCore,
-  request: models.ReportRequest,
+  request: operations.QueryApiReportRequest,
   options?: RequestOptions,
 ): APIPromise<
   Result<
@@ -62,7 +61,7 @@ export function reportsQuery(
 
 async function $do(
   client: LapymeCore,
-  request: models.ReportRequest,
+  request: operations.QueryApiReportRequest,
   options?: RequestOptions,
 ): Promise<
   [
@@ -83,7 +82,7 @@ async function $do(
 > {
   const parsed = safeParse(
     request,
-    (value) => z.parse(models.ReportRequest$outboundSchema, value),
+    (value) => z.parse(operations.QueryApiReportRequest$outboundSchema, value),
     "Input validation failed",
   );
   if (!parsed.ok) {
