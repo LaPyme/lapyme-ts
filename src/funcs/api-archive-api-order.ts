@@ -30,6 +30,9 @@ import { Result } from "../types/fp.js";
 
 /**
  * Archivar pedido
+ *
+ * @remarks
+ * Archiva un pedido elegible y permite registrar un motivo opcional sin modificar sus líneas ni importes.
  */
 export function apiArchiveAPIOrder(
   client: LapymeCore,

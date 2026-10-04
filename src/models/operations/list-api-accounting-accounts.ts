@@ -13,6 +13,12 @@ import * as models from "../index.js";
 
 export type ListApiAccountingAccountsRequest = {
   includeInactive?: boolean | undefined;
+  isActive?: boolean | undefined;
+  isPostable?: boolean | undefined;
+  type?: models.ApiSharedEnum5433445ffc | undefined;
+  parentId?: string | undefined;
+  systemRole?: models.ApiSharedEnum87e38e3147 | undefined;
+  isInflationAdjustable?: boolean | undefined;
 };
 
 /**
@@ -34,6 +40,12 @@ export type ListApiAccountingAccountsResponse = {
 /** @internal */
 export type ListApiAccountingAccountsRequest$Outbound = {
   include_inactive: boolean;
+  is_active?: boolean | undefined;
+  is_postable?: boolean | undefined;
+  type?: string | undefined;
+  parent_id?: string | undefined;
+  system_role?: string | undefined;
+  is_inflation_adjustable?: boolean | undefined;
 };
 
 /** @internal */
@@ -43,10 +55,21 @@ export const ListApiAccountingAccountsRequest$outboundSchema: z.ZodMiniType<
 > = z.pipe(
   z.object({
     includeInactive: z._default(z.boolean(), false),
+    isActive: z.optional(z.boolean()),
+    isPostable: z.optional(z.boolean()),
+    type: z.optional(models.ApiSharedEnum5433445ffc$outboundSchema),
+    parentId: z.optional(z.string()),
+    systemRole: z.optional(models.ApiSharedEnum87e38e3147$outboundSchema),
+    isInflationAdjustable: z.optional(z.boolean()),
   }),
   z.transform((v) => {
     return remap$(v, {
       includeInactive: "include_inactive",
+      isActive: "is_active",
+      isPostable: "is_postable",
+      parentId: "parent_id",
+      systemRole: "system_role",
+      isInflationAdjustable: "is_inflation_adjustable",
     });
   }),
 );
