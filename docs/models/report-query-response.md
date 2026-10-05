@@ -8,32 +8,17 @@ import { ReportQueryResponse } from "lapyme/models";
 let value: ReportQueryResponse = {
   requestId: "<id>",
   data: {
-    rows: [
-      {
-        id: "<id>",
-        ids: [
-          "<value 1>",
-        ],
-        labels: [
-          "<value 1>",
-        ],
-        measures: {},
-      },
-    ],
-    totals: {
-      "key": 708.07,
-      "key1": 4600.88,
-      "key2": 7753.74,
-    },
+    rows: [],
+    totals: {},
     metadata: {
       source: "inventory",
       dimensions: [
         "<value 1>",
         "<value 2>",
       ],
-      measures: [
-        "<value 1>",
-      ],
+      measures: [],
+      reportingCurrency: "USD",
+      rateBasis: "treasury_functional_ars_accounting_value",
     },
   },
 };

@@ -7,19 +7,24 @@ import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
 import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
+import { smartUnion } from "../../types/smart-union.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import * as models from "../index.js";
 
-export type PatchApiOrderRequestBody = {
-  notes?: string | null | undefined;
-};
+export type PatchApiOrderRequestBody =
+  | models.ApiOrderEditRequest
+  | models.ApiOrderNotesPatchRequest;
 
 export type PatchApiOrderRequest = {
   /**
    * ID del pedido
    */
   orderId: string;
-  body: PatchApiOrderRequestBody;
+  /**
+   * Obligatoria para ediciones estructurales. Se omite para el contrato histórico que actualiza solo notes.
+   */
+  idempotencyKey?: string | undefined;
+  body: models.ApiOrderEditRequest | models.ApiOrderNotesPatchRequest;
 };
 
 export type PatchApiOrderResponse = {
@@ -28,17 +33,18 @@ export type PatchApiOrderResponse = {
 };
 
 /** @internal */
-export type PatchApiOrderRequestBody$Outbound = {
-  notes?: string | null | undefined;
-};
+export type PatchApiOrderRequestBody$Outbound =
+  | models.ApiOrderEditRequest$Outbound
+  | models.ApiOrderNotesPatchRequest$Outbound;
 
 /** @internal */
 export const PatchApiOrderRequestBody$outboundSchema: z.ZodMiniType<
   PatchApiOrderRequestBody$Outbound,
   PatchApiOrderRequestBody
-> = z.object({
-  notes: z.optional(z.nullable(z.string())),
-});
+> = smartUnion([
+  models.ApiOrderEditRequest$outboundSchema,
+  models.ApiOrderNotesPatchRequest$outboundSchema,
+]);
 
 export function patchApiOrderRequestBodyToJSON(
   patchApiOrderRequestBody: PatchApiOrderRequestBody,
@@ -51,7 +57,10 @@ export function patchApiOrderRequestBodyToJSON(
 /** @internal */
 export type PatchApiOrderRequest$Outbound = {
   order_id: string;
-  body: PatchApiOrderRequestBody$Outbound;
+  "Idempotency-Key"?: string | undefined;
+  body:
+    | models.ApiOrderEditRequest$Outbound
+    | models.ApiOrderNotesPatchRequest$Outbound;
 };
 
 /** @internal */
@@ -61,11 +70,16 @@ export const PatchApiOrderRequest$outboundSchema: z.ZodMiniType<
 > = z.pipe(
   z.object({
     orderId: z.string(),
-    body: z.lazy(() => PatchApiOrderRequestBody$outboundSchema),
+    idempotencyKey: z.optional(z.string()),
+    body: smartUnion([
+      models.ApiOrderEditRequest$outboundSchema,
+      models.ApiOrderNotesPatchRequest$outboundSchema,
+    ]),
   }),
   z.transform((v) => {
     return remap$(v, {
       orderId: "order_id",
+      idempotencyKey: "Idempotency-Key",
     });
   }),
 );

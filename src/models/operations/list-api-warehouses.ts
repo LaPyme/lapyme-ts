@@ -23,10 +23,6 @@ export type ListApiWarehousesRequest = {
    * Texto de búsqueda por nombre
    */
   query?: string | undefined;
-  /**
-   * Alias de query
-   */
-  search?: string | undefined;
 };
 
 export type ListApiWarehousesResponse = {
@@ -39,7 +35,6 @@ export type ListApiWarehousesRequest$Outbound = {
   cursor?: string | undefined;
   limit: number;
   query?: string | undefined;
-  search?: string | undefined;
 };
 
 /** @internal */
@@ -50,7 +45,6 @@ export const ListApiWarehousesRequest$outboundSchema: z.ZodMiniType<
   cursor: z.optional(z.string()),
   limit: z._default(z.int(), 50),
   query: z.optional(z.string()),
-  search: z.optional(z.string()),
 });
 
 export function listApiWarehousesRequestToJSON(

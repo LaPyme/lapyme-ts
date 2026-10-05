@@ -6,16 +6,9 @@
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
 import { safeParse } from "../../lib/schemas.js";
-import { ClosedEnum } from "../../types/enums.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import * as models from "../index.js";
-
-export const Status = {
-  Active: "active",
-  Inactive: "inactive",
-} as const;
-export type Status = ClosedEnum<typeof Status>;
 
 export type ListApiCustomersRequest = {
   /**
@@ -31,17 +24,13 @@ export type ListApiCustomersRequest = {
    */
   query?: string | undefined;
   /**
-   * Alias de query
-   */
-  search?: string | undefined;
-  /**
    * Filtra por estado activo
    */
   isActive?: boolean | undefined;
   /**
    * Estado lógico del cliente. Puede repetirse o enviarse separado por comas.
    */
-  status?: Array<Status> | undefined;
+  status?: Array<models.ApiSharedEnumd952d5ce8e> | undefined;
 };
 
 export type ListApiCustomersResponse = {
@@ -50,16 +39,10 @@ export type ListApiCustomersResponse = {
 };
 
 /** @internal */
-export const Status$outboundSchema: z.ZodMiniEnum<typeof Status> = z.enum(
-  Status,
-);
-
-/** @internal */
 export type ListApiCustomersRequest$Outbound = {
   cursor?: string | undefined;
   limit: number;
   query?: string | undefined;
-  search?: string | undefined;
   is_active?: boolean | undefined;
   status?: Array<string> | undefined;
 };
@@ -73,9 +56,8 @@ export const ListApiCustomersRequest$outboundSchema: z.ZodMiniType<
     cursor: z.optional(z.string()),
     limit: z._default(z.int(), 50),
     query: z.optional(z.string()),
-    search: z.optional(z.string()),
     isActive: z.optional(z.boolean()),
-    status: z.optional(z.array(Status$outboundSchema)),
+    status: z.optional(z.array(models.ApiSharedEnumd952d5ce8e$outboundSchema)),
   }),
   z.transform((v) => {
     return remap$(v, {
