@@ -24,19 +24,26 @@ import {
   SalesReportRequest$Outbound,
   SalesReportRequest$outboundSchema,
 } from "./sales-report-request.js";
+import {
+  TreasuryReportRequest,
+  TreasuryReportRequest$Outbound,
+  TreasuryReportRequest$outboundSchema,
+} from "./treasury-report-request.js";
 
 export type ReportRequest =
   | SalesReportRequest
   | PurchasesReportRequest
   | PaymentsReportRequest
-  | InventoryReportRequest;
+  | InventoryReportRequest
+  | TreasuryReportRequest;
 
 /** @internal */
 export type ReportRequest$Outbound =
   | SalesReportRequest$Outbound
   | PurchasesReportRequest$Outbound
   | PaymentsReportRequest$Outbound
-  | InventoryReportRequest$Outbound;
+  | InventoryReportRequest$Outbound
+  | TreasuryReportRequest$Outbound;
 
 /** @internal */
 export const ReportRequest$outboundSchema: z.ZodMiniType<
@@ -47,6 +54,7 @@ export const ReportRequest$outboundSchema: z.ZodMiniType<
   PurchasesReportRequest$outboundSchema,
   PaymentsReportRequest$outboundSchema,
   InventoryReportRequest$outboundSchema,
+  TreasuryReportRequest$outboundSchema,
 ]);
 
 export function reportRequestToJSON(reportRequest: ReportRequest): string {

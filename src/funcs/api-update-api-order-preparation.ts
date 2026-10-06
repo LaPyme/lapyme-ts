@@ -32,7 +32,7 @@ import { Result } from "../types/fp.js";
  * Actualizar preparación pendiente
  *
  * @remarks
- * Marca el pedido como en preparación o cambia el depósito de unidades pendientes.
+ * Marca un grupo de preparación como en preparación o cambia el depósito de sus unidades pendientes.
  */
 export function apiUpdateAPIOrderPreparation(
   client: LapymeCore,

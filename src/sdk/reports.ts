@@ -5,7 +5,6 @@
 
 import { reportsQuery } from "../funcs/reports-query.js";
 import { ClientSDK, RequestOptions } from "../lib/sdks.js";
-import * as models from "../models/index.js";
 import * as operations from "../models/operations/index.js";
 import { unwrapAsync } from "../types/fp.js";
 
@@ -14,10 +13,10 @@ export class Reports extends ClientSDK {
    * Consultar reporte
    *
    * @remarks
-   * Ejecuta una consulta analítica agrupada sobre ventas, compras, pagos o inventario. El campo `source` determina qué dimensiones y métricas están disponibles.
+   * Ejecuta una consulta analítica agrupada sobre ventas, compras, pagos, inventario o tesorería. El campo `source` determina qué dimensiones y métricas están disponibles. Las consultas de tesorería requieren además el scope `treasury:read`. Usá `response_mode=assistant` para resolución de nombres, períodos predefinidos, comparaciones y paginación compatibles con run_report.
    */
   async query(
-    request: models.ReportRequest,
+    request: operations.QueryApiReportRequest,
     options?: RequestOptions,
   ): Promise<operations.QueryApiReportResponse> {
     return unwrapAsync(reportsQuery(
