@@ -30,6 +30,7 @@ export type ApiSupplierUpdateRequest = {
   apartment?: string | null | undefined;
   postalCode?: string | null | undefined;
   paymentTermId?: string | null | undefined;
+  paymentTermDays?: number | null | undefined;
   isActive?: boolean | undefined;
 };
 
@@ -50,6 +51,7 @@ export type ApiSupplierUpdateRequest$Outbound = {
   apartment?: string | null | undefined;
   postal_code?: string | null | undefined;
   payment_term_id?: string | null | undefined;
+  payment_term_days?: number | null | undefined;
   is_active?: boolean | undefined;
 };
 
@@ -74,6 +76,7 @@ export const ApiSupplierUpdateRequest$outboundSchema: z.ZodMiniType<
     apartment: z.optional(z.nullable(z.string())),
     postalCode: z.optional(z.nullable(z.string())),
     paymentTermId: z.optional(z.nullable(z.string())),
+    paymentTermDays: z.optional(z.nullable(z.int())),
     isActive: z.optional(z.boolean()),
   }),
   z.transform((v) => {
@@ -84,6 +87,7 @@ export const ApiSupplierUpdateRequest$outboundSchema: z.ZodMiniType<
       taxCategory: "tax_category",
       postalCode: "postal_code",
       paymentTermId: "payment_term_id",
+      paymentTermDays: "payment_term_days",
       isActive: "is_active",
     });
   }),

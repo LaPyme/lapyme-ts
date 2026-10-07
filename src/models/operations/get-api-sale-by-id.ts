@@ -6,9 +6,28 @@
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
 import { safeParse } from "../../lib/schemas.js";
+import { ClosedEnum } from "../../types/enums.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import * as models from "../index.js";
+
+export const GetApiSaleByIdField = {
+  Id: "id",
+  InvoicePdf: "invoicePdf",
+  Document: "document",
+  Customer: "customer",
+  Amounts: "amounts",
+  Items: "items",
+  Payments: "payments",
+  Applications: "applications",
+  Fiscal: "fiscal",
+  Integration: "integration",
+  ReversesVoucher: "reversesVoucher",
+  Audit: "audit",
+  Tags: "tags",
+  Accounting: "accounting",
+} as const;
+export type GetApiSaleByIdField = ClosedEnum<typeof GetApiSaleByIdField>;
 
 export type GetApiSaleByIdRequest = {
   /**
@@ -16,15 +35,20 @@ export type GetApiSaleByIdRequest = {
    */
   saleId: string;
   /**
-   * Comma-separated top-level sale sections to include. Omit for the endpoint default. List default: id, document, customer, amounts, reversesVoucher, integration, audit. Detail default: id, document, customer, amounts, items, payments, applications, fiscal, reversesVoucher, integration, audit.
+   * Comma-separated top-level sale sections to include. Omit for the detail default: id, invoicePdf, document, customer, amounts, items, payments, applications, fiscal, reversesVoucher, integration, audit, tags, accounting. accounting needs the reports:read scope and runs an extra query, so leave it out when you do not need the journal evidence.
    */
-  fields?: Array<models.ApiSharedEnumd1f2fb458d> | undefined;
+  fields?: Array<GetApiSaleByIdField> | undefined;
 };
 
 export type GetApiSaleByIdResponse = {
   headers: { [k: string]: Array<string> };
   result: models.ApiSaleDetailResponse;
 };
+
+/** @internal */
+export const GetApiSaleByIdField$outboundSchema: z.ZodMiniEnum<
+  typeof GetApiSaleByIdField
+> = z.enum(GetApiSaleByIdField);
 
 /** @internal */
 export type GetApiSaleByIdRequest$Outbound = {
@@ -39,7 +63,7 @@ export const GetApiSaleByIdRequest$outboundSchema: z.ZodMiniType<
 > = z.pipe(
   z.object({
     saleId: z.string(),
-    fields: z.optional(z.array(models.ApiSharedEnumd1f2fb458d$outboundSchema)),
+    fields: z.optional(z.array(GetApiSaleByIdField$outboundSchema)),
   }),
   z.transform((v) => {
     return remap$(v, {

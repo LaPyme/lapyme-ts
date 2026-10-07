@@ -7,9 +7,14 @@ import { ListApiInventoryMovementsResponse } from "lapyme/models/operations";
 
 let value: ListApiInventoryMovementsResponse = {
   headers: {
-    "key": [
+    "key": [],
+    "key1": [
       "<value 1>",
       "<value 2>",
+      "<value 3>",
+    ],
+    "key2": [
+      "<value 1>",
     ],
   },
   result: {
@@ -21,16 +26,20 @@ let value: ListApiInventoryMovementsResponse = {
         movementType: "<value>",
         quantity: 7293.1,
         balance: 6690.44,
-        quantityChange: 9992.36,
-        reservedQuantityChange: 241.01,
-        incomingQuantityChange: 5895.88,
+        reservedBalance: 9992.36,
+        incomingBalance: 241.01,
+        quantityChange: 5895.88,
+        reservedQuantityChange: 123.33,
+        incomingQuantityChange: 1774.44,
         reason: null,
         notes: "<value>",
-        createdAt: new Date("2024-03-08T12:04:51.091Z"),
+        createdAt: new Date("2026-06-14T22:22:25.068Z"),
+        createdBy: "a71bffc1-c116-493f-b8ee-4c224b615cdd",
         createdByName: "<value>",
         warehouseName: "<value>",
         targetWarehouseName: "<value>",
-        referenceType: "sale",
+        otherWarehouseName: "<value>",
+        referenceType: null,
         referenceId: "<id>",
         referenceLabel: "<value>",
       },
@@ -38,7 +47,7 @@ let value: ListApiInventoryMovementsResponse = {
     hasMore: false,
     nextCursor: "<value>",
     object: "list",
-    url: "https://soulful-calculus.com/",
+    url: "https://upset-pliers.net/",
   },
 };
 ```
