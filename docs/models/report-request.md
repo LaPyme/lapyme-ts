@@ -12,9 +12,6 @@ const value: models.SalesReportRequest = {
     startDate: new Date("2026-01-01"),
     endDate: new Date("2026-03-31"),
   },
-  dimensions: [
-    "product_metafield:season",
-  ],
   measures: [],
 };
 ```
@@ -28,11 +25,8 @@ const value: models.PurchasesReportRequest = {
     startDate: new Date("2026-01-01"),
     endDate: new Date("2026-03-31"),
   },
-  dimensions: [
-    "product_metafield:season",
-  ],
   measures: [
-    "purchaseSubtotal",
+    "purchase_subtotal",
   ],
 };
 ```
@@ -46,8 +40,26 @@ const value: models.PaymentsReportRequest = {
     startDate: new Date("2026-01-01"),
     endDate: new Date("2026-03-31"),
   },
+  dimensions: [
+    "contact_metafield:customer_segment",
+  ],
   measures: [
-    "paymentCount",
+    "payment_count",
+  ],
+};
+```
+
+### `models.AppliedCollectionsReportRequest`
+
+```typescript
+const value: models.AppliedCollectionsReportRequest = {
+  source: "applied_collections",
+  period: {
+    startDate: new Date("2026-01-01"),
+    endDate: new Date("2026-03-31"),
+  },
+  measures: [
+    "applied_collection_net_amount",
   ],
 };
 ```
@@ -65,6 +77,31 @@ const value: models.InventoryReportRequest = {
     "product_metafield:season",
   ],
   measures: [],
+};
+```
+
+### `models.MarketplaceListingsReportRequest`
+
+```typescript
+const value: models.MarketplaceListingsReportRequest = {
+  source: "marketplace_listings",
+  measures: [],
+};
+```
+
+### `models.TreasuryReportRequest`
+
+```typescript
+const value: models.TreasuryReportRequest = {
+  source: "treasury",
+  period: {
+    startDate: new Date("2026-01-01"),
+    endDate: new Date("2026-03-31"),
+  },
+  measures: [
+    "treasury_adjustment_net",
+  ],
+  treasuryCurrencyBasis: "original",
 };
 ```
 
