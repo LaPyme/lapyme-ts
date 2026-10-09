@@ -1,6 +1,6 @@
 # SalesReportRequestDimensionFilters
 
-Filtros por dimensión. Cada clave debe ser una dimensión filtrable para la fuente. También acepta product_metafield:<key> para campos personalizados select de producto. El valor es un array de IDs o valores a incluir.
+Filtros por dimensión. Cada clave debe ser una dimensión filtrable para la fuente. También acepta product_metafield:<key> para campos personalizados select de producto y contact_metafield:<key> para campos personalizados select de contacto cuando la fuente lo soporta. El valor es un array de IDs o valores a incluir.
 
 ## Example Usage
 
@@ -18,6 +18,8 @@ let value: SalesReportRequestDimensionFilters = {};
 | `customerName`           | *string*[]               | :heavy_minus_sign:       | N/A                      |
 | `customerEmail`          | *string*[]               | :heavy_minus_sign:       | N/A                      |
 | `customerTaxCategory`    | *string*[]               | :heavy_minus_sign:       | N/A                      |
+| `customerType`           | *string*[]               | :heavy_minus_sign:       | N/A                      |
+| `customerRecency`        | *string*[]               | :heavy_minus_sign:       | N/A                      |
 | `province`               | *string*[]               | :heavy_minus_sign:       | N/A                      |
 | `city`                   | *string*[]               | :heavy_minus_sign:       | N/A                      |
 | `product`                | *string*[]               | :heavy_minus_sign:       | N/A                      |
@@ -28,15 +30,24 @@ let value: SalesReportRequestDimensionFilters = {};
 | `defaultSupplierName`    | *string*[]               | :heavy_minus_sign:       | N/A                      |
 | `productType`            | *string*[]               | :heavy_minus_sign:       | N/A                      |
 | `salesperson`            | *string*[]               | :heavy_minus_sign:       | N/A                      |
+| `cashier`                | *string*[]               | :heavy_minus_sign:       | N/A                      |
 | `pointOfSale`            | *string*[]               | :heavy_minus_sign:       | N/A                      |
 | `warehouse`              | *string*[]               | :heavy_minus_sign:       | N/A                      |
 | `register`               | *string*[]               | :heavy_minus_sign:       | N/A                      |
 | `integrationSource`      | *string*[]               | :heavy_minus_sign:       | N/A                      |
+| `channelListing`         | *string*[]               | :heavy_minus_sign:       | N/A                      |
+| `channelListingType`     | *string*[]               | :heavy_minus_sign:       | N/A                      |
+| `channelLogistics`       | *string*[]               | :heavy_minus_sign:       | N/A                      |
 | `voucherType`            | *string*[]               | :heavy_minus_sign:       | N/A                      |
 | `currency`               | *string*[]               | :heavy_minus_sign:       | N/A                      |
 | `paymentStatus`          | *string*[]               | :heavy_minus_sign:       | N/A                      |
 | `caeStatus`              | *string*[]               | :heavy_minus_sign:       | N/A                      |
+| `invoiceStatus`          | *string*[]               | :heavy_minus_sign:       | N/A                      |
 | `formattedInvoiceNumber` | *string*[]               | :heavy_minus_sign:       | N/A                      |
-| `paymentMethod`          | *string*[]               | :heavy_minus_sign:       | N/A                      |
 | `taxRate`                | *string*[]               | :heavy_minus_sign:       | N/A                      |
 | `saleLineType`           | *string*[]               | :heavy_minus_sign:       | N/A                      |
+| `customerStatus`         | *string*[]               | :heavy_minus_sign:       | N/A                      |
+| `productStatus`          | *string*[]               | :heavy_minus_sign:       | N/A                      |
+| `warehouseStatus`        | *string*[]               | :heavy_minus_sign:       | N/A                      |
+| `pointOfSaleStatus`      | *string*[]               | :heavy_minus_sign:       | N/A                      |
+| `registerStatus`         | *string*[]               | :heavy_minus_sign:       | N/A                      |
