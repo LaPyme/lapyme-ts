@@ -102,7 +102,7 @@ async function run() {
       supplierId: "327cbfaa-bdc6-454c-ab70-1739c72d6e49",
       pointOfSaleId: "ba7f4895-13b5-46e8-9466-323405ce54a8",
       paymentDate: "<value>",
-      currency: "PES",
+      currency: "ARS",
       totalAmount: 491818,
       splits: [
         {
@@ -140,7 +140,7 @@ async function run() {
       supplierId: "327cbfaa-bdc6-454c-ab70-1739c72d6e49",
       pointOfSaleId: "ba7f4895-13b5-46e8-9466-323405ce54a8",
       paymentDate: "<value>",
-      currency: "PES",
+      currency: "ARS",
       totalAmount: 491818,
       splits: [
         {

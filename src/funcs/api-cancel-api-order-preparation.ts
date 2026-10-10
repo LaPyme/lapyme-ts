@@ -30,6 +30,9 @@ import { Result } from "../types/fp.js";
 
 /**
  * Cancelar preparación
+ *
+ * @remarks
+ * Cancela una preparación existente del pedido y permite registrar un motivo opcional.
  */
 export function apiCancelAPIOrderPreparation(
   client: LapymeCore,
