@@ -12,7 +12,7 @@ let value: ApiOrderInvoiceRequest = {
   lines: [
     {
       orderLineId: "4ed05c6f-41d4-477d-8d43-4aacd96c1da4",
-      quantityToInvoice: 942518,
+      quantityToInvoice: 9425.18,
     },
   ],
 };

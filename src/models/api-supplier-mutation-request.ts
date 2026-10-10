@@ -15,6 +15,10 @@ import {
 } from "./api-shared-enumbb2864ecea.js";
 
 export type ApiSupplierMutationRequest = {
+  /**
+   * Setting or clearing this field also requires treasury:write. Omit it to preserve the default.
+   */
+  defaultAccountId?: string | null | undefined;
   name: string;
   companyName?: string | null | undefined;
   description?: string | null | undefined;
@@ -30,11 +34,13 @@ export type ApiSupplierMutationRequest = {
   apartment?: string | null | undefined;
   postalCode?: string | null | undefined;
   paymentTermId?: string | null | undefined;
+  paymentTermDays?: number | null | undefined;
   isActive?: boolean | undefined;
 };
 
 /** @internal */
 export type ApiSupplierMutationRequest$Outbound = {
+  default_account_id?: string | null | undefined;
   name: string;
   company_name?: string | null | undefined;
   description?: string | null | undefined;
@@ -50,6 +56,7 @@ export type ApiSupplierMutationRequest$Outbound = {
   apartment?: string | null | undefined;
   postal_code?: string | null | undefined;
   payment_term_id?: string | null | undefined;
+  payment_term_days?: number | null | undefined;
   is_active?: boolean | undefined;
 };
 
@@ -59,6 +66,7 @@ export const ApiSupplierMutationRequest$outboundSchema: z.ZodMiniType<
   ApiSupplierMutationRequest
 > = z.pipe(
   z.object({
+    defaultAccountId: z.optional(z.nullable(z.string())),
     name: z.string(),
     companyName: z.optional(z.nullable(z.string())),
     description: z.optional(z.nullable(z.string())),
@@ -74,16 +82,19 @@ export const ApiSupplierMutationRequest$outboundSchema: z.ZodMiniType<
     apartment: z.optional(z.nullable(z.string())),
     postalCode: z.optional(z.nullable(z.string())),
     paymentTermId: z.optional(z.nullable(z.string())),
+    paymentTermDays: z.optional(z.nullable(z.int())),
     isActive: z.optional(z.boolean()),
   }),
   z.transform((v) => {
     return remap$(v, {
+      defaultAccountId: "default_account_id",
       companyName: "company_name",
       taxId: "tax_id",
       taxIdType: "tax_id_type",
       taxCategory: "tax_category",
       postalCode: "postal_code",
       paymentTermId: "payment_term_id",
+      paymentTermDays: "payment_term_days",
       isActive: "is_active",
     });
   }),

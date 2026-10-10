@@ -18,15 +18,31 @@ let value: ApiSupplierCreateResponseData = {
     taxIdType: "<value>",
     taxCategory: "<value>",
     paymentTermId: "<id>",
+    paymentTermDays: 100217,
     isActive: true,
-    country: "Gibraltar",
+    tags: [
+      {
+        object: "tag",
+        id: "b4c64393-84ca-458c-8f3b-39718b070484",
+        scope: "transfer",
+        name: "<value>",
+        slug: "<value>",
+        color: "pink",
+        description: "delectable astride downright",
+        archivedAt: new Date("2024-08-12T06:34:32.349Z"),
+        createdAt: new Date("2024-10-25T15:17:34.484Z"),
+        updatedAt: new Date("2024-11-10T16:15:42.311Z"),
+      },
+    ],
+    defaultAccountId: "2f11213e-900d-43a9-8d96-658124d9faf1",
+    country: null,
     provinceId: "<id>",
-    city: "Fort Bernardton",
-    address: "38500 E 3rd Street",
+    city: "Melanyborough",
+    address: null,
     apartment: "<value>",
-    postalCode: "53435-1128",
-    createdAt: new Date("2025-09-17T03:40:21.450Z"),
-    updatedAt: new Date("2026-12-17T07:31:45.520Z"),
+    postalCode: "98472",
+    createdAt: new Date("2025-06-22T07:25:06.612Z"),
+    updatedAt: new Date("2026-07-16T14:09:23.826Z"),
   },
   idempotentReplay: false,
 };
@@ -36,5 +52,5 @@ let value: ApiSupplierCreateResponseData = {
 
 | Field                                                                        | Type                                                                         | Required                                                                     | Description                                                                  |
 | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| `supplier`                                                                   | [models.ApiSharedObjectac822ca2fd](../models/api-shared-objectac822ca2fd.md) | :heavy_check_mark:                                                           | N/A                                                                          |
+| `supplier`                                                                   | [models.ApiSharedObjecte014df5c78](../models/api-shared-objecte014df5c78.md) | :heavy_check_mark:                                                           | N/A                                                                          |
 | `idempotentReplay`                                                           | *boolean*                                                                    | :heavy_check_mark:                                                           | N/A                                                                          |
