@@ -104,7 +104,6 @@ async function $do(
     "limit": payload?.limit,
     "product_type": payload?.product_type,
     "query": payload?.query,
-    "search": payload?.search,
   });
 
   const headers = new Headers(compactMap({
