@@ -6,7 +6,12 @@
 import { CreateApiPriceListResponse } from "lapyme/models/operations";
 
 let value: CreateApiPriceListResponse = {
-  headers: {},
+  headers: {
+    "key": [],
+    "key1": [
+      "<value 1>",
+    ],
+  },
   result: {
     requestId: "<id>",
     data: {
@@ -16,17 +21,14 @@ let value: CreateApiPriceListResponse = {
         isAutomatic: false,
         automaticPricingMode: "base_price_adjustment",
         adjustmentPercentage: 2396.83,
+        sourcePriceListId: "70f1cf58-2d51-4353-95d7-f37148b710a2",
         taxInclusive: true,
-        createdAt: new Date("2025-04-30T20:16:20.962Z"),
+        createdAt: new Date("2024-07-25T12:54:02.886Z"),
         object: "price_list",
       },
       idempotentReplay: true,
     },
-    warnings: [
-      "<value 1>",
-      "<value 2>",
-      "<value 3>",
-    ],
+    warnings: [],
   },
 };
 ```

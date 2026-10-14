@@ -107,7 +107,6 @@ async function $do(
     "max_balance": payload?.max_balance,
     "min_balance": payload?.min_balance,
     "query": payload?.query,
-    "search": payload?.search,
   });
 
   const headers = new Headers(compactMap({
