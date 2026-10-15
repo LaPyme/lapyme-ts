@@ -9,7 +9,7 @@ let value: ApiOrderPreparationCreateRequest = {
   items: [
     {
       orderLineId: "51f775ac-fea7-4555-a187-56ee7fd284e6",
-      quantity: 947337,
+      quantity: 9473.37,
     },
   ],
 };
@@ -19,5 +19,6 @@ let value: ApiOrderPreparationCreateRequest = {
 
 | Field                                                                          | Type                                                                           | Required                                                                       | Description                                                                    |
 | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
+| `preparationGroupId`                                                           | *string*                                                                       | :heavy_minus_sign:                                                             | N/A                                                                            |
 | `warehouseId`                                                                  | *string*                                                                       | :heavy_minus_sign:                                                             | N/A                                                                            |
-| `items`                                                                        | [models.ApiSharedObject1dbe66a4f8](../models/api-shared-object1dbe66a4f8.md)[] | :heavy_check_mark:                                                             | N/A                                                                            |
+| `items`                                                                        | [models.ApiSharedObjectc2dbdba87b](../models/api-shared-objectc2dbdba87b.md)[] | :heavy_check_mark:                                                             | N/A                                                                            |
