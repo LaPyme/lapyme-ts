@@ -5,11 +5,11 @@
 ```typescript
 import { PaymentsReportRequestMeasure } from "lapyme/models";
 
-let value: PaymentsReportRequestMeasure = "paymentCount";
+let value: PaymentsReportRequestMeasure = "payment_count";
 ```
 
 ## Values
 
 ```typescript
-"paymentCollectedTotal" | "paymentPaidTotal" | "paymentNetCashflow" | "paymentGrossMovement" | "paymentNetAmount" | "paymentFeeAmount" | "paymentBalance" | "paymentCount" | "paymentSplitCount" | "uniquePaymentContacts" | "avgPaymentAmount"
+"payment_collected_total" | "payment_paid_total" | "payment_net_cashflow" | "payment_gross_movement" | "payment_net_amount" | "payment_fee_amount" | "payment_balance" | "payment_count" | "payment_split_count" | "unique_payment_contacts" | "avg_payment_amount"
 ```
