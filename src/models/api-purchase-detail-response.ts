@@ -9,201 +9,15 @@ import { safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import {
-  ApiSharedEnum822a963f55,
-  ApiSharedEnum822a963f55$inboundSchema,
-} from "./api-shared-enum822a963f55.js";
-import {
-  ApiSharedEnum9e7af09974,
-  ApiSharedEnum9e7af09974$inboundSchema,
-} from "./api-shared-enum9e7af09974.js";
-import {
-  ApiSharedEnumd34af90520,
-  ApiSharedEnumd34af90520$inboundSchema,
-} from "./api-shared-enumd34af90520.js";
-import {
-  ApiSharedEnumf0d69c3d87,
-  ApiSharedEnumf0d69c3d87$inboundSchema,
-} from "./api-shared-enumf0d69c3d87.js";
-import {
-  ApiSharedObject799d3e3f37,
-  ApiSharedObject799d3e3f37$inboundSchema,
-} from "./api-shared-object799d3e3f37.js";
-import {
-  ApiSharedObject8aeeceaf0f,
-  ApiSharedObject8aeeceaf0f$inboundSchema,
-} from "./api-shared-object8aeeceaf0f.js";
-import {
-  ApiSharedObject95929ea589,
-  ApiSharedObject95929ea589$inboundSchema,
-} from "./api-shared-object95929ea589.js";
-import {
-  ApiSharedObjecta8ecbd0557,
-  ApiSharedObjecta8ecbd0557$inboundSchema,
-} from "./api-shared-objecta8ecbd0557.js";
-import {
-  ApiSharedObjecte048f871c2,
-  ApiSharedObjecte048f871c2$inboundSchema,
-} from "./api-shared-objecte048f871c2.js";
-import {
-  ApiSharedObjectfb7405a472,
-  ApiSharedObjectfb7405a472$inboundSchema,
-} from "./api-shared-objectfb7405a472.js";
+  ApiPurchaseDetail,
+  ApiPurchaseDetail$inboundSchema,
+} from "./api-purchase-detail.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
-
-export type ApiPurchaseDetailResponseData = {
-  object: "purchase";
-  id: string;
-  accounting?: ApiSharedObject799d3e3f37 | undefined;
-  voucherType: string;
-  /**
-   * Rol del comprobante dentro del flujo de importacion.
-   */
-  importDocumentRole: ApiSharedEnum9e7af09974 | null;
-  /**
-   * ID de la factura comercial asociada al despacho aduanero.
-   */
-  importSourcePurchaseId: string | null;
-  /**
-   * Estado de nacionalizacion de la factura comercial de importacion.
-   */
-  importNationalizationStatus: ApiSharedEnumf0d69c3d87 | null;
-  /**
-   * Numero de despacho aduanero informado por el proveedor. Hasta 32 caracteres.
-   */
-  customsDispatchNumber: string | null;
-  /**
-   * Numero de comprobante del proveedor. Hasta 120 caracteres.
-   */
-  supplierInvoiceNumber: string | null;
-  /**
-   * Fecha del comprobante en formato YYYY-MM-DD.
-   */
-  invoiceDate: string | null;
-  /**
-   * Fecha contable de la compra en formato YYYY-MM-DD.
-   */
-  accountDate: string | null;
-  /**
-   * Fecha de vencimiento en formato YYYY-MM-DD.
-   */
-  dueDate: string | null;
-  paymentTermId: ApiSharedEnumd34af90520 | null;
-  vatPerceptionAmount: number | null;
-  nationalTaxAmount: number | null;
-  grossIncomeTaxAmount: number | null;
-  grossIncomeTaxBreakdown: Array<ApiSharedObject95929ea589>;
-  municipalTaxAmount: number | null;
-  internalTaxAmount: number | null;
-  otherTaxAmount: number | null;
-  subtotal: number | null;
-  taxAmount: number | null;
-  exemptAmount: number | null;
-  total: number | null;
-  balance: number | null;
-  discount: number | null;
-  vatBreakdown: Array<ApiSharedObjectfb7405a472>;
-  notes: string | null;
-  vatCategory: ApiSharedEnum822a963f55 | null;
-  currency: string;
-  exchangeRate: string;
-  pdfPath: string | null;
-  createdAt: Date;
-  supplier: ApiSharedObjecta8ecbd0557 | null;
-  warehouse: ApiSharedObject8aeeceaf0f | null;
-  items: Array<ApiSharedObjecte048f871c2>;
-};
 
 export type ApiPurchaseDetailResponse = {
   requestId: string;
-  data: ApiPurchaseDetailResponseData;
+  data: ApiPurchaseDetail;
 };
-
-/** @internal */
-export const ApiPurchaseDetailResponseData$inboundSchema: z.ZodMiniType<
-  ApiPurchaseDetailResponseData,
-  unknown
-> = z.pipe(
-  z.object({
-    object: types.literal("purchase"),
-    id: types.string(),
-    accounting: types.optional(ApiSharedObject799d3e3f37$inboundSchema),
-    voucher_type: types.string(),
-    import_document_role: types.nullable(ApiSharedEnum9e7af09974$inboundSchema),
-    import_source_purchase_id: types.nullable(types.string()),
-    import_nationalization_status: types.nullable(
-      ApiSharedEnumf0d69c3d87$inboundSchema,
-    ),
-    customs_dispatch_number: types.nullable(types.string()),
-    supplier_invoice_number: types.nullable(types.string()),
-    invoice_date: types.nullable(types.string()),
-    account_date: types.nullable(types.string()),
-    due_date: types.nullable(types.string()),
-    payment_term_id: types.nullable(ApiSharedEnumd34af90520$inboundSchema),
-    vat_perception_amount: types.nullable(types.number()),
-    national_tax_amount: types.nullable(types.number()),
-    gross_income_tax_amount: types.nullable(types.number()),
-    gross_income_tax_breakdown: z.array(
-      ApiSharedObject95929ea589$inboundSchema,
-    ),
-    municipal_tax_amount: types.nullable(types.number()),
-    internal_tax_amount: types.nullable(types.number()),
-    other_tax_amount: types.nullable(types.number()),
-    subtotal: types.nullable(types.number()),
-    tax_amount: types.nullable(types.number()),
-    exempt_amount: types.nullable(types.number()),
-    total: types.nullable(types.number()),
-    balance: types.nullable(types.number()),
-    discount: types.nullable(types.number()),
-    vat_breakdown: z.array(ApiSharedObjectfb7405a472$inboundSchema),
-    notes: types.nullable(types.string()),
-    vat_category: types.nullable(ApiSharedEnum822a963f55$inboundSchema),
-    currency: types.string(),
-    exchange_rate: types.string(),
-    pdf_path: types.nullable(types.string()),
-    created_at: types.date(),
-    supplier: types.nullable(ApiSharedObjecta8ecbd0557$inboundSchema),
-    warehouse: types.nullable(ApiSharedObject8aeeceaf0f$inboundSchema),
-    items: z.array(ApiSharedObjecte048f871c2$inboundSchema),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "voucher_type": "voucherType",
-      "import_document_role": "importDocumentRole",
-      "import_source_purchase_id": "importSourcePurchaseId",
-      "import_nationalization_status": "importNationalizationStatus",
-      "customs_dispatch_number": "customsDispatchNumber",
-      "supplier_invoice_number": "supplierInvoiceNumber",
-      "invoice_date": "invoiceDate",
-      "account_date": "accountDate",
-      "due_date": "dueDate",
-      "payment_term_id": "paymentTermId",
-      "vat_perception_amount": "vatPerceptionAmount",
-      "national_tax_amount": "nationalTaxAmount",
-      "gross_income_tax_amount": "grossIncomeTaxAmount",
-      "gross_income_tax_breakdown": "grossIncomeTaxBreakdown",
-      "municipal_tax_amount": "municipalTaxAmount",
-      "internal_tax_amount": "internalTaxAmount",
-      "other_tax_amount": "otherTaxAmount",
-      "tax_amount": "taxAmount",
-      "exempt_amount": "exemptAmount",
-      "vat_breakdown": "vatBreakdown",
-      "vat_category": "vatCategory",
-      "exchange_rate": "exchangeRate",
-      "pdf_path": "pdfPath",
-      "created_at": "createdAt",
-    });
-  }),
-);
-
-export function apiPurchaseDetailResponseDataFromJSON(
-  jsonString: string,
-): SafeParseResult<ApiPurchaseDetailResponseData, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) => ApiPurchaseDetailResponseData$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'ApiPurchaseDetailResponseData' from JSON`,
-  );
-}
 
 /** @internal */
 export const ApiPurchaseDetailResponse$inboundSchema: z.ZodMiniType<
@@ -212,7 +26,7 @@ export const ApiPurchaseDetailResponse$inboundSchema: z.ZodMiniType<
 > = z.pipe(
   z.object({
     request_id: types.string(),
-    data: z.lazy(() => ApiPurchaseDetailResponseData$inboundSchema),
+    data: ApiPurchaseDetail$inboundSchema,
   }),
   z.transform((v) => {
     return remap$(v, {
