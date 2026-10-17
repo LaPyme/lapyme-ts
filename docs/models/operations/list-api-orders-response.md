@@ -6,18 +6,7 @@
 import { ListApiOrdersResponse } from "lapyme/models/operations";
 
 let value: ListApiOrdersResponse = {
-  headers: {
-    "key": [],
-    "key1": [
-      "<value 1>",
-      "<value 2>",
-      "<value 3>",
-    ],
-    "key2": [
-      "<value 1>",
-      "<value 2>",
-    ],
-  },
+  headers: {},
   result: {
     requestId: "<id>",
     data: [
@@ -31,24 +20,25 @@ let value: ListApiOrdersResponse = {
         customerName: "<value>",
         customerTaxId: "<id>",
         itemsCount: 395182,
-        totalUnits: 370516,
+        totalUnits: 3705.16,
         discountAmount: 838466,
         subtotal: 674053,
         taxAmount: 181272,
         total: 671136,
-        currency: "PES",
+        currency: "ARS",
         orderStatus: "open",
         preparationStatus: "in_progress",
         invoicingStatus: "partially_invoiced",
         notes: "<value>",
         createdAt: new Date("2025-01-28T20:17:37.951Z"),
+        updatedAt: new Date("2024-12-07T10:58:01.560Z"),
         createdByName: "<value>",
       },
     ],
     hasMore: true,
     nextCursor: "<value>",
     object: "list",
-    url: "https://jagged-lieu.net",
+    url: "https://monstrous-promise.org/",
   },
 };
 ```
