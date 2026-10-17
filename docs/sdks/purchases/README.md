@@ -100,7 +100,7 @@ async function run() {
     idempotencyKey: "<value>",
     body: {
       voucherType: 51105,
-      currency: "PES",
+      currency: "USD",
     },
   });
 
@@ -129,7 +129,7 @@ async function run() {
     idempotencyKey: "<value>",
     body: {
       voucherType: 51105,
-      currency: "PES",
+      currency: "USD",
     },
   });
   if (res.ok) {
@@ -157,7 +157,7 @@ async function run() {
     idempotencyKey: "<value>",
     body: {
       voucherType: 51105,
-      currency: "PES",
+      currency: "USD",
     },
   });
 
@@ -186,7 +186,7 @@ async function run() {
     idempotencyKey: "<value>",
     body: {
       voucherType: 51105,
-      currency: "PES",
+      currency: "USD",
     },
   });
   if (res.ok) {
@@ -228,7 +228,7 @@ async function run() {
           taxRateId: 5,
         },
       ],
-      currency: "PES",
+      currency: "ARS",
       exchangeRate: 1,
     },
   });
@@ -272,7 +272,7 @@ async function run() {
           taxRateId: 5,
         },
       ],
-      currency: "PES",
+      currency: "ARS",
       exchangeRate: 1,
     },
   });
@@ -314,7 +314,7 @@ async function run() {
           taxRateId: 5,
         },
       ],
-      currency: "PES",
+      currency: "ARS",
       exchangeRate: 1,
     },
   });
@@ -357,8 +357,166 @@ async function run() {
           taxRateId: 5,
         },
       ],
-      currency: "PES",
+      currency: "ARS",
       exchangeRate: 1,
+    },
+  });
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("purchasesCreatePurchase failed:", res.error);
+  }
+}
+
+run();
+```
+### Example Usage: service_expense_with_accounting_allocation
+
+<!-- UsageSnippet language="typescript" operationID="createApiPurchase" method="post" path="/api/v1/purchases" example="service_expense_with_accounting_allocation" -->
+```typescript
+import { Lapyme } from "lapyme";
+
+const lapyme = new Lapyme({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const result = await lapyme.purchases.createPurchase({
+    idempotencyKey: "<value>",
+    body: {
+      supplierId: "afafcbec-9d94-4174-8d5c-ec8d72780947",
+      voucherType: 1,
+      supplierInvoiceNumber: "0001-00000003",
+      invoiceDate: new Date("2026-03-10"),
+      productsReceived: false,
+      items: [
+        {
+          name: "Meta Ads",
+          quantity: 1,
+          unitCost: 100000,
+          taxRateId: 5,
+          accountId: "550e8400-e29b-41d4-a716-446655440301",
+        },
+      ],
+      currency: "ARS",
+    },
+  });
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { LapymeCore } from "lapyme/core.js";
+import { purchasesCreatePurchase } from "lapyme/funcs/purchases-create-purchase.js";
+
+// Use `LapymeCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const lapyme = new LapymeCore({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const res = await purchasesCreatePurchase(lapyme, {
+    idempotencyKey: "<value>",
+    body: {
+      supplierId: "afafcbec-9d94-4174-8d5c-ec8d72780947",
+      voucherType: 1,
+      supplierInvoiceNumber: "0001-00000003",
+      invoiceDate: new Date("2026-03-10"),
+      productsReceived: false,
+      items: [
+        {
+          name: "Meta Ads",
+          quantity: 1,
+          unitCost: 100000,
+          taxRateId: 5,
+          accountId: "550e8400-e29b-41d4-a716-446655440301",
+        },
+      ],
+      currency: "ARS",
+    },
+  });
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("purchasesCreatePurchase failed:", res.error);
+  }
+}
+
+run();
+```
+### Example Usage: totals_only_with_manual_accounts
+
+<!-- UsageSnippet language="typescript" operationID="createApiPurchase" method="post" path="/api/v1/purchases" example="totals_only_with_manual_accounts" -->
+```typescript
+import { Lapyme } from "lapyme";
+
+const lapyme = new Lapyme({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const result = await lapyme.purchases.createPurchase({
+    idempotencyKey: "<value>",
+    body: {
+      supplierId: "afafcbec-9d94-4174-8d5c-ec8d72780947",
+      voucherType: 1,
+      supplierInvoiceNumber: "0001-00000004",
+      invoiceDate: new Date("2026-03-10"),
+      subtotal: 100000,
+      taxAmount: 21000,
+      total: 121000,
+      manualAccountAllocations: {
+        gravado21: "550e8400-e29b-41d4-a716-446655440301",
+      },
+      currency: "ARS",
+    },
+  });
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { LapymeCore } from "lapyme/core.js";
+import { purchasesCreatePurchase } from "lapyme/funcs/purchases-create-purchase.js";
+
+// Use `LapymeCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const lapyme = new LapymeCore({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const res = await purchasesCreatePurchase(lapyme, {
+    idempotencyKey: "<value>",
+    body: {
+      supplierId: "afafcbec-9d94-4174-8d5c-ec8d72780947",
+      voucherType: 1,
+      supplierInvoiceNumber: "0001-00000004",
+      invoiceDate: new Date("2026-03-10"),
+      subtotal: 100000,
+      taxAmount: 21000,
+      total: 121000,
+      manualAccountAllocations: {
+        gravado21: "550e8400-e29b-41d4-a716-446655440301",
+      },
+      currency: "ARS",
     },
   });
   if (res.ok) {
