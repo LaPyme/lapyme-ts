@@ -1,0 +1,30 @@
+# ApiSaleDetailResponseData
+
+## Example Usage
+
+```typescript
+import { ApiSaleDetailResponseData } from "lapyme/models";
+
+let value: ApiSaleDetailResponseData = {};
+```
+
+## Fields
+
+| Field                                                                          | Type                                                                           | Required                                                                       | Description                                                                    |
+| ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
+| `object`                                                                       | *"sale"*                                                                       | :heavy_minus_sign:                                                             | N/A                                                                            |
+| `id`                                                                           | *string*                                                                       | :heavy_minus_sign:                                                             | N/A                                                                            |
+| `invoicePdf`                                                                   | *string*                                                                       | :heavy_minus_sign:                                                             | N/A                                                                            |
+| `accounting`                                                                   | [models.ApiSharedObjectb708221d2f](../models/api-shared-objectb708221d2f.md)   | :heavy_minus_sign:                                                             | N/A                                                                            |
+| `document`                                                                     | [models.ApiSharedObjectdacb842378](../models/api-shared-objectdacb842378.md)   | :heavy_minus_sign:                                                             | N/A                                                                            |
+| `customer`                                                                     | Record<string, *any*>                                                          | :heavy_minus_sign:                                                             | N/A                                                                            |
+| `amounts`                                                                      | Record<string, *any*>                                                          | :heavy_minus_sign:                                                             | N/A                                                                            |
+| `items`                                                                        | Record<string, *any*>[]                                                        | :heavy_minus_sign:                                                             | N/A                                                                            |
+| `payments`                                                                     | Record<string, *any*>                                                          | :heavy_minus_sign:                                                             | N/A                                                                            |
+| `applications`                                                                 | Record<string, *any*>                                                          | :heavy_minus_sign:                                                             | N/A                                                                            |
+| `fiscal`                                                                       | Record<string, *any*>                                                          | :heavy_minus_sign:                                                             | N/A                                                                            |
+| `integration`                                                                  | Record<string, *any*>                                                          | :heavy_minus_sign:                                                             | N/A                                                                            |
+| `reversesVoucher`                                                              | Record<string, *any*>                                                          | :heavy_minus_sign:                                                             | N/A                                                                            |
+| `audit`                                                                        | Record<string, *any*>                                                          | :heavy_minus_sign:                                                             | N/A                                                                            |
+| `tags`                                                                         | [models.ApiSharedObjected3905a55b](../models/api-shared-objected3905a55b.md)[] | :heavy_minus_sign:                                                             | N/A                                                                            |
+| `additionalProperties`                                                         | Record<string, *any*>                                                          | :heavy_minus_sign:                                                             | N/A                                                                            |

@@ -33,7 +33,7 @@ export const ApiOrderInvoiceRequestLine$outboundSchema: z.ZodMiniType<
 > = z.pipe(
   z.object({
     orderLineId: z.string(),
-    quantityToInvoice: z.int(),
+    quantityToInvoice: z.number(),
   }),
   z.transform((v) => {
     return remap$(v, {
