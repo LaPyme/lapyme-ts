@@ -32,7 +32,7 @@ import { Result } from "../types/fp.js";
  * Actualizar producto
  *
  * @remarks
- * Actualiza un producto y devuelve el detalle persistido.
+ * Actualiza un producto y devuelve el detalle persistido. La actualización de un combo requiere Idempotency-Key para deduplicar reintentos.
  */
 export function productsUpdate(
   client: LapymeCore,
@@ -103,6 +103,11 @@ async function $do(
   const headers = new Headers(compactMap({
     "Content-Type": "application/json",
     Accept: "application/json",
+    "Idempotency-Key": encodeSimple(
+      "Idempotency-Key",
+      payload["Idempotency-Key"],
+      { explode: false, charEncoding: "none" },
+    ),
     "X-Request-Id": encodeSimple("X-Request-Id", payload["X-Request-Id"], {
       explode: false,
       charEncoding: "none",
