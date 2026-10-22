@@ -102,7 +102,6 @@ async function $do(
     "is_active": payload?.is_active,
     "limit": payload?.limit,
     "query": payload?.query,
-    "search": payload?.search,
   });
 
   const headers = new Headers(compactMap({

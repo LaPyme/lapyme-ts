@@ -14,7 +14,10 @@ export type ApiStockTransferRequestItem = {
 export type ApiStockTransferRequest = {
   sourceWarehouseId: string;
   targetWarehouseId: string;
-  transferDate: Date;
+  /**
+   * Fecha ISO (YYYY-MM-DD) u hora ISO 8601 completa.
+   */
+  transferDate: string;
   notes?: string | undefined;
   items: Array<ApiStockTransferRequestItem>;
   saveAsDraft?: boolean | undefined;
@@ -72,7 +75,7 @@ export const ApiStockTransferRequest$outboundSchema: z.ZodMiniType<
   z.object({
     sourceWarehouseId: z.string(),
     targetWarehouseId: z.string(),
-    transferDate: z.pipe(z.date(), z.transform(v => v.toISOString())),
+    transferDate: z.string(),
     notes: z.optional(z.string()),
     items: z.array(z.lazy(() => ApiStockTransferRequestItem$outboundSchema)),
     saveAsDraft: z.optional(z.boolean()),

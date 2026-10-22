@@ -6,86 +6,106 @@
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
 import { ClosedEnum } from "../types/enums.js";
-import { smartUnion } from "../types/smart-union.js";
+import {
+  ApiSharedEnum6440f2bcc2,
+  ApiSharedEnum6440f2bcc2$outboundSchema,
+} from "./api-shared-enum6440f2bcc2.js";
 import {
   ReportPeriod,
   ReportPeriod$Outbound,
   ReportPeriod$outboundSchema,
 } from "./report-period.js";
 
-export const SalesReportRequestDimensionEnum = {
+export const SalesReportRequestDimension = {
   Date: "date",
   Week: "week",
-  WeekOfYear: "weekOfYear",
+  WeekOfYear: "week_of_year",
   Month: "month",
-  MonthOfYear: "monthOfYear",
-  DayOfWeek: "dayOfWeek",
+  MonthOfYear: "month_of_year",
+  DayOfWeek: "day_of_week",
   Year: "year",
   Quarter: "quarter",
-  HourOfDay: "hourOfDay",
+  HourOfDay: "hour_of_day",
   Customer: "customer",
-  CustomerName: "customerName",
-  CustomerEmail: "customerEmail",
-  CustomerTaxCategory: "customerTaxCategory",
+  CustomerName: "customer_name",
+  CustomerEmail: "customer_email",
+  CustomerTaxCategory: "customer_tax_category",
+  CustomerType: "customer_type",
+  CustomerRecency: "customer_recency",
   Province: "province",
   City: "city",
   Product: "product",
-  ProductName: "productName",
+  ProductName: "product_name",
   Variant: "variant",
-  VariantSku: "variantSku",
+  VariantSku: "variant_sku",
   Category: "category",
   Subcategory: "subcategory",
-  DefaultSupplierName: "defaultSupplierName",
-  ProductType: "productType",
+  DefaultSupplierName: "default_supplier_name",
+  ProductType: "product_type",
   Salesperson: "salesperson",
-  PointOfSale: "pointOfSale",
+  Cashier: "cashier",
+  PointOfSale: "point_of_sale",
   Warehouse: "warehouse",
   Register: "register",
-  IntegrationSource: "integrationSource",
-  VoucherType: "voucherType",
+  IntegrationSource: "integration_source",
+  ChannelListing: "channel_listing",
+  ChannelListingType: "channel_listing_type",
+  ChannelLogistics: "channel_logistics",
+  VoucherType: "voucher_type",
   Currency: "currency",
-  PaymentStatus: "paymentStatus",
-  CaeStatus: "caeStatus",
-  FormattedInvoiceNumber: "formattedInvoiceNumber",
-  PaymentMethod: "paymentMethod",
-  TaxRate: "taxRate",
-  SaleLineType: "saleLineType",
+  PaymentStatus: "payment_status",
+  CaeStatus: "cae_status",
+  InvoiceStatus: "invoice_status",
+  FormattedInvoiceNumber: "formatted_invoice_number",
+  TaxRate: "tax_rate",
+  SaleLineType: "sale_line_type",
 } as const;
-export type SalesReportRequestDimensionEnum = ClosedEnum<
-  typeof SalesReportRequestDimensionEnum
+export type SalesReportRequestDimension = ClosedEnum<
+  typeof SalesReportRequestDimension
 >;
-
-export type SalesReportRequestDimensionUnion =
-  | SalesReportRequestDimensionEnum
-  | string;
 
 export const SalesReportRequestMeasure = {
   Total: "total",
   Subtotal: "subtotal",
-  TaxAmount: "taxAmount",
+  TaxAmount: "tax_amount",
   Count: "count",
+  SaleCount: "sale_count",
+  CreditNoteCount: "credit_note_count",
   Units: "units",
+  UnitsPerSale: "units_per_sale",
   Cost: "cost",
   Margin: "margin",
-  AvgTicket: "avgTicket",
-  MarginPercent: "marginPercent",
-  DiscountAmount: "discountAmount",
+  AvgTicket: "avg_ticket",
+  MarginPercent: "margin_percent",
+  ChannelFee: "channel_fee",
+  SellerShipping: "seller_shipping",
+  AdditionalCosts: "additional_costs",
+  ContributionMargin: "contribution_margin",
+  ContributionMarginPercent: "contribution_margin_percent",
+  DiscountAmount: "discount_amount",
+  LineDiscountAmount: "line_discount_amount",
+  LineDiscountRate: "line_discount_rate",
+  GlobalDiscountAmount: "global_discount_amount",
+  GlobalDiscountRate: "global_discount_rate",
+  DiscountedSalesCount: "discounted_sales_count",
   Balance: "balance",
-  UniqueCustomers: "uniqueCustomers",
-  UniqueProducts: "uniqueProducts",
+  UniqueCustomers: "unique_customers",
+  UniqueProducts: "unique_products",
 } as const;
 export type SalesReportRequestMeasure = ClosedEnum<
   typeof SalesReportRequestMeasure
 >;
 
 /**
- * Filtros por dimensión. Cada clave debe ser una dimensión filtrable para la fuente. También acepta product_metafield:<key> para campos personalizados select de producto. El valor es un array de IDs o valores a incluir.
+ * Filtros por dimensión. Cada clave debe ser una dimensión filtrable para la fuente. También acepta product_metafield:<key> para campos personalizados select de producto y contact_metafield:<key> para campos personalizados select de contacto cuando la fuente lo soporta. El valor es un array de IDs o valores a incluir.
  */
 export type SalesReportRequestDimensionFilters = {
   customer?: Array<string> | undefined;
   customerName?: Array<string> | undefined;
   customerEmail?: Array<string> | undefined;
   customerTaxCategory?: Array<string> | undefined;
+  customerType?: Array<string> | undefined;
+  customerRecency?: Array<string> | undefined;
   province?: Array<string> | undefined;
   city?: Array<string> | undefined;
   product?: Array<string> | undefined;
@@ -96,18 +116,27 @@ export type SalesReportRequestDimensionFilters = {
   defaultSupplierName?: Array<string> | undefined;
   productType?: Array<string> | undefined;
   salesperson?: Array<string> | undefined;
+  cashier?: Array<string> | undefined;
   pointOfSale?: Array<string> | undefined;
   warehouse?: Array<string> | undefined;
   register?: Array<string> | undefined;
   integrationSource?: Array<string> | undefined;
+  channelListing?: Array<string> | undefined;
+  channelListingType?: Array<string> | undefined;
+  channelLogistics?: Array<string> | undefined;
   voucherType?: Array<string> | undefined;
   currency?: Array<string> | undefined;
   paymentStatus?: Array<string> | undefined;
   caeStatus?: Array<string> | undefined;
+  invoiceStatus?: Array<string> | undefined;
   formattedInvoiceNumber?: Array<string> | undefined;
-  paymentMethod?: Array<string> | undefined;
   taxRate?: Array<string> | undefined;
   saleLineType?: Array<string> | undefined;
+  customerStatus?: Array<string> | undefined;
+  productStatus?: Array<string> | undefined;
+  warehouseStatus?: Array<string> | undefined;
+  pointOfSaleStatus?: Array<string> | undefined;
+  registerStatus?: Array<string> | undefined;
 };
 
 /**
@@ -128,15 +157,15 @@ export type SalesReportRequest = {
   source: "sales";
   period: ReportPeriod;
   /**
-   * Dimensiones de agrupación. Máximo 4. Acepta product_metafield:<key> para campos personalizados select de producto.
+   * Dimensiones de agrupación. Máximo 12. Acepta product_metafield:<key> para campos personalizados select de producto y contact_metafield:<key> para campos personalizados select de contacto.
    */
-  dimensions?: Array<SalesReportRequestDimensionEnum | string> | undefined;
+  dimensions?: Array<any> | undefined;
   /**
    * Medidas a calcular. Al menos una.
    */
   measures: Array<SalesReportRequestMeasure>;
   /**
-   * Filtros por dimensión. Cada clave debe ser una dimensión filtrable para la fuente. También acepta product_metafield:<key> para campos personalizados select de producto. El valor es un array de IDs o valores a incluir.
+   * Filtros por dimensión. Cada clave debe ser una dimensión filtrable para la fuente. También acepta product_metafield:<key> para campos personalizados select de producto y contact_metafield:<key> para campos personalizados select de contacto cuando la fuente lo soporta. El valor es un array de IDs o valores a incluir.
    */
   dimensionFilters?: SalesReportRequestDimensionFilters | undefined;
   /**
@@ -144,34 +173,19 @@ export type SalesReportRequest = {
    */
   includeTotals?: boolean | undefined;
   /**
+   * Currency used for all monetary measures in the report.
+   */
+  reportingCurrency?: ApiSharedEnum6440f2bcc2 | undefined;
+  /**
    * `commercial` usa la fecha de venta. `fiscal` usa la fecha contable del comprobante.
    */
   dateBasis?: SalesReportRequestDateBasis | undefined;
 };
 
 /** @internal */
-export const SalesReportRequestDimensionEnum$outboundSchema: z.ZodMiniEnum<
-  typeof SalesReportRequestDimensionEnum
-> = z.enum(SalesReportRequestDimensionEnum);
-
-/** @internal */
-export type SalesReportRequestDimensionUnion$Outbound = string | string;
-
-/** @internal */
-export const SalesReportRequestDimensionUnion$outboundSchema: z.ZodMiniType<
-  SalesReportRequestDimensionUnion$Outbound,
-  SalesReportRequestDimensionUnion
-> = smartUnion([SalesReportRequestDimensionEnum$outboundSchema, z.string()]);
-
-export function salesReportRequestDimensionUnionToJSON(
-  salesReportRequestDimensionUnion: SalesReportRequestDimensionUnion,
-): string {
-  return JSON.stringify(
-    SalesReportRequestDimensionUnion$outboundSchema.parse(
-      salesReportRequestDimensionUnion,
-    ),
-  );
-}
+export const SalesReportRequestDimension$outboundSchema: z.ZodMiniEnum<
+  typeof SalesReportRequestDimension
+> = z.enum(SalesReportRequestDimension);
 
 /** @internal */
 export const SalesReportRequestMeasure$outboundSchema: z.ZodMiniEnum<
@@ -184,6 +198,8 @@ export type SalesReportRequestDimensionFilters$Outbound = {
   customer_name?: Array<string> | undefined;
   customer_email?: Array<string> | undefined;
   customer_tax_category?: Array<string> | undefined;
+  customer_type?: Array<string> | undefined;
+  customer_recency?: Array<string> | undefined;
   province?: Array<string> | undefined;
   city?: Array<string> | undefined;
   product?: Array<string> | undefined;
@@ -194,18 +210,27 @@ export type SalesReportRequestDimensionFilters$Outbound = {
   default_supplier_name?: Array<string> | undefined;
   product_type?: Array<string> | undefined;
   salesperson?: Array<string> | undefined;
+  cashier?: Array<string> | undefined;
   point_of_sale?: Array<string> | undefined;
   warehouse?: Array<string> | undefined;
   register?: Array<string> | undefined;
   integration_source?: Array<string> | undefined;
+  channel_listing?: Array<string> | undefined;
+  channel_listing_type?: Array<string> | undefined;
+  channel_logistics?: Array<string> | undefined;
   voucher_type?: Array<string> | undefined;
   currency?: Array<string> | undefined;
   payment_status?: Array<string> | undefined;
   cae_status?: Array<string> | undefined;
+  invoice_status?: Array<string> | undefined;
   formatted_invoice_number?: Array<string> | undefined;
-  payment_method?: Array<string> | undefined;
   tax_rate?: Array<string> | undefined;
   sale_line_type?: Array<string> | undefined;
+  customer_status?: Array<string> | undefined;
+  product_status?: Array<string> | undefined;
+  warehouse_status?: Array<string> | undefined;
+  point_of_sale_status?: Array<string> | undefined;
+  register_status?: Array<string> | undefined;
 };
 
 /** @internal */
@@ -218,6 +243,8 @@ export const SalesReportRequestDimensionFilters$outboundSchema: z.ZodMiniType<
     customerName: z.optional(z.array(z.string())),
     customerEmail: z.optional(z.array(z.string())),
     customerTaxCategory: z.optional(z.array(z.string())),
+    customerType: z.optional(z.array(z.string())),
+    customerRecency: z.optional(z.array(z.string())),
     province: z.optional(z.array(z.string())),
     city: z.optional(z.array(z.string())),
     product: z.optional(z.array(z.string())),
@@ -228,37 +255,56 @@ export const SalesReportRequestDimensionFilters$outboundSchema: z.ZodMiniType<
     defaultSupplierName: z.optional(z.array(z.string())),
     productType: z.optional(z.array(z.string())),
     salesperson: z.optional(z.array(z.string())),
+    cashier: z.optional(z.array(z.string())),
     pointOfSale: z.optional(z.array(z.string())),
     warehouse: z.optional(z.array(z.string())),
     register: z.optional(z.array(z.string())),
     integrationSource: z.optional(z.array(z.string())),
+    channelListing: z.optional(z.array(z.string())),
+    channelListingType: z.optional(z.array(z.string())),
+    channelLogistics: z.optional(z.array(z.string())),
     voucherType: z.optional(z.array(z.string())),
     currency: z.optional(z.array(z.string())),
     paymentStatus: z.optional(z.array(z.string())),
     caeStatus: z.optional(z.array(z.string())),
+    invoiceStatus: z.optional(z.array(z.string())),
     formattedInvoiceNumber: z.optional(z.array(z.string())),
-    paymentMethod: z.optional(z.array(z.string())),
     taxRate: z.optional(z.array(z.string())),
     saleLineType: z.optional(z.array(z.string())),
+    customerStatus: z.optional(z.array(z.string())),
+    productStatus: z.optional(z.array(z.string())),
+    warehouseStatus: z.optional(z.array(z.string())),
+    pointOfSaleStatus: z.optional(z.array(z.string())),
+    registerStatus: z.optional(z.array(z.string())),
   }),
   z.transform((v) => {
     return remap$(v, {
       customerName: "customer_name",
       customerEmail: "customer_email",
       customerTaxCategory: "customer_tax_category",
+      customerType: "customer_type",
+      customerRecency: "customer_recency",
       productName: "product_name",
       variantSku: "variant_sku",
       defaultSupplierName: "default_supplier_name",
       productType: "product_type",
       pointOfSale: "point_of_sale",
       integrationSource: "integration_source",
+      channelListing: "channel_listing",
+      channelListingType: "channel_listing_type",
+      channelLogistics: "channel_logistics",
       voucherType: "voucher_type",
       paymentStatus: "payment_status",
       caeStatus: "cae_status",
+      invoiceStatus: "invoice_status",
       formattedInvoiceNumber: "formatted_invoice_number",
-      paymentMethod: "payment_method",
       taxRate: "tax_rate",
       saleLineType: "sale_line_type",
+      customerStatus: "customer_status",
+      productStatus: "product_status",
+      warehouseStatus: "warehouse_status",
+      pointOfSaleStatus: "point_of_sale_status",
+      registerStatus: "register_status",
     });
   }),
 );
@@ -282,10 +328,11 @@ export const SalesReportRequestDateBasis$outboundSchema: z.ZodMiniEnum<
 export type SalesReportRequest$Outbound = {
   source: "sales";
   period: ReportPeriod$Outbound;
-  dimensions?: Array<string | string> | undefined;
+  dimensions?: Array<any> | undefined;
   measures: Array<string>;
   dimension_filters?: SalesReportRequestDimensionFilters$Outbound | undefined;
   include_totals?: boolean | undefined;
+  reporting_currency: string;
   date_basis: string;
 };
 
@@ -297,19 +344,16 @@ export const SalesReportRequest$outboundSchema: z.ZodMiniType<
   z.object({
     source: z.literal("sales"),
     period: ReportPeriod$outboundSchema,
-    dimensions: z.optional(
-      z.array(
-        smartUnion([
-          SalesReportRequestDimensionEnum$outboundSchema,
-          z.string(),
-        ]),
-      ),
-    ),
+    dimensions: z.optional(z.array(z.any())),
     measures: z.array(SalesReportRequestMeasure$outboundSchema),
     dimensionFilters: z.optional(
       z.lazy(() => SalesReportRequestDimensionFilters$outboundSchema),
     ),
     includeTotals: z.optional(z.boolean()),
+    reportingCurrency: z._default(
+      ApiSharedEnum6440f2bcc2$outboundSchema,
+      "ARS",
+    ),
     dateBasis: z._default(
       SalesReportRequestDateBasis$outboundSchema,
       "commercial",
@@ -319,6 +363,7 @@ export const SalesReportRequest$outboundSchema: z.ZodMiniType<
     return remap$(v, {
       dimensionFilters: "dimension_filters",
       includeTotals: "include_totals",
+      reportingCurrency: "reporting_currency",
       dateBasis: "date_basis",
     });
   }),
