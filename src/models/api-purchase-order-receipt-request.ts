@@ -31,7 +31,7 @@ export const ApiPurchaseOrderReceiptRequestItem$outboundSchema: z.ZodMiniType<
   z.object({
     purchaseOrderItemId: z.string(),
     productId: z.string(),
-    receivedQuantity: z.int(),
+    receivedQuantity: z.number(),
   }),
   z.transform((v) => {
     return remap$(v, {

@@ -6,7 +6,9 @@
 import { ListApiProductsResponse } from "lapyme/models/operations";
 
 let value: ListApiProductsResponse = {
-  headers: {},
+  headers: {
+    "key": [],
+  },
   result: {
     requestId: "<id>",
     data: [
@@ -20,29 +22,45 @@ let value: ListApiProductsResponse = {
         },
         sku: "<value>",
         barcode: "<value>",
-        currency: "Lek",
-        cost: 4169.96,
-        price: 11.65,
+        imageUrl: null,
+        currency: "Jordanian Dinar",
+        cost: null,
+        price: 9545.45,
         taxRate: {
-          id: 9545.45,
-          value: 8570.91,
+          id: 6496.5,
+          value: 3957.79,
         },
         defaultSupplier: {
-          id: "e2939b22-6734-418f-802e-69ca6e74fd88",
+          id: "9431a085-9f3d-46fb-8826-91199d393547",
           name: "<value>",
         },
         productType: "kit",
+        visibility: "system",
         isActive: true,
         organizationSlug: "<value>",
-        createdAt: new Date("2025-01-03T08:44:42.602Z"),
-        updatedAt: new Date("2025-02-15T09:21:59.181Z"),
+        createdAt: new Date("2025-10-10T09:48:40.601Z"),
+        updatedAt: new Date("2024-09-29T01:23:20.724Z"),
         object: "product",
+        tags: [
+          {
+            object: "tag",
+            id: "b4c64393-84ca-458c-8f3b-39718b070484",
+            scope: "transfer",
+            name: "<value>",
+            slug: "<value>",
+            color: "pink",
+            description: "delectable astride downright",
+            archivedAt: new Date("2024-08-12T06:34:32.349Z"),
+            createdAt: new Date("2024-10-25T15:17:34.484Z"),
+            updatedAt: new Date("2024-11-10T16:15:42.311Z"),
+          },
+        ],
       },
     ],
-    hasMore: true,
+    hasMore: false,
     nextCursor: "<value>",
     object: "list",
-    url: "https://descriptive-analogy.com",
+    url: "https://hurtful-issue.biz/",
   },
 };
 ```

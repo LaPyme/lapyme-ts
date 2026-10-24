@@ -33,7 +33,7 @@ export class SupplierPayments extends ClientSDK {
    * Crear pago a proveedor
    *
    * @remarks
-   * Registra un pago a proveedor con uno o más métodos de pago, aplicaciones a compras o cuenta corriente, retenciones y datos de cheque cuando corresponde.
+   * Registra un pago a proveedor con uno o más métodos de pago, aplicaciones a compras o cuenta corriente, retenciones y datos de cheque cuando corresponde. Reintentar con la misma Idempotency-Key y los mismos datos devuelve el pago original con idempotent_replay en true y no registra otro; reutilizar la clave con datos distintos devuelve 409 IDEMPOTENCY_CONFLICT. Ante un 503, reintentá con la misma clave.
    */
   async createSupplierPayment(
     request: operations.CreateApiSupplierPaymentRequest,

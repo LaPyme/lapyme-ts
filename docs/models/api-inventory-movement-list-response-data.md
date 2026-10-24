@@ -11,15 +11,19 @@ let value: ApiInventoryMovementListResponseData = {
   movementType: "<value>",
   quantity: 8242.44,
   balance: 3809.04,
-  quantityChange: 6273.81,
-  reservedQuantityChange: 4172.64,
-  incomingQuantityChange: 6992.23,
+  reservedBalance: 6273.81,
+  incomingBalance: 4172.64,
+  quantityChange: 6992.23,
+  reservedQuantityChange: 3031.89,
+  incomingQuantityChange: 7395.45,
   reason: "<value>",
   notes: "<value>",
-  createdAt: new Date("2025-08-22T12:23:16.018Z"),
+  createdAt: new Date("2025-08-30T20:25:09.024Z"),
+  createdBy: "249c8612-1456-45c5-809e-e898a5b8d108",
   createdByName: "<value>",
   warehouseName: "<value>",
   targetWarehouseName: "<value>",
+  otherWarehouseName: "<value>",
   referenceType: "purchase",
   referenceId: "<id>",
   referenceLabel: "<value>",
@@ -35,15 +39,19 @@ let value: ApiInventoryMovementListResponseData = {
 | `movementType`                                                                                | *string*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `quantity`                                                                                    | *number*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `balance`                                                                                     | *number*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
+| `reservedBalance`                                                                             | *number*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
+| `incomingBalance`                                                                             | *number*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `quantityChange`                                                                              | *number*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `reservedQuantityChange`                                                                      | *number*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `incomingQuantityChange`                                                                      | *number*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `reason`                                                                                      | *string*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `notes`                                                                                       | *string*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `createdAt`                                                                                   | [Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date) | :heavy_check_mark:                                                                            | N/A                                                                                           |
+| `createdBy`                                                                                   | *string*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `createdByName`                                                                               | *string*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `warehouseName`                                                                               | *string*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `targetWarehouseName`                                                                         | *string*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
+| `otherWarehouseName`                                                                          | *string*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `referenceType`                                                                               | [models.ApiSharedEnumed1129741e](../models/api-shared-enumed1129741e.md)                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `referenceId`                                                                                 | *string*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `referenceLabel`                                                                              | *string*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
