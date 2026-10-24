@@ -34,7 +34,7 @@ export class Customers extends ClientSDK {
    * Crear cliente
    *
    * @remarks
-   * Crea un cliente para ventas, cuentas corrientes, etiquetas y reportes.
+   * Crea un cliente para ventas, cuentas corrientes, etiquetas y reportes. Un DNI o CUIT que ya pertenece a otro cliente de la organización responde 409 CONFLICT.
    */
   async create(
     request: operations.CreateApiCustomerRequest,
@@ -68,7 +68,7 @@ export class Customers extends ClientSDK {
    * Actualizar cliente
    *
    * @remarks
-   * Actualiza un cliente y devuelve los datos persistidos.
+   * Actualiza un cliente y devuelve los datos persistidos. Cambiar el DNI o CUIT a uno que ya pertenece a otro cliente de la organización responde 409 CONFLICT; reenviar el documento guardado no lo valida otra vez.
    */
   async updateCustomer(
     request: operations.UpdateApiCustomerRequest,
