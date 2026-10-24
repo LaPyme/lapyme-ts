@@ -14,14 +14,15 @@ let value: ApiPaymentMethodDetailResponse = {
     icon: null,
     type: "bank_transfer",
     bankAccountId: "a543ada9-6803-4eab-bb56-cde7cdc459cd",
+    supplierSourceBankAccountId: "6c23ac39-1214-4804-a0dd-0dbbbf65f1a3",
     feePercentage: "<value>",
-    feeFixed: 779185,
-    requiresReference: true,
+    feeFixed: 639813,
+    requiresReference: false,
     visibility: "sales",
     isActive: false,
     isDefault: false,
-    createdAt: new Date("2024-09-28T16:50:14.318Z"),
-    updatedAt: new Date("2025-09-12T20:54:03.880Z"),
+    createdAt: new Date("2025-03-19T00:52:06.347Z"),
+    updatedAt: new Date("2025-04-10T12:55:00.312Z"),
   },
 };
 ```
@@ -31,4 +32,4 @@ let value: ApiPaymentMethodDetailResponse = {
 | Field                                                                        | Type                                                                         | Required                                                                     | Description                                                                  |
 | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
 | `requestId`                                                                  | *string*                                                                     | :heavy_check_mark:                                                           | N/A                                                                          |
-| `data`                                                                       | [models.ApiSharedObjectbea6e6be70](../models/api-shared-objectbea6e6be70.md) | :heavy_check_mark:                                                           | N/A                                                                          |
+| `data`                                                                       | [models.ApiSharedObjecta2bd01d7eb](../models/api-shared-objecta2bd01d7eb.md) | :heavy_check_mark:                                                           | N/A                                                                          |

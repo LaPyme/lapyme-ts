@@ -6,36 +6,59 @@
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
 import {
-  ApiSharedEnum6cfb146157,
-  ApiSharedEnum6cfb146157$outboundSchema,
-} from "./api-shared-enum6cfb146157.js";
+  ApiSharedEnumffb4886f2b,
+  ApiSharedEnumffb4886f2b$outboundSchema,
+} from "./api-shared-enumffb4886f2b.js";
 import {
-  ApiSharedObject4faf4c3ad5,
-  ApiSharedObject4faf4c3ad5$Outbound,
-  ApiSharedObject4faf4c3ad5$outboundSchema,
-} from "./api-shared-object4faf4c3ad5.js";
+  ApiSharedObject24cbbd28ea,
+  ApiSharedObject24cbbd28ea$Outbound,
+  ApiSharedObject24cbbd28ea$outboundSchema,
+} from "./api-shared-object24cbbd28ea.js";
+import {
+  ApiSharedObject31607d73d9,
+  ApiSharedObject31607d73d9$Outbound,
+  ApiSharedObject31607d73d9$outboundSchema,
+} from "./api-shared-object31607d73d9.js";
 import {
   ApiSharedObject6447103182,
   ApiSharedObject6447103182$Outbound,
   ApiSharedObject6447103182$outboundSchema,
 } from "./api-shared-object6447103182.js";
 import {
-  ApiSharedObject9e584e0f8a,
-  ApiSharedObject9e584e0f8a$Outbound,
-  ApiSharedObject9e584e0f8a$outboundSchema,
-} from "./api-shared-object9e584e0f8a.js";
-import {
   ApiSharedObjectdaa374f786,
   ApiSharedObjectdaa374f786$Outbound,
   ApiSharedObjectdaa374f786$outboundSchema,
 } from "./api-shared-objectdaa374f786.js";
 
-export type ApiCustomerPaymentCreateRequestApplication = {
+export type ApiCustomerPaymentCreateRequestSplit = {
+  paymentMethodId: string;
+  amount: number;
+  reference?: string | undefined;
+  cardBrand?: string | undefined;
+  cardBatchNumber?: string | undefined;
+  cardCouponNumber?: string | undefined;
+  cardInstallmentPlanCode?: string | undefined;
+  notes?: string | undefined;
+  /**
+   * Costo real informado por el procesador, incluido IVA no recuperable. Se contabiliza y reduce el cupón pendiente. fee_amount sigue siendo una estimación sin asiento. Solo para cobranzas en pesos pendientes en el procesador. Omitilo si el costo no está disponible; cero declara un costo real de cero.
+   */
+  actualProcessorFeeAmount?: number | undefined;
+  feeAmount?: number | undefined;
+  feePercentageApplied?: string | undefined;
+  feeFixedApplied?: number | undefined;
+  netAmount?: number | undefined;
+  checkId?: string | undefined;
+  checkData?: ApiSharedObject24cbbd28ea | undefined;
+  registerId?: string | undefined;
+  safeId?: string | undefined;
+};
+
+export type Application = {
   saleId: string;
   appliedAmount: number;
 };
 
-export type ApiCustomerPaymentCreateRequestCreditNoteApplication = {
+export type CreditNoteApplication = {
   creditSaleId: string;
   appliedAmount: number;
 };
@@ -44,91 +67,152 @@ export type ApiCustomerPaymentCreateRequest = {
   customerId: string;
   pointOfSaleId: string;
   paymentDate: string;
-  currency: ApiSharedEnum6cfb146157;
+  currency: ApiSharedEnumffb4886f2b;
   exchangeRate?: number | undefined;
   totalAmount: number;
-  settlementCurrency?: ApiSharedEnum6cfb146157 | undefined;
+  settlementCurrency?: ApiSharedEnumffb4886f2b | undefined;
   settlementTotalAmount?: number | undefined;
   sessionId?: string | undefined;
   notes?: string | undefined;
-  splits: Array<ApiSharedObject9e584e0f8a>;
-  applications?: Array<ApiCustomerPaymentCreateRequestApplication> | undefined;
+  splits: Array<ApiCustomerPaymentCreateRequestSplit>;
+  applications?: Array<Application> | undefined;
   journalLineApplications?: Array<ApiSharedObjectdaa374f786> | undefined;
   creditJournalLineApplications?: Array<ApiSharedObjectdaa374f786> | undefined;
-  creditNoteApplications?:
-    | Array<ApiCustomerPaymentCreateRequestCreditNoteApplication>
-    | undefined;
+  creditNoteApplications?: Array<CreditNoteApplication> | undefined;
   advanceApplications?: Array<ApiSharedObject6447103182> | undefined;
-  withholdings?: Array<ApiSharedObject4faf4c3ad5> | undefined;
+  withholdings?: Array<ApiSharedObject31607d73d9> | undefined;
 };
 
 /** @internal */
-export type ApiCustomerPaymentCreateRequestApplication$Outbound = {
-  sale_id: string;
-  applied_amount: number;
+export type ApiCustomerPaymentCreateRequestSplit$Outbound = {
+  payment_method_id: string;
+  amount: number;
+  reference?: string | undefined;
+  card_brand?: string | undefined;
+  card_batch_number?: string | undefined;
+  card_coupon_number?: string | undefined;
+  card_installment_plan_code?: string | undefined;
+  notes?: string | undefined;
+  actual_processor_fee_amount?: number | undefined;
+  fee_amount?: number | undefined;
+  fee_percentage_applied?: string | undefined;
+  fee_fixed_applied?: number | undefined;
+  net_amount?: number | undefined;
+  check_id?: string | undefined;
+  check_data?: ApiSharedObject24cbbd28ea$Outbound | undefined;
+  register_id?: string | undefined;
+  safe_id?: string | undefined;
 };
 
 /** @internal */
-export const ApiCustomerPaymentCreateRequestApplication$outboundSchema:
-  z.ZodMiniType<
-    ApiCustomerPaymentCreateRequestApplication$Outbound,
-    ApiCustomerPaymentCreateRequestApplication
-  > = z.pipe(
-    z.object({
-      saleId: z.string(),
-      appliedAmount: z.int(),
-    }),
-    z.transform((v) => {
-      return remap$(v, {
-        saleId: "sale_id",
-        appliedAmount: "applied_amount",
-      });
-    }),
-  );
+export const ApiCustomerPaymentCreateRequestSplit$outboundSchema: z.ZodMiniType<
+  ApiCustomerPaymentCreateRequestSplit$Outbound,
+  ApiCustomerPaymentCreateRequestSplit
+> = z.pipe(
+  z.object({
+    paymentMethodId: z.string(),
+    amount: z.int(),
+    reference: z.optional(z.string()),
+    cardBrand: z.optional(z.string()),
+    cardBatchNumber: z.optional(z.string()),
+    cardCouponNumber: z.optional(z.string()),
+    cardInstallmentPlanCode: z.optional(z.string()),
+    notes: z.optional(z.string()),
+    actualProcessorFeeAmount: z.optional(z.int()),
+    feeAmount: z.optional(z.int()),
+    feePercentageApplied: z.optional(z.string()),
+    feeFixedApplied: z.optional(z.int()),
+    netAmount: z.optional(z.int()),
+    checkId: z.optional(z.string()),
+    checkData: z.optional(ApiSharedObject24cbbd28ea$outboundSchema),
+    registerId: z.optional(z.string()),
+    safeId: z.optional(z.string()),
+  }),
+  z.transform((v) => {
+    return remap$(v, {
+      paymentMethodId: "payment_method_id",
+      cardBrand: "card_brand",
+      cardBatchNumber: "card_batch_number",
+      cardCouponNumber: "card_coupon_number",
+      cardInstallmentPlanCode: "card_installment_plan_code",
+      actualProcessorFeeAmount: "actual_processor_fee_amount",
+      feeAmount: "fee_amount",
+      feePercentageApplied: "fee_percentage_applied",
+      feeFixedApplied: "fee_fixed_applied",
+      netAmount: "net_amount",
+      checkId: "check_id",
+      checkData: "check_data",
+      registerId: "register_id",
+      safeId: "safe_id",
+    });
+  }),
+);
 
-export function apiCustomerPaymentCreateRequestApplicationToJSON(
-  apiCustomerPaymentCreateRequestApplication:
-    ApiCustomerPaymentCreateRequestApplication,
+export function apiCustomerPaymentCreateRequestSplitToJSON(
+  apiCustomerPaymentCreateRequestSplit: ApiCustomerPaymentCreateRequestSplit,
 ): string {
   return JSON.stringify(
-    ApiCustomerPaymentCreateRequestApplication$outboundSchema.parse(
-      apiCustomerPaymentCreateRequestApplication,
+    ApiCustomerPaymentCreateRequestSplit$outboundSchema.parse(
+      apiCustomerPaymentCreateRequestSplit,
     ),
   );
 }
 
 /** @internal */
-export type ApiCustomerPaymentCreateRequestCreditNoteApplication$Outbound = {
+export type Application$Outbound = {
+  sale_id: string;
+  applied_amount: number;
+};
+
+/** @internal */
+export const Application$outboundSchema: z.ZodMiniType<
+  Application$Outbound,
+  Application
+> = z.pipe(
+  z.object({
+    saleId: z.string(),
+    appliedAmount: z.int(),
+  }),
+  z.transform((v) => {
+    return remap$(v, {
+      saleId: "sale_id",
+      appliedAmount: "applied_amount",
+    });
+  }),
+);
+
+export function applicationToJSON(application: Application): string {
+  return JSON.stringify(Application$outboundSchema.parse(application));
+}
+
+/** @internal */
+export type CreditNoteApplication$Outbound = {
   credit_sale_id: string;
   applied_amount: number;
 };
 
 /** @internal */
-export const ApiCustomerPaymentCreateRequestCreditNoteApplication$outboundSchema:
-  z.ZodMiniType<
-    ApiCustomerPaymentCreateRequestCreditNoteApplication$Outbound,
-    ApiCustomerPaymentCreateRequestCreditNoteApplication
-  > = z.pipe(
-    z.object({
-      creditSaleId: z.string(),
-      appliedAmount: z.int(),
-    }),
-    z.transform((v) => {
-      return remap$(v, {
-        creditSaleId: "credit_sale_id",
-        appliedAmount: "applied_amount",
-      });
-    }),
-  );
+export const CreditNoteApplication$outboundSchema: z.ZodMiniType<
+  CreditNoteApplication$Outbound,
+  CreditNoteApplication
+> = z.pipe(
+  z.object({
+    creditSaleId: z.string(),
+    appliedAmount: z.int(),
+  }),
+  z.transform((v) => {
+    return remap$(v, {
+      creditSaleId: "credit_sale_id",
+      appliedAmount: "applied_amount",
+    });
+  }),
+);
 
-export function apiCustomerPaymentCreateRequestCreditNoteApplicationToJSON(
-  apiCustomerPaymentCreateRequestCreditNoteApplication:
-    ApiCustomerPaymentCreateRequestCreditNoteApplication,
+export function creditNoteApplicationToJSON(
+  creditNoteApplication: CreditNoteApplication,
 ): string {
   return JSON.stringify(
-    ApiCustomerPaymentCreateRequestCreditNoteApplication$outboundSchema.parse(
-      apiCustomerPaymentCreateRequestCreditNoteApplication,
-    ),
+    CreditNoteApplication$outboundSchema.parse(creditNoteApplication),
   );
 }
 
@@ -144,21 +228,17 @@ export type ApiCustomerPaymentCreateRequest$Outbound = {
   settlement_total_amount?: number | undefined;
   session_id?: string | undefined;
   notes?: string | undefined;
-  splits: Array<ApiSharedObject9e584e0f8a$Outbound>;
-  applications?:
-    | Array<ApiCustomerPaymentCreateRequestApplication$Outbound>
-    | undefined;
+  splits: Array<ApiCustomerPaymentCreateRequestSplit$Outbound>;
+  applications?: Array<Application$Outbound> | undefined;
   journal_line_applications?:
     | Array<ApiSharedObjectdaa374f786$Outbound>
     | undefined;
   credit_journal_line_applications?:
     | Array<ApiSharedObjectdaa374f786$Outbound>
     | undefined;
-  credit_note_applications?:
-    | Array<ApiCustomerPaymentCreateRequestCreditNoteApplication$Outbound>
-    | undefined;
+  credit_note_applications?: Array<CreditNoteApplication$Outbound> | undefined;
   advance_applications?: Array<ApiSharedObject6447103182$Outbound> | undefined;
-  withholdings?: Array<ApiSharedObject4faf4c3ad5$Outbound> | undefined;
+  withholdings?: Array<ApiSharedObject31607d73d9$Outbound> | undefined;
 };
 
 /** @internal */
@@ -170,30 +250,30 @@ export const ApiCustomerPaymentCreateRequest$outboundSchema: z.ZodMiniType<
     customerId: z.string(),
     pointOfSaleId: z.string(),
     paymentDate: z.string(),
-    currency: ApiSharedEnum6cfb146157$outboundSchema,
+    currency: ApiSharedEnumffb4886f2b$outboundSchema,
     exchangeRate: z.optional(z.number()),
     totalAmount: z.int(),
-    settlementCurrency: z.optional(ApiSharedEnum6cfb146157$outboundSchema),
+    settlementCurrency: z.optional(ApiSharedEnumffb4886f2b$outboundSchema),
     settlementTotalAmount: z.optional(z.int()),
     sessionId: z.optional(z.string()),
     notes: z.optional(z.string()),
-    splits: z.array(ApiSharedObject9e584e0f8a$outboundSchema),
-    applications: z.optional(z.array(z.lazy(() =>
-      ApiCustomerPaymentCreateRequestApplication$outboundSchema
-    ))),
+    splits: z.array(
+      z.lazy(() => ApiCustomerPaymentCreateRequestSplit$outboundSchema),
+    ),
+    applications: z.optional(z.array(z.lazy(() => Application$outboundSchema))),
     journalLineApplications: z.optional(
       z.array(ApiSharedObjectdaa374f786$outboundSchema),
     ),
     creditJournalLineApplications: z.optional(
       z.array(ApiSharedObjectdaa374f786$outboundSchema),
     ),
-    creditNoteApplications: z.optional(z.array(z.lazy(() =>
-      ApiCustomerPaymentCreateRequestCreditNoteApplication$outboundSchema
-    ))),
+    creditNoteApplications: z.optional(
+      z.array(z.lazy(() => CreditNoteApplication$outboundSchema)),
+    ),
     advanceApplications: z.optional(
       z.array(ApiSharedObject6447103182$outboundSchema),
     ),
-    withholdings: z.optional(z.array(ApiSharedObject4faf4c3ad5$outboundSchema)),
+    withholdings: z.optional(z.array(ApiSharedObject31607d73d9$outboundSchema)),
   }),
   z.transform((v) => {
     return remap$(v, {
