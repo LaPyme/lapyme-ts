@@ -241,7 +241,7 @@ run();
 
 ## updatePriceList
 
-Actualiza una lista de precios y devuelve el detalle persistido, incluyendo si se disparó la sincronización de precios.
+Actualiza una lista de precios y devuelve el detalle persistido, incluyendo si se disparó la sincronización de precios. Si cambia cómo se calcula la lista (manual, desde el precio base u otra lista, o desde el costo), se borran los ajustes por producto en porcentaje que no corresponden al nuevo cálculo. Los precios fijos por producto se mantienen.
 
 ### Example Usage
 

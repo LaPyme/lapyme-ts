@@ -83,7 +83,7 @@ run();
 
 ## createSupplierPayment
 
-Registra un pago a proveedor con uno o más métodos de pago, aplicaciones a compras o cuenta corriente, retenciones y datos de cheque cuando corresponde.
+Registra un pago a proveedor con uno o más métodos de pago, aplicaciones a compras o cuenta corriente, retenciones y datos de cheque cuando corresponde. Reintentar con la misma Idempotency-Key y los mismos datos devuelve el pago original con idempotent_replay en true y no registra otro; reutilizar la clave con datos distintos devuelve 409 IDEMPOTENCY_CONFLICT. Ante un 503, reintentá con la misma clave.
 
 ### Example Usage
 
@@ -102,7 +102,7 @@ async function run() {
       supplierId: "327cbfaa-bdc6-454c-ab70-1739c72d6e49",
       pointOfSaleId: "ba7f4895-13b5-46e8-9466-323405ce54a8",
       paymentDate: "<value>",
-      currency: "PES",
+      currency: "ARS",
       totalAmount: 491818,
       splits: [
         {
@@ -140,7 +140,7 @@ async function run() {
       supplierId: "327cbfaa-bdc6-454c-ab70-1739c72d6e49",
       pointOfSaleId: "ba7f4895-13b5-46e8-9466-323405ce54a8",
       paymentDate: "<value>",
-      currency: "PES",
+      currency: "ARS",
       totalAmount: 491818,
       splits: [
         {
@@ -180,7 +180,7 @@ run();
 | ------------------------- | ------------------------- | ------------------------- |
 | errors.ApiErrorEnvelope   | 400, 401, 403, 409        | application/json          |
 | errors.ApiErrorEnvelope   | 429                       | application/json          |
-| errors.ApiErrorEnvelope   | 500                       | application/json          |
+| errors.ApiErrorEnvelope   | 500, 503                  | application/json          |
 | errors.LapymeDefaultError | 4XX, 5XX                  | \*/\*                     |
 
 ## getSupplierPayment
