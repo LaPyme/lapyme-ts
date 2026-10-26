@@ -32,7 +32,7 @@ import { Result } from "../types/fp.js";
  * Actualizar proveedor
  *
  * @remarks
- * Actualiza los datos comerciales, fiscales y de contacto de un proveedor.
+ * Actualiza los datos comerciales, fiscales y de contacto de un proveedor. Si el proveedor también es cliente, cambiar el DNI o CUIT a uno que ya pertenece a otro cliente de la organización responde 409 CONFLICT.
  */
 export function suppliersUpdateSupplier(
   client: LapymeCore,
@@ -185,7 +185,7 @@ async function $do(
     M.json(200, operations.UpdateApiSupplierResponse$inboundSchema, {
       key: "Result",
     }),
-    M.jsonErr([400, 401, 403, 404], errors.ApiErrorEnvelope$inboundSchema),
+    M.jsonErr([400, 401, 403, 404, 409], errors.ApiErrorEnvelope$inboundSchema),
     M.jsonErr(429, errors.ApiErrorEnvelope$inboundSchema, { hdrs: true }),
     M.jsonErr(500, errors.ApiErrorEnvelope$inboundSchema),
     M.fail("4XX"),

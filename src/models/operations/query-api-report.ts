@@ -7,13 +7,66 @@ import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
 import { safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
+import { smartUnion } from "../../types/smart-union.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import * as models from "../index.js";
 
+export type QueryApiReportRequest =
+  | models.AssistantReportRequest
+  | models.ReportRequest;
+
+/**
+ * Reporte ejecutado exitosamente
+ */
+export type QueryApiReportResponseBody =
+  | models.ReportQueryResponse
+  | models.AssistantReportResponse;
+
 export type QueryApiReportResponse = {
   headers: { [k: string]: Array<string> };
-  result: models.ReportQueryResponse;
+  result: models.ReportQueryResponse | models.AssistantReportResponse;
 };
+
+/** @internal */
+export type QueryApiReportRequest$Outbound =
+  | models.AssistantReportRequest$Outbound
+  | models.ReportRequest$Outbound;
+
+/** @internal */
+export const QueryApiReportRequest$outboundSchema: z.ZodMiniType<
+  QueryApiReportRequest$Outbound,
+  QueryApiReportRequest
+> = smartUnion([
+  models.AssistantReportRequest$outboundSchema,
+  models.ReportRequest$outboundSchema,
+]);
+
+export function queryApiReportRequestToJSON(
+  queryApiReportRequest: QueryApiReportRequest,
+): string {
+  return JSON.stringify(
+    QueryApiReportRequest$outboundSchema.parse(queryApiReportRequest),
+  );
+}
+
+/** @internal */
+export const QueryApiReportResponseBody$inboundSchema: z.ZodMiniType<
+  QueryApiReportResponseBody,
+  unknown
+> = smartUnion([
+  models.ReportQueryResponse$inboundSchema,
+  models.AssistantReportResponse$inboundSchema,
+]);
+
+export function queryApiReportResponseBodyFromJSON(
+  jsonString: string,
+): SafeParseResult<QueryApiReportResponseBody, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => QueryApiReportResponseBody$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'QueryApiReportResponseBody' from JSON`,
+  );
+}
 
 /** @internal */
 export const QueryApiReportResponse$inboundSchema: z.ZodMiniType<
@@ -22,7 +75,10 @@ export const QueryApiReportResponse$inboundSchema: z.ZodMiniType<
 > = z.pipe(
   z.object({
     Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
-    Result: models.ReportQueryResponse$inboundSchema,
+    Result: smartUnion([
+      models.ReportQueryResponse$inboundSchema,
+      models.AssistantReportResponse$inboundSchema,
+    ]),
   }),
   z.transform((v) => {
     return remap$(v, {

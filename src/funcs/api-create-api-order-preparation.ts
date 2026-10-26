@@ -32,7 +32,7 @@ import { Result } from "../types/fp.js";
  * Marcar líneas como preparadas
  *
  * @remarks
- * Crea una preparación de líneas del pedido y requiere Idempotency-Key.
+ * Registra cantidades preparadas para un grupo del pedido y requiere Idempotency-Key.
  */
 export function apiCreateAPIOrderPreparation(
   client: LapymeCore,
