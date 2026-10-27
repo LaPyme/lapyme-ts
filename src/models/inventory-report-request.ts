@@ -7,9 +7,13 @@ import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
 import { ClosedEnum } from "../types/enums.js";
 import { smartUnion } from "../types/smart-union.js";
+import {
+  ApiSharedEnum6440f2bcc2,
+  ApiSharedEnum6440f2bcc2$outboundSchema,
+} from "./api-shared-enum6440f2bcc2.js";
 
 /**
- * Obligatorio solo cuando se piden métricas derivadas de ventas: endingInventoryUnits, inventoryUnitsSold, inventoryUnitsSoldPerDay, daysOfInventoryRemaining.
+ * Obligatorio cuando se piden métricas históricas de inventario, métricas derivadas de ventas, métricas de movimientos o la dimensión abc_grade (clasificación ABC por ventas netas del período).
  */
 export type InventoryReportRequestPeriod = {
   /**
@@ -23,16 +27,26 @@ export type InventoryReportRequestPeriod = {
 };
 
 export const InventoryReportRequestDimensionEnum = {
+  Date: "date",
+  Week: "week",
+  WeekOfYear: "week_of_year",
+  Month: "month",
+  MonthOfYear: "month_of_year",
+  DayOfWeek: "day_of_week",
+  Year: "year",
+  Quarter: "quarter",
   Product: "product",
-  ProductName: "productName",
+  ProductName: "product_name",
   Variant: "variant",
-  VariantSku: "variantSku",
+  VariantSku: "variant_sku",
   Category: "category",
   Subcategory: "subcategory",
-  DefaultSupplierName: "defaultSupplierName",
-  ProductType: "productType",
-  Warehouse: "warehouse",
+  DefaultSupplierName: "default_supplier_name",
+  ProductType: "product_type",
   Currency: "currency",
+  InventoryItemCost: "inventory_item_cost",
+  AbcGrade: "abc_grade",
+  Warehouse: "warehouse",
 } as const;
 export type InventoryReportRequestDimensionEnum = ClosedEnum<
   typeof InventoryReportRequestDimensionEnum
@@ -43,31 +57,36 @@ export type InventoryReportRequestDimensionUnion =
   | string;
 
 export const InventoryReportRequestMeasure = {
-  StockOnHand: "stockOnHand",
-  StockAvailable: "stockAvailable",
-  StockReserved: "stockReserved",
-  StockIncoming: "stockIncoming",
-  StockValueCost: "stockValueCost",
-  StockValueRetail: "stockValueRetail",
-  EndingInventoryUnits: "endingInventoryUnits",
-  InventoryUnitsSold: "inventoryUnitsSold",
-  InventoryUnitsSoldPerDay: "inventoryUnitsSoldPerDay",
-  DaysOfInventoryRemaining: "daysOfInventoryRemaining",
-  SellThroughRate: "sellThroughRate",
-  InventoryUnitsNetChange: "inventoryUnitsNetChange",
-  InventoryAdjustmentChange: "inventoryAdjustmentChange",
-  InventoryAdjustmentCount: "inventoryAdjustmentCount",
-  ReceivedQuantity: "receivedQuantity",
-  TransferCount: "transferCount",
-  TransferLineItemCount: "transferLineItemCount",
-  UniqueItemsTransferred: "uniqueItemsTransferred",
+  StockOnHand: "stock_on_hand",
+  StockAvailable: "stock_available",
+  StockReserved: "stock_reserved",
+  StockIncoming: "stock_incoming",
+  StockValueCost: "stock_value_cost",
+  StockValueRetail: "stock_value_retail",
+  StartingInventoryUnits: "starting_inventory_units",
+  EndingInventoryUnits: "ending_inventory_units",
+  EndingInventoryValue: "ending_inventory_value",
+  EndingInventoryRetailValue: "ending_inventory_retail_value",
+  DaysInStock: "days_in_stock",
+  DaysOutOfStock: "days_out_of_stock",
+  InventoryUnitsSold: "inventory_units_sold",
+  InventoryUnitsSoldPerDay: "inventory_units_sold_per_day",
+  DaysOfInventoryRemaining: "days_of_inventory_remaining",
+  SellThroughRate: "sell_through_rate",
+  InventoryUnitsNetChange: "inventory_units_net_change",
+  InventoryAdjustmentChange: "inventory_adjustment_change",
+  InventoryAdjustmentCount: "inventory_adjustment_count",
+  ReceivedQuantity: "received_quantity",
+  TransferCount: "transfer_count",
+  TransferLineItemCount: "transfer_line_item_count",
+  UniqueItemsTransferred: "unique_items_transferred",
 } as const;
 export type InventoryReportRequestMeasure = ClosedEnum<
   typeof InventoryReportRequestMeasure
 >;
 
 /**
- * Filtros por dimensión. Cada clave debe ser una dimensión filtrable para la fuente. También acepta product_metafield:<key> para campos personalizados select de producto. El valor es un array de IDs o valores a incluir.
+ * Filtros por dimensión. Cada clave debe ser una dimensión filtrable para la fuente. También acepta product_metafield:<key> para campos personalizados select de producto y contact_metafield:<key> para campos personalizados select de contacto cuando la fuente lo soporta. El valor es un array de IDs o valores a incluir.
  */
 export type InventoryReportRequestDimensionFilters = {
   product?: Array<string> | undefined;
@@ -77,20 +96,23 @@ export type InventoryReportRequestDimensionFilters = {
   subcategory?: Array<string> | undefined;
   defaultSupplierName?: Array<string> | undefined;
   productType?: Array<string> | undefined;
-  warehouse?: Array<string> | undefined;
   currency?: Array<string> | undefined;
+  abcGrade?: Array<string> | undefined;
+  warehouse?: Array<string> | undefined;
+  productStatus?: Array<string> | undefined;
+  warehouseStatus?: Array<string> | undefined;
   saleLineType?: Array<string> | undefined;
 };
 
 /**
- * Aplica solo cuando se usan métricas derivadas de ventas. `commercial` usa la fecha de venta; `fiscal` usa la fecha contable.
+ * Aplica solo cuando se usan métricas derivadas de ventas o la dimensión abc_grade. `commercial` usa la fecha de venta; `fiscal` usa la fecha contable.
  */
 export const InventoryReportRequestDateBasis = {
   Commercial: "commercial",
   Fiscal: "fiscal",
 } as const;
 /**
- * Aplica solo cuando se usan métricas derivadas de ventas. `commercial` usa la fecha de venta; `fiscal` usa la fecha contable.
+ * Aplica solo cuando se usan métricas derivadas de ventas o la dimensión abc_grade. `commercial` usa la fecha de venta; `fiscal` usa la fecha contable.
  */
 export type InventoryReportRequestDateBasis = ClosedEnum<
   typeof InventoryReportRequestDateBasis
@@ -99,19 +121,19 @@ export type InventoryReportRequestDateBasis = ClosedEnum<
 export type InventoryReportRequest = {
   source: "inventory";
   /**
-   * Obligatorio solo cuando se piden métricas derivadas de ventas: endingInventoryUnits, inventoryUnitsSold, inventoryUnitsSoldPerDay, daysOfInventoryRemaining.
+   * Obligatorio cuando se piden métricas históricas de inventario, métricas derivadas de ventas, métricas de movimientos o la dimensión abc_grade (clasificación ABC por ventas netas del período).
    */
   period?: InventoryReportRequestPeriod | undefined;
   /**
-   * Dimensiones de agrupación. Máximo 4. Acepta product_metafield:<key> para campos personalizados select de producto.
+   * Dimensiones de agrupación. Máximo 12. Acepta product_metafield:<key> para campos personalizados select de producto.
    */
   dimensions?: Array<InventoryReportRequestDimensionEnum | string> | undefined;
   /**
-   * Measures to calculate. Snapshot measures (stockOnHand, stockAvailable, etc.) do not require period. Sales-derived measures do require it.
+   * Measures to calculate. Inventory analytics measures are period-based; use ending_inventory_units for the inventory balance at the end of the requested period.
    */
   measures: Array<InventoryReportRequestMeasure>;
   /**
-   * Filtros por dimensión. Cada clave debe ser una dimensión filtrable para la fuente. También acepta product_metafield:<key> para campos personalizados select de producto. El valor es un array de IDs o valores a incluir.
+   * Filtros por dimensión. Cada clave debe ser una dimensión filtrable para la fuente. También acepta product_metafield:<key> para campos personalizados select de producto y contact_metafield:<key> para campos personalizados select de contacto cuando la fuente lo soporta. El valor es un array de IDs o valores a incluir.
    */
   dimensionFilters?: InventoryReportRequestDimensionFilters | undefined;
   /**
@@ -119,7 +141,11 @@ export type InventoryReportRequest = {
    */
   includeTotals?: boolean | undefined;
   /**
-   * Aplica solo cuando se usan métricas derivadas de ventas. `commercial` usa la fecha de venta; `fiscal` usa la fecha contable.
+   * Currency used for all monetary measures in the report.
+   */
+  reportingCurrency?: ApiSharedEnum6440f2bcc2 | undefined;
+  /**
+   * Aplica solo cuando se usan métricas derivadas de ventas o la dimensión abc_grade. `commercial` usa la fecha de venta; `fiscal` usa la fecha contable.
    */
   dateBasis?: InventoryReportRequestDateBasis | undefined;
 };
@@ -204,8 +230,11 @@ export type InventoryReportRequestDimensionFilters$Outbound = {
   subcategory?: Array<string> | undefined;
   default_supplier_name?: Array<string> | undefined;
   product_type?: Array<string> | undefined;
-  warehouse?: Array<string> | undefined;
   currency?: Array<string> | undefined;
+  abc_grade?: Array<string> | undefined;
+  warehouse?: Array<string> | undefined;
+  product_status?: Array<string> | undefined;
+  warehouse_status?: Array<string> | undefined;
   sale_line_type?: Array<string> | undefined;
 };
 
@@ -223,8 +252,11 @@ export const InventoryReportRequestDimensionFilters$outboundSchema:
       subcategory: z.optional(z.array(z.string())),
       defaultSupplierName: z.optional(z.array(z.string())),
       productType: z.optional(z.array(z.string())),
-      warehouse: z.optional(z.array(z.string())),
       currency: z.optional(z.array(z.string())),
+      abcGrade: z.optional(z.array(z.string())),
+      warehouse: z.optional(z.array(z.string())),
+      productStatus: z.optional(z.array(z.string())),
+      warehouseStatus: z.optional(z.array(z.string())),
       saleLineType: z.optional(z.array(z.string())),
     }),
     z.transform((v) => {
@@ -233,6 +265,9 @@ export const InventoryReportRequestDimensionFilters$outboundSchema:
         variantSku: "variant_sku",
         defaultSupplierName: "default_supplier_name",
         productType: "product_type",
+        abcGrade: "abc_grade",
+        productStatus: "product_status",
+        warehouseStatus: "warehouse_status",
         saleLineType: "sale_line_type",
       });
     }),
@@ -264,6 +299,7 @@ export type InventoryReportRequest$Outbound = {
     | InventoryReportRequestDimensionFilters$Outbound
     | undefined;
   include_totals?: boolean | undefined;
+  reporting_currency: string;
   date_basis: string;
 };
 
@@ -290,6 +326,10 @@ export const InventoryReportRequest$outboundSchema: z.ZodMiniType<
       z.lazy(() => InventoryReportRequestDimensionFilters$outboundSchema),
     ),
     includeTotals: z.optional(z.boolean()),
+    reportingCurrency: z._default(
+      ApiSharedEnum6440f2bcc2$outboundSchema,
+      "ARS",
+    ),
     dateBasis: z._default(
       InventoryReportRequestDateBasis$outboundSchema,
       "commercial",
@@ -299,6 +339,7 @@ export const InventoryReportRequest$outboundSchema: z.ZodMiniType<
     return remap$(v, {
       dimensionFilters: "dimension_filters",
       includeTotals: "include_totals",
+      reportingCurrency: "reporting_currency",
       dateBasis: "date_basis",
     });
   }),

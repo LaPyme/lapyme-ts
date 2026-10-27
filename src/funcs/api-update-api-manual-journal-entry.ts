@@ -32,7 +32,7 @@ import { Result } from "../types/fp.js";
  * Reemplazar asiento manual
  *
  * @remarks
- * Reemplaza completamente un asiento manual editable. Los asientos generados devuelven conflicto.
+ * Reemplaza un asiento manual editable y conserva las líneas identificadas por id. Si una línea imputada cambia financieramente, la primera solicitud devuelve allocations_require_unapply; repetí con un nuevo Idempotency-Key y unapply_allocated_lines=true para desimputar y editar en una sola transacción. Los asientos generados devuelven conflicto.
  */
 export function apiUpdateAPIManualJournalEntry(
   client: LapymeCore,
@@ -191,7 +191,7 @@ async function $do(
     M.json(200, operations.UpdateApiManualJournalEntryResponse$inboundSchema, {
       key: "Result",
     }),
-    M.jsonErr([400, 401, 403, 409, 412], errors.ApiErrorEnvelope$inboundSchema),
+    M.jsonErr([400, 401, 403, 409], errors.ApiErrorEnvelope$inboundSchema),
     M.jsonErr(429, errors.ApiErrorEnvelope$inboundSchema, { hdrs: true }),
     M.jsonErr(500, errors.ApiErrorEnvelope$inboundSchema),
     M.fail("4XX"),

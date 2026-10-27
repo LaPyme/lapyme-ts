@@ -15,20 +15,21 @@ let value: ApiPaymentMethodListResponse = {
       icon: "<value>",
       type: "cash",
       bankAccountId: "4cb581bc-b154-48ae-a3e4-2dcb4949e04c",
+      supplierSourceBankAccountId: "76d75262-7471-465f-82c0-5d5956b0c122",
       feePercentage: "<value>",
-      feeFixed: 434478,
+      feeFixed: 268236,
       requiresReference: false,
-      visibility: "purchases",
-      isActive: true,
+      visibility: "system",
+      isActive: false,
       isDefault: true,
-      createdAt: new Date("2025-02-18T15:44:06.477Z"),
-      updatedAt: new Date("2024-06-06T01:57:25.690Z"),
+      createdAt: new Date("2025-04-02T00:30:52.806Z"),
+      updatedAt: new Date("2024-01-19T08:25:27.029Z"),
     },
   ],
   hasMore: true,
   nextCursor: "<value>",
   object: "list",
-  url: "https://coarse-hierarchy.biz/",
+  url: "https://zesty-countess.org",
 };
 ```
 
@@ -37,7 +38,7 @@ let value: ApiPaymentMethodListResponse = {
 | Field                                                                          | Type                                                                           | Required                                                                       | Description                                                                    |
 | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
 | `requestId`                                                                    | *string*                                                                       | :heavy_check_mark:                                                             | N/A                                                                            |
-| `data`                                                                         | [models.ApiSharedObjectbea6e6be70](../models/api-shared-objectbea6e6be70.md)[] | :heavy_check_mark:                                                             | N/A                                                                            |
+| `data`                                                                         | [models.ApiSharedObjecta2bd01d7eb](../models/api-shared-objecta2bd01d7eb.md)[] | :heavy_check_mark:                                                             | N/A                                                                            |
 | `hasMore`                                                                      | *boolean*                                                                      | :heavy_check_mark:                                                             | N/A                                                                            |
 | `nextCursor`                                                                   | *string*                                                                       | :heavy_check_mark:                                                             | N/A                                                                            |
 | `object`                                                                       | [models.ApiSharedEnum8d46e1ec20](../models/api-shared-enum8d46e1ec20.md)       | :heavy_check_mark:                                                             | List-envelope discriminator.                                                   |
