@@ -8,24 +8,29 @@ import { ApiCustomerListResponseData } from "lapyme/models";
 let value: ApiCustomerListResponseData = {
   object: "customer",
   id: "004d02ed-a30a-4b3a-848d-18e70c8d8a7f",
+  code: "<value>",
   name: "<value>",
-  companyName: "Hudson Group",
-  description: "lest insecure of deny ah",
-  email: "Imogene_Hirthe8@gmail.com",
-  phone: "(804) 353-4719 x43495",
-  address: "375 Cliff Road",
+  companyName: "Balistreri and Sons",
+  description: "times before midst brief joyfully oh",
+  email: "Rickey.Kulas@hotmail.com",
+  phone: "394.449.5362 x7581",
+  address: "2057 Cemetery Road",
   apartment: "<value>",
-  city: "North Kaelacester",
+  city: "Baumbachview",
+  deliveryCarrier: "<value>",
+  deliveryAddress: "<value>",
   taxId: "<id>",
   taxIdType: "<value>",
   taxCategory: "<value>",
-  contactType: "<value>",
-  defaultPriceListId: "06c414b1-40a8-4a09-b085-3fd5e43d6b18",
+  contactType: null,
+  defaultPriceListId: "0a8a0908-53fd-45e4-83d6-b18f77f1c0ce",
   paymentTermId: "<id>",
+  paymentTermDays: 302255,
   provinceId: "<id>",
   isActive: true,
-  createdAt: new Date("2026-05-29T22:07:34.236Z"),
-  updatedAt: new Date("2024-01-17T16:34:11.247Z"),
+  createdAt: new Date("2024-07-19T21:26:26.145Z"),
+  updatedAt: new Date("2026-01-22T02:17:40.532Z"),
+  tags: [],
 };
 ```
 
@@ -35,6 +40,7 @@ let value: ApiCustomerListResponseData = {
 | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
 | `object`                                                                                      | *"customer"*                                                                                  | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `id`                                                                                          | *string*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
+| `code`                                                                                        | *string*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `name`                                                                                        | *string*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `companyName`                                                                                 | *string*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `description`                                                                                 | *string*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
@@ -43,13 +49,17 @@ let value: ApiCustomerListResponseData = {
 | `address`                                                                                     | *string*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `apartment`                                                                                   | *string*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `city`                                                                                        | *string*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
+| `deliveryCarrier`                                                                             | *string*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
+| `deliveryAddress`                                                                             | *string*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `taxId`                                                                                       | *string*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `taxIdType`                                                                                   | *string*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `taxCategory`                                                                                 | *string*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `contactType`                                                                                 | *string*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `defaultPriceListId`                                                                          | *string*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `paymentTermId`                                                                               | *string*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
+| `paymentTermDays`                                                                             | *number*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `provinceId`                                                                                  | *string*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `isActive`                                                                                    | *boolean*                                                                                     | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `createdAt`                                                                                   | [Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date) | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `updatedAt`                                                                                   | [Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date) | :heavy_check_mark:                                                                            | N/A                                                                                           |
+| `tags`                                                                                        | [models.ApiSharedObjected3905a55b](../models/api-shared-objected3905a55b.md)[]                | :heavy_check_mark:                                                                            | N/A                                                                                           |
