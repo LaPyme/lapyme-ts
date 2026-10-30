@@ -11,12 +11,12 @@ let value: CreateApiSupplierPaymentRequest = {
     supplierId: "36e50f34-a572-4206-9c81-3130747388ac",
     pointOfSaleId: "f08db476-5bd0-408f-964b-6c2842951f86",
     paymentDate: "<value>",
-    currency: "DOL",
+    currency: "USD",
     totalAmount: 839457,
     splits: [
       {
-        paymentMethodId: "054e9f37-01f0-47c8-9a76-e799960b0187",
-        amount: 489271,
+        paymentMethodId: "011f1218-1a2c-466d-af1f-7e51dae20421",
+        amount: 625760,
       },
     ],
   },
