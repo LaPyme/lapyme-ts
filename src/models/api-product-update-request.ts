@@ -7,102 +7,74 @@ import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
 import { ClosedEnum } from "../types/enums.js";
 import {
-  ApiSharedEnum6cfb146157,
-  ApiSharedEnum6cfb146157$outboundSchema,
-} from "./api-shared-enum6cfb146157.js";
+  ApiSharedEnum5f0db377e3,
+  ApiSharedEnum5f0db377e3$outboundSchema,
+} from "./api-shared-enum5f0db377e3.js";
 import {
-  ApiSharedEnumff49232140,
-  ApiSharedEnumff49232140$outboundSchema,
-} from "./api-shared-enumff49232140.js";
+  ApiSharedEnuma7f3605118,
+  ApiSharedEnuma7f3605118$outboundSchema,
+} from "./api-shared-enuma7f3605118.js";
+import {
+  ApiSharedEnumffb4886f2b,
+  ApiSharedEnumffb4886f2b$outboundSchema,
+} from "./api-shared-enumffb4886f2b.js";
+import {
+  ApiSharedObject0da0631443,
+  ApiSharedObject0da0631443$Outbound,
+  ApiSharedObject0da0631443$outboundSchema,
+} from "./api-shared-object0da0631443.js";
 import {
   ApiSharedObject6dbe49c4ef,
   ApiSharedObject6dbe49c4ef$Outbound,
   ApiSharedObject6dbe49c4ef$outboundSchema,
 } from "./api-shared-object6dbe49c4ef.js";
 
-export const ApiProductUpdateRequestVisibility = {
-  Both: "both",
-  Sales: "sales",
-  Purchases: "purchases",
+export const ApiProductUpdateRequestProductType = {
+  Product: "product",
+  Service: "service",
+  Kit: "kit",
+  Combo: "combo",
 } as const;
-export type ApiProductUpdateRequestVisibility = ClosedEnum<
-  typeof ApiProductUpdateRequestVisibility
+export type ApiProductUpdateRequestProductType = ClosedEnum<
+  typeof ApiProductUpdateRequestProductType
 >;
 
-export const ApiProductUpdateRequestUnitOfMeasure = {
-  Ten: "10",
-  Eleven: "11",
-  Twelve: "12",
-  Thirteen: "13",
-  Fourteen: "14",
-  Fifteen: "15",
-  Sixteen: "16",
-  Seventeen: "17",
-  Eighteen: "18",
-  Nineteen: "19",
-  Twenty: "20",
-  TwentyOne: "21",
-  TwentyTwo: "22",
-  TwentyThree: "23",
-  TwentyFour: "24",
-  TwentyFive: "25",
-  TwentySix: "26",
-  TwentySeven: "27",
-  TwentyEight: "28",
-  TwentyNine: "29",
-  Thirty: "30",
-  ThirtyOne: "31",
-  ThirtyTwo: "32",
-  ThirtyThree: "33",
-  ThirtyFour: "34",
-  ThirtyFive: "35",
-  ThirtySix: "36",
-  ThirtySeven: "37",
-  FortyOne: "41",
-  FortySeven: "47",
-  FortyEight: "48",
-  FortyNine: "49",
-  Fifty: "50",
-  FiftyOne: "51",
-  FiftyTwo: "52",
-  FiftyThree: "53",
-  FiftyFour: "54",
-  FiftyFive: "55",
-  SixtyOne: "61",
-  SixtyTwo: "62",
-  SixtyThree: "63",
-  NinetySeven: "97",
-  NinetyEight: "98",
-  NinetyNine: "99",
-  Zero: "00",
-  One: "01",
-  Two: "02",
-  Three: "03",
-  Four: "04",
-  Five: "05",
-  Six: "06",
-  Seven: "07",
-  Eight: "08",
-  Nine: "09",
+export const ApiProductUpdateRequestPricingMode = {
+  Automatic: "automatic",
+  Manual: "manual",
 } as const;
-export type ApiProductUpdateRequestUnitOfMeasure = ClosedEnum<
-  typeof ApiProductUpdateRequestUnitOfMeasure
+export type ApiProductUpdateRequestPricingMode = ClosedEnum<
+  typeof ApiProductUpdateRequestPricingMode
 >;
 
 export type ApiProductUpdateRequest = {
+  /**
+   * Identificador del producto en el catálogo; se normaliza al guardar.
+   */
+  handle?: string | undefined;
   name?: string | undefined;
   description?: string | null | undefined;
   categoryId?: string | null | undefined;
-  visibility?: ApiProductUpdateRequestVisibility | undefined;
+  visibility?: ApiSharedEnuma7f3605118 | undefined;
+  /**
+   * External product image URL reference. La Pyme displays it best effort and does not copy, ingest, or host the image.
+   */
   imageUrl?: string | null | undefined;
-  productType?: ApiSharedEnumff49232140 | undefined;
+  productType?: ApiProductUpdateRequestProductType | undefined;
   sku?: string | undefined;
   barcode?: string | null | undefined;
-  unitOfMeasure?: ApiProductUpdateRequestUnitOfMeasure | undefined;
-  currency?: ApiSharedEnum6cfb146157 | undefined;
+  unitOfMeasure?: ApiSharedEnum5f0db377e3 | undefined;
+  currency?: ApiSharedEnumffb4886f2b | undefined;
+  arsReferenceExchangeRate?: number | null | undefined;
   cost?: number | undefined;
-  price?: number | undefined;
+  /**
+   * Precio manual en centavos. En combos existentes, omitilo para conservar el precio guardado.
+   */
+  price?: number | null | undefined;
   promotionalPrice?: number | null | undefined;
+  /**
+   * Markup percentage used to calculate the sale price from cost and organization rounding rules. The price adds the product's IVA rate only when the organization's sales prices include IVA. Mutually exclusive with price; send null to switch back to manual pricing.
+   */
   markupPercentage?: number | null | undefined;
   taxRateId?: number | undefined;
   isExempt?: boolean | undefined;
@@ -111,20 +83,27 @@ export type ApiProductUpdateRequest = {
   defaultPurchaseAccountId?: string | null | undefined;
   warehouseStocks?: Array<ApiSharedObject6dbe49c4ef> | undefined;
   isActive?: boolean | undefined;
+  pricingMode?: ApiProductUpdateRequestPricingMode | undefined;
+  priceAdjustmentPercentage?: number | null | undefined;
+  /**
+   * Solo para combos existentes. Omití la clave para conservar la composición; enviarla reemplaza todos los componentes.
+   */
+  components?: Array<ApiSharedObject0da0631443> | undefined;
 };
 
 /** @internal */
-export const ApiProductUpdateRequestVisibility$outboundSchema: z.ZodMiniEnum<
-  typeof ApiProductUpdateRequestVisibility
-> = z.enum(ApiProductUpdateRequestVisibility);
+export const ApiProductUpdateRequestProductType$outboundSchema: z.ZodMiniEnum<
+  typeof ApiProductUpdateRequestProductType
+> = z.enum(ApiProductUpdateRequestProductType);
 
 /** @internal */
-export const ApiProductUpdateRequestUnitOfMeasure$outboundSchema: z.ZodMiniEnum<
-  typeof ApiProductUpdateRequestUnitOfMeasure
-> = z.enum(ApiProductUpdateRequestUnitOfMeasure);
+export const ApiProductUpdateRequestPricingMode$outboundSchema: z.ZodMiniEnum<
+  typeof ApiProductUpdateRequestPricingMode
+> = z.enum(ApiProductUpdateRequestPricingMode);
 
 /** @internal */
 export type ApiProductUpdateRequest$Outbound = {
+  handle?: string | undefined;
   name?: string | undefined;
   description?: string | null | undefined;
   category_id?: string | null | undefined;
@@ -133,10 +112,11 @@ export type ApiProductUpdateRequest$Outbound = {
   product_type?: string | undefined;
   sku?: string | undefined;
   barcode?: string | null | undefined;
-  unit_of_measure?: string | undefined;
+  unit_of_measure: string;
   currency?: string | undefined;
+  ars_reference_exchange_rate?: number | null | undefined;
   cost?: number | undefined;
-  price?: number | undefined;
+  price?: number | null | undefined;
   promotional_price?: number | null | undefined;
   markup_percentage?: number | null | undefined;
   tax_rate_id?: number | undefined;
@@ -146,6 +126,9 @@ export type ApiProductUpdateRequest$Outbound = {
   default_purchase_account_id?: string | null | undefined;
   warehouse_stocks?: Array<ApiSharedObject6dbe49c4ef$Outbound> | undefined;
   is_active?: boolean | undefined;
+  pricing_mode?: string | undefined;
+  price_adjustment_percentage?: number | null | undefined;
+  components?: Array<ApiSharedObject0da0631443$Outbound> | undefined;
 };
 
 /** @internal */
@@ -154,20 +137,20 @@ export const ApiProductUpdateRequest$outboundSchema: z.ZodMiniType<
   ApiProductUpdateRequest
 > = z.pipe(
   z.object({
+    handle: z.optional(z.string()),
     name: z.optional(z.string()),
     description: z.optional(z.nullable(z.string())),
     categoryId: z.optional(z.nullable(z.string())),
-    visibility: z.optional(ApiProductUpdateRequestVisibility$outboundSchema),
+    visibility: z.optional(ApiSharedEnuma7f3605118$outboundSchema),
     imageUrl: z.optional(z.nullable(z.string())),
-    productType: z.optional(ApiSharedEnumff49232140$outboundSchema),
+    productType: z.optional(ApiProductUpdateRequestProductType$outboundSchema),
     sku: z.optional(z.string()),
     barcode: z.optional(z.nullable(z.string())),
-    unitOfMeasure: z.optional(
-      ApiProductUpdateRequestUnitOfMeasure$outboundSchema,
-    ),
-    currency: z.optional(ApiSharedEnum6cfb146157$outboundSchema),
+    unitOfMeasure: z._default(ApiSharedEnum5f0db377e3$outboundSchema, "07"),
+    currency: z.optional(ApiSharedEnumffb4886f2b$outboundSchema),
+    arsReferenceExchangeRate: z.optional(z.nullable(z.number())),
     cost: z.optional(z.int()),
-    price: z.optional(z.int()),
+    price: z.optional(z.nullable(z.int())),
     promotionalPrice: z.optional(z.nullable(z.int())),
     markupPercentage: z.optional(z.nullable(z.number())),
     taxRateId: z.optional(z.int()),
@@ -179,6 +162,9 @@ export const ApiProductUpdateRequest$outboundSchema: z.ZodMiniType<
       z.array(ApiSharedObject6dbe49c4ef$outboundSchema),
     ),
     isActive: z.optional(z.boolean()),
+    pricingMode: z.optional(ApiProductUpdateRequestPricingMode$outboundSchema),
+    priceAdjustmentPercentage: z.optional(z.nullable(z.number())),
+    components: z.optional(z.array(ApiSharedObject0da0631443$outboundSchema)),
   }),
   z.transform((v) => {
     return remap$(v, {
@@ -186,6 +172,7 @@ export const ApiProductUpdateRequest$outboundSchema: z.ZodMiniType<
       imageUrl: "image_url",
       productType: "product_type",
       unitOfMeasure: "unit_of_measure",
+      arsReferenceExchangeRate: "ars_reference_exchange_rate",
       promotionalPrice: "promotional_price",
       markupPercentage: "markup_percentage",
       taxRateId: "tax_rate_id",
@@ -195,6 +182,8 @@ export const ApiProductUpdateRequest$outboundSchema: z.ZodMiniType<
       defaultPurchaseAccountId: "default_purchase_account_id",
       warehouseStocks: "warehouse_stocks",
       isActive: "is_active",
+      pricingMode: "pricing_mode",
+      priceAdjustmentPercentage: "price_adjustment_percentage",
     });
   }),
 );

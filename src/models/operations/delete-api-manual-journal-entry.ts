@@ -18,7 +18,7 @@ export type DeleteApiManualJournalEntryRequest = {
   idempotencyKey: string;
 };
 
-export type Data = {
+export type DeleteApiManualJournalEntryData = {
   deleted?: boolean | undefined;
 };
 
@@ -27,7 +27,7 @@ export type Data = {
  */
 export type DeleteApiManualJournalEntryResponseBody = {
   requestId?: string | undefined;
-  data?: Data | undefined;
+  data?: DeleteApiManualJournalEntryData | undefined;
 };
 
 export type DeleteApiManualJournalEntryResponse = {
@@ -69,17 +69,20 @@ export function deleteApiManualJournalEntryRequestToJSON(
 }
 
 /** @internal */
-export const Data$inboundSchema: z.ZodMiniType<Data, unknown> = z.object({
+export const DeleteApiManualJournalEntryData$inboundSchema: z.ZodMiniType<
+  DeleteApiManualJournalEntryData,
+  unknown
+> = z.object({
   deleted: types.optional(types.boolean()),
 });
 
-export function dataFromJSON(
+export function deleteApiManualJournalEntryDataFromJSON(
   jsonString: string,
-): SafeParseResult<Data, SDKValidationError> {
+): SafeParseResult<DeleteApiManualJournalEntryData, SDKValidationError> {
   return safeParse(
     jsonString,
-    (x) => Data$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'Data' from JSON`,
+    (x) => DeleteApiManualJournalEntryData$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'DeleteApiManualJournalEntryData' from JSON`,
   );
 }
 
@@ -88,7 +91,9 @@ export const DeleteApiManualJournalEntryResponseBody$inboundSchema:
   z.ZodMiniType<DeleteApiManualJournalEntryResponseBody, unknown> = z.pipe(
     z.object({
       request_id: types.optional(types.string()),
-      data: types.optional(z.lazy(() => Data$inboundSchema)),
+      data: types.optional(z.lazy(() =>
+        DeleteApiManualJournalEntryData$inboundSchema
+      )),
     }),
     z.transform((v) => {
       return remap$(v, {
