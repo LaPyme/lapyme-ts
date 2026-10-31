@@ -20,7 +20,7 @@ specific category of applications.
 
 ```typescript
 import { LapymeCore } from "lapyme/core.js";
-import { suppliersList } from "lapyme/funcs/suppliers-list.js";
+import { apiListAPISettlementPendingItems } from "lapyme/funcs/api-list-api-settlement-pending-items.js";
 
 // Use `LapymeCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -29,12 +29,12 @@ const lapyme = new LapymeCore({
 });
 
 async function run() {
-  const res = await suppliersList(lapyme, {});
+  const res = await apiListAPISettlementPendingItems(lapyme, {});
   if (res.ok) {
     const { value: result } = res;
     console.log(result);
   } else {
-    console.log("suppliersList failed:", res.error);
+    console.log("apiListAPISettlementPendingItems failed:", res.error);
   }
 }
 
