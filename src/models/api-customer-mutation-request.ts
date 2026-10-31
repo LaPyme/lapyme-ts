@@ -6,41 +6,75 @@
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
 import {
-  ApiSharedEnum250b15b651,
-  ApiSharedEnum250b15b651$outboundSchema,
-} from "./api-shared-enum250b15b651.js";
+  ApiSharedEnumafe76ccc88,
+  ApiSharedEnumafe76ccc88$outboundSchema,
+} from "./api-shared-enumafe76ccc88.js";
 import {
-  ApiSharedEnumbb2864ecea,
-  ApiSharedEnumbb2864ecea$outboundSchema,
-} from "./api-shared-enumbb2864ecea.js";
+  ApiSharedEnumcb6fc950ce,
+  ApiSharedEnumcb6fc950ce$outboundSchema,
+} from "./api-shared-enumcb6fc950ce.js";
 import {
   ApiSharedEnumd34af90520,
   ApiSharedEnumd34af90520$outboundSchema,
 } from "./api-shared-enumd34af90520.js";
+import {
+  ApiSharedObject23505030dc,
+  ApiSharedObject23505030dc$Outbound,
+  ApiSharedObject23505030dc$outboundSchema,
+} from "./api-shared-object23505030dc.js";
 
 export type ApiCustomerMutationRequest = {
+  /**
+   * Setting or clearing this field also requires treasury:write. Omit it to preserve the default.
+   */
+  defaultAccountId?: string | null | undefined;
+  /**
+   * Código visible del contacto; se genera si se omite
+   */
+  code?: string | undefined;
   name: string;
   companyName?: string | null | undefined;
   description?: string | null | undefined;
   email?: string | null | undefined;
   phone?: string | null | undefined;
+  /**
+   * Documento sin guiones, o "0" cuando tax_id_type es "Otro"
+   */
   taxId?: string | null | undefined;
-  taxIdType?: ApiSharedEnum250b15b651 | null | undefined;
-  taxCategory?: ApiSharedEnumbb2864ecea | null | undefined;
+  /**
+   * "Otro" requiere tax_id="0" y categoría efectiva Consumidor Final
+   */
+  taxIdType?: ApiSharedEnumcb6fc950ce | null | undefined;
+  /**
+   * foreign_customer requiere country, arca_destination_country y foreign_tax_id o arca_country_tax_id. Su identidad reemplaza tax_id, tax_id_type y province; en actualizaciones se conservan los campos omitidos, pero cambiar arca_destination_country requiere enviar también el nuevo country.
+   */
+  taxCategory?: ApiSharedEnumafe76ccc88 | null | undefined;
+  arcaDestinationCountry?: number | null | undefined;
+  foreignTaxId?: string | null | undefined;
+  arcaCountryTaxId?: string | null | undefined;
+  metafields?: Array<ApiSharedObject23505030dc> | undefined;
+  /**
+   * Nombre del país. Obligatorio al crear un foreign_customer y al cambiar arca_destination_country; las actualizaciones sin cambio de destino conservan el nombre omitido.
+   */
   country?: string | null | undefined;
   province?: string | null | undefined;
   city?: string | null | undefined;
   address?: string | null | undefined;
   apartment?: string | null | undefined;
   postalCode?: string | null | undefined;
+  deliveryCarrier?: string | null | undefined;
+  deliveryAddress?: string | null | undefined;
   assignedSalespersonId?: string | null | undefined;
   defaultPriceListId?: string | null | undefined;
   paymentTermId?: ApiSharedEnumd34af90520 | null | undefined;
+  paymentTermDays?: number | null | undefined;
   isActive?: boolean | undefined;
 };
 
 /** @internal */
 export type ApiCustomerMutationRequest$Outbound = {
+  default_account_id?: string | null | undefined;
+  code?: string | undefined;
   name: string;
   company_name?: string | null | undefined;
   description?: string | null | undefined;
@@ -49,15 +83,22 @@ export type ApiCustomerMutationRequest$Outbound = {
   tax_id?: string | null | undefined;
   tax_id_type?: string | null | undefined;
   tax_category?: string | null | undefined;
+  arca_destination_country?: number | null | undefined;
+  foreign_tax_id?: string | null | undefined;
+  arca_country_tax_id?: string | null | undefined;
+  metafields?: Array<ApiSharedObject23505030dc$Outbound> | undefined;
   country?: string | null | undefined;
   province?: string | null | undefined;
   city?: string | null | undefined;
   address?: string | null | undefined;
   apartment?: string | null | undefined;
   postal_code?: string | null | undefined;
+  delivery_carrier?: string | null | undefined;
+  delivery_address?: string | null | undefined;
   assigned_salesperson_id?: string | null | undefined;
   default_price_list_id?: string | null | undefined;
   payment_term_id?: string | null | undefined;
+  payment_term_days?: number | null | undefined;
   is_active?: boolean | undefined;
 };
 
@@ -67,37 +108,53 @@ export const ApiCustomerMutationRequest$outboundSchema: z.ZodMiniType<
   ApiCustomerMutationRequest
 > = z.pipe(
   z.object({
+    defaultAccountId: z.optional(z.nullable(z.string())),
+    code: z.optional(z.string()),
     name: z.string(),
     companyName: z.optional(z.nullable(z.string())),
     description: z.optional(z.nullable(z.string())),
     email: z.optional(z.nullable(z.string())),
     phone: z.optional(z.nullable(z.string())),
     taxId: z.optional(z.nullable(z.string())),
-    taxIdType: z.optional(z.nullable(ApiSharedEnum250b15b651$outboundSchema)),
-    taxCategory: z.optional(z.nullable(ApiSharedEnumbb2864ecea$outboundSchema)),
+    taxIdType: z.optional(z.nullable(ApiSharedEnumcb6fc950ce$outboundSchema)),
+    taxCategory: z.optional(z.nullable(ApiSharedEnumafe76ccc88$outboundSchema)),
+    arcaDestinationCountry: z.optional(z.nullable(z.int())),
+    foreignTaxId: z.optional(z.nullable(z.string())),
+    arcaCountryTaxId: z.optional(z.nullable(z.string())),
+    metafields: z.optional(z.array(ApiSharedObject23505030dc$outboundSchema)),
     country: z.optional(z.nullable(z.string())),
     province: z.optional(z.nullable(z.string())),
     city: z.optional(z.nullable(z.string())),
     address: z.optional(z.nullable(z.string())),
     apartment: z.optional(z.nullable(z.string())),
     postalCode: z.optional(z.nullable(z.string())),
+    deliveryCarrier: z.optional(z.nullable(z.string())),
+    deliveryAddress: z.optional(z.nullable(z.string())),
     assignedSalespersonId: z.optional(z.nullable(z.string())),
     defaultPriceListId: z.optional(z.nullable(z.string())),
     paymentTermId: z.optional(
       z.nullable(ApiSharedEnumd34af90520$outboundSchema),
     ),
+    paymentTermDays: z.optional(z.nullable(z.int())),
     isActive: z.optional(z.boolean()),
   }),
   z.transform((v) => {
     return remap$(v, {
+      defaultAccountId: "default_account_id",
       companyName: "company_name",
       taxId: "tax_id",
       taxIdType: "tax_id_type",
       taxCategory: "tax_category",
+      arcaDestinationCountry: "arca_destination_country",
+      foreignTaxId: "foreign_tax_id",
+      arcaCountryTaxId: "arca_country_tax_id",
       postalCode: "postal_code",
+      deliveryCarrier: "delivery_carrier",
+      deliveryAddress: "delivery_address",
       assignedSalespersonId: "assigned_salesperson_id",
       defaultPriceListId: "default_price_list_id",
       paymentTermId: "payment_term_id",
+      paymentTermDays: "payment_term_days",
       isActive: "is_active",
     });
   }),
