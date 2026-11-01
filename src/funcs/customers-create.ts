@@ -32,7 +32,7 @@ import { Result } from "../types/fp.js";
  * Crear cliente
  *
  * @remarks
- * Crea un cliente para ventas, cuentas corrientes, etiquetas y reportes.
+ * Crea un cliente para ventas, cuentas corrientes, etiquetas y reportes. Un DNI o CUIT que ya pertenece a otro cliente de la organización responde 409 CONFLICT.
  */
 export function customersCreate(
   client: LapymeCore,

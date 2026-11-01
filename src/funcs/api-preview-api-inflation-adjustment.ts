@@ -31,6 +31,9 @@ import { Result } from "../types/fp.js";
 
 /**
  * Previsualizar ajuste por inflación
+ *
+ * @remarks
+ * Calcula en el servidor una previsualización mensual auditable. La clasificación configurada se usa cuando no se envía un reemplazo; los saldos iniciales requieren un cierre anterior vigente o meses de origen explícitos. Los reemplazos de índices oficiales requieren un motivo.
  */
 export function apiPreviewAPIInflationAdjustment(
   client: LapymeCore,

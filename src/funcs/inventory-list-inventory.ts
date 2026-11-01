@@ -116,7 +116,6 @@ async function $do(
     "reserved_max": payload.reserved_max,
     "reserved_min": payload.reserved_min,
     "reserved_rule": payload.reserved_rule,
-    "search": payload.search,
     "warehouse_id": payload.warehouse_id,
   });
 

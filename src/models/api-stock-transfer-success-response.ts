@@ -9,13 +9,9 @@ import { safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import {
-  ApiSharedEnumc66b046f05,
-  ApiSharedEnumc66b046f05$inboundSchema,
-} from "./api-shared-enumc66b046f05.js";
-import {
-  ApiSharedObject13f8ed82da,
-  ApiSharedObject13f8ed82da$inboundSchema,
-} from "./api-shared-object13f8ed82da.js";
+  ApiSharedEnum736f0d077b,
+  ApiSharedEnum736f0d077b$inboundSchema,
+} from "./api-shared-enum736f0d077b.js";
 import {
   ApiSharedObject8aeeceaf0f,
   ApiSharedObject8aeeceaf0f$inboundSchema,
@@ -24,25 +20,29 @@ import {
   ApiSharedObjectc671832641,
   ApiSharedObjectc671832641$inboundSchema,
 } from "./api-shared-objectc671832641.js";
+import {
+  ApiSharedObjectfc454d8721,
+  ApiSharedObjectfc454d8721$inboundSchema,
+} from "./api-shared-objectfc454d8721.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type Transfer = {
   id: string;
   organizationId: string;
-  sourceWarehouseId: string;
-  targetWarehouseId: string;
+  sourceWarehouseId: string | null;
+  targetWarehouseId: string | null;
   transferNumber: number | null;
   formattedTransferNumber: string | null;
   transferDate: Date;
   notes: string | null;
-  status: ApiSharedEnumc66b046f05;
+  status: ApiSharedEnum736f0d077b;
   createdAt: Date;
   updatedAt: Date;
   createdBy: string;
   updatedBy: string | null;
-  sourceWarehouse: ApiSharedObject8aeeceaf0f;
-  targetWarehouse: ApiSharedObject8aeeceaf0f;
-  items: Array<ApiSharedObject13f8ed82da>;
+  sourceWarehouse: ApiSharedObject8aeeceaf0f | null;
+  targetWarehouse: ApiSharedObject8aeeceaf0f | null;
+  items: Array<ApiSharedObjectfc454d8721>;
 };
 
 export type ApiStockTransferSuccessResponseData = {
@@ -61,20 +61,20 @@ export const Transfer$inboundSchema: z.ZodMiniType<Transfer, unknown> = z.pipe(
   z.object({
     id: types.string(),
     organization_id: types.string(),
-    source_warehouse_id: types.string(),
-    target_warehouse_id: types.string(),
+    source_warehouse_id: types.nullable(types.string()),
+    target_warehouse_id: types.nullable(types.string()),
     transfer_number: types.nullable(types.number()),
     formatted_transfer_number: types.nullable(types.string()),
     transfer_date: types.date(),
     notes: types.nullable(types.string()),
-    status: ApiSharedEnumc66b046f05$inboundSchema,
+    status: ApiSharedEnum736f0d077b$inboundSchema,
     created_at: types.date(),
     updated_at: types.date(),
     created_by: types.string(),
     updated_by: types.nullable(types.string()),
-    source_warehouse: ApiSharedObject8aeeceaf0f$inboundSchema,
-    target_warehouse: ApiSharedObject8aeeceaf0f$inboundSchema,
-    items: z.array(ApiSharedObject13f8ed82da$inboundSchema),
+    source_warehouse: types.nullable(ApiSharedObject8aeeceaf0f$inboundSchema),
+    target_warehouse: types.nullable(ApiSharedObject8aeeceaf0f$inboundSchema),
+    items: z.array(ApiSharedObjectfc454d8721$inboundSchema),
   }),
   z.transform((v) => {
     return remap$(v, {

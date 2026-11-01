@@ -5,11 +5,11 @@
 ```typescript
 import { PurchasesReportRequestMeasure } from "lapyme/models";
 
-let value: PurchasesReportRequestMeasure = "uniqueSuppliers";
+let value: PurchasesReportRequestMeasure = "unique_suppliers";
 ```
 
 ## Values
 
 ```typescript
-"purchaseTotal" | "purchaseSubtotal" | "purchaseTaxAmount" | "purchaseCount" | "purchaseUnits" | "purchaseCost" | "uniqueSuppliers" | "avgPurchaseTicket" | "avgPurchaseUnitCost"
+"purchase_total" | "purchase_subtotal" | "purchase_tax_amount" | "purchase_count" | "purchase_units" | "purchase_cost" | "unique_suppliers" | "avg_purchase_ticket" | "avg_purchase_unit_cost"
 ```

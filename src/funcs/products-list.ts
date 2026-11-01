@@ -32,7 +32,7 @@ import { Result } from "../types/fp.js";
  * Listar productos
  *
  * @remarks
- * Lista los productos de la organización con precios. Soporta búsqueda y filtros por categoría, tipo y estado.
+ * Lista los productos de la organización con precios. Filtra por categoría, tipo, estado, etiquetas y campos personalizados; ordena por producto, categoría o SKU.
  */
 export function productsList(
   client: LapymeCore,
@@ -100,11 +100,14 @@ async function $do(
   const query = encodeFormQuery({
     "category_id": payload?.category_id,
     "cursor": payload?.cursor,
+    "direction": payload?.direction,
     "is_active": payload?.is_active,
     "limit": payload?.limit,
+    "metafield": payload?.metafield,
     "product_type": payload?.product_type,
     "query": payload?.query,
-    "search": payload?.search,
+    "sort": payload?.sort,
+    "tag": payload?.tag,
   });
 
   const headers = new Headers(compactMap({
