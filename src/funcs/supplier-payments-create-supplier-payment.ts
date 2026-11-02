@@ -32,7 +32,7 @@ import { Result } from "../types/fp.js";
  * Crear pago a proveedor
  *
  * @remarks
- * Registra un pago a proveedor con uno o más métodos de pago, aplicaciones a compras o cuenta corriente, retenciones y datos de cheque cuando corresponde.
+ * Registra un pago a proveedor con uno o más métodos de pago, aplicaciones a compras o cuenta corriente, retenciones y datos de cheque cuando corresponde. Reintentar con la misma Idempotency-Key y los mismos datos devuelve el pago original con idempotent_replay en true y no registra otro; reutilizar la clave con datos distintos devuelve 409 IDEMPOTENCY_CONFLICT. Ante un 503, reintentá con la misma clave.
  */
 export function supplierPaymentsCreateSupplierPayment(
   client: LapymeCore,
@@ -181,7 +181,7 @@ async function $do(
     }),
     M.jsonErr([400, 401, 403, 409], errors.ApiErrorEnvelope$inboundSchema),
     M.jsonErr(429, errors.ApiErrorEnvelope$inboundSchema, { hdrs: true }),
-    M.jsonErr(500, errors.ApiErrorEnvelope$inboundSchema),
+    M.jsonErr([500, 503], errors.ApiErrorEnvelope$inboundSchema),
     M.fail("4XX"),
     M.fail("5XX"),
   )(response, req, { extraFields: responseFields });

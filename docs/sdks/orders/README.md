@@ -7,7 +7,7 @@
 * [listOrders](#listorders) - Listar pedidos
 * [createOrder](#createorder) - Crear pedido
 * [getOrderById](#getorderbyid) - Obtener pedido
-* [updateOrderNotes](#updateordernotes) - Actualizar notas del pedido
+* [updateOrderNotes](#updateordernotes) - Editar pedido
 * [deleteArchived](#deletearchived) - Eliminar pedido archivado
 * [cancel](#cancel) - Cancelar pedido
 * [unarchive](#unarchive) - Desarchivar pedido
@@ -104,11 +104,6 @@ async function run() {
     body: {
       customerId: "2bfbf716-33ab-4708-bf35-5873e33ea4a5",
       assignedWarehouseId: "b92af079-32d3-4e0e-b22e-848a208e6eb4",
-      totals: {
-        subtotal: 898897,
-        taxAmount: 399499,
-        total: 513425,
-      },
       lines: [
         {
           productNameSnapshot: "<value>",
@@ -146,11 +141,6 @@ async function run() {
     body: {
       customerId: "2bfbf716-33ab-4708-bf35-5873e33ea4a5",
       assignedWarehouseId: "b92af079-32d3-4e0e-b22e-848a208e6eb4",
-      totals: {
-        subtotal: 898897,
-        taxAmount: 399499,
-        total: 513425,
-      },
       lines: [
         {
           productNameSnapshot: "<value>",
@@ -272,9 +262,9 @@ run();
 
 ## updateOrderNotes
 
-Actualiza las notas del pedido sin modificar importes, líneas ni estados.
+Acepta el contrato histórico de solo notas sin Idempotency-Key. Para cambiar cliente, lista de precios, depósito, entrega, fecha, impuestos, descuento o líneas, enviá la representación estructural completa, expected_updated_at cuando necesites concurrencia optimista e Idempotency-Key. unit_price usa importes netos como los devueltos por el GET, y los campos opcionales omitidos conservan su valor actual. Un cambio de depósito o entrega traslada el trabajo pendiente y sus reservas en la misma operación.
 
-### Example Usage
+### Example Usage: default
 
 <!-- UsageSnippet language="typescript" operationID="patchApiOrder" method="patch" path="/api/v1/orders/{order_id}" example="default" -->
 ```typescript
@@ -314,6 +304,144 @@ async function run() {
   const res = await ordersUpdateOrderNotes(lapyme, {
     orderId: "4215e3ef-aa36-4811-9591-5f0e07da2262",
     body: {},
+  });
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("ordersUpdateOrderNotes failed:", res.error);
+  }
+}
+
+run();
+```
+### Example Usage: notes_only_compatibility
+
+<!-- UsageSnippet language="typescript" operationID="patchApiOrder" method="patch" path="/api/v1/orders/{order_id}" example="notes_only_compatibility" -->
+```typescript
+import { Lapyme } from "lapyme";
+
+const lapyme = new Lapyme({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const result = await lapyme.orders.updateOrderNotes({
+    orderId: "4215e3ef-aa36-4811-9591-5f0e07da2262",
+    body: {
+      notes: "Retira por sucursal.",
+    },
+  });
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { LapymeCore } from "lapyme/core.js";
+import { ordersUpdateOrderNotes } from "lapyme/funcs/orders-update-order-notes.js";
+
+// Use `LapymeCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const lapyme = new LapymeCore({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const res = await ordersUpdateOrderNotes(lapyme, {
+    orderId: "4215e3ef-aa36-4811-9591-5f0e07da2262",
+    body: {
+      notes: "Retira por sucursal.",
+    },
+  });
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("ordersUpdateOrderNotes failed:", res.error);
+  }
+}
+
+run();
+```
+### Example Usage: structural_edit
+
+<!-- UsageSnippet language="typescript" operationID="patchApiOrder" method="patch" path="/api/v1/orders/{order_id}" example="structural_edit" -->
+```typescript
+import { Lapyme } from "lapyme";
+
+const lapyme = new Lapyme({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const result = await lapyme.orders.updateOrderNotes({
+    orderId: "d9052133-e4c5-49f5-962f-6a9b763e6fc1",
+    body: {
+      assignedWarehouseId: "550e8400-e29b-41d4-a716-446655440003",
+      deliveryMethod: "shipping",
+      expectedUpdatedAt: new Date("2026-08-28T12:00:00.000Z"),
+      taxInclusive: false,
+      lines: [
+        {
+          orderLineId: "550e8400-e29b-41d4-a716-446655440004",
+          productId: "550e8400-e29b-41d4-a716-446655440005",
+          productNameSnapshot: "Mate",
+          skuSnapshot: "MATE-1",
+          orderedQuantity: 2,
+          unitPrice: 10000,
+          taxRateId: 5,
+        },
+      ],
+    },
+  });
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { LapymeCore } from "lapyme/core.js";
+import { ordersUpdateOrderNotes } from "lapyme/funcs/orders-update-order-notes.js";
+
+// Use `LapymeCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const lapyme = new LapymeCore({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const res = await ordersUpdateOrderNotes(lapyme, {
+    orderId: "d9052133-e4c5-49f5-962f-6a9b763e6fc1",
+    body: {
+      assignedWarehouseId: "550e8400-e29b-41d4-a716-446655440003",
+      deliveryMethod: "shipping",
+      expectedUpdatedAt: new Date("2026-08-28T12:00:00.000Z"),
+      taxInclusive: false,
+      lines: [
+        {
+          orderLineId: "550e8400-e29b-41d4-a716-446655440004",
+          productId: "550e8400-e29b-41d4-a716-446655440005",
+          productNameSnapshot: "Mate",
+          skuSnapshot: "MATE-1",
+          orderedQuantity: 2,
+          unitPrice: 10000,
+          taxRateId: 5,
+        },
+      ],
+    },
   });
   if (res.ok) {
     const { value: result } = res;
@@ -426,7 +554,7 @@ run();
 
 ## cancel
 
-Cancelar pedido
+Cancela un pedido elegible y devuelve el estado persistido después de aplicar sus efectos de cancelación.
 
 ### Example Usage
 
@@ -502,7 +630,7 @@ run();
 
 ## unarchive
 
-Desarchivar pedido
+Restaura un pedido archivado y devuelve el estado persistido resultante.
 
 ### Example Usage
 

@@ -1,0 +1,35 @@
+# ApiSharedObject8486fd69ce
+
+## Example Usage
+
+```typescript
+import { ApiSharedObject8486fd69ce } from "lapyme/models";
+
+let value: ApiSharedObject8486fd69ce = {
+  paymentMethodId: "d0a14d65-a5c9-4967-80a7-86c378f56cda",
+  amount: 807206,
+};
+```
+
+## Fields
+
+| Field                                                                             | Type                                                                              | Required                                                                          | Description                                                                       |
+| --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| `id`                                                                              | *string*                                                                          | :heavy_minus_sign:                                                                | N/A                                                                               |
+| `paymentMethodId`                                                                 | *string*                                                                          | :heavy_check_mark:                                                                | N/A                                                                               |
+| `paymentMethodName`                                                               | *string*                                                                          | :heavy_minus_sign:                                                                | N/A                                                                               |
+| `amount`                                                                          | *number*                                                                          | :heavy_check_mark:                                                                | N/A                                                                               |
+| `reference`                                                                       | *string*                                                                          | :heavy_minus_sign:                                                                | N/A                                                                               |
+| `cardBrand`                                                                       | *string*                                                                          | :heavy_minus_sign:                                                                | N/A                                                                               |
+| `cardBatchNumber`                                                                 | *string*                                                                          | :heavy_minus_sign:                                                                | N/A                                                                               |
+| `cardCouponNumber`                                                                | *string*                                                                          | :heavy_minus_sign:                                                                | N/A                                                                               |
+| `cardInstallmentPlanCode`                                                         | *string*                                                                          | :heavy_minus_sign:                                                                | N/A                                                                               |
+| `notes`                                                                           | *string*                                                                          | :heavy_minus_sign:                                                                | N/A                                                                               |
+| `feeAmount`                                                                       | *number*                                                                          | :heavy_minus_sign:                                                                | N/A                                                                               |
+| `actualProcessorFeeAmount`                                                        | *number*                                                                          | :heavy_minus_sign:                                                                | Costo real reconocido al registrar la cobranza. null indica que no fue informado. |
+| `feePercentageApplied`                                                            | *string*                                                                          | :heavy_minus_sign:                                                                | N/A                                                                               |
+| `feeFixedApplied`                                                                 | *number*                                                                          | :heavy_minus_sign:                                                                | N/A                                                                               |
+| `netAmount`                                                                       | *number*                                                                          | :heavy_minus_sign:                                                                | N/A                                                                               |
+| `checkId`                                                                         | *string*                                                                          | :heavy_minus_sign:                                                                | N/A                                                                               |
+| `registerId`                                                                      | *string*                                                                          | :heavy_minus_sign:                                                                | N/A                                                                               |
+| `safeId`                                                                          | *string*                                                                          | :heavy_minus_sign:                                                                | N/A                                                                               |

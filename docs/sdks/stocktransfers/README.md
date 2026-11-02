@@ -99,7 +99,7 @@ async function run() {
     body: {
       sourceWarehouseId: "da9ef71c-50f9-47ff-a040-9b9aadc837a3",
       targetWarehouseId: "93b766d2-9e75-44c4-bc54-dd6d4965951e",
-      transferDate: new Date("2025-07-04T06:10:53.551Z"),
+      transferDate: "2025-07-04T06:10:53.551Z",
       items: [],
     },
   });
@@ -129,7 +129,7 @@ async function run() {
     body: {
       sourceWarehouseId: "da9ef71c-50f9-47ff-a040-9b9aadc837a3",
       targetWarehouseId: "93b766d2-9e75-44c4-bc54-dd6d4965951e",
-      transferDate: new Date("2025-07-04T06:10:53.551Z"),
+      transferDate: "2025-07-04T06:10:53.551Z",
       items: [],
     },
   });
@@ -158,7 +158,7 @@ async function run() {
     body: {
       sourceWarehouseId: "da9ef71c-50f9-47ff-a040-9b9aadc837a3",
       targetWarehouseId: "93b766d2-9e75-44c4-bc54-dd6d4965951e",
-      transferDate: new Date("2025-07-04T06:10:53.551Z"),
+      transferDate: "2025-07-04T06:10:53.551Z",
       items: [],
     },
   });
@@ -188,7 +188,7 @@ async function run() {
     body: {
       sourceWarehouseId: "da9ef71c-50f9-47ff-a040-9b9aadc837a3",
       targetWarehouseId: "93b766d2-9e75-44c4-bc54-dd6d4965951e",
-      transferDate: new Date("2025-07-04T06:10:53.551Z"),
+      transferDate: "2025-07-04T06:10:53.551Z",
       items: [],
     },
   });

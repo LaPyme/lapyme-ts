@@ -9,14 +9,22 @@ import { safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import {
-  ApiSharedObjectd371740910,
-  ApiSharedObjectd371740910$inboundSchema,
-} from "./api-shared-objectd371740910.js";
+  ApiSharedObject425dc8c092,
+  ApiSharedObject425dc8c092$inboundSchema,
+} from "./api-shared-object425dc8c092.js";
+import {
+  ApiSharedObjectcbcdbf3dfa,
+  ApiSharedObjectcbcdbf3dfa$inboundSchema,
+} from "./api-shared-objectcbcdbf3dfa.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type ApiProductCreateResponseData = {
-  product: ApiSharedObjectd371740910;
+  product: ApiSharedObject425dc8c092;
   idempotentReplay: boolean;
+  /**
+   * USD conversions used by this save. Empty when no conversion was resolved or costs are hidden. Create replay returns the original evidence.
+   */
+  costConversions: Array<ApiSharedObjectcbcdbf3dfa>;
 };
 
 export type ApiProductCreateResponse = {
@@ -31,12 +39,14 @@ export const ApiProductCreateResponseData$inboundSchema: z.ZodMiniType<
   unknown
 > = z.pipe(
   z.object({
-    product: ApiSharedObjectd371740910$inboundSchema,
+    product: ApiSharedObject425dc8c092$inboundSchema,
     idempotent_replay: types.boolean(),
+    cost_conversions: z.array(ApiSharedObjectcbcdbf3dfa$inboundSchema),
   }),
   z.transform((v) => {
     return remap$(v, {
       "idempotent_replay": "idempotentReplay",
+      "cost_conversions": "costConversions",
     });
   }),
 );

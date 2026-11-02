@@ -8,7 +8,7 @@ import { ApiOrderCreateRequestLine } from "lapyme/models";
 let value: ApiOrderCreateRequestLine = {
   productNameSnapshot: "<value>",
   skuSnapshot: "<value>",
-  orderedQuantity: 992447,
+  orderedQuantity: 9924.47,
   unitPrice: 47372,
 };
 ```

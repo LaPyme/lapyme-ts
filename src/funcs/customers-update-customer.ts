@@ -32,7 +32,7 @@ import { Result } from "../types/fp.js";
  * Actualizar cliente
  *
  * @remarks
- * Actualiza un cliente y devuelve los datos persistidos.
+ * Actualiza un cliente y devuelve los datos persistidos. Cambiar el DNI o CUIT a uno que ya pertenece a otro cliente de la organización responde 409 CONFLICT; reenviar el documento guardado no lo valida otra vez.
  */
 export function customersUpdateCustomer(
   client: LapymeCore,

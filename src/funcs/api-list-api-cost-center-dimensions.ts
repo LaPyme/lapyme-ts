@@ -30,6 +30,9 @@ import { Result } from "../types/fp.js";
 
 /**
  * Listar dimensiones de centros de costo
+ *
+ * @remarks
+ * Lista las dimensiones de centros de costo disponibles y permite incluir dimensiones inactivas.
  */
 export function apiListAPICostCenterDimensions(
   client: LapymeCore,
