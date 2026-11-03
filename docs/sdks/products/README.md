@@ -12,7 +12,7 @@
 
 ## list
 
-Lista los productos de la organización con precios. Soporta búsqueda y filtros por categoría, tipo y estado.
+Lista los productos de la organización con precios. Filtra por categoría, tipo, estado, etiquetas y campos personalizados; ordena por producto, categoría o SKU.
 
 ### Example Usage
 
@@ -84,7 +84,7 @@ run();
 
 ## create
 
-Crea un producto, servicio, combo o kit con su información comercial y de inventario.
+Crea un producto simple, servicio o kit; un producto con hasta tres opciones y 250 variantes; o un combo con su composición completa y no vacía. La creación de un combo persiste producto, precio y componentes de forma atómica.
 
 ### Example Usage
 
@@ -101,7 +101,15 @@ async function run() {
     idempotencyKey: "<value>",
     body: {
       name: "<value>",
+      visibility: "both",
+      productType: "product",
       sku: "<value>",
+      unitOfMeasure: "07",
+      currency: "ARS",
+      cost: 0,
+      taxRateId: 5,
+      isExempt: false,
+      isActive: true,
     },
   });
 
@@ -130,7 +138,15 @@ async function run() {
     idempotencyKey: "<value>",
     body: {
       name: "<value>",
+      visibility: "both",
+      productType: "product",
       sku: "<value>",
+      unitOfMeasure: "07",
+      currency: "ARS",
+      cost: 0,
+      taxRateId: 5,
+      isExempt: false,
+      isActive: true,
     },
   });
   if (res.ok) {
@@ -244,7 +260,7 @@ run();
 
 ## update
 
-Actualiza un producto y devuelve el detalle persistido.
+Actualiza solo los campos enviados y devuelve el detalle persistido. Para un combo existente, product_type y components son opcionales: omitir components conserva la composición y omitir los campos de precio conserva el precio guardado. Si se envía components, reemplaza la composición completa. No permite convertir otros productos en combos. La actualización de un combo requiere Idempotency-Key para deduplicar reintentos.
 
 ### Example Usage
 

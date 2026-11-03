@@ -101,6 +101,7 @@ async function $do(
 
   const query = encodeFormQuery({
     "account_id": payload?.account_id,
+    "circuit_id": payload?.circuit_id,
     "cursor": payload?.cursor,
     "date_from": payload?.date_from,
     "date_to": payload?.date_to,

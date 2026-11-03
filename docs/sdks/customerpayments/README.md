@@ -83,7 +83,7 @@ run();
 
 ## createCustomerPayment
 
-Registra una cobranza de cliente con uno o más métodos de pago, aplicaciones a ventas o cuenta corriente, retenciones y datos de cheque cuando corresponde.
+Registra una cobranza de cliente con uno o más métodos de pago, aplicaciones a ventas o cuenta corriente, retenciones y datos de cheque cuando corresponde. Reintentar con la misma Idempotency-Key y los mismos datos devuelve la cobranza original con idempotent_replay en true y no registra otra; reutilizar la clave con datos distintos devuelve 409 IDEMPOTENCY_CONFLICT. Ante un 503, reintentá con la misma clave.
 
 ### Example Usage
 
@@ -102,7 +102,7 @@ async function run() {
       customerId: "6c3bc874-5a0f-4681-9333-2cb3b1ae904e",
       pointOfSaleId: "4951289f-66e9-4bef-a8ed-fa5e1852a608",
       paymentDate: "<value>",
-      currency: "PES",
+      currency: "ARS",
       totalAmount: 164221,
       splits: [],
     },
@@ -135,7 +135,7 @@ async function run() {
       customerId: "6c3bc874-5a0f-4681-9333-2cb3b1ae904e",
       pointOfSaleId: "4951289f-66e9-4bef-a8ed-fa5e1852a608",
       paymentDate: "<value>",
-      currency: "PES",
+      currency: "ARS",
       totalAmount: 164221,
       splits: [],
     },
@@ -170,7 +170,7 @@ run();
 | ------------------------- | ------------------------- | ------------------------- |
 | errors.ApiErrorEnvelope   | 400, 401, 403, 409        | application/json          |
 | errors.ApiErrorEnvelope   | 429                       | application/json          |
-| errors.ApiErrorEnvelope   | 500                       | application/json          |
+| errors.ApiErrorEnvelope   | 500, 503                  | application/json          |
 | errors.LapymeDefaultError | 4XX, 5XX                  | \*/\*                     |
 
 ## getCustomerPayment
