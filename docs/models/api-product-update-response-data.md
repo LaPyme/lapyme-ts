@@ -7,58 +7,76 @@ import { ApiProductUpdateResponseData } from "lapyme/models";
 
 let value: ApiProductUpdateResponseData = {
   product: {
-    id: "466902fc-c58e-4e6b-8002-706e5660907a",
+    id: "4be7e44d-e025-41cb-a98f-12d48698b5e5",
     name: "<value>",
-    description: "construe discourse similar jogging onset",
-    category: {
-      id: "266530ce-75cf-40a4-81e8-226c43eeb6d9",
-      name: "<value>",
-    },
+    description: "vice junior scoff zowie scoff powerfully psst",
+    category: null,
     sku: "<value>",
     barcode: "<value>",
-    currency: "Venezuelan bolívar",
-    cost: 2129.23,
-    price: 8568.58,
+    imageUrl: "https://sunny-nightlife.org/",
+    currency: "Denar",
+    cost: 4639.09,
+    price: 7340.09,
     taxRate: {
-      id: 9545.45,
-      value: 8570.91,
+      id: 6496.5,
+      value: 3957.79,
     },
     defaultSupplier: {
-      id: "e2939b22-6734-418f-802e-69ca6e74fd88",
+      id: "9431a085-9f3d-46fb-8826-91199d393547",
       name: "<value>",
     },
-    productType: "combo",
-    isActive: true,
+    productType: "product",
+    visibility: "purchases",
+    isActive: false,
     organizationSlug: "<value>",
-    createdAt: new Date("2024-07-31T07:25:38.915Z"),
-    updatedAt: new Date("2025-07-23T22:16:38.063Z"),
+    createdAt: new Date("2024-03-03T10:59:33.677Z"),
+    updatedAt: new Date("2026-10-10T09:28:53.927Z"),
+    components: [
+      {
+        productId: "4a0b478b-0e90-4aa0-a6fb-e28f0ddf5869",
+        name: "<value>",
+        sku: "<value>",
+        quantity: 5832.75,
+      },
+    ],
     object: "product",
-    variantGroupId: "bf32ac26-3e27-4830-aa84-bdd32992e378",
+    variantGroupId: "9b4c6439-384c-4a58-9cf3-b39718b07048",
+    tags: [],
     variantOptions: {
       "key": "<value>",
       "key1": "<value>",
+      "key2": "<value>",
     },
     isExempt: false,
+    metafields: [
+      {
+        key: "<key>",
+        value: "<value>",
+      },
+    ],
+    variantMetafields: [],
     stockSummary: {
-      totalQuantity: 3450.16,
-      warehouseCount: 107596,
+      totalQuantity: 9296.94,
+      warehouseCount: 406381,
       byWarehouse: [
         {
-          warehouseId: "8355b424-e8f1-4b19-a424-22b1798decfe",
+          warehouseId: "b6e29039-6b35-4a8c-8a83-53449182ecbb",
           warehouseName: "<value>",
-          quantity: 1678.21,
-          onHand: 2292.22,
-          reservedQuantity: 4791.26,
-          incomingQuantity: 4053.93,
+          quantity: 7029.39,
+          onHand: 3002.45,
+          reservedQuantity: 8793.03,
+          incomingQuantity: 7069.24,
         },
       ],
     },
   },
+  costConversions: [],
 };
 ```
 
 ## Fields
 
-| Field                                                                        | Type                                                                         | Required                                                                     | Description                                                                  |
-| ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| `product`                                                                    | [models.ApiSharedObjectd371740910](../models/api-shared-objectd371740910.md) | :heavy_check_mark:                                                           | N/A                                                                          |
+| Field                                                                          | Type                                                                           | Required                                                                       | Description                                                                    |
+| ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
+| `product`                                                                      | [models.ApiSharedObjectbdd9158fb4](../models/api-shared-objectbdd9158fb4.md)   | :heavy_check_mark:                                                             | N/A                                                                            |
+| `costConversions`                                                              | [models.ApiSharedObjectcbcdbf3dfa](../models/api-shared-objectcbcdbf3dfa.md)[] | :heavy_check_mark:                                                             | N/A                                                                            |

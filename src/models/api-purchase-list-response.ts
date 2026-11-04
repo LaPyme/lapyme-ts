@@ -13,9 +13,13 @@ import {
   ApiSharedEnum8d46e1ec20$inboundSchema,
 } from "./api-shared-enum8d46e1ec20.js";
 import {
-  ApiSharedObjectf28d5cf256,
-  ApiSharedObjectf28d5cf256$inboundSchema,
-} from "./api-shared-objectf28d5cf256.js";
+  ApiSharedObject91cc200368,
+  ApiSharedObject91cc200368$inboundSchema,
+} from "./api-shared-object91cc200368.js";
+import {
+  ApiSharedObjected3905a55b,
+  ApiSharedObjected3905a55b$inboundSchema,
+} from "./api-shared-objected3905a55b.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type ApiPurchaseListResponseData = {
@@ -44,7 +48,8 @@ export type ApiPurchaseListResponseData = {
    */
   supplierInvoiceNumber: string | null;
   createdAt: Date;
-  supplier: ApiSharedObjectf28d5cf256 | null;
+  supplier: ApiSharedObject91cc200368 | null;
+  tags: Array<ApiSharedObjected3905a55b>;
 };
 
 export type ApiPurchaseListResponse = {
@@ -81,7 +86,8 @@ export const ApiPurchaseListResponseData$inboundSchema: z.ZodMiniType<
     exchange_rate: types.string(),
     supplier_invoice_number: types.nullable(types.string()),
     created_at: types.date(),
-    supplier: types.nullable(ApiSharedObjectf28d5cf256$inboundSchema),
+    supplier: types.nullable(ApiSharedObject91cc200368$inboundSchema),
+    tags: z.array(ApiSharedObjected3905a55b$inboundSchema),
   }),
   z.transform((v) => {
     return remap$(v, {
