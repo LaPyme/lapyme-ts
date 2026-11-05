@@ -18,15 +18,31 @@ let value: ApiSupplierUpdateResponseData = {
     taxIdType: "<value>",
     taxCategory: "<value>",
     paymentTermId: "<id>",
+    paymentTermDays: 100217,
     isActive: true,
-    country: "Gibraltar",
+    tags: [
+      {
+        object: "tag",
+        id: "d17aba97-5a39-49b6-b021-2a82b75ca998",
+        scope: "purchase_order",
+        name: "<value>",
+        slug: "<value>",
+        color: "yellow",
+        description: "natural huzzah heavenly",
+        archivedAt: new Date("2024-12-06T02:21:59.305Z"),
+        createdAt: new Date("2024-02-28T10:14:14.640Z"),
+        updatedAt: new Date("2025-08-18T02:43:21.277Z"),
+      },
+    ],
+    defaultAccountId: "2f11213e-900d-43a9-8d96-658124d9faf1",
+    country: null,
     provinceId: "<id>",
-    city: "Fort Bernardton",
-    address: "38500 E 3rd Street",
+    city: "Melanyborough",
+    address: null,
     apartment: "<value>",
-    postalCode: "53435-1128",
-    createdAt: new Date("2025-09-17T03:40:21.450Z"),
-    updatedAt: new Date("2026-12-17T07:31:45.520Z"),
+    postalCode: "98472",
+    createdAt: new Date("2025-06-22T07:25:06.612Z"),
+    updatedAt: new Date("2026-07-16T14:09:23.826Z"),
   },
 };
 ```
@@ -35,4 +51,4 @@ let value: ApiSupplierUpdateResponseData = {
 
 | Field                                                                        | Type                                                                         | Required                                                                     | Description                                                                  |
 | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| `supplier`                                                                   | [models.ApiSharedObjectac822ca2fd](../models/api-shared-objectac822ca2fd.md) | :heavy_check_mark:                                                           | N/A                                                                          |
+| `supplier`                                                                   | [models.ApiSharedObjecte014df5c78](../models/api-shared-objecte014df5c78.md) | :heavy_check_mark:                                                           | N/A                                                                          |

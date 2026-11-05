@@ -30,6 +30,9 @@ import { Result } from "../types/fp.js";
 
 /**
  * Obtener sumas y saldos
+ *
+ * @remarks
+ * Calcula sumas y saldos para el período y los filtros contables solicitados.
  */
 export function apiGetAPITrialBalance(
   client: LapymeCore,
@@ -95,11 +98,13 @@ async function $do(
   const path = pathToFunc("/api/v1/accounting/trial-balance")();
 
   const query = encodeFormQuery({
-    "cost_center1_ids": payload?.cost_center1_ids,
-    "cost_center2_ids": payload?.cost_center2_ids,
-    "cost_center3_ids": payload?.cost_center3_ids,
+    "circuit_id": payload?.circuit_id,
+    "cost_center_1_ids": payload?.cost_center_1_ids,
+    "cost_center_2_ids": payload?.cost_center_2_ids,
+    "cost_center_3_ids": payload?.cost_center_3_ids,
     "date_from": payload?.date_from,
     "date_to": payload?.date_to,
+    "period_preset": payload?.period_preset,
   });
 
   const headers = new Headers(compactMap({
@@ -185,6 +190,7 @@ async function $do(
     M.jsonErr([400, 401, 403], errors.ApiErrorEnvelope$inboundSchema),
     M.jsonErr(429, errors.ApiErrorEnvelope$inboundSchema, { hdrs: true }),
     M.jsonErr(500, errors.ApiErrorEnvelope$inboundSchema),
+    M.jsonErr(503, errors.ApiErrorEnvelope$inboundSchema, { hdrs: true }),
     M.fail("4XX"),
     M.fail("5XX"),
   )(response, req, { extraFields: responseFields });

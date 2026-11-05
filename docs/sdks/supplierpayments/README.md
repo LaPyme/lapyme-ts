@@ -79,11 +79,12 @@ run();
 | errors.ApiErrorEnvelope   | 400, 401, 403             | application/json          |
 | errors.ApiErrorEnvelope   | 429                       | application/json          |
 | errors.ApiErrorEnvelope   | 500                       | application/json          |
+| errors.ApiErrorEnvelope   | 503                       | application/json          |
 | errors.LapymeDefaultError | 4XX, 5XX                  | \*/\*                     |
 
 ## createSupplierPayment
 
-Registra un pago a proveedor con uno o más métodos de pago, aplicaciones a compras o cuenta corriente, retenciones y datos de cheque cuando corresponde.
+Registra un pago a proveedor con uno o más métodos de pago, aplicaciones a compras o cuenta corriente, retenciones y datos de cheque cuando corresponde. Reintentar con la misma Idempotency-Key y los mismos datos devuelve el pago original con idempotent_replay en true y no registra otro; reutilizar la clave con datos distintos devuelve 409 IDEMPOTENCY_CONFLICT. Ganancias automática se solicita con ganancias_withholding (regimen, calculation_base en centavos ARS e is_inscripto opcional), sin un importe ni número de certificado. Consultá preview-ganancias antes de balancear splits. El pago recalcula dentro de su transacción y conserva bases inferiores al mínimo, sin emitir certificados de importe cero. Un cambio que desbalancea splits devuelve 409 con detalle GANANCIAS_CALCULATION_MISMATCH; un fallo ARCA devuelve 422 con detalle GANANCIAS_STATUS_UNRESOLVED. Los importes y certificados manuales siguen admitidos. Ante un 503, reintentá con la misma clave.
 
 ### Example Usage
 
@@ -102,7 +103,7 @@ async function run() {
       supplierId: "327cbfaa-bdc6-454c-ab70-1739c72d6e49",
       pointOfSaleId: "ba7f4895-13b5-46e8-9466-323405ce54a8",
       paymentDate: "<value>",
-      currency: "PES",
+      currency: "ARS",
       totalAmount: 491818,
       splits: [
         {
@@ -140,7 +141,7 @@ async function run() {
       supplierId: "327cbfaa-bdc6-454c-ab70-1739c72d6e49",
       pointOfSaleId: "ba7f4895-13b5-46e8-9466-323405ce54a8",
       paymentDate: "<value>",
-      currency: "PES",
+      currency: "ARS",
       totalAmount: 491818,
       splits: [
         {
@@ -178,9 +179,10 @@ run();
 
 | Error Type                | Status Code               | Content Type              |
 | ------------------------- | ------------------------- | ------------------------- |
-| errors.ApiErrorEnvelope   | 400, 401, 403, 409        | application/json          |
+| errors.ApiErrorEnvelope   | 400, 401, 403, 409, 422   | application/json          |
 | errors.ApiErrorEnvelope   | 429                       | application/json          |
 | errors.ApiErrorEnvelope   | 500                       | application/json          |
+| errors.ApiErrorEnvelope   | 503                       | application/json          |
 | errors.LapymeDefaultError | 4XX, 5XX                  | \*/\*                     |
 
 ## getSupplierPayment
@@ -257,6 +259,7 @@ run();
 | errors.ApiErrorEnvelope   | 400, 401, 403, 404        | application/json          |
 | errors.ApiErrorEnvelope   | 429                       | application/json          |
 | errors.ApiErrorEnvelope   | 500                       | application/json          |
+| errors.ApiErrorEnvelope   | 503                       | application/json          |
 | errors.LapymeDefaultError | 4XX, 5XX                  | \*/\*                     |
 
 ## voidSupplierPayment
@@ -335,4 +338,5 @@ run();
 | errors.ApiErrorEnvelope   | 400, 401, 403, 404, 409   | application/json          |
 | errors.ApiErrorEnvelope   | 429                       | application/json          |
 | errors.ApiErrorEnvelope   | 500                       | application/json          |
+| errors.ApiErrorEnvelope   | 503                       | application/json          |
 | errors.LapymeDefaultError | 4XX, 5XX                  | \*/\*                     |

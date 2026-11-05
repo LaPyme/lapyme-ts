@@ -33,7 +33,7 @@ export class SupplierPayments extends ClientSDK {
    * Crear pago a proveedor
    *
    * @remarks
-   * Registra un pago a proveedor con uno o más métodos de pago, aplicaciones a compras o cuenta corriente, retenciones y datos de cheque cuando corresponde.
+   * Registra un pago a proveedor con uno o más métodos de pago, aplicaciones a compras o cuenta corriente, retenciones y datos de cheque cuando corresponde. Reintentar con la misma Idempotency-Key y los mismos datos devuelve el pago original con idempotent_replay en true y no registra otro; reutilizar la clave con datos distintos devuelve 409 IDEMPOTENCY_CONFLICT. Ganancias automática se solicita con ganancias_withholding (regimen, calculation_base en centavos ARS e is_inscripto opcional), sin un importe ni número de certificado. Consultá preview-ganancias antes de balancear splits. El pago recalcula dentro de su transacción y conserva bases inferiores al mínimo, sin emitir certificados de importe cero. Un cambio que desbalancea splits devuelve 409 con detalle GANANCIAS_CALCULATION_MISMATCH; un fallo ARCA devuelve 422 con detalle GANANCIAS_STATUS_UNRESOLVED. Los importes y certificados manuales siguen admitidos. Ante un 503, reintentá con la misma clave.
    */
   async createSupplierPayment(
     request: operations.CreateApiSupplierPaymentRequest,

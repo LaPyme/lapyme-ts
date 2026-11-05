@@ -17,10 +17,6 @@ import {
   ApiSharedEnum4ac9200c4a$inboundSchema,
 } from "./api-shared-enum4ac9200c4a.js";
 import {
-  ApiSharedEnum6cfb146157,
-  ApiSharedEnum6cfb146157$inboundSchema,
-} from "./api-shared-enum6cfb146157.js";
-import {
   ApiSharedEnum8d46e1ec20,
   ApiSharedEnum8d46e1ec20$inboundSchema,
 } from "./api-shared-enum8d46e1ec20.js";
@@ -28,6 +24,10 @@ import {
   ApiSharedEnumb49e56b125,
   ApiSharedEnumb49e56b125$inboundSchema,
 } from "./api-shared-enumb49e56b125.js";
+import {
+  ApiSharedEnumffb4886f2b,
+  ApiSharedEnumffb4886f2b$inboundSchema,
+} from "./api-shared-enumffb4886f2b.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type ApiOrderListResponseData = {
@@ -45,12 +45,13 @@ export type ApiOrderListResponseData = {
   subtotal: number;
   taxAmount: number;
   total: number;
-  currency: ApiSharedEnum6cfb146157;
+  currency: ApiSharedEnumffb4886f2b;
   orderStatus: ApiSharedEnum4ac9200c4a;
   preparationStatus: ApiSharedEnumb49e56b125;
   invoicingStatus: ApiSharedEnum2f67ddf0e8;
   notes: string | null;
   createdAt: Date;
+  updatedAt: Date;
   createdByName: string;
 };
 
@@ -89,12 +90,13 @@ export const ApiOrderListResponseData$inboundSchema: z.ZodMiniType<
     subtotal: types.number(),
     tax_amount: types.number(),
     total: types.number(),
-    currency: ApiSharedEnum6cfb146157$inboundSchema,
+    currency: ApiSharedEnumffb4886f2b$inboundSchema,
     order_status: ApiSharedEnum4ac9200c4a$inboundSchema,
     preparation_status: ApiSharedEnumb49e56b125$inboundSchema,
     invoicing_status: ApiSharedEnum2f67ddf0e8$inboundSchema,
     notes: types.nullable(types.string()),
     created_at: types.date(),
+    updated_at: types.date(),
     created_by_name: types.string(),
   }),
   z.transform((v) => {
@@ -113,6 +115,7 @@ export const ApiOrderListResponseData$inboundSchema: z.ZodMiniType<
       "preparation_status": "preparationStatus",
       "invoicing_status": "invoicingStatus",
       "created_at": "createdAt",
+      "updated_at": "updatedAt",
       "created_by_name": "createdByName",
     });
   }),
