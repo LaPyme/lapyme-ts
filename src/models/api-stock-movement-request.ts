@@ -21,14 +21,24 @@ export type Direction = ClosedEnum<typeof Direction>;
 
 export type ApiStockMovementRequestItem = {
   productId: string;
+  /**
+   * Debe ser mayor a cero para movimientos delta. Las correcciones por reemplazo aceptan cualquier cantidad final finita, incluidos valores negativos.
+   */
   quantity: number;
+  /**
+   * Solo para mode replace: stock disponible que observaste para este producto o combo en la ubicación. Si cambió, el movimiento completo devuelve STATE_CONFLICT (409). No se acepta en mode delta.
+   */
+  expectedQuantity?: number | undefined;
 };
 
 export type ApiStockMovementRequest = {
   warehouseId: string;
   mode: Mode;
   direction?: Direction | undefined;
-  operationDate: Date;
+  /**
+   * Fecha ISO (YYYY-MM-DD) u hora ISO 8601 completa.
+   */
+  operationDate: string;
   reason: string;
   notes?: string | undefined;
   items: Array<ApiStockMovementRequestItem>;
@@ -46,6 +56,7 @@ export const Direction$outboundSchema: z.ZodMiniEnum<typeof Direction> = z.enum(
 export type ApiStockMovementRequestItem$Outbound = {
   product_id: string;
   quantity: number;
+  expected_quantity?: number | undefined;
 };
 
 /** @internal */
@@ -56,10 +67,12 @@ export const ApiStockMovementRequestItem$outboundSchema: z.ZodMiniType<
   z.object({
     productId: z.string(),
     quantity: z.number(),
+    expectedQuantity: z.optional(z.number()),
   }),
   z.transform((v) => {
     return remap$(v, {
       productId: "product_id",
+      expectedQuantity: "expected_quantity",
     });
   }),
 );
@@ -94,7 +107,7 @@ export const ApiStockMovementRequest$outboundSchema: z.ZodMiniType<
     warehouseId: z.string(),
     mode: Mode$outboundSchema,
     direction: z.optional(Direction$outboundSchema),
-    operationDate: z.pipe(z.date(), z.transform(v => v.toISOString())),
+    operationDate: z.string(),
     reason: z.string(),
     notes: z.optional(z.string()),
     items: z.array(z.lazy(() => ApiStockMovementRequestItem$outboundSchema)),
