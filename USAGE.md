@@ -7,7 +7,15 @@ const lapyme = new Lapyme({
 });
 
 async function run() {
-  const result = await lapyme.suppliers.list({});
+  const result = await lapyme.api.createApiStatement({
+    idempotencyKey: "<value>",
+    body: {
+      source: "mercadopago_release",
+      bankAccountId: "bbcc124e-2652-432f-b232-8423696c1640",
+      periodStart: new Date("2025-09-28"),
+      periodEnd: new Date("2025-09-10"),
+    },
+  });
 
   console.log(result);
 }

@@ -26,6 +26,10 @@ export type ListApiCostCentersResponseBody = {
   data?: Array<models.ApiCostCenter> | undefined;
   hasMore?: boolean | undefined;
   nextCursor?: string | null | undefined;
+  /**
+   * Requested list path.
+   */
+  url?: string | undefined;
 };
 
 export type ListApiCostCentersResponse = {
@@ -77,6 +81,7 @@ export const ListApiCostCentersResponseBody$inboundSchema: z.ZodMiniType<
     data: types.optional(z.array(models.ApiCostCenter$inboundSchema)),
     has_more: types.optional(types.boolean()),
     next_cursor: z.optional(z.nullable(types.string())),
+    url: types.optional(types.string()),
   }),
   z.transform((v) => {
     return remap$(v, {
