@@ -5,11 +5,17 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
+import {
+  ApiSharedObject601104d793,
+  ApiSharedObject601104d793$Outbound,
+  ApiSharedObject601104d793$outboundSchema,
+} from "./api-shared-object601104d793.js";
 
 /**
  * Actualizacion parcial de metadatos operativos de venta. Envia al menos un campo. integration_source e integration_id deben enviarse juntos; para limpiar la referencia externa, envia ambos en null.
  */
 export type ApiSaleMetadataPatchRequest = {
+  metafields?: Array<ApiSharedObject601104d793> | undefined;
   /**
    * Notas operativas de la venta. Enviar null o string vacio para limpiar.
    */
@@ -30,6 +36,7 @@ export type ApiSaleMetadataPatchRequest = {
 
 /** @internal */
 export type ApiSaleMetadataPatchRequest$Outbound = {
+  metafields?: Array<ApiSharedObject601104d793$Outbound> | undefined;
   notes?: string | null | undefined;
   integration_source?: string | null | undefined;
   integration_id?: string | null | undefined;
@@ -42,6 +49,7 @@ export const ApiSaleMetadataPatchRequest$outboundSchema: z.ZodMiniType<
   ApiSaleMetadataPatchRequest
 > = z.pipe(
   z.object({
+    metafields: z.optional(z.array(ApiSharedObject601104d793$outboundSchema)),
     notes: z.optional(z.nullable(z.string())),
     integrationSource: z.optional(z.nullable(z.string())),
     integrationId: z.optional(z.nullable(z.string())),

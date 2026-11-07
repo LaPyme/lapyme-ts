@@ -30,6 +30,9 @@ import { Result } from "../types/fp.js";
 
 /**
  * Cancelar pedido
+ *
+ * @remarks
+ * Cancela un pedido elegible y devuelve el estado persistido después de aplicar sus efectos de cancelación.
  */
 export function ordersCancel(
   client: LapymeCore,
@@ -178,6 +181,7 @@ async function $do(
     M.jsonErr([400, 401, 403, 404, 409], errors.ApiErrorEnvelope$inboundSchema),
     M.jsonErr(429, errors.ApiErrorEnvelope$inboundSchema, { hdrs: true }),
     M.jsonErr(500, errors.ApiErrorEnvelope$inboundSchema),
+    M.jsonErr(503, errors.ApiErrorEnvelope$inboundSchema, { hdrs: true }),
     M.fail("4XX"),
     M.fail("5XX"),
   )(response, req, { extraFields: responseFields });
