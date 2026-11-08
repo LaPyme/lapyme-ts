@@ -30,6 +30,9 @@ import { Result } from "../types/fp.js";
 
 /**
  * Obtener estado de resultados comparativo
+ *
+ * @remarks
+ * Compara el estado de resultados de dos períodos con los mismos criterios de moneda y agrupación.
  */
 export function apiGetAPIComparativeIncomeStatement(
   client: LapymeCore,
@@ -97,13 +100,18 @@ async function $do(
   const path = pathToFunc("/api/v1/accounting/income-statement/comparative")();
 
   const query = encodeFormQuery({
+    "circuit_id": payload?.circuit_id,
     "compare_date_from": payload?.compare_date_from,
     "compare_date_to": payload?.compare_date_to,
-    "cost_center1_ids": payload?.cost_center1_ids,
-    "cost_center2_ids": payload?.cost_center2_ids,
-    "cost_center3_ids": payload?.cost_center3_ids,
+    "compare_enabled": payload?.compare_enabled,
+    "compare_period_preset": payload?.compare_period_preset,
+    "cost_center_1_ids": payload?.cost_center_1_ids,
+    "cost_center_2_ids": payload?.cost_center_2_ids,
+    "cost_center_3_ids": payload?.cost_center_3_ids,
     "date_from": payload?.date_from,
     "date_to": payload?.date_to,
+    "period_preset": payload?.period_preset,
+    "reporting_currency": payload?.reporting_currency,
   });
 
   const headers = new Headers(compactMap({
@@ -191,6 +199,7 @@ async function $do(
     M.jsonErr([400, 401, 403], errors.ApiErrorEnvelope$inboundSchema),
     M.jsonErr(429, errors.ApiErrorEnvelope$inboundSchema, { hdrs: true }),
     M.jsonErr(500, errors.ApiErrorEnvelope$inboundSchema),
+    M.jsonErr(503, errors.ApiErrorEnvelope$inboundSchema, { hdrs: true }),
     M.fail("4XX"),
     M.fail("5XX"),
   )(response, req, { extraFields: responseFields });

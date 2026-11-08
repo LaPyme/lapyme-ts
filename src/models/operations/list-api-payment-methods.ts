@@ -24,10 +24,6 @@ export type ListApiPaymentMethodsRequest = {
    */
   query?: string | undefined;
   /**
-   * Alias de query
-   */
-  search?: string | undefined;
-  /**
    * Filtra por estado activo. Si se omite, el endpoint usa true por defecto.
    */
   isActive?: boolean | undefined;
@@ -43,7 +39,6 @@ export type ListApiPaymentMethodsRequest$Outbound = {
   cursor?: string | undefined;
   limit: number;
   query?: string | undefined;
-  search?: string | undefined;
   is_active?: boolean | undefined;
 };
 
@@ -56,7 +51,6 @@ export const ListApiPaymentMethodsRequest$outboundSchema: z.ZodMiniType<
     cursor: z.optional(z.string()),
     limit: z._default(z.int(), 50),
     query: z.optional(z.string()),
-    search: z.optional(z.string()),
     isActive: z.optional(z.boolean()),
   }),
   z.transform((v) => {

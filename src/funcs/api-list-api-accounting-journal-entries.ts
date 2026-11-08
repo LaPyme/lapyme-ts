@@ -101,6 +101,7 @@ async function $do(
 
   const query = encodeFormQuery({
     "account_id": payload?.account_id,
+    "circuit_id": payload?.circuit_id,
     "cursor": payload?.cursor,
     "date_from": payload?.date_from,
     "date_to": payload?.date_to,
@@ -194,6 +195,7 @@ async function $do(
     M.jsonErr([400, 401, 403], errors.ApiErrorEnvelope$inboundSchema),
     M.jsonErr(429, errors.ApiErrorEnvelope$inboundSchema, { hdrs: true }),
     M.jsonErr(500, errors.ApiErrorEnvelope$inboundSchema),
+    M.jsonErr(503, errors.ApiErrorEnvelope$inboundSchema, { hdrs: true }),
     M.fail("4XX"),
     M.fail("5XX"),
   )(response, req, { extraFields: responseFields });
