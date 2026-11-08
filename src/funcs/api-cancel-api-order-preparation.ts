@@ -30,6 +30,9 @@ import { Result } from "../types/fp.js";
 
 /**
  * Cancelar preparación
+ *
+ * @remarks
+ * Cancela una preparación existente del pedido y permite registrar un motivo opcional.
  */
 export function apiCancelAPIOrderPreparation(
   client: LapymeCore,
@@ -189,6 +192,7 @@ async function $do(
     M.jsonErr([400, 401, 403, 404, 409], errors.ApiErrorEnvelope$inboundSchema),
     M.jsonErr(429, errors.ApiErrorEnvelope$inboundSchema, { hdrs: true }),
     M.jsonErr(500, errors.ApiErrorEnvelope$inboundSchema),
+    M.jsonErr(503, errors.ApiErrorEnvelope$inboundSchema, { hdrs: true }),
     M.fail("4XX"),
     M.fail("5XX"),
   )(response, req, { extraFields: responseFields });

@@ -81,6 +81,7 @@ run();
 | errors.ApiErrorEnvelope   | 400, 401, 403             | application/json          |
 | errors.ApiErrorEnvelope   | 429                       | application/json          |
 | errors.ApiErrorEnvelope   | 500                       | application/json          |
+| errors.ApiErrorEnvelope   | 503                       | application/json          |
 | errors.LapymeDefaultError | 4XX, 5XX                  | \*/\*                     |
 
 ## createPurchaseOrder
@@ -179,6 +180,7 @@ run();
 | errors.ApiErrorEnvelope   | 400, 401, 403, 404, 409   | application/json          |
 | errors.ApiErrorEnvelope   | 429                       | application/json          |
 | errors.ApiErrorEnvelope   | 500                       | application/json          |
+| errors.ApiErrorEnvelope   | 503                       | application/json          |
 | errors.LapymeDefaultError | 4XX, 5XX                  | \*/\*                     |
 
 ## getPurchaseOrderById
@@ -255,6 +257,7 @@ run();
 | errors.ApiErrorEnvelope   | 400, 401, 403, 404        | application/json          |
 | errors.ApiErrorEnvelope   | 429                       | application/json          |
 | errors.ApiErrorEnvelope   | 500                       | application/json          |
+| errors.ApiErrorEnvelope   | 503                       | application/json          |
 | errors.LapymeDefaultError | 4XX, 5XX                  | \*/\*                     |
 
 ## confirm
@@ -331,6 +334,7 @@ run();
 | errors.ApiErrorEnvelope   | 400, 401, 403, 404, 409   | application/json          |
 | errors.ApiErrorEnvelope   | 429                       | application/json          |
 | errors.ApiErrorEnvelope   | 500                       | application/json          |
+| errors.ApiErrorEnvelope   | 503                       | application/json          |
 | errors.LapymeDefaultError | 4XX, 5XX                  | \*/\*                     |
 
 ## close
@@ -407,6 +411,7 @@ run();
 | errors.ApiErrorEnvelope   | 400, 401, 403, 404, 409   | application/json          |
 | errors.ApiErrorEnvelope   | 429                       | application/json          |
 | errors.ApiErrorEnvelope   | 500                       | application/json          |
+| errors.ApiErrorEnvelope   | 503                       | application/json          |
 | errors.LapymeDefaultError | 4XX, 5XX                  | \*/\*                     |
 
 ## reopen
@@ -483,4 +488,5 @@ run();
 | errors.ApiErrorEnvelope   | 400, 401, 403, 404, 409   | application/json          |
 | errors.ApiErrorEnvelope   | 429                       | application/json          |
 | errors.ApiErrorEnvelope   | 500                       | application/json          |
+| errors.ApiErrorEnvelope   | 503                       | application/json          |
 | errors.LapymeDefaultError | 4XX, 5XX                  | \*/\*                     |

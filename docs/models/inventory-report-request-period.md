@@ -1,6 +1,6 @@
 # InventoryReportRequestPeriod
 
-Obligatorio solo cuando se piden métricas derivadas de ventas: endingInventoryUnits, inventoryUnitsSold, inventoryUnitsSoldPerDay, daysOfInventoryRemaining.
+Obligatorio cuando se piden métricas históricas de inventario, métricas derivadas de ventas, métricas de movimientos o la dimensión abc_grade (clasificación ABC por ventas netas del período).
 
 ## Example Usage
 

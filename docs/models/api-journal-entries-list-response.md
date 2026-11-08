@@ -7,23 +7,55 @@ import { ApiJournalEntriesListResponse } from "lapyme/models";
 
 let value: ApiJournalEntriesListResponse = {
   requestId: "<id>",
+  effectiveScope: {
+    circuitId: "5643363b-d6a2-421b-a1bd-db42e516c729",
+    circuitName: "<value>",
+  },
   object: "list",
-  url: "https://grandiose-exterior.info",
+  url: "https://gifted-illusion.org/",
   data: [
     {
       object: "journal_entry",
-      id: "c820e6c7-8beb-40ac-b95f-7d5d049f5941",
-      entryNumber: 660669,
-      date: new Date("2026-02-20"),
-      description: "burgeon intent pish likewise hmph old massage certainly",
+      id: "820e6c78-beb0-4ac9-b5f7-d5d049f5941e",
+      entryNumber: 712813,
+      date: new Date("2026-02-19"),
+      description: "enthusiastically wrongly cook yahoo pfft",
       reference: "<value>",
       sourceType: "<value>",
-      sourceId: "26834254-17af-4de1-849c-e92e1151c464",
-      currency: "Jordanian Dinar",
-      exchangeRate: 476.12,
-      createdAt: new Date("2026-04-11T14:14:43.216Z"),
-      updatedAt: new Date("2026-01-13T03:57:16.903Z"),
-      lines: [],
+      sourceId: "ea915876-78b9-4912-a31d-f42683425417",
+      currency: "Namibia Dollar",
+      exchangeRate: 9086.53,
+      circuitId: "49ce92e1-151c-4464-926a-0ca7ee14c16a",
+      createdAt: new Date("2024-11-23T03:57:21.175Z"),
+      updatedAt: new Date("2025-10-11T19:12:45.728Z"),
+      lines: [
+        {
+          object: "journal_entry_line",
+          id: "fef308b0-f40c-4b0e-86b2-546470a17320",
+          account: {
+            object: "account",
+            id: "405f9387-1ea4-4676-a44f-bf5f2cf8a440",
+            code: "<value>",
+            name: "<value>",
+          },
+          debit: 445414,
+          credit: 848074,
+          enteredDebit: 152698,
+          enteredCredit: 717417,
+          currency: "Jordanian Dinar",
+          contact: {
+            object: "contact",
+            id: "c01ff2a5-287f-4db8-afbe-fd9b837ca82d",
+            name: "<value>",
+          },
+          costCenters: {
+            "key": "<value>",
+            "key1": "<value>",
+          },
+          description:
+            "ack blah enroll within coil sleet ordinary till nervously",
+        },
+      ],
     },
   ],
   hasMore: false,
@@ -33,11 +65,12 @@ let value: ApiJournalEntriesListResponse = {
 
 ## Fields
 
-| Field                                                                                             | Type                                                                                              | Required                                                                                          | Description                                                                                       |
-| ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| `requestId`                                                                                       | *string*                                                                                          | :heavy_check_mark:                                                                                | N/A                                                                                               |
-| `object`                                                                                          | *"list"*                                                                                          | :heavy_check_mark:                                                                                | N/A                                                                                               |
-| `url`                                                                                             | *string*                                                                                          | :heavy_check_mark:                                                                                | N/A                                                                                               |
-| `data`                                                                                            | [models.ApiJournalEntriesListResponseData](../models/api-journal-entries-list-response-data.md)[] | :heavy_check_mark:                                                                                | N/A                                                                                               |
-| `hasMore`                                                                                         | *boolean*                                                                                         | :heavy_check_mark:                                                                                | N/A                                                                                               |
-| `nextCursor`                                                                                      | *string*                                                                                          | :heavy_check_mark:                                                                                | N/A                                                                                               |
+| Field                                                                                                                         | Type                                                                                                                          | Required                                                                                                                      | Description                                                                                                                   |
+| ----------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| `requestId`                                                                                                                   | *string*                                                                                                                      | :heavy_check_mark:                                                                                                            | N/A                                                                                                                           |
+| `effectiveScope`                                                                                                              | *models.ApiJournalEntriesListResponseEffectiveScope*                                                                          | :heavy_check_mark:                                                                                                            | Circuito sobre el que corrió el reporte: `all` para todos los circuitos, o el circuito pedido (`circuit_id` null es General). |
+| `object`                                                                                                                      | *"list"*                                                                                                                      | :heavy_check_mark:                                                                                                            | N/A                                                                                                                           |
+| `url`                                                                                                                         | *string*                                                                                                                      | :heavy_check_mark:                                                                                                            | N/A                                                                                                                           |
+| `data`                                                                                                                        | [models.ApiJournalEntriesListResponseData](../models/api-journal-entries-list-response-data.md)[]                             | :heavy_check_mark:                                                                                                            | N/A                                                                                                                           |
+| `hasMore`                                                                                                                     | *boolean*                                                                                                                     | :heavy_check_mark:                                                                                                            | N/A                                                                                                                           |
+| `nextCursor`                                                                                                                  | *string*                                                                                                                      | :heavy_check_mark:                                                                                                            | N/A                                                                                                                           |

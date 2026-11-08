@@ -68,7 +68,7 @@ export class Suppliers extends ClientSDK {
    * Actualizar proveedor
    *
    * @remarks
-   * Actualiza los datos comerciales, fiscales y de contacto de un proveedor.
+   * Actualiza los datos comerciales, fiscales y de contacto de un proveedor. Si el proveedor también es cliente, cambiar el DNI o CUIT a uno que ya pertenece a otro cliente de la organización responde 409 CONFLICT.
    */
   async updateSupplier(
     request: operations.UpdateApiSupplierRequest,
