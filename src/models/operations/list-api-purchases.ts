@@ -39,10 +39,6 @@ export type ListApiPurchasesRequest = {
    */
   query?: string | undefined;
   /**
-   * Alias de query
-   */
-  search?: string | undefined;
-  /**
    * Fecha inicial para el filtro
    */
   dateFrom?: Date | undefined;
@@ -83,7 +79,6 @@ export type ListApiPurchasesRequest$Outbound = {
   cursor?: string | undefined;
   limit: number;
   query?: string | undefined;
-  search?: string | undefined;
   date_from?: string | undefined;
   date_to?: string | undefined;
   date_attribute: string;
@@ -101,7 +96,6 @@ export const ListApiPurchasesRequest$outboundSchema: z.ZodMiniType<
     cursor: z.optional(z.string()),
     limit: z._default(z.int(), 50),
     query: z.optional(z.string()),
-    search: z.optional(z.string()),
     dateFrom: z.optional(z.pipe(
       z.date(),
       z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),

@@ -79,6 +79,7 @@ run();
 | errors.ApiErrorEnvelope   | 400, 401, 403             | application/json          |
 | errors.ApiErrorEnvelope   | 429                       | application/json          |
 | errors.ApiErrorEnvelope   | 500                       | application/json          |
+| errors.ApiErrorEnvelope   | 503                       | application/json          |
 | errors.LapymeDefaultError | 4XX, 5XX                  | \*/\*                     |
 
 ## createPriceList
@@ -161,6 +162,7 @@ run();
 | errors.ApiErrorEnvelope   | 400, 401, 403, 409        | application/json          |
 | errors.ApiErrorEnvelope   | 429                       | application/json          |
 | errors.ApiErrorEnvelope   | 500                       | application/json          |
+| errors.ApiErrorEnvelope   | 503                       | application/json          |
 | errors.LapymeDefaultError | 4XX, 5XX                  | \*/\*                     |
 
 ## getPriceListById
@@ -237,11 +239,12 @@ run();
 | errors.ApiErrorEnvelope   | 400, 401, 403, 404        | application/json          |
 | errors.ApiErrorEnvelope   | 429                       | application/json          |
 | errors.ApiErrorEnvelope   | 500                       | application/json          |
+| errors.ApiErrorEnvelope   | 503                       | application/json          |
 | errors.LapymeDefaultError | 4XX, 5XX                  | \*/\*                     |
 
 ## updatePriceList
 
-Actualiza una lista de precios y devuelve el detalle persistido, incluyendo si se disparó la sincronización de precios.
+Actualiza una lista de precios y devuelve el detalle persistido, incluyendo si se disparó la sincronización de precios. Si cambia cómo se calcula la lista (manual, desde el precio base u otra lista, o desde el costo), se borran los ajustes por producto en porcentaje que no corresponden al nuevo cálculo. Al pasar de manual a automática se borran también los precios fijos por producto.
 
 ### Example Usage
 
@@ -319,4 +322,5 @@ run();
 | errors.ApiErrorEnvelope   | 400, 401, 403, 404, 409   | application/json          |
 | errors.ApiErrorEnvelope   | 429                       | application/json          |
 | errors.ApiErrorEnvelope   | 500                       | application/json          |
+| errors.ApiErrorEnvelope   | 503                       | application/json          |
 | errors.LapymeDefaultError | 4XX, 5XX                  | \*/\*                     |
