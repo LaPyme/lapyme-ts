@@ -80,11 +80,12 @@ run();
 | errors.ApiErrorEnvelope   | 400, 401, 403             | application/json          |
 | errors.ApiErrorEnvelope   | 429                       | application/json          |
 | errors.ApiErrorEnvelope   | 500                       | application/json          |
+| errors.ApiErrorEnvelope   | 503                       | application/json          |
 | errors.LapymeDefaultError | 4XX, 5XX                  | \*/\*                     |
 
 ## create
 
-Crea un cliente para ventas, cuentas corrientes, etiquetas y reportes.
+Crea un cliente para ventas, cuentas corrientes, etiquetas y reportes. Un DNI o CUIT que ya pertenece a otro cliente de la organización responde 409 CONFLICT.
 
 ### Example Usage
 
@@ -162,6 +163,7 @@ run();
 | errors.ApiErrorEnvelope   | 400, 401, 403, 404, 409   | application/json          |
 | errors.ApiErrorEnvelope   | 429                       | application/json          |
 | errors.ApiErrorEnvelope   | 500                       | application/json          |
+| errors.ApiErrorEnvelope   | 503                       | application/json          |
 | errors.LapymeDefaultError | 4XX, 5XX                  | \*/\*                     |
 
 ## getCustomerById
@@ -238,11 +240,12 @@ run();
 | errors.ApiErrorEnvelope   | 400, 401, 403, 404        | application/json          |
 | errors.ApiErrorEnvelope   | 429                       | application/json          |
 | errors.ApiErrorEnvelope   | 500                       | application/json          |
+| errors.ApiErrorEnvelope   | 503                       | application/json          |
 | errors.LapymeDefaultError | 4XX, 5XX                  | \*/\*                     |
 
 ## updateCustomer
 
-Actualiza un cliente y devuelve los datos persistidos.
+Actualiza un cliente y devuelve los datos persistidos. Cambiar el DNI o CUIT a uno que ya pertenece a otro cliente de la organización responde 409 CONFLICT; reenviar el documento guardado no lo valida otra vez.
 
 ### Example Usage
 
@@ -316,6 +319,7 @@ run();
 | errors.ApiErrorEnvelope   | 400, 401, 403, 404, 409   | application/json          |
 | errors.ApiErrorEnvelope   | 429                       | application/json          |
 | errors.ApiErrorEnvelope   | 500                       | application/json          |
+| errors.ApiErrorEnvelope   | 503                       | application/json          |
 | errors.LapymeDefaultError | 4XX, 5XX                  | \*/\*                     |
 
 ## applyTags
@@ -404,4 +408,5 @@ run();
 | errors.ApiErrorEnvelope   | 400, 401, 403             | application/json          |
 | errors.ApiErrorEnvelope   | 429                       | application/json          |
 | errors.ApiErrorEnvelope   | 500                       | application/json          |
+| errors.ApiErrorEnvelope   | 503                       | application/json          |
 | errors.LapymeDefaultError | 4XX, 5XX                  | \*/\*                     |
