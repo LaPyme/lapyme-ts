@@ -7,15 +7,15 @@ import { ListApiOrdersResponse } from "lapyme/models/operations";
 
 let value: ListApiOrdersResponse = {
   headers: {
-    "key": [],
-    "key1": [
+    "key": [
       "<value 1>",
       "<value 2>",
       "<value 3>",
     ],
-    "key2": [
+    "key1": [
       "<value 1>",
       "<value 2>",
+      "<value 3>",
     ],
   },
   result: {
@@ -31,24 +31,26 @@ let value: ListApiOrdersResponse = {
         customerName: "<value>",
         customerTaxId: "<id>",
         itemsCount: 395182,
-        totalUnits: 370516,
+        totalUnits: 3705.16,
         discountAmount: 838466,
-        subtotal: 674053,
-        taxAmount: 181272,
-        total: 671136,
-        currency: "PES",
-        orderStatus: "open",
-        preparationStatus: "in_progress",
+        discountPercentage: 1812.72,
+        subtotal: 671136,
+        taxAmount: 208792,
+        total: 172967,
+        currency: "ARS",
+        orderStatus: "completed",
+        preparationStatus: "partially_fulfilled",
         invoicingStatus: "partially_invoiced",
         notes: "<value>",
-        createdAt: new Date("2025-01-28T20:17:37.951Z"),
+        createdAt: new Date("2024-12-28T04:51:46.253Z"),
+        updatedAt: new Date("2025-10-15T08:48:16.037Z"),
         createdByName: "<value>",
       },
     ],
     hasMore: true,
     nextCursor: "<value>",
     object: "list",
-    url: "https://jagged-lieu.net",
+    url: "https://vague-developing.org",
   },
 };
 ```

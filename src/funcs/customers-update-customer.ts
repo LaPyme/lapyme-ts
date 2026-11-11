@@ -32,7 +32,7 @@ import { Result } from "../types/fp.js";
  * Actualizar cliente
  *
  * @remarks
- * Actualiza un cliente y devuelve los datos persistidos.
+ * Actualiza un cliente y devuelve los datos persistidos. Cambiar el DNI o CUIT a uno que ya pertenece a otro cliente de la organización responde 409 CONFLICT; reenviar el documento guardado no lo valida otra vez.
  */
 export function customersUpdateCustomer(
   client: LapymeCore,
@@ -103,6 +103,11 @@ async function $do(
   const headers = new Headers(compactMap({
     "Content-Type": "application/json",
     Accept: "application/json",
+    "Idempotency-Key": encodeSimple(
+      "Idempotency-Key",
+      payload["Idempotency-Key"],
+      { explode: false, charEncoding: "none" },
+    ),
     "X-Request-Id": encodeSimple("X-Request-Id", payload["X-Request-Id"], {
       explode: false,
       charEncoding: "none",
@@ -187,6 +192,7 @@ async function $do(
     M.jsonErr([400, 401, 403, 404, 409], errors.ApiErrorEnvelope$inboundSchema),
     M.jsonErr(429, errors.ApiErrorEnvelope$inboundSchema, { hdrs: true }),
     M.jsonErr(500, errors.ApiErrorEnvelope$inboundSchema),
+    M.jsonErr(503, errors.ApiErrorEnvelope$inboundSchema, { hdrs: true }),
     M.fail("4XX"),
     M.fail("5XX"),
   )(response, req, { extraFields: responseFields });

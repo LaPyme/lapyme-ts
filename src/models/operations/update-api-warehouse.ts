@@ -12,6 +12,10 @@ import * as models from "../index.js";
 
 export type UpdateApiWarehouseRequest = {
   /**
+   * Clave estable para deduplicar reintentos de la misma operación. Opcional en v1; si se envía, un reintento con la misma clave y el mismo cuerpo devuelve el resultado original sin repetir la operación, y con otro cuerpo devuelve 409.
+   */
+  idempotencyKey?: string | undefined;
+  /**
    * ID del depósito
    */
   warehouseId: string;
@@ -29,6 +33,7 @@ export type UpdateApiWarehouseResponse = {
 
 /** @internal */
 export type UpdateApiWarehouseRequest$Outbound = {
+  "Idempotency-Key"?: string | undefined;
   warehouse_id: string;
   "X-Request-Id"?: string | undefined;
   body: models.ApiWarehouseUpdateRequest$Outbound;
@@ -40,12 +45,14 @@ export const UpdateApiWarehouseRequest$outboundSchema: z.ZodMiniType<
   UpdateApiWarehouseRequest
 > = z.pipe(
   z.object({
+    idempotencyKey: z.optional(z.string()),
     warehouseId: z.string(),
     xRequestId: z.optional(z.string()),
     body: models.ApiWarehouseUpdateRequest$outboundSchema,
   }),
   z.transform((v) => {
     return remap$(v, {
+      idempotencyKey: "Idempotency-Key",
       warehouseId: "warehouse_id",
       xRequestId: "X-Request-Id",
     });

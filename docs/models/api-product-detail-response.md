@@ -17,41 +17,61 @@ let value: ApiProductDetailResponse = {
     },
     sku: "<value>",
     barcode: "<value>",
-    currency: "Trinidad and Tobago Dollar",
-    cost: 5023.57,
-    price: 9776.7,
+    imageUrl: "https://woeful-jogging.biz",
+    currency: "Won",
+    cost: 5092.57,
+    price: 5475.87,
     taxRate: {
-      id: 9545.45,
-      value: 8570.91,
+      id: 6496.5,
+      value: 3957.79,
     },
-    defaultSupplier: {
-      id: "e2939b22-6734-418f-802e-69ca6e74fd88",
-      name: "<value>",
-    },
-    productType: "service",
-    isActive: true,
+    defaultSupplier: null,
+    productType: "kit",
+    visibility: "sales",
+    isActive: false,
     organizationSlug: "<value>",
-    createdAt: new Date("2026-12-14T18:31:18.269Z"),
-    updatedAt: new Date("2025-07-12T03:29:39.613Z"),
+    createdAt: new Date("2026-01-16T09:33:12.917Z"),
+    updatedAt: new Date("2024-06-11T06:47:04.747Z"),
+    components: [
+      {
+        productId: "4a0b478b-0e90-4aa0-a6fb-e28f0ddf5869",
+        name: "<value>",
+        sku: "<value>",
+        quantity: 5832.75,
+      },
+    ],
     object: "product",
-    variantGroupId: "80c4ea2a-2181-4f02-a8ad-2c884928ee3f",
+    variantGroupId: "2181f028-ad2c-4884-9928-ee3fbfd2b186",
+    tags: [],
     variantOptions: {
       "key": "<value>",
       "key1": "<value>",
       "key2": "<value>",
     },
-    isExempt: true,
+    isExempt: false,
+    metafields: [
+      {
+        key: "<key>",
+        value: "<value>",
+      },
+    ],
+    variantMetafields: [
+      {
+        key: "<key>",
+        value: "<value>",
+      },
+    ],
     stockSummary: {
-      totalQuantity: 3450.16,
-      warehouseCount: 107596,
+      totalQuantity: 9296.94,
+      warehouseCount: 406381,
       byWarehouse: [
         {
-          warehouseId: "8355b424-e8f1-4b19-a424-22b1798decfe",
+          warehouseId: "b6e29039-6b35-4a8c-8a83-53449182ecbb",
           warehouseName: "<value>",
-          quantity: 1678.21,
-          onHand: 2292.22,
-          reservedQuantity: 4791.26,
-          incomingQuantity: 4053.93,
+          quantity: 7029.39,
+          onHand: 3002.45,
+          reservedQuantity: 8793.03,
+          incomingQuantity: 7069.24,
         },
       ],
     },
@@ -64,4 +84,4 @@ let value: ApiProductDetailResponse = {
 | Field                                                                        | Type                                                                         | Required                                                                     | Description                                                                  |
 | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
 | `requestId`                                                                  | *string*                                                                     | :heavy_check_mark:                                                           | N/A                                                                          |
-| `data`                                                                       | [models.ApiSharedObjectd371740910](../models/api-shared-objectd371740910.md) | :heavy_check_mark:                                                           | N/A                                                                          |
+| `data`                                                                       | [models.ApiSharedObjectbdd9158fb4](../models/api-shared-objectbdd9158fb4.md) | :heavy_check_mark:                                                           | N/A                                                                          |

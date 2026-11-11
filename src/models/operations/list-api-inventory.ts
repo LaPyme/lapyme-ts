@@ -6,18 +6,9 @@
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
 import { safeParse } from "../../lib/schemas.js";
-import { ClosedEnum } from "../../types/enums.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import * as models from "../index.js";
-
-export const ProductType = {
-  Product: "product",
-  Combo: "combo",
-  Kit: "kit",
-  Service: "service",
-} as const;
-export type ProductType = ClosedEnum<typeof ProductType>;
 
 export type ListApiInventoryRequest = {
   /**
@@ -37,9 +28,13 @@ export type ListApiInventoryRequest = {
    */
   query?: string | undefined;
   /**
-   * Alias de query
+   * IDs de productos (grupos) o variantes, hasta 100. Se combinan con skus[] con OR y con el resto de los filtros con AND. Usalo para consultar el stock de varios productos conocidos en una sola llamada.
    */
-  search?: string | undefined;
+  ids?: Array<string> | undefined;
+  /**
+   * SKUs exactos, sin distinguir mayúsculas ni espacios alrededor, hasta 100. Se combinan con ids[] con OR y con el resto de los filtros con AND.
+   */
+  skus?: Array<string> | undefined;
   /**
    * IDs de categorías. Puede repetirse o enviarse separada por comas.
    */
@@ -47,7 +42,7 @@ export type ListApiInventoryRequest = {
   /**
    * Tipos de producto. Puede repetirse o enviarse separada por comas.
    */
-  productTypes?: Array<ProductType> | undefined;
+  productTypes?: Array<models.ApiSharedEnum5c962a8637> | undefined;
   /**
    * Regla para el filtro de stock disponible
    */
@@ -120,16 +115,13 @@ export type ListApiInventoryResponse = {
 };
 
 /** @internal */
-export const ProductType$outboundSchema: z.ZodMiniEnum<typeof ProductType> = z
-  .enum(ProductType);
-
-/** @internal */
 export type ListApiInventoryRequest$Outbound = {
   warehouse_id: string;
   cursor?: string | undefined;
   limit: number;
   query?: string | undefined;
-  search?: string | undefined;
+  "ids[]"?: Array<string> | undefined;
+  "skus[]"?: Array<string> | undefined;
   category_ids?: Array<string> | undefined;
   product_types?: Array<string> | undefined;
   available_rule?: string | undefined;
@@ -160,9 +152,12 @@ export const ListApiInventoryRequest$outboundSchema: z.ZodMiniType<
     cursor: z.optional(z.string()),
     limit: z._default(z.int(), 50),
     query: z.optional(z.string()),
-    search: z.optional(z.string()),
+    ids: z.optional(z.array(z.string())),
+    skus: z.optional(z.array(z.string())),
     categoryIds: z.optional(z.array(z.string())),
-    productTypes: z.optional(z.array(ProductType$outboundSchema)),
+    productTypes: z.optional(
+      z.array(models.ApiSharedEnum5c962a8637$outboundSchema),
+    ),
     availableRule: z.optional(models.ApiSharedEnuma4e4082638$outboundSchema),
     availableAmount: z.optional(z.number()),
     availableMin: z.optional(z.number()),
@@ -183,6 +178,8 @@ export const ListApiInventoryRequest$outboundSchema: z.ZodMiniType<
   z.transform((v) => {
     return remap$(v, {
       warehouseId: "warehouse_id",
+      ids: "ids[]",
+      skus: "skus[]",
       categoryIds: "category_ids",
       productTypes: "product_types",
       availableRule: "available_rule",

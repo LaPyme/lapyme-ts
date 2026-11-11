@@ -12,6 +12,10 @@ import * as models from "../index.js";
 
 export type UpdateApiTagRequest = {
   /**
+   * Clave estable para deduplicar reintentos de la misma operación. Opcional en v1; si se envía, un reintento con la misma clave y el mismo cuerpo devuelve el resultado original sin repetir la operación, y con otro cuerpo devuelve 409.
+   */
+  idempotencyKey?: string | undefined;
+  /**
    * ID de la etiqueta
    */
   tagId: string;
@@ -29,6 +33,7 @@ export type UpdateApiTagResponse = {
 
 /** @internal */
 export type UpdateApiTagRequest$Outbound = {
+  "Idempotency-Key"?: string | undefined;
   tag_id: string;
   "X-Request-Id"?: string | undefined;
   body: models.ApiTagUpdateRequest$Outbound;
@@ -40,12 +45,14 @@ export const UpdateApiTagRequest$outboundSchema: z.ZodMiniType<
   UpdateApiTagRequest
 > = z.pipe(
   z.object({
+    idempotencyKey: z.optional(z.string()),
     tagId: z.string(),
     xRequestId: z.optional(z.string()),
     body: models.ApiTagUpdateRequest$outboundSchema,
   }),
   z.transform((v) => {
     return remap$(v, {
+      idempotencyKey: "Idempotency-Key",
       tagId: "tag_id",
       xRequestId: "X-Request-Id",
     });
