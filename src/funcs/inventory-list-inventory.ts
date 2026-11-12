@@ -101,6 +101,7 @@ async function $do(
     "available_rule": payload.available_rule,
     "category_ids": payload.category_ids,
     "cursor": payload.cursor,
+    "ids[]": payload["ids[]"],
     "incoming_amount": payload.incoming_amount,
     "incoming_max": payload.incoming_max,
     "incoming_min": payload.incoming_min,
@@ -116,7 +117,7 @@ async function $do(
     "reserved_max": payload.reserved_max,
     "reserved_min": payload.reserved_min,
     "reserved_rule": payload.reserved_rule,
-    "search": payload.search,
+    "skus[]": payload["skus[]"],
     "warehouse_id": payload.warehouse_id,
   });
 
@@ -203,6 +204,7 @@ async function $do(
     M.jsonErr([400, 401, 403, 404], errors.ApiErrorEnvelope$inboundSchema),
     M.jsonErr(429, errors.ApiErrorEnvelope$inboundSchema, { hdrs: true }),
     M.jsonErr(500, errors.ApiErrorEnvelope$inboundSchema),
+    M.jsonErr(503, errors.ApiErrorEnvelope$inboundSchema, { hdrs: true }),
     M.fail("4XX"),
     M.fail("5XX"),
   )(response, req, { extraFields: responseFields });

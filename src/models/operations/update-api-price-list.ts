@@ -12,6 +12,10 @@ import * as models from "../index.js";
 
 export type UpdateApiPriceListRequest = {
   /**
+   * Clave estable para deduplicar reintentos de la misma operación. Opcional en v1; si se envía, un reintento con la misma clave y el mismo cuerpo devuelve el resultado original sin repetir la operación, y con otro cuerpo devuelve 409.
+   */
+  idempotencyKey?: string | undefined;
+  /**
    * ID de la lista de precios
    */
   priceListId: string;
@@ -29,6 +33,7 @@ export type UpdateApiPriceListResponse = {
 
 /** @internal */
 export type UpdateApiPriceListRequest$Outbound = {
+  "Idempotency-Key"?: string | undefined;
   price_list_id: string;
   "X-Request-Id"?: string | undefined;
   body: models.ApiPriceListMutationRequest$Outbound;
@@ -40,12 +45,14 @@ export const UpdateApiPriceListRequest$outboundSchema: z.ZodMiniType<
   UpdateApiPriceListRequest
 > = z.pipe(
   z.object({
+    idempotencyKey: z.optional(z.string()),
     priceListId: z.string(),
     xRequestId: z.optional(z.string()),
     body: models.ApiPriceListMutationRequest$outboundSchema,
   }),
   z.transform((v) => {
     return remap$(v, {
+      idempotencyKey: "Idempotency-Key",
       priceListId: "price_list_id",
       xRequestId: "X-Request-Id",
     });
