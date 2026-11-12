@@ -24,13 +24,13 @@ export type ListApiSuppliersRequest = {
    */
   query?: string | undefined;
   /**
-   * Alias de query
-   */
-  search?: string | undefined;
-  /**
    * Filtra por estado activo
    */
   isActive?: boolean | undefined;
+  /**
+   * Estados exactos a incluir. Enviá ambos para incluir proveedores activos e inactivos.
+   */
+  status?: Array<models.ApiSharedEnumd952d5ce8e> | undefined;
 };
 
 export type ListApiSuppliersResponse = {
@@ -43,8 +43,8 @@ export type ListApiSuppliersRequest$Outbound = {
   cursor?: string | undefined;
   limit: number;
   query?: string | undefined;
-  search?: string | undefined;
   is_active?: boolean | undefined;
+  status?: Array<string> | undefined;
 };
 
 /** @internal */
@@ -56,8 +56,8 @@ export const ListApiSuppliersRequest$outboundSchema: z.ZodMiniType<
     cursor: z.optional(z.string()),
     limit: z._default(z.int(), 50),
     query: z.optional(z.string()),
-    search: z.optional(z.string()),
     isActive: z.optional(z.boolean()),
+    status: z.optional(z.array(models.ApiSharedEnumd952d5ce8e$outboundSchema)),
   }),
   z.transform((v) => {
     return remap$(v, {

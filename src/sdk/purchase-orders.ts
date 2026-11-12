@@ -75,7 +75,7 @@ export class PurchaseOrders extends ClientSDK {
    * Confirmar orden de compra
    *
    * @remarks
-   * Confirma una orden de compra y devuelve el detalle persistido.
+   * Confirma una orden de compra y devuelve el detalle persistido. Idempotency-Key es opcional; si se envía, un reintento con la misma clave devuelve el resultado original y la clave reusada con otro cuerpo responde 409 IDEMPOTENCY_CONFLICT.
    */
   async confirm(
     request: operations.ConfirmApiPurchaseOrderRequest,
@@ -92,7 +92,7 @@ export class PurchaseOrders extends ClientSDK {
    * Cerrar orden de compra
    *
    * @remarks
-   * Cierra una orden de compra y devuelve el detalle persistido.
+   * Cierra una orden de compra y devuelve el detalle persistido. Idempotency-Key es opcional; si se envía, un reintento con la misma clave devuelve el resultado original y la clave reusada con otro cuerpo responde 409 IDEMPOTENCY_CONFLICT.
    */
   async close(
     request: operations.CloseApiPurchaseOrderRequest,
@@ -109,7 +109,7 @@ export class PurchaseOrders extends ClientSDK {
    * Reabrir orden de compra
    *
    * @remarks
-   * Reabre una orden de compra cerrada y devuelve el detalle persistido.
+   * Reabre una orden de compra cerrada y devuelve el detalle persistido. Idempotency-Key es opcional; si se envía, un reintento con la misma clave devuelve el resultado original y la clave reusada con otro cuerpo responde 409 IDEMPOTENCY_CONFLICT.
    */
   async reopen(
     request: operations.ReopenApiPurchaseOrderRequest,
