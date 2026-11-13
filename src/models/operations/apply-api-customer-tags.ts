@@ -12,6 +12,10 @@ import * as models from "../index.js";
 
 export type ApplyApiCustomerTagsRequest = {
   /**
+   * Clave estable para deduplicar reintentos de la misma operación. Opcional en v1; si se envía, un reintento con la misma clave y el mismo cuerpo devuelve el resultado original sin repetir la operación, y con otro cuerpo devuelve 409.
+   */
+  idempotencyKey?: string | undefined;
+  /**
    * ID opcional de la solicitud para trazabilidad. Si se omite, el servidor genera uno.
    */
   xRequestId?: string | undefined;
@@ -25,6 +29,7 @@ export type ApplyApiCustomerTagsResponse = {
 
 /** @internal */
 export type ApplyApiCustomerTagsRequest$Outbound = {
+  "Idempotency-Key"?: string | undefined;
   "X-Request-Id"?: string | undefined;
   body: models.ApiApplyTagsRequest$Outbound;
 };
@@ -35,11 +40,13 @@ export const ApplyApiCustomerTagsRequest$outboundSchema: z.ZodMiniType<
   ApplyApiCustomerTagsRequest
 > = z.pipe(
   z.object({
+    idempotencyKey: z.optional(z.string()),
     xRequestId: z.optional(z.string()),
     body: models.ApiApplyTagsRequest$outboundSchema,
   }),
   z.transform((v) => {
     return remap$(v, {
+      idempotencyKey: "Idempotency-Key",
       xRequestId: "X-Request-Id",
     });
   }),

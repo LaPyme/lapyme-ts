@@ -4,17 +4,22 @@
  */
 
 import * as z from "zod/v4-mini";
-import { ClosedEnum } from "../types/enums.js";
+import * as openEnums from "../types/enums.js";
+import { OpenEnum } from "../types/enums.js";
 
 export const ApiSharedEnumbf6bff0c7b = {
   Paper: "paper",
   Electronic: "electronic",
 } as const;
-export type ApiSharedEnumbf6bff0c7b = ClosedEnum<
-  typeof ApiSharedEnumbf6bff0c7b
->;
+export type ApiSharedEnumbf6bff0c7b = OpenEnum<typeof ApiSharedEnumbf6bff0c7b>;
 
 /** @internal */
-export const ApiSharedEnumbf6bff0c7b$outboundSchema: z.ZodMiniEnum<
-  typeof ApiSharedEnumbf6bff0c7b
-> = z.enum(ApiSharedEnumbf6bff0c7b);
+export const ApiSharedEnumbf6bff0c7b$inboundSchema: z.ZodMiniType<
+  ApiSharedEnumbf6bff0c7b,
+  unknown
+> = openEnums.inboundSchema(ApiSharedEnumbf6bff0c7b);
+/** @internal */
+export const ApiSharedEnumbf6bff0c7b$outboundSchema: z.ZodMiniType<
+  string,
+  ApiSharedEnumbf6bff0c7b
+> = openEnums.outboundSchema(ApiSharedEnumbf6bff0c7b);
