@@ -30,6 +30,9 @@ import { Result } from "../types/fp.js";
 
 /**
  * Desarchivar pedido
+ *
+ * @remarks
+ * Restaura un pedido archivado y devuelve el estado persistido resultante. Idempotency-Key es opcional; si se envía, un reintento con la misma clave devuelve el resultado original y la clave reusada con otro cuerpo responde 409 IDEMPOTENCY_CONFLICT.
  */
 export function ordersUnarchive(
   client: LapymeCore,
@@ -99,6 +102,11 @@ async function $do(
 
   const headers = new Headers(compactMap({
     Accept: "application/json",
+    "Idempotency-Key": encodeSimple(
+      "Idempotency-Key",
+      payload["Idempotency-Key"],
+      { explode: false, charEncoding: "none" },
+    ),
   }));
 
   const secConfig = await extractSecurity(client._options.bearerAuth);
@@ -179,6 +187,7 @@ async function $do(
     M.jsonErr([400, 401, 403, 404, 409], errors.ApiErrorEnvelope$inboundSchema),
     M.jsonErr(429, errors.ApiErrorEnvelope$inboundSchema, { hdrs: true }),
     M.jsonErr(500, errors.ApiErrorEnvelope$inboundSchema),
+    M.jsonErr(503, errors.ApiErrorEnvelope$inboundSchema, { hdrs: true }),
     M.fail("4XX"),
     M.fail("5XX"),
   )(response, req, { extraFields: responseFields });

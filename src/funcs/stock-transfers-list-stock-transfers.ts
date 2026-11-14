@@ -103,7 +103,6 @@ async function $do(
     "date_to": payload?.date_to,
     "limit": payload?.limit,
     "query": payload?.query,
-    "search": payload?.search,
     "source_warehouse_id": payload?.source_warehouse_id,
     "statuses": payload?.statuses,
     "target_warehouse_id": payload?.target_warehouse_id,
@@ -192,6 +191,7 @@ async function $do(
     M.jsonErr([400, 401, 403], errors.ApiErrorEnvelope$inboundSchema),
     M.jsonErr(429, errors.ApiErrorEnvelope$inboundSchema, { hdrs: true }),
     M.jsonErr(500, errors.ApiErrorEnvelope$inboundSchema),
+    M.jsonErr(503, errors.ApiErrorEnvelope$inboundSchema, { hdrs: true }),
     M.fail("4XX"),
     M.fail("5XX"),
   )(response, req, { extraFields: responseFields });

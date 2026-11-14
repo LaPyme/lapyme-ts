@@ -9,13 +9,18 @@ import { safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import {
-  ApiSharedObjectd371740910,
-  ApiSharedObjectd371740910$inboundSchema,
-} from "./api-shared-objectd371740910.js";
+  ApiSharedObjectbdd9158fb4,
+  ApiSharedObjectbdd9158fb4$inboundSchema,
+} from "./api-shared-objectbdd9158fb4.js";
+import {
+  ApiSharedObjectcbcdbf3dfa,
+  ApiSharedObjectcbcdbf3dfa$inboundSchema,
+} from "./api-shared-objectcbcdbf3dfa.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type ApiProductUpdateResponseData = {
-  product: ApiSharedObjectd371740910;
+  product: ApiSharedObjectbdd9158fb4;
+  costConversions: Array<ApiSharedObjectcbcdbf3dfa>;
 };
 
 export type ApiProductUpdateResponse = {
@@ -28,9 +33,17 @@ export type ApiProductUpdateResponse = {
 export const ApiProductUpdateResponseData$inboundSchema: z.ZodMiniType<
   ApiProductUpdateResponseData,
   unknown
-> = z.object({
-  product: ApiSharedObjectd371740910$inboundSchema,
-});
+> = z.pipe(
+  z.object({
+    product: ApiSharedObjectbdd9158fb4$inboundSchema,
+    cost_conversions: z.array(ApiSharedObjectcbcdbf3dfa$inboundSchema),
+  }),
+  z.transform((v) => {
+    return remap$(v, {
+      "cost_conversions": "costConversions",
+    });
+  }),
+);
 
 export function apiProductUpdateResponseDataFromJSON(
   jsonString: string,
