@@ -15,20 +15,21 @@ let value: ApiTransferDetailResponse = {
     targetWarehouseId: "5283156d-d2df-46e8-85ae-839b3f4a8912",
     transferDate: new Date("2026-03-20T12:50:11.407Z"),
     notes: "<value>",
-    status: "completed",
+    status: "closed_with_difference",
     createdAt: new Date("2026-04-28T05:47:30.323Z"),
     updatedAt: new Date("2025-12-30T02:51:34.734Z"),
     createdBy: "812da217-0912-4faa-b34f-dc09b64999c6",
     updatedBy: "6cd42fc6-354f-4a4d-9ae6-2bb6eb2ee7ac",
     sourceWarehouse: {
-      id: "bea67aa9-4cab-4290-aa26-8749e7435e10",
+      id: "7aa94cab-290a-4268-8749-e7435e10838d",
       name: "<value>",
     },
     targetWarehouse: {
-      id: "38d07e33-fb22-4193-8a9b-253b14e9cce9",
+      id: "e33fb221-93a9-4b25-83b1-4e9cce912575",
       name: "<value>",
     },
     items: [],
+    tags: [],
   },
 };
 ```
@@ -38,4 +39,4 @@ let value: ApiTransferDetailResponse = {
 | Field                                                                        | Type                                                                         | Required                                                                     | Description                                                                  |
 | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
 | `requestId`                                                                  | *string*                                                                     | :heavy_check_mark:                                                           | N/A                                                                          |
-| `data`                                                                       | [models.ApiSharedObject4b29ca9c27](../models/api-shared-object4b29ca9c27.md) | :heavy_check_mark:                                                           | N/A                                                                          |
+| `data`                                                                       | [models.ApiSharedObject29aea9dac9](../models/api-shared-object29aea9dac9.md) | :heavy_check_mark:                                                           | N/A                                                                          |

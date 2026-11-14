@@ -8,7 +8,7 @@ import { CreateApiTagRequest } from "lapyme/models/operations";
 let value: CreateApiTagRequest = {
   idempotencyKey: "<value>",
   body: {
-    scope: "product",
+    scope: "sale",
     name: "<value>",
   },
 };
