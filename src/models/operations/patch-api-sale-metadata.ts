@@ -12,6 +12,10 @@ import * as models from "../index.js";
 
 export type PatchApiSaleMetadataRequest = {
   /**
+   * Clave estable para deduplicar reintentos de la misma operación. Opcional en v1; si se envía, un reintento con la misma clave y el mismo cuerpo devuelve el resultado original sin repetir la operación, y con otro cuerpo devuelve 409.
+   */
+  idempotencyKey?: string | undefined;
+  /**
    * ID de la venta
    */
   saleId: string;
@@ -25,6 +29,7 @@ export type PatchApiSaleMetadataResponse = {
 
 /** @internal */
 export type PatchApiSaleMetadataRequest$Outbound = {
+  "Idempotency-Key"?: string | undefined;
   sale_id: string;
   body: models.ApiSaleMetadataPatchRequest$Outbound;
 };
@@ -35,11 +40,13 @@ export const PatchApiSaleMetadataRequest$outboundSchema: z.ZodMiniType<
   PatchApiSaleMetadataRequest
 > = z.pipe(
   z.object({
+    idempotencyKey: z.optional(z.string()),
     saleId: z.string(),
     body: models.ApiSaleMetadataPatchRequest$outboundSchema,
   }),
   z.transform((v) => {
     return remap$(v, {
+      idempotencyKey: "Idempotency-Key",
       saleId: "sale_id",
     });
   }),

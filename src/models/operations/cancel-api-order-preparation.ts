@@ -19,6 +19,10 @@ export type CancelApiOrderPreparationRequest = {
    * ID de la preparación
    */
   preparationId: string;
+  /**
+   * Clave estable para deduplicar reintentos de la misma operación. Opcional en v1; si se envía, un reintento con la misma clave y el mismo cuerpo devuelve el resultado original sin repetir la operación, y con otro cuerpo devuelve 409.
+   */
+  idempotencyKey?: string | undefined;
   body?: models.ApiOrderOptionalReasonRequest | undefined;
 };
 
@@ -31,6 +35,7 @@ export type CancelApiOrderPreparationResponse = {
 export type CancelApiOrderPreparationRequest$Outbound = {
   order_id: string;
   preparation_id: string;
+  "Idempotency-Key"?: string | undefined;
   body?: models.ApiOrderOptionalReasonRequest$Outbound | undefined;
 };
 
@@ -42,12 +47,14 @@ export const CancelApiOrderPreparationRequest$outboundSchema: z.ZodMiniType<
   z.object({
     orderId: z.string(),
     preparationId: z.string(),
+    idempotencyKey: z.optional(z.string()),
     body: z.optional(models.ApiOrderOptionalReasonRequest$outboundSchema),
   }),
   z.transform((v) => {
     return remap$(v, {
       orderId: "order_id",
       preparationId: "preparation_id",
+      idempotencyKey: "Idempotency-Key",
     });
   }),
 );
