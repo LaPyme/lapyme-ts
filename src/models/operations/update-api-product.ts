@@ -19,6 +19,10 @@ export type UpdateApiProductRequest = {
    * ID opcional de la solicitud para trazabilidad. Si se omite, el servidor genera uno.
    */
   xRequestId?: string | undefined;
+  /**
+   * Clave estable obligatoria al actualizar un combo existente, aunque se omita product_type. Reutilizala solo para reintentar exactamente la misma actualización.
+   */
+  idempotencyKey?: string | undefined;
   body: models.ApiProductUpdateRequest;
 };
 
@@ -31,6 +35,7 @@ export type UpdateApiProductResponse = {
 export type UpdateApiProductRequest$Outbound = {
   product_id: string;
   "X-Request-Id"?: string | undefined;
+  "Idempotency-Key"?: string | undefined;
   body: models.ApiProductUpdateRequest$Outbound;
 };
 
@@ -42,12 +47,14 @@ export const UpdateApiProductRequest$outboundSchema: z.ZodMiniType<
   z.object({
     productId: z.string(),
     xRequestId: z.optional(z.string()),
+    idempotencyKey: z.optional(z.string()),
     body: models.ApiProductUpdateRequest$outboundSchema,
   }),
   z.transform((v) => {
     return remap$(v, {
       productId: "product_id",
       xRequestId: "X-Request-Id",
+      idempotencyKey: "Idempotency-Key",
     });
   }),
 );

@@ -6,11 +6,39 @@
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
 import { safeParse } from "../../lib/schemas.js";
+import { ClosedEnum } from "../../types/enums.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import * as models from "../index.js";
 
+export const Sort = {
+  Product: "product",
+  Category: "category",
+  Sku: "sku",
+} as const;
+export type Sort = ClosedEnum<typeof Sort>;
+
+/**
+ * Conservá sort y direction al usar next_cursor.
+ */
+export const Direction = {
+  Asc: "asc",
+  Desc: "desc",
+} as const;
+/**
+ * Conservá sort y direction al usar next_cursor.
+ */
+export type Direction = ClosedEnum<typeof Direction>;
+
 export type ListApiProductsRequest = {
+  /**
+   * IDs de productos (grupos) o variantes, hasta 100. Se combinan con skus[] con OR. Incluye inactivos salvo que se indique is_active.
+   */
+  ids?: Array<string> | undefined;
+  /**
+   * SKUs exactos, sin distinguir mayúsculas, hasta 100. Se combinan con ids[] con OR. Incluye inactivos salvo que se indique is_active.
+   */
+  skus?: Array<string> | undefined;
   /**
    * Valor de next_cursor recibido en la respuesta anterior
    */
@@ -24,10 +52,6 @@ export type ListApiProductsRequest = {
    */
   query?: string | undefined;
   /**
-   * Alias de query
-   */
-  search?: string | undefined;
-  /**
    * Filtra por categoría
    */
   categoryId?: string | undefined;
@@ -39,6 +63,19 @@ export type ListApiProductsRequest = {
    * Filtra por tipo de producto
    */
   productType?: models.ApiSharedEnumff49232140 | undefined;
+  /**
+   * Etiquetas (UUID) o __untagged__. Coincide con cualquiera; repetí el parámetro.
+   */
+  tag?: Array<string> | undefined;
+  /**
+   * <key>:<valor>. Valores de una definición se combinan con OR; definiciones distintas con AND.
+   */
+  metafield?: Array<string> | undefined;
+  sort?: Sort | undefined;
+  /**
+   * Conservá sort y direction al usar next_cursor.
+   */
+  direction?: Direction | undefined;
 };
 
 export type ListApiProductsResponse = {
@@ -47,14 +84,27 @@ export type ListApiProductsResponse = {
 };
 
 /** @internal */
+export const Sort$outboundSchema: z.ZodMiniEnum<typeof Sort> = z.enum(Sort);
+
+/** @internal */
+export const Direction$outboundSchema: z.ZodMiniEnum<typeof Direction> = z.enum(
+  Direction,
+);
+
+/** @internal */
 export type ListApiProductsRequest$Outbound = {
+  "ids[]"?: Array<string> | undefined;
+  "skus[]"?: Array<string> | undefined;
   cursor?: string | undefined;
   limit: number;
   query?: string | undefined;
-  search?: string | undefined;
   category_id?: string | undefined;
   is_active?: boolean | undefined;
   product_type?: string | undefined;
+  tag?: Array<string> | undefined;
+  metafield?: Array<string> | undefined;
+  sort: string;
+  direction: string;
 };
 
 /** @internal */
@@ -63,16 +113,23 @@ export const ListApiProductsRequest$outboundSchema: z.ZodMiniType<
   ListApiProductsRequest
 > = z.pipe(
   z.object({
+    ids: z.optional(z.array(z.string())),
+    skus: z.optional(z.array(z.string())),
     cursor: z.optional(z.string()),
     limit: z._default(z.int(), 50),
     query: z.optional(z.string()),
-    search: z.optional(z.string()),
     categoryId: z.optional(z.string()),
     isActive: z.optional(z.boolean()),
     productType: z.optional(models.ApiSharedEnumff49232140$outboundSchema),
+    tag: z.optional(z.array(z.string())),
+    metafield: z.optional(z.array(z.string())),
+    sort: z._default(Sort$outboundSchema, "product"),
+    direction: z._default(Direction$outboundSchema, "asc"),
   }),
   z.transform((v) => {
     return remap$(v, {
+      ids: "ids[]",
+      skus: "skus[]",
       categoryId: "category_id",
       isActive: "is_active",
       productType: "product_type",
