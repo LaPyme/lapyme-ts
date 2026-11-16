@@ -13,14 +13,14 @@ import {
   ApiSharedEnum8d46e1ec20$inboundSchema,
 } from "./api-shared-enum8d46e1ec20.js";
 import {
-  ApiSharedObjectbea6e6be70,
-  ApiSharedObjectbea6e6be70$inboundSchema,
-} from "./api-shared-objectbea6e6be70.js";
+  ApiSharedObjecta2bd01d7eb,
+  ApiSharedObjecta2bd01d7eb$inboundSchema,
+} from "./api-shared-objecta2bd01d7eb.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type ApiPaymentMethodListResponse = {
   requestId: string;
-  data: Array<ApiSharedObjectbea6e6be70>;
+  data: Array<ApiSharedObjecta2bd01d7eb>;
   hasMore: boolean;
   nextCursor: string | null;
   /**
@@ -40,7 +40,7 @@ export const ApiPaymentMethodListResponse$inboundSchema: z.ZodMiniType<
 > = z.pipe(
   z.object({
     request_id: types.string(),
-    data: z.array(ApiSharedObjectbea6e6be70$inboundSchema),
+    data: z.array(ApiSharedObjecta2bd01d7eb$inboundSchema),
     has_more: types.boolean(),
     next_cursor: types.nullable(types.string()),
     object: ApiSharedEnum8d46e1ec20$inboundSchema,

@@ -6,66 +6,99 @@
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
 import { ClosedEnum } from "../types/enums.js";
-import { smartUnion } from "../types/smart-union.js";
+import {
+  ApiSharedEnum6440f2bcc2,
+  ApiSharedEnum6440f2bcc2$outboundSchema,
+} from "./api-shared-enum6440f2bcc2.js";
 import {
   ReportPeriod,
   ReportPeriod$Outbound,
   ReportPeriod$outboundSchema,
 } from "./report-period.js";
 
-export const PurchasesReportRequestDimensionEnum = {
+export const PurchasesReportRequestDimension = {
   Date: "date",
   Week: "week",
   Month: "month",
   Quarter: "quarter",
   Year: "year",
+  WeekOfYear: "week_of_year",
+  MonthOfYear: "month_of_year",
+  DayOfWeek: "day_of_week",
+  DueDate: "due_date",
+  AccountDate: "account_date",
+  InvoiceDate: "invoice_date",
   Supplier: "supplier",
-  SupplierName: "supplierName",
-  SupplierTaxCategory: "supplierTaxCategory",
-  SupplierProvince: "supplierProvince",
-  SupplierCity: "supplierCity",
+  SupplierName: "supplier_name",
+  SupplierTaxCategory: "supplier_tax_category",
+  SupplierProvince: "supplier_province",
+  SupplierCity: "supplier_city",
+  VariantSku: "variant_sku",
+  ProductName: "product_name",
   Product: "product",
   Variant: "variant",
   Category: "category",
   Subcategory: "subcategory",
-  ProductType: "productType",
+  ProductType: "product_type",
   Warehouse: "warehouse",
-  VoucherType: "voucherType",
+  VoucherType: "voucher_type",
   Currency: "currency",
-  TaxRate: "taxRate",
+  TaxRate: "tax_rate",
+  PurchaseInvoiceNumber: "purchase_invoice_number",
+  PaymentStatus: "payment_status",
+  PurchaseStatus: "purchase_status",
+  CreatedBy: "created_by",
+  PurchaseOrigin: "purchase_origin",
+  PaymentTerm: "payment_term",
+  PaymentTermDays: "payment_term_days",
 } as const;
-export type PurchasesReportRequestDimensionEnum = ClosedEnum<
-  typeof PurchasesReportRequestDimensionEnum
+export type PurchasesReportRequestDimension = ClosedEnum<
+  typeof PurchasesReportRequestDimension
 >;
 
-export type PurchasesReportRequestDimensionUnion =
-  | PurchasesReportRequestDimensionEnum
-  | string;
-
 export const PurchasesReportRequestMeasure = {
-  PurchaseTotal: "purchaseTotal",
-  PurchaseSubtotal: "purchaseSubtotal",
-  PurchaseTaxAmount: "purchaseTaxAmount",
-  PurchaseCount: "purchaseCount",
-  PurchaseUnits: "purchaseUnits",
-  PurchaseCost: "purchaseCost",
-  UniqueSuppliers: "uniqueSuppliers",
-  AvgPurchaseTicket: "avgPurchaseTicket",
-  AvgPurchaseUnitCost: "avgPurchaseUnitCost",
+  PurchaseTotal: "purchase_total",
+  PurchaseSubtotal: "purchase_subtotal",
+  PurchaseTaxAmount: "purchase_tax_amount",
+  PurchasePerceptionAmount: "purchase_perception_amount",
+  PurchaseBalance: "purchase_balance",
+  PurchaseCount: "purchase_count",
+  PurchaseDocumentCount: "purchase_document_count",
+  PurchaseCreditNoteCount: "purchase_credit_note_count",
+  NetPurchaseCount: "net_purchase_count",
+  PurchaseUnits: "purchase_units",
+  UnitsPerPurchase: "units_per_purchase",
+  PurchaseCost: "purchase_cost",
+  UniqueSuppliers: "unique_suppliers",
+  UniquePurchasedProducts: "unique_purchased_products",
+  AvgPurchaseTicket: "avg_purchase_ticket",
+  AvgNetPurchaseTicket: "avg_net_purchase_ticket",
+  AvgPurchaseUnitCost: "avg_purchase_unit_cost",
+  PurchaseDiscountAmount: "purchase_discount_amount",
+  PurchaseLineDiscountAmount: "purchase_line_discount_amount",
+  PurchaseLineDiscountRate: "purchase_line_discount_rate",
+  PurchaseGlobalDiscountAmount: "purchase_global_discount_amount",
+  PurchaseGlobalDiscountRate: "purchase_global_discount_rate",
+  DiscountedPurchaseCount: "discounted_purchase_count",
 } as const;
 export type PurchasesReportRequestMeasure = ClosedEnum<
   typeof PurchasesReportRequestMeasure
 >;
 
 /**
- * Filtros por dimensión. Cada clave debe ser una dimensión filtrable para la fuente. También acepta product_metafield:<key> para campos personalizados select de producto. El valor es un array de IDs o valores a incluir.
+ * Filtros por dimensión. Cada clave debe ser una dimensión filtrable para la fuente. También acepta product_metafield:<key> para campos personalizados select de producto y contact_metafield:<key> para campos personalizados select de contacto cuando la fuente lo soporta. El valor es un array de IDs o valores a incluir.
  */
 export type PurchasesReportRequestDimensionFilters = {
+  dueDate?: Array<string> | undefined;
+  accountDate?: Array<string> | undefined;
+  invoiceDate?: Array<string> | undefined;
   supplier?: Array<string> | undefined;
   supplierName?: Array<string> | undefined;
   supplierTaxCategory?: Array<string> | undefined;
   supplierProvince?: Array<string> | undefined;
   supplierCity?: Array<string> | undefined;
+  variantSku?: Array<string> | undefined;
+  productName?: Array<string> | undefined;
   product?: Array<string> | undefined;
   category?: Array<string> | undefined;
   subcategory?: Array<string> | undefined;
@@ -74,55 +107,47 @@ export type PurchasesReportRequestDimensionFilters = {
   voucherType?: Array<string> | undefined;
   currency?: Array<string> | undefined;
   taxRate?: Array<string> | undefined;
+  purchaseInvoiceNumber?: Array<string> | undefined;
+  paymentStatus?: Array<string> | undefined;
+  purchaseStatus?: Array<string> | undefined;
+  createdBy?: Array<string> | undefined;
+  purchaseOrigin?: Array<string> | undefined;
+  paymentTerm?: Array<string> | undefined;
+  paymentTermDays?: Array<string> | undefined;
+  supplierStatus?: Array<string> | undefined;
+  productStatus?: Array<string> | undefined;
+  warehouseStatus?: Array<string> | undefined;
 };
 
 export type PurchasesReportRequest = {
   source: "purchases";
   period: ReportPeriod;
   /**
-   * Dimensiones de agrupación. Máximo 4. Acepta product_metafield:<key> para campos personalizados select de producto.
+   * Dimensiones de agrupación. Máximo 12. Acepta product_metafield:<key> para campos personalizados select de producto y contact_metafield:<key> para campos personalizados select de contacto.
    */
-  dimensions?: Array<PurchasesReportRequestDimensionEnum | string> | undefined;
+  dimensions?: Array<any> | undefined;
   /**
    * Medidas a calcular. Al menos una.
    */
   measures: Array<PurchasesReportRequestMeasure>;
   /**
-   * Filtros por dimensión. Cada clave debe ser una dimensión filtrable para la fuente. También acepta product_metafield:<key> para campos personalizados select de producto. El valor es un array de IDs o valores a incluir.
+   * Filtros por dimensión. Cada clave debe ser una dimensión filtrable para la fuente. También acepta product_metafield:<key> para campos personalizados select de producto y contact_metafield:<key> para campos personalizados select de contacto cuando la fuente lo soporta. El valor es un array de IDs o valores a incluir.
    */
   dimensionFilters?: PurchasesReportRequestDimensionFilters | undefined;
   /**
    * Si es true, la respuesta incluye totales agregados en el campo `totals`.
    */
   includeTotals?: boolean | undefined;
+  /**
+   * Currency used for all monetary measures in the report.
+   */
+  reportingCurrency?: ApiSharedEnum6440f2bcc2 | undefined;
 };
 
 /** @internal */
-export const PurchasesReportRequestDimensionEnum$outboundSchema: z.ZodMiniEnum<
-  typeof PurchasesReportRequestDimensionEnum
-> = z.enum(PurchasesReportRequestDimensionEnum);
-
-/** @internal */
-export type PurchasesReportRequestDimensionUnion$Outbound = string | string;
-
-/** @internal */
-export const PurchasesReportRequestDimensionUnion$outboundSchema: z.ZodMiniType<
-  PurchasesReportRequestDimensionUnion$Outbound,
-  PurchasesReportRequestDimensionUnion
-> = smartUnion([
-  PurchasesReportRequestDimensionEnum$outboundSchema,
-  z.string(),
-]);
-
-export function purchasesReportRequestDimensionUnionToJSON(
-  purchasesReportRequestDimensionUnion: PurchasesReportRequestDimensionUnion,
-): string {
-  return JSON.stringify(
-    PurchasesReportRequestDimensionUnion$outboundSchema.parse(
-      purchasesReportRequestDimensionUnion,
-    ),
-  );
-}
+export const PurchasesReportRequestDimension$outboundSchema: z.ZodMiniEnum<
+  typeof PurchasesReportRequestDimension
+> = z.enum(PurchasesReportRequestDimension);
 
 /** @internal */
 export const PurchasesReportRequestMeasure$outboundSchema: z.ZodMiniEnum<
@@ -131,11 +156,16 @@ export const PurchasesReportRequestMeasure$outboundSchema: z.ZodMiniEnum<
 
 /** @internal */
 export type PurchasesReportRequestDimensionFilters$Outbound = {
+  due_date?: Array<string> | undefined;
+  account_date?: Array<string> | undefined;
+  invoice_date?: Array<string> | undefined;
   supplier?: Array<string> | undefined;
   supplier_name?: Array<string> | undefined;
   supplier_tax_category?: Array<string> | undefined;
   supplier_province?: Array<string> | undefined;
   supplier_city?: Array<string> | undefined;
+  variant_sku?: Array<string> | undefined;
+  product_name?: Array<string> | undefined;
   product?: Array<string> | undefined;
   category?: Array<string> | undefined;
   subcategory?: Array<string> | undefined;
@@ -144,6 +174,16 @@ export type PurchasesReportRequestDimensionFilters$Outbound = {
   voucher_type?: Array<string> | undefined;
   currency?: Array<string> | undefined;
   tax_rate?: Array<string> | undefined;
+  purchase_invoice_number?: Array<string> | undefined;
+  payment_status?: Array<string> | undefined;
+  purchase_status?: Array<string> | undefined;
+  created_by?: Array<string> | undefined;
+  purchase_origin?: Array<string> | undefined;
+  payment_term?: Array<string> | undefined;
+  payment_term_days?: Array<string> | undefined;
+  supplier_status?: Array<string> | undefined;
+  product_status?: Array<string> | undefined;
+  warehouse_status?: Array<string> | undefined;
 };
 
 /** @internal */
@@ -153,11 +193,16 @@ export const PurchasesReportRequestDimensionFilters$outboundSchema:
     PurchasesReportRequestDimensionFilters
   > = z.pipe(
     z.object({
+      dueDate: z.optional(z.array(z.string())),
+      accountDate: z.optional(z.array(z.string())),
+      invoiceDate: z.optional(z.array(z.string())),
       supplier: z.optional(z.array(z.string())),
       supplierName: z.optional(z.array(z.string())),
       supplierTaxCategory: z.optional(z.array(z.string())),
       supplierProvince: z.optional(z.array(z.string())),
       supplierCity: z.optional(z.array(z.string())),
+      variantSku: z.optional(z.array(z.string())),
+      productName: z.optional(z.array(z.string())),
       product: z.optional(z.array(z.string())),
       category: z.optional(z.array(z.string())),
       subcategory: z.optional(z.array(z.string())),
@@ -166,16 +211,41 @@ export const PurchasesReportRequestDimensionFilters$outboundSchema:
       voucherType: z.optional(z.array(z.string())),
       currency: z.optional(z.array(z.string())),
       taxRate: z.optional(z.array(z.string())),
+      purchaseInvoiceNumber: z.optional(z.array(z.string())),
+      paymentStatus: z.optional(z.array(z.string())),
+      purchaseStatus: z.optional(z.array(z.string())),
+      createdBy: z.optional(z.array(z.string())),
+      purchaseOrigin: z.optional(z.array(z.string())),
+      paymentTerm: z.optional(z.array(z.string())),
+      paymentTermDays: z.optional(z.array(z.string())),
+      supplierStatus: z.optional(z.array(z.string())),
+      productStatus: z.optional(z.array(z.string())),
+      warehouseStatus: z.optional(z.array(z.string())),
     }),
     z.transform((v) => {
       return remap$(v, {
+        dueDate: "due_date",
+        accountDate: "account_date",
+        invoiceDate: "invoice_date",
         supplierName: "supplier_name",
         supplierTaxCategory: "supplier_tax_category",
         supplierProvince: "supplier_province",
         supplierCity: "supplier_city",
+        variantSku: "variant_sku",
+        productName: "product_name",
         productType: "product_type",
         voucherType: "voucher_type",
         taxRate: "tax_rate",
+        purchaseInvoiceNumber: "purchase_invoice_number",
+        paymentStatus: "payment_status",
+        purchaseStatus: "purchase_status",
+        createdBy: "created_by",
+        purchaseOrigin: "purchase_origin",
+        paymentTerm: "payment_term",
+        paymentTermDays: "payment_term_days",
+        supplierStatus: "supplier_status",
+        productStatus: "product_status",
+        warehouseStatus: "warehouse_status",
       });
     }),
   );
@@ -195,12 +265,13 @@ export function purchasesReportRequestDimensionFiltersToJSON(
 export type PurchasesReportRequest$Outbound = {
   source: "purchases";
   period: ReportPeriod$Outbound;
-  dimensions?: Array<string | string> | undefined;
+  dimensions?: Array<any> | undefined;
   measures: Array<string>;
   dimension_filters?:
     | PurchasesReportRequestDimensionFilters$Outbound
     | undefined;
   include_totals?: boolean | undefined;
+  reporting_currency: string;
 };
 
 /** @internal */
@@ -211,24 +282,22 @@ export const PurchasesReportRequest$outboundSchema: z.ZodMiniType<
   z.object({
     source: z.literal("purchases"),
     period: ReportPeriod$outboundSchema,
-    dimensions: z.optional(
-      z.array(
-        smartUnion([
-          PurchasesReportRequestDimensionEnum$outboundSchema,
-          z.string(),
-        ]),
-      ),
-    ),
+    dimensions: z.optional(z.array(z.any())),
     measures: z.array(PurchasesReportRequestMeasure$outboundSchema),
     dimensionFilters: z.optional(
       z.lazy(() => PurchasesReportRequestDimensionFilters$outboundSchema),
     ),
     includeTotals: z.optional(z.boolean()),
+    reportingCurrency: z._default(
+      ApiSharedEnum6440f2bcc2$outboundSchema,
+      "ARS",
+    ),
   }),
   z.transform((v) => {
     return remap$(v, {
       dimensionFilters: "dimension_filters",
       includeTotals: "include_totals",
+      reportingCurrency: "reporting_currency",
     });
   }),
 );

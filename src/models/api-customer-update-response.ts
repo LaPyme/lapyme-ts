@@ -9,13 +9,13 @@ import { safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import {
-  ApiSharedObject5bccea1792,
-  ApiSharedObject5bccea1792$inboundSchema,
-} from "./api-shared-object5bccea1792.js";
+  ApiSharedObjecta6ed1b9437,
+  ApiSharedObjecta6ed1b9437$inboundSchema,
+} from "./api-shared-objecta6ed1b9437.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type ApiCustomerUpdateResponseData = {
-  customer: ApiSharedObject5bccea1792;
+  customer: ApiSharedObjecta6ed1b9437;
 };
 
 export type ApiCustomerUpdateResponse = {
@@ -29,7 +29,7 @@ export const ApiCustomerUpdateResponseData$inboundSchema: z.ZodMiniType<
   ApiCustomerUpdateResponseData,
   unknown
 > = z.object({
-  customer: ApiSharedObject5bccea1792$inboundSchema,
+  customer: ApiSharedObjecta6ed1b9437$inboundSchema,
 });
 
 export function apiCustomerUpdateResponseDataFromJSON(

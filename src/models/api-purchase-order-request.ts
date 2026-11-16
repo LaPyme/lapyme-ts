@@ -8,6 +8,9 @@ import { remap as remap$ } from "../lib/primitives.js";
 
 export type ApiPurchaseOrderRequestItem = {
   productId: string;
+  /**
+   * Greater than 0. An update may keep 0 on a line that already has 0: a product added while receiving.
+   */
   orderedQuantity: number;
   expectedUnitCost?: number | undefined;
 };
