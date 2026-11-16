@@ -9,14 +9,14 @@ import { safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import {
-  ApiSharedObjectbea6e6be70,
-  ApiSharedObjectbea6e6be70$inboundSchema,
-} from "./api-shared-objectbea6e6be70.js";
+  ApiSharedObjecta2bd01d7eb,
+  ApiSharedObjecta2bd01d7eb$inboundSchema,
+} from "./api-shared-objecta2bd01d7eb.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type ApiPaymentMethodDetailResponse = {
   requestId: string;
-  data: ApiSharedObjectbea6e6be70;
+  data: ApiSharedObjecta2bd01d7eb;
 };
 
 /** @internal */
@@ -26,7 +26,7 @@ export const ApiPaymentMethodDetailResponse$inboundSchema: z.ZodMiniType<
 > = z.pipe(
   z.object({
     request_id: types.string(),
-    data: ApiSharedObjectbea6e6be70$inboundSchema,
+    data: ApiSharedObjecta2bd01d7eb$inboundSchema,
   }),
   z.transform((v) => {
     return remap$(v, {

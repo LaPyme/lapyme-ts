@@ -10,12 +10,12 @@ let value: ApiSharedObjecta9f7340006 = {
   warehouseCount: 34761,
   byWarehouse: [
     {
-      warehouseId: "8355b424-e8f1-4b19-a424-22b1798decfe",
+      warehouseId: "b6e29039-6b35-4a8c-8a83-53449182ecbb",
       warehouseName: "<value>",
-      quantity: 1678.21,
-      onHand: 2292.22,
-      reservedQuantity: 4791.26,
-      incomingQuantity: 4053.93,
+      quantity: 7029.39,
+      onHand: 3002.45,
+      reservedQuantity: 8793.03,
+      incomingQuantity: 7069.24,
     },
   ],
 };

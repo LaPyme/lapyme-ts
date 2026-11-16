@@ -19,7 +19,7 @@ export type CreateApiProductRequest = {
    * ID opcional de la solicitud para trazabilidad. Si se omite, el servidor genera uno.
    */
   xRequestId?: string | undefined;
-  body: models.ApiProductMutationRequest;
+  body: models.ApiProductMutationRequestUnion;
 };
 
 export type CreateApiProductResponse = {
@@ -31,7 +31,7 @@ export type CreateApiProductResponse = {
 export type CreateApiProductRequest$Outbound = {
   "Idempotency-Key": string;
   "X-Request-Id"?: string | undefined;
-  body: models.ApiProductMutationRequest$Outbound;
+  body: models.ApiProductMutationRequestUnion$Outbound;
 };
 
 /** @internal */
@@ -42,7 +42,7 @@ export const CreateApiProductRequest$outboundSchema: z.ZodMiniType<
   z.object({
     idempotencyKey: z.string(),
     xRequestId: z.optional(z.string()),
-    body: models.ApiProductMutationRequest$outboundSchema,
+    body: models.ApiProductMutationRequestUnion$outboundSchema,
   }),
   z.transform((v) => {
     return remap$(v, {
