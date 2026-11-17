@@ -17,10 +17,6 @@ import {
   ApiSharedEnum4ac9200c4a$inboundSchema,
 } from "./api-shared-enum4ac9200c4a.js";
 import {
-  ApiSharedEnum6cfb146157,
-  ApiSharedEnum6cfb146157$inboundSchema,
-} from "./api-shared-enum6cfb146157.js";
-import {
   ApiSharedEnum8d46e1ec20,
   ApiSharedEnum8d46e1ec20$inboundSchema,
 } from "./api-shared-enum8d46e1ec20.js";
@@ -28,6 +24,10 @@ import {
   ApiSharedEnumb49e56b125,
   ApiSharedEnumb49e56b125$inboundSchema,
 } from "./api-shared-enumb49e56b125.js";
+import {
+  ApiSharedEnumffb4886f2b,
+  ApiSharedEnumffb4886f2b$inboundSchema,
+} from "./api-shared-enumffb4886f2b.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type ApiOrderListResponseData = {
@@ -35,22 +35,34 @@ export type ApiOrderListResponseData = {
   id: string;
   orderNumber: string;
   rawOrderNumber: number;
+  /**
+   * Referencia externa enviada al crear el pedido, o null. No cambia el número de La Pyme ni vincula una integración.
+   */
+  externalOrderReference: string | null;
   orderDate: Date;
   customerId: string;
   customerName: string;
   customerTaxId: string | null;
   itemsCount: number;
   totalUnits: number;
+  /**
+   * Descuento global aplicado, en centavos.
+   */
   discountAmount: number;
+  /**
+   * Porcentaje del descuento global tal como se cargó. null si el descuento es un importe fijo o no hay descuento.
+   */
+  discountPercentage: number | null;
   subtotal: number;
   taxAmount: number;
   total: number;
-  currency: ApiSharedEnum6cfb146157;
+  currency: ApiSharedEnumffb4886f2b;
   orderStatus: ApiSharedEnum4ac9200c4a;
   preparationStatus: ApiSharedEnumb49e56b125;
   invoicingStatus: ApiSharedEnum2f67ddf0e8;
   notes: string | null;
   createdAt: Date;
+  updatedAt: Date;
   createdByName: string;
 };
 
@@ -79,6 +91,7 @@ export const ApiOrderListResponseData$inboundSchema: z.ZodMiniType<
     id: types.string(),
     order_number: types.string(),
     raw_order_number: types.number(),
+    external_order_reference: types.nullable(types.string()),
     order_date: types.date(),
     customer_id: types.string(),
     customer_name: types.string(),
@@ -86,21 +99,24 @@ export const ApiOrderListResponseData$inboundSchema: z.ZodMiniType<
     items_count: types.number(),
     total_units: types.number(),
     discount_amount: types.number(),
+    discount_percentage: types.nullable(types.number()),
     subtotal: types.number(),
     tax_amount: types.number(),
     total: types.number(),
-    currency: ApiSharedEnum6cfb146157$inboundSchema,
+    currency: ApiSharedEnumffb4886f2b$inboundSchema,
     order_status: ApiSharedEnum4ac9200c4a$inboundSchema,
     preparation_status: ApiSharedEnumb49e56b125$inboundSchema,
     invoicing_status: ApiSharedEnum2f67ddf0e8$inboundSchema,
     notes: types.nullable(types.string()),
     created_at: types.date(),
+    updated_at: types.date(),
     created_by_name: types.string(),
   }),
   z.transform((v) => {
     return remap$(v, {
       "order_number": "orderNumber",
       "raw_order_number": "rawOrderNumber",
+      "external_order_reference": "externalOrderReference",
       "order_date": "orderDate",
       "customer_id": "customerId",
       "customer_name": "customerName",
@@ -108,11 +124,13 @@ export const ApiOrderListResponseData$inboundSchema: z.ZodMiniType<
       "items_count": "itemsCount",
       "total_units": "totalUnits",
       "discount_amount": "discountAmount",
+      "discount_percentage": "discountPercentage",
       "tax_amount": "taxAmount",
       "order_status": "orderStatus",
       "preparation_status": "preparationStatus",
       "invoicing_status": "invoicingStatus",
       "created_at": "createdAt",
+      "updated_at": "updatedAt",
       "created_by_name": "createdByName",
     });
   }),

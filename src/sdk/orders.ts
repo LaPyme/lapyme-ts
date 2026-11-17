@@ -67,10 +67,10 @@ export class Orders extends ClientSDK {
   }
 
   /**
-   * Actualizar notas del pedido
+   * Editar pedido
    *
    * @remarks
-   * Actualiza las notas del pedido sin modificar importes, líneas ni estados.
+   * Acepta el contrato histórico de solo notas sin Idempotency-Key. Para cambiar cliente, lista de precios, depósito, entrega, fecha, impuestos, descuento o líneas, enviá la representación estructural completa, expected_updated_at cuando necesites concurrencia optimista e Idempotency-Key. unit_price usa importes netos como los devueltos por el GET, y los campos opcionales omitidos conservan su valor actual. Un cambio de depósito o entrega traslada el trabajo pendiente y sus reservas en la misma operación.
    */
   async updateOrderNotes(
     request: operations.PatchApiOrderRequest,
@@ -87,7 +87,7 @@ export class Orders extends ClientSDK {
    * Eliminar pedido archivado
    *
    * @remarks
-   * Elimina únicamente pedidos archivados; la validación de estado vive en la capability de commerce.
+   * Elimina únicamente pedidos archivados; la validación de estado vive en la capability de commerce. Idempotency-Key es opcional; si se envía, un reintento con la misma clave devuelve el resultado original y la clave reusada con otro cuerpo responde 409 IDEMPOTENCY_CONFLICT.
    */
   async deleteArchived(
     request: operations.DeleteApiArchivedOrderRequest,
@@ -102,6 +102,9 @@ export class Orders extends ClientSDK {
 
   /**
    * Cancelar pedido
+   *
+   * @remarks
+   * Cancela un pedido elegible y devuelve el estado persistido después de aplicar sus efectos de cancelación. Idempotency-Key es opcional; si se envía, un reintento con la misma clave devuelve el resultado original y la clave reusada con otro cuerpo responde 409 IDEMPOTENCY_CONFLICT.
    */
   async cancel(
     request: operations.CancelApiOrderRequest,
@@ -116,6 +119,9 @@ export class Orders extends ClientSDK {
 
   /**
    * Desarchivar pedido
+   *
+   * @remarks
+   * Restaura un pedido archivado y devuelve el estado persistido resultante. Idempotency-Key es opcional; si se envía, un reintento con la misma clave devuelve el resultado original y la clave reusada con otro cuerpo responde 409 IDEMPOTENCY_CONFLICT.
    */
   async unarchive(
     request: operations.UnarchiveApiOrderRequest,
