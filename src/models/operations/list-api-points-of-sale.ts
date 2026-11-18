@@ -24,10 +24,6 @@ export type ListApiPointsOfSaleRequest = {
    */
   query?: string | undefined;
   /**
-   * Alias de query
-   */
-  search?: string | undefined;
-  /**
    * Incluye puntos de venta inactivos
    */
   includeInactive?: boolean | undefined;
@@ -43,7 +39,6 @@ export type ListApiPointsOfSaleRequest$Outbound = {
   cursor?: string | undefined;
   limit: number;
   query?: string | undefined;
-  search?: string | undefined;
   include_inactive: boolean;
 };
 
@@ -56,7 +51,6 @@ export const ListApiPointsOfSaleRequest$outboundSchema: z.ZodMiniType<
     cursor: z.optional(z.string()),
     limit: z._default(z.int(), 50),
     query: z.optional(z.string()),
-    search: z.optional(z.string()),
     includeInactive: z._default(z.boolean(), false),
   }),
   z.transform((v) => {

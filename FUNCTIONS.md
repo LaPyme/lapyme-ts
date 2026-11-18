@@ -20,7 +20,7 @@ specific category of applications.
 
 ```typescript
 import { LapymeCore } from "lapyme/core.js";
-import { suppliersList } from "lapyme/funcs/suppliers-list.js";
+import { apiCreateAPIStatement } from "lapyme/funcs/api-create-api-statement.js";
 
 // Use `LapymeCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -29,12 +29,20 @@ const lapyme = new LapymeCore({
 });
 
 async function run() {
-  const res = await suppliersList(lapyme, {});
+  const res = await apiCreateAPIStatement(lapyme, {
+    idempotencyKey: "<value>",
+    body: {
+      source: "mercadopago_release",
+      bankAccountId: "bbcc124e-2652-432f-b232-8423696c1640",
+      periodStart: new Date("2025-09-28"),
+      periodEnd: new Date("2025-09-10"),
+    },
+  });
   if (res.ok) {
     const { value: result } = res;
     console.log(result);
   } else {
-    console.log("suppliersList failed:", res.error);
+    console.log("apiCreateAPIStatement failed:", res.error);
   }
 }
 

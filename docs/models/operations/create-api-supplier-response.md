@@ -6,7 +6,9 @@
 import { CreateApiSupplierResponse } from "lapyme/models/operations";
 
 let value: CreateApiSupplierResponse = {
-  headers: {},
+  headers: {
+    "key": [],
+  },
   result: {
     requestId: "<id>",
     data: {
@@ -22,22 +24,38 @@ let value: CreateApiSupplierResponse = {
         taxIdType: "<value>",
         taxCategory: "<value>",
         paymentTermId: "<id>",
+        paymentTermDays: 100217,
         isActive: true,
-        country: "Gibraltar",
+        tags: [
+          {
+            object: "tag",
+            id: "fd0e6eb6-e290-4396-ab35-a8ca83534491",
+            scope: "customer",
+            name: "<value>",
+            slug: "<value>",
+            color: "blue",
+            description:
+              "striking angrily oily brightly commandeer justly where unto",
+            archivedAt: new Date("2024-07-02T07:10:54.132Z"),
+            createdAt: new Date("2025-08-08T00:49:49.551Z"),
+            updatedAt: new Date("2026-07-18T06:36:50.529Z"),
+          },
+        ],
+        defaultAccountId: "2f11213e-900d-43a9-8d96-658124d9faf1",
+        country: null,
         provinceId: "<id>",
-        city: "Fort Bernardton",
-        address: "38500 E 3rd Street",
+        city: "Melanyborough",
+        address: null,
         apartment: "<value>",
-        postalCode: "53435-1128",
-        createdAt: new Date("2025-09-17T03:40:21.450Z"),
-        updatedAt: new Date("2026-12-17T07:31:45.520Z"),
+        postalCode: "98472",
+        createdAt: new Date("2025-06-22T07:25:06.612Z"),
+        updatedAt: new Date("2026-07-16T14:09:23.826Z"),
       },
       idempotentReplay: false,
     },
     warnings: [
       "<value 1>",
       "<value 2>",
-      "<value 3>",
     ],
   },
 };

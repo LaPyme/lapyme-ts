@@ -11,7 +11,7 @@ let value: CreateApiCustomerPaymentRequest = {
     customerId: "136f6b7d-6805-4769-9119-f77fc3196b99",
     pointOfSaleId: "f2ea5da3-f197-4ce2-b676-3cf2dc4f99f5",
     paymentDate: "<value>",
-    currency: "DOL",
+    currency: "USD",
     totalAmount: 432488,
     splits: [
       {

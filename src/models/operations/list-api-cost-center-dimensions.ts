@@ -24,6 +24,10 @@ export type ListApiCostCenterDimensionsResponseBody = {
   data?: Array<models.ApiCostCenterDimension> | undefined;
   hasMore?: boolean | undefined;
   nextCursor?: string | null | undefined;
+  /**
+   * Requested list path.
+   */
+  url?: string | undefined;
 };
 
 export type ListApiCostCenterDimensionsResponse = {
@@ -72,6 +76,7 @@ export const ListApiCostCenterDimensionsResponseBody$inboundSchema:
       ),
       has_more: types.optional(types.boolean()),
       next_cursor: z.optional(z.nullable(types.string())),
+      url: types.optional(types.string()),
     }),
     z.transform((v) => {
       return remap$(v, {

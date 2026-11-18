@@ -6,11 +6,23 @@
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
 import { safeParse } from "../../lib/schemas.js";
+import { ClosedEnum } from "../../types/enums.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import * as models from "../index.js";
 
+export const Include = {
+  Splits: "splits",
+  Applications: "applications",
+  Withholdings: "withholdings",
+} as const;
+export type Include = ClosedEnum<typeof Include>;
+
 export type ListApiSupplierPaymentsRequest = {
+  /**
+   * Detalles opcionales del pago. Usá splits, applications y withholdings para consultar una página completa sin abrir cada pago.
+   */
+  include?: Array<Include> | undefined;
   /**
    * Valor de next_cursor recibido en la respuesta anterior
    */
@@ -43,7 +55,13 @@ export type ListApiSupplierPaymentsResponse = {
 };
 
 /** @internal */
+export const Include$outboundSchema: z.ZodMiniEnum<typeof Include> = z.enum(
+  Include,
+);
+
+/** @internal */
 export type ListApiSupplierPaymentsRequest$Outbound = {
+  "include[]"?: Array<string> | undefined;
   cursor?: string | undefined;
   limit: number;
   query?: string | undefined;
@@ -58,6 +76,7 @@ export const ListApiSupplierPaymentsRequest$outboundSchema: z.ZodMiniType<
   ListApiSupplierPaymentsRequest
 > = z.pipe(
   z.object({
+    include: z.optional(z.array(Include$outboundSchema)),
     cursor: z.optional(z.string()),
     limit: z._default(z.int(), 50),
     query: z.optional(z.string()),
@@ -73,6 +92,7 @@ export const ListApiSupplierPaymentsRequest$outboundSchema: z.ZodMiniType<
   }),
   z.transform((v) => {
     return remap$(v, {
+      include: "include[]",
       dateFrom: "date_from",
       dateTo: "date_to",
     });

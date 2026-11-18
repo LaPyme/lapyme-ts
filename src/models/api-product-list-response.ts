@@ -13,6 +13,10 @@ import {
   ApiSharedEnum8d46e1ec20$inboundSchema,
 } from "./api-shared-enum8d46e1ec20.js";
 import {
+  ApiSharedEnuma7f3605118,
+  ApiSharedEnuma7f3605118$inboundSchema,
+} from "./api-shared-enuma7f3605118.js";
+import {
   ApiSharedEnumfe93f70a59,
   ApiSharedEnumfe93f70a59$inboundSchema,
 } from "./api-shared-enumfe93f70a59.js";
@@ -21,17 +25,25 @@ import {
   ApiSharedEnumff49232140$inboundSchema,
 } from "./api-shared-enumff49232140.js";
 import {
+  ApiSharedObject3b83f74923,
+  ApiSharedObject3b83f74923$inboundSchema,
+} from "./api-shared-object3b83f74923.js";
+import {
+  ApiSharedObject564df4258f,
+  ApiSharedObject564df4258f$inboundSchema,
+} from "./api-shared-object564df4258f.js";
+import {
   ApiSharedObject8aeeceaf0f,
   ApiSharedObject8aeeceaf0f$inboundSchema,
 } from "./api-shared-object8aeeceaf0f.js";
 import {
+  ApiSharedObjected3905a55b,
+  ApiSharedObjected3905a55b$inboundSchema,
+} from "./api-shared-objected3905a55b.js";
+import {
   ApiSharedObjectee5eae48b0,
   ApiSharedObjectee5eae48b0$inboundSchema,
 } from "./api-shared-objectee5eae48b0.js";
-import {
-  ApiSharedObjectfc277c542a,
-  ApiSharedObjectfc277c542a$inboundSchema,
-} from "./api-shared-objectfc277c542a.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type ApiProductListResponseData = {
@@ -40,21 +52,41 @@ export type ApiProductListResponseData = {
   description: string | null;
   category: ApiSharedObject8aeeceaf0f | null;
   sku: string;
+  /**
+   * SKU del proveedor de la variante en el catálogo actual.
+   */
+  supplierSku: string | null;
   barcode: string | null;
+  /**
+   * External product image URL reference. La Pyme displays it best effort and does not copy, ingest, or host the image.
+   */
+  imageUrl: string | null;
   currency: string;
-  cost: number;
+  /**
+   * Product cost in cents. Null when the delegated user cannot view product costs.
+   */
+  cost: number | null;
   price: number;
   taxRate: ApiSharedObjectee5eae48b0;
   defaultSupplier: ApiSharedObject8aeeceaf0f | null;
   productType: ApiSharedEnumff49232140;
+  visibility: ApiSharedEnuma7f3605118;
+  availableInPos: boolean;
   isActive: boolean;
   organizationSlug: string;
   createdAt: Date;
   updatedAt: Date;
+  components?: Array<ApiSharedObject564df4258f> | undefined;
   effectivePrice?: number | undefined;
   priceSource?: ApiSharedEnumfe93f70a59 | undefined;
-  appliedPriceList?: ApiSharedObjectfc277c542a | undefined;
+  appliedPriceList?: ApiSharedObject3b83f74923 | undefined;
   object: "product";
+  variantGroupId: string;
+  /**
+   * El SKU coincide exactamente con otra variante por nombre, SKU o código de barras. Para resolver texto sin tipo explícito, usá reference-candidates.
+   */
+  skuReferenceAmbiguous?: boolean | undefined;
+  tags: Array<ApiSharedObjected3905a55b>;
 };
 
 export type ApiProductListResponse = {
@@ -83,27 +115,40 @@ export const ApiProductListResponseData$inboundSchema: z.ZodMiniType<
     description: types.nullable(types.string()),
     category: types.nullable(ApiSharedObject8aeeceaf0f$inboundSchema),
     sku: types.string(),
+    supplier_sku: types.nullable(types.string()),
     barcode: types.nullable(types.string()),
+    image_url: types.nullable(types.string()),
     currency: types.string(),
-    cost: types.number(),
+    cost: types.nullable(types.number()),
     price: types.number(),
     tax_rate: ApiSharedObjectee5eae48b0$inboundSchema,
     default_supplier: types.nullable(ApiSharedObject8aeeceaf0f$inboundSchema),
     product_type: ApiSharedEnumff49232140$inboundSchema,
+    visibility: ApiSharedEnuma7f3605118$inboundSchema,
+    available_in_pos: types.boolean(),
     is_active: types.boolean(),
     organization_slug: types.string(),
     created_at: types.date(),
     updated_at: types.date(),
+    components: types.optional(
+      z.array(ApiSharedObject564df4258f$inboundSchema),
+    ),
     effective_price: types.optional(types.number()),
     price_source: types.optional(ApiSharedEnumfe93f70a59$inboundSchema),
-    applied_price_list: types.optional(ApiSharedObjectfc277c542a$inboundSchema),
+    applied_price_list: types.optional(ApiSharedObject3b83f74923$inboundSchema),
     object: types.literal("product"),
+    variant_group_id: types.string(),
+    sku_reference_ambiguous: types.optional(types.boolean()),
+    tags: z.array(ApiSharedObjected3905a55b$inboundSchema),
   }),
   z.transform((v) => {
     return remap$(v, {
+      "supplier_sku": "supplierSku",
+      "image_url": "imageUrl",
       "tax_rate": "taxRate",
       "default_supplier": "defaultSupplier",
       "product_type": "productType",
+      "available_in_pos": "availableInPos",
       "is_active": "isActive",
       "organization_slug": "organizationSlug",
       "created_at": "createdAt",
@@ -111,6 +156,8 @@ export const ApiProductListResponseData$inboundSchema: z.ZodMiniType<
       "effective_price": "effectivePrice",
       "price_source": "priceSource",
       "applied_price_list": "appliedPriceList",
+      "variant_group_id": "variantGroupId",
+      "sku_reference_ambiguous": "skuReferenceAmbiguous",
     });
   }),
 );
