@@ -7,7 +7,10 @@ import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
 
 export type ApiPurchaseOrderReceiptRequestItem = {
-  purchaseOrderItemId: string;
+  /**
+   * Omit to receive a product that is not on the order. The product is added to the order with ordered quantity 0, and the received quantity must be greater than 0.
+   */
+  purchaseOrderItemId?: string | undefined;
   productId: string;
   receivedQuantity: number;
 };
@@ -18,7 +21,7 @@ export type ApiPurchaseOrderReceiptRequest = {
 
 /** @internal */
 export type ApiPurchaseOrderReceiptRequestItem$Outbound = {
-  purchase_order_item_id: string;
+  purchase_order_item_id?: string | undefined;
   product_id: string;
   received_quantity: number;
 };
@@ -29,9 +32,9 @@ export const ApiPurchaseOrderReceiptRequestItem$outboundSchema: z.ZodMiniType<
   ApiPurchaseOrderReceiptRequestItem
 > = z.pipe(
   z.object({
-    purchaseOrderItemId: z.string(),
+    purchaseOrderItemId: z.optional(z.string()),
     productId: z.string(),
-    receivedQuantity: z.int(),
+    receivedQuantity: z.number(),
   }),
   z.transform((v) => {
     return remap$(v, {

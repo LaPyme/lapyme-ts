@@ -23,6 +23,21 @@ let value: ApiPurchaseListResponseData = {
     id: "fd77c624-8fc6-42ba-a044-fd4ea2b29db8",
     name: "<value>",
   },
+  tags: [
+    {
+      object: "tag",
+      id: "fd0e6eb6-e290-4396-ab35-a8ca83534491",
+      scope: "customer",
+      name: "<value>",
+      slug: "<value>",
+      color: "blue",
+      description:
+        "striking angrily oily brightly commandeer justly where unto",
+      archivedAt: new Date("2024-07-02T07:10:54.132Z"),
+      createdAt: new Date("2025-08-08T00:49:49.551Z"),
+      updatedAt: new Date("2026-07-18T06:36:50.529Z"),
+    },
+  ],
 };
 ```
 
@@ -43,4 +58,5 @@ let value: ApiPurchaseListResponseData = {
 | `exchangeRate`                                                                                | *string*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `supplierInvoiceNumber`                                                                       | *string*                                                                                      | :heavy_check_mark:                                                                            | Numero de comprobante del proveedor. Hasta 120 caracteres.                                    |
 | `createdAt`                                                                                   | [Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date) | :heavy_check_mark:                                                                            | N/A                                                                                           |
-| `supplier`                                                                                    | [models.ApiSharedObjectf28d5cf256](../models/api-shared-objectf28d5cf256.md)                  | :heavy_check_mark:                                                                            | N/A                                                                                           |
+| `supplier`                                                                                    | [models.ApiSharedObject91cc200368](../models/api-shared-object91cc200368.md)                  | :heavy_check_mark:                                                                            | N/A                                                                                           |
+| `tags`                                                                                        | [models.ApiSharedObjected3905a55b](../models/api-shared-objected3905a55b.md)[]                | :heavy_check_mark:                                                                            | N/A                                                                                           |

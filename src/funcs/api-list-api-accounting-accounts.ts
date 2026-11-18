@@ -99,6 +99,12 @@ async function $do(
 
   const query = encodeFormQuery({
     "include_inactive": payload?.include_inactive,
+    "is_active": payload?.is_active,
+    "is_inflation_adjustable": payload?.is_inflation_adjustable,
+    "is_postable": payload?.is_postable,
+    "parent_id": payload?.parent_id,
+    "system_role": payload?.system_role,
+    "type": payload?.type,
   });
 
   const headers = new Headers(compactMap({
@@ -184,6 +190,7 @@ async function $do(
     M.jsonErr([400, 401, 403], errors.ApiErrorEnvelope$inboundSchema),
     M.jsonErr(429, errors.ApiErrorEnvelope$inboundSchema, { hdrs: true }),
     M.jsonErr(500, errors.ApiErrorEnvelope$inboundSchema),
+    M.jsonErr(503, errors.ApiErrorEnvelope$inboundSchema, { hdrs: true }),
     M.fail("4XX"),
     M.fail("5XX"),
   )(response, req, { extraFields: responseFields });

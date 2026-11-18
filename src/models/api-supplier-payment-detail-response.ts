@@ -9,45 +9,15 @@ import { safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import {
-  ApiSharedObjectdd60033a21,
-  ApiSharedObjectdd60033a21$inboundSchema,
-} from "./api-shared-objectdd60033a21.js";
+  ApiSharedObjectca136c7f78,
+  ApiSharedObjectca136c7f78$inboundSchema,
+} from "./api-shared-objectca136c7f78.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
-
-export type ApiSupplierPaymentDetailResponseData = {
-  supplierPayment: ApiSharedObjectdd60033a21;
-};
 
 export type ApiSupplierPaymentDetailResponse = {
   requestId: string;
-  data: ApiSupplierPaymentDetailResponseData;
+  data: ApiSharedObjectca136c7f78;
 };
-
-/** @internal */
-export const ApiSupplierPaymentDetailResponseData$inboundSchema: z.ZodMiniType<
-  ApiSupplierPaymentDetailResponseData,
-  unknown
-> = z.pipe(
-  z.object({
-    supplier_payment: ApiSharedObjectdd60033a21$inboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "supplier_payment": "supplierPayment",
-    });
-  }),
-);
-
-export function apiSupplierPaymentDetailResponseDataFromJSON(
-  jsonString: string,
-): SafeParseResult<ApiSupplierPaymentDetailResponseData, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) =>
-      ApiSupplierPaymentDetailResponseData$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'ApiSupplierPaymentDetailResponseData' from JSON`,
-  );
-}
 
 /** @internal */
 export const ApiSupplierPaymentDetailResponse$inboundSchema: z.ZodMiniType<
@@ -56,7 +26,7 @@ export const ApiSupplierPaymentDetailResponse$inboundSchema: z.ZodMiniType<
 > = z.pipe(
   z.object({
     request_id: types.string(),
-    data: z.lazy(() => ApiSupplierPaymentDetailResponseData$inboundSchema),
+    data: ApiSharedObjectca136c7f78$inboundSchema,
   }),
   z.transform((v) => {
     return remap$(v, {
