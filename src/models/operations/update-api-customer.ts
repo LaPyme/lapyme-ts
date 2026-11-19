@@ -12,6 +12,10 @@ import * as models from "../index.js";
 
 export type UpdateApiCustomerRequest = {
   /**
+   * Clave estable para deduplicar reintentos de la misma operación. Opcional en v1; si se envía, un reintento con la misma clave y el mismo cuerpo devuelve el resultado original sin repetir la operación, y con otro cuerpo devuelve 409.
+   */
+  idempotencyKey?: string | undefined;
+  /**
    * ID del cliente
    */
   customerId: string;
@@ -29,6 +33,7 @@ export type UpdateApiCustomerResponse = {
 
 /** @internal */
 export type UpdateApiCustomerRequest$Outbound = {
+  "Idempotency-Key"?: string | undefined;
   customer_id: string;
   "X-Request-Id"?: string | undefined;
   body: models.ApiCustomerUpdateRequest$Outbound;
@@ -40,12 +45,14 @@ export const UpdateApiCustomerRequest$outboundSchema: z.ZodMiniType<
   UpdateApiCustomerRequest
 > = z.pipe(
   z.object({
+    idempotencyKey: z.optional(z.string()),
     customerId: z.string(),
     xRequestId: z.optional(z.string()),
     body: models.ApiCustomerUpdateRequest$outboundSchema,
   }),
   z.transform((v) => {
     return remap$(v, {
+      idempotencyKey: "Idempotency-Key",
       customerId: "customer_id",
       xRequestId: "X-Request-Id",
     });

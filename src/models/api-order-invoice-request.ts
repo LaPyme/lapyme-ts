@@ -5,6 +5,11 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
+import {
+  ApiSharedObject601104d793,
+  ApiSharedObject601104d793$Outbound,
+  ApiSharedObject601104d793$outboundSchema,
+} from "./api-shared-object601104d793.js";
 
 export type ApiOrderInvoiceRequestLine = {
   orderLineId: string;
@@ -12,6 +17,7 @@ export type ApiOrderInvoiceRequestLine = {
 };
 
 export type ApiOrderInvoiceRequest = {
+  metafields?: Array<ApiSharedObject601104d793> | undefined;
   voucherType: number;
   pointOfSaleId: string;
   invoiceDate: Date;
@@ -33,7 +39,7 @@ export const ApiOrderInvoiceRequestLine$outboundSchema: z.ZodMiniType<
 > = z.pipe(
   z.object({
     orderLineId: z.string(),
-    quantityToInvoice: z.int(),
+    quantityToInvoice: z.number(),
   }),
   z.transform((v) => {
     return remap$(v, {
@@ -53,6 +59,7 @@ export function apiOrderInvoiceRequestLineToJSON(
 
 /** @internal */
 export type ApiOrderInvoiceRequest$Outbound = {
+  metafields?: Array<ApiSharedObject601104d793$Outbound> | undefined;
   voucher_type: number;
   point_of_sale_id: string;
   invoice_date: string;
@@ -67,6 +74,7 @@ export const ApiOrderInvoiceRequest$outboundSchema: z.ZodMiniType<
   ApiOrderInvoiceRequest
 > = z.pipe(
   z.object({
+    metafields: z.optional(z.array(ApiSharedObject601104d793$outboundSchema)),
     voucherType: z.int(),
     pointOfSaleId: z.string(),
     invoiceDate: z.pipe(

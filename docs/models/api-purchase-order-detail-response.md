@@ -17,30 +17,68 @@ let value: ApiPurchaseOrderDetailResponse = {
     expectedDate: null,
     currency: "Pataca",
     supplier: {
-      id: "ebacdb2a-1c5e-4eee-a30f-5983b0f8c084",
+      id: "a45a7fd5-160a-41a7-baa2-5367b011b0b2",
       name: "<value>",
       description:
-        "fairly which pro upliftingly but super whereas guacamole between",
-      email: "Monserrat_Kovacek@yahoo.com",
-      phone: "1-498-218-0382 x3346",
+        "cod stable snow our famously switchboard as from likewise stiff",
+      email: null,
+      phone: "802.394.0907",
       taxIdType: "<value>",
       taxId: "<id>",
-      taxCategory: "<value>",
+      taxCategory: null,
       paymentTermId: "<id>",
-      address: "298 Goldner Views",
+      paymentTermDays: 198666,
+      address: null,
       apartment: "<value>",
-      city: "South Marcelinofurt",
+      city: "Port Werner",
       province: "<value>",
-      postalCode: "46341",
+      postalCode: "65289",
     },
     warehouse: {
-      id: "1d81895d-9d7f-44ea-9636-e0e6181dee4f",
+      id: "0978f48b-ba46-4ec8-b56c-32d7bd1637ff",
       name: "<value>",
     },
-    createdAt: new Date("2026-05-06T11:30:52.684Z"),
-    warehouseId: "26f43006-9dbb-4033-8332-b7eb47bae627",
+    createdAt: new Date("2026-03-27T15:33:20.950Z"),
+    tags: [
+      {
+        object: "tag",
+        id: "fd0e6eb6-e290-4396-ab35-a8ca83534491",
+        scope: "customer",
+        name: "<value>",
+        slug: "<value>",
+        color: "blue",
+        description:
+          "striking angrily oily brightly commandeer justly where unto",
+        archivedAt: new Date("2024-07-02T07:10:54.132Z"),
+        createdAt: new Date("2025-08-08T00:49:49.551Z"),
+        updatedAt: new Date("2026-07-18T06:36:50.529Z"),
+      },
+    ],
+    warehouseId: "db2a1c5e-eee3-40f5-a983-b0f8c0848ac9",
     notes: "<value>",
-    items: [],
+    items: [
+      {
+        id: "b4c16814-e2a0-4e9d-bc52-f10a367aa686",
+        orderedQuantity: 7716.56,
+        receivedQuantity: 5172.21,
+        expectedUnitCost: 943658,
+        product: {
+          id: "6c2da590-f059-4c84-8fb3-66f78187f1b7",
+          name: "<value>",
+          sku: "<value>",
+          supplierSku: "<value>",
+          productType: "service",
+          variantOptions: {
+            "key": "<value>",
+            "key1": "<value>",
+          },
+          optionNames: [
+            "<value 1>",
+            "<value 2>",
+          ],
+        },
+      },
+    ],
   },
 };
 ```
@@ -50,4 +88,4 @@ let value: ApiPurchaseOrderDetailResponse = {
 | Field                                                                        | Type                                                                         | Required                                                                     | Description                                                                  |
 | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
 | `requestId`                                                                  | *string*                                                                     | :heavy_check_mark:                                                           | N/A                                                                          |
-| `data`                                                                       | [models.ApiSharedObjecta6cd4a0a4e](../models/api-shared-objecta6cd4a0a4e.md) | :heavy_check_mark:                                                           | N/A                                                                          |
+| `data`                                                                       | [models.ApiSharedObjecte1856a1a85](../models/api-shared-objecte1856a1a85.md) | :heavy_check_mark:                                                           | N/A                                                                          |
