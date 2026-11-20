@@ -7,7 +7,12 @@ import { GetApiSupplierResponse } from "lapyme/models/operations";
 
 let value: GetApiSupplierResponse = {
   headers: {
-    "key": [
+    "key": [],
+    "key1": [
+      "<value 1>",
+      "<value 2>",
+    ],
+    "key2": [
       "<value 1>",
       "<value 2>",
     ],
@@ -26,15 +31,24 @@ let value: GetApiSupplierResponse = {
       taxIdType: "<value>",
       taxCategory: "<value>",
       paymentTermId: "<id>",
-      isActive: false,
-      country: "Greece",
+      paymentTermDays: 540540,
+      paymentTermLabel: "<value>",
+      paymentTermInstallmentDays: [
+        955225,
+        274000,
+        273124,
+      ],
+      isActive: true,
+      tags: [],
+      defaultAccountId: "d7c5d622-01c1-4fbd-8768-a8fc67fdd5d0",
+      country: "Central African Republic",
       provinceId: "<id>",
-      city: "West Caterina",
-      address: "68473 Lake Drive",
+      city: "Fort Raquel",
+      address: "1245 Elizabeth Shore",
       apartment: "<value>",
-      postalCode: "08096",
-      createdAt: new Date("2026-06-17T11:47:26.140Z"),
-      updatedAt: new Date("2025-06-06T17:36:15.305Z"),
+      postalCode: "51722",
+      createdAt: new Date("2024-09-16T19:49:42.474Z"),
+      updatedAt: new Date("2025-02-08T13:06:50.735Z"),
     },
   },
 };

@@ -18,15 +18,24 @@ let value: ApiSupplierCreateResponseData = {
     taxIdType: "<value>",
     taxCategory: "<value>",
     paymentTermId: "<id>",
+    paymentTermDays: 100217,
+    paymentTermLabel: "<value>",
+    paymentTermInstallmentDays: [
+      174204,
+      176779,
+      957437,
+    ],
     isActive: true,
-    country: "Gibraltar",
+    tags: [],
+    defaultAccountId: null,
+    country: "Tajikistan",
     provinceId: "<id>",
-    city: "Fort Bernardton",
-    address: "38500 E 3rd Street",
+    city: null,
+    address: null,
     apartment: "<value>",
-    postalCode: "53435-1128",
-    createdAt: new Date("2025-09-17T03:40:21.450Z"),
-    updatedAt: new Date("2026-12-17T07:31:45.520Z"),
+    postalCode: "68534-3511",
+    createdAt: new Date("2024-10-17T09:21:26.745Z"),
+    updatedAt: new Date("2026-07-25T08:45:32.215Z"),
   },
   idempotentReplay: false,
 };
@@ -36,5 +45,5 @@ let value: ApiSupplierCreateResponseData = {
 
 | Field                                                                        | Type                                                                         | Required                                                                     | Description                                                                  |
 | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| `supplier`                                                                   | [models.ApiSharedObjectac822ca2fd](../models/api-shared-objectac822ca2fd.md) | :heavy_check_mark:                                                           | N/A                                                                          |
+| `supplier`                                                                   | [models.ApiSharedObjectcee24e628c](../models/api-shared-objectcee24e628c.md) | :heavy_check_mark:                                                           | N/A                                                                          |
 | `idempotentReplay`                                                           | *boolean*                                                                    | :heavy_check_mark:                                                           | N/A                                                                          |
