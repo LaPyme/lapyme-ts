@@ -6,16 +6,15 @@
 import { ApiPurchaseOrderReceiptRequestItem } from "lapyme/models";
 
 let value: ApiPurchaseOrderReceiptRequestItem = {
-  purchaseOrderItemId: "fe5a8db1-74d0-4dc9-bee6-d64d79dcb6b8",
-  productId: "697a97f2-971a-48be-b4a0-dd4890a8e4f8",
-  receivedQuantity: 711290,
+  productId: "fe5a8db1-74d0-4dc9-bee6-d64d79dcb6b8",
+  receivedQuantity: 4028.66,
 };
 ```
 
 ## Fields
 
-| Field                 | Type                  | Required              | Description           |
-| --------------------- | --------------------- | --------------------- | --------------------- |
-| `purchaseOrderItemId` | *string*              | :heavy_check_mark:    | N/A                   |
-| `productId`           | *string*              | :heavy_check_mark:    | N/A                   |
-| `receivedQuantity`    | *number*              | :heavy_check_mark:    | N/A                   |
+| Field                                                                                                                                                            | Type                                                                                                                                                             | Required                                                                                                                                                         | Description                                                                                                                                                      |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `purchaseOrderItemId`                                                                                                                                            | *string*                                                                                                                                                         | :heavy_minus_sign:                                                                                                                                               | Omit to receive a product that is not on the order. The product is added to the order with ordered quantity 0, and the received quantity must be greater than 0. |
+| `productId`                                                                                                                                                      | *string*                                                                                                                                                         | :heavy_check_mark:                                                                                                                                               | N/A                                                                                                                                                              |
+| `receivedQuantity`                                                                                                                                               | *number*                                                                                                                                                         | :heavy_check_mark:                                                                                                                                               | N/A                                                                                                                                                              |

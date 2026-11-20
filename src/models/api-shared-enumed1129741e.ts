@@ -18,3 +18,8 @@ export const ApiSharedEnumed1129741e$inboundSchema: z.ZodMiniType<
   ApiSharedEnumed1129741e,
   unknown
 > = openEnums.inboundSchema(ApiSharedEnumed1129741e);
+/** @internal */
+export const ApiSharedEnumed1129741e$outboundSchema: z.ZodMiniType<
+  string,
+  ApiSharedEnumed1129741e
+> = openEnums.outboundSchema(ApiSharedEnumed1129741e);

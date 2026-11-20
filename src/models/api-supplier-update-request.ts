@@ -15,6 +15,10 @@ import {
 } from "./api-shared-enumbb2864ecea.js";
 
 export type ApiSupplierUpdateRequest = {
+  /**
+   * Setting or clearing this field also requires treasury:write. Omit it to preserve the default.
+   */
+  defaultAccountId?: string | null | undefined;
   name?: string | undefined;
   companyName?: string | null | undefined;
   description?: string | null | undefined;
@@ -30,11 +34,17 @@ export type ApiSupplierUpdateRequest = {
   apartment?: string | null | undefined;
   postalCode?: string | null | undefined;
   paymentTermId?: string | null | undefined;
+  paymentTermDays?: number | null | undefined;
+  /**
+   * Plazos en orden estrictamente creciente. null elimina el plazo. El escalar debe coincidir con el último plazo; reenviar un escalar sin cambios conserva las cuotas.
+   */
+  paymentTermInstallmentDays?: Array<number> | null | undefined;
   isActive?: boolean | undefined;
 };
 
 /** @internal */
 export type ApiSupplierUpdateRequest$Outbound = {
+  default_account_id?: string | null | undefined;
   name?: string | undefined;
   company_name?: string | null | undefined;
   description?: string | null | undefined;
@@ -50,6 +60,8 @@ export type ApiSupplierUpdateRequest$Outbound = {
   apartment?: string | null | undefined;
   postal_code?: string | null | undefined;
   payment_term_id?: string | null | undefined;
+  payment_term_days?: number | null | undefined;
+  payment_term_installment_days?: Array<number> | null | undefined;
   is_active?: boolean | undefined;
 };
 
@@ -59,6 +71,7 @@ export const ApiSupplierUpdateRequest$outboundSchema: z.ZodMiniType<
   ApiSupplierUpdateRequest
 > = z.pipe(
   z.object({
+    defaultAccountId: z.optional(z.nullable(z.string())),
     name: z.optional(z.string()),
     companyName: z.optional(z.nullable(z.string())),
     description: z.optional(z.nullable(z.string())),
@@ -74,16 +87,21 @@ export const ApiSupplierUpdateRequest$outboundSchema: z.ZodMiniType<
     apartment: z.optional(z.nullable(z.string())),
     postalCode: z.optional(z.nullable(z.string())),
     paymentTermId: z.optional(z.nullable(z.string())),
+    paymentTermDays: z.optional(z.nullable(z.int())),
+    paymentTermInstallmentDays: z.optional(z.nullable(z.array(z.int()))),
     isActive: z.optional(z.boolean()),
   }),
   z.transform((v) => {
     return remap$(v, {
+      defaultAccountId: "default_account_id",
       companyName: "company_name",
       taxId: "tax_id",
       taxIdType: "tax_id_type",
       taxCategory: "tax_category",
       postalCode: "postal_code",
       paymentTermId: "payment_term_id",
+      paymentTermDays: "payment_term_days",
+      paymentTermInstallmentDays: "payment_term_installment_days",
       isActive: "is_active",
     });
   }),

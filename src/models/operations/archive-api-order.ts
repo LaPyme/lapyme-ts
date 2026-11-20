@@ -15,6 +15,10 @@ export type ArchiveApiOrderRequest = {
    * ID del pedido
    */
   orderId: string;
+  /**
+   * Clave estable para deduplicar reintentos de la misma operación. Opcional en v1; si se envía, un reintento con la misma clave y el mismo cuerpo devuelve el resultado original sin repetir la operación, y con otro cuerpo devuelve 409.
+   */
+  idempotencyKey?: string | undefined;
   body?: models.ApiOrderOptionalReasonRequest | undefined;
 };
 
@@ -26,6 +30,7 @@ export type ArchiveApiOrderResponse = {
 /** @internal */
 export type ArchiveApiOrderRequest$Outbound = {
   order_id: string;
+  "Idempotency-Key"?: string | undefined;
   body?: models.ApiOrderOptionalReasonRequest$Outbound | undefined;
 };
 
@@ -36,11 +41,13 @@ export const ArchiveApiOrderRequest$outboundSchema: z.ZodMiniType<
 > = z.pipe(
   z.object({
     orderId: z.string(),
+    idempotencyKey: z.optional(z.string()),
     body: z.optional(models.ApiOrderOptionalReasonRequest$outboundSchema),
   }),
   z.transform((v) => {
     return remap$(v, {
       orderId: "order_id",
+      idempotencyKey: "Idempotency-Key",
     });
   }),
 );
