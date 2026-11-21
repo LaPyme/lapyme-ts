@@ -5,7 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
-import { safeParse } from "../../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import * as models from "../index.js";
@@ -46,19 +46,21 @@ export type ListApiInventoryMovementsRequest$Outbound = {
 export const ListApiInventoryMovementsRequest$outboundSchema: z.ZodMiniType<
   ListApiInventoryMovementsRequest$Outbound,
   ListApiInventoryMovementsRequest
-> = z.pipe(
-  z.object({
-    productId: z.string(),
-    warehouseId: z.optional(z.string()),
-    cursor: z.optional(z.string()),
-    limit: z._default(z.int(), 50),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      productId: "product_id",
-      warehouseId: "warehouse_id",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      productId: z.string(),
+      warehouseId: z.optional(z.string()),
+      cursor: z.optional(z.string()),
+      limit: z._default(z.int(), 50),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        productId: "product_id",
+        warehouseId: "warehouse_id",
+      });
+    }),
+  )
 );
 
 export function listApiInventoryMovementsRequestToJSON(
@@ -75,17 +77,19 @@ export function listApiInventoryMovementsRequestToJSON(
 export const ListApiInventoryMovementsResponse$inboundSchema: z.ZodMiniType<
   ListApiInventoryMovementsResponse,
   unknown
-> = z.pipe(
-  z.object({
-    Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
-    Result: models.ApiInventoryMovementListResponse$inboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "Headers": "headers",
-      "Result": "result",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
+      Result: models.ApiInventoryMovementListResponse$inboundSchema,
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "Headers": "headers",
+        "Result": "result",
+      });
+    }),
+  )
 );
 
 export function listApiInventoryMovementsResponseFromJSON(

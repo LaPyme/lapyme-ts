@@ -10,9 +10,8 @@ import { matchStatusCode } from "../lib/http.js";
 import * as M from "../lib/matchers.js";
 import { compactMap } from "../lib/primitives.js";
 import { safeParse } from "../lib/schemas.js";
-import { RequestOptions } from "../lib/sdks.js";
+import { encodePath, RequestOptions } from "../lib/sdks.js";
 import { extractSecurity, resolveGlobalSecurity } from "../lib/security.js";
-import { pathToFunc } from "../lib/url.js";
 import {
   ConnectionError,
   InvalidRequestError,
@@ -32,7 +31,7 @@ import { Result } from "../types/fp.js";
  * Cerrar orden de compra
  *
  * @remarks
- * Cierra una orden de compra y devuelve el detalle persistido.
+ * Cierra una orden de compra y devuelve el detalle persistido. Idempotency-Key es opcional; si se envía, un reintento con la misma clave devuelve el resultado original y la clave reusada con otro cuerpo responde 409 IDEMPOTENCY_CONFLICT.
  */
 export function purchaseOrdersClose(
   client: LapymeCore,
@@ -99,12 +98,22 @@ async function $do(
       { explode: false, charEncoding: "percent" },
     ),
   };
-  const path = pathToFunc("/api/v1/purchase-orders/{purchase_order_id}/close")(
+  const pathResult = encodePath(
+    "/api/v1/purchase-orders/{purchase_order_id}/close",
     pathParams,
   );
+  if (!pathResult.ok) {
+    return [pathResult, { status: "invalid" }];
+  }
+  const path = pathResult.value;
 
   const headers = new Headers(compactMap({
     Accept: "application/json",
+    "Idempotency-Key": encodeSimple(
+      "Idempotency-Key",
+      payload["Idempotency-Key"],
+      { explode: false, charEncoding: "none" },
+    ),
   }));
 
   const secConfig = await extractSecurity(client._options.bearerAuth);
@@ -185,6 +194,7 @@ async function $do(
     M.jsonErr([400, 401, 403, 404, 409], errors.ApiErrorEnvelope$inboundSchema),
     M.jsonErr(429, errors.ApiErrorEnvelope$inboundSchema, { hdrs: true }),
     M.jsonErr(500, errors.ApiErrorEnvelope$inboundSchema),
+    M.jsonErr(503, errors.ApiErrorEnvelope$inboundSchema, { hdrs: true }),
     M.fail("4XX"),
     M.fail("5XX"),
   )(response, req, { extraFields: responseFields });

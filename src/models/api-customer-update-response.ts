@@ -5,17 +5,17 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import {
-  ApiSharedObject5bccea1792,
-  ApiSharedObject5bccea1792$inboundSchema,
-} from "./api-shared-object5bccea1792.js";
+  ApiSharedObjectc8400fd2fb,
+  ApiSharedObjectc8400fd2fb$inboundSchema,
+} from "./api-shared-objectc8400fd2fb.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type ApiCustomerUpdateResponseData = {
-  customer: ApiSharedObject5bccea1792;
+  customer: ApiSharedObjectc8400fd2fb;
 };
 
 export type ApiCustomerUpdateResponse = {
@@ -28,9 +28,11 @@ export type ApiCustomerUpdateResponse = {
 export const ApiCustomerUpdateResponseData$inboundSchema: z.ZodMiniType<
   ApiCustomerUpdateResponseData,
   unknown
-> = z.object({
-  customer: ApiSharedObject5bccea1792$inboundSchema,
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    customer: ApiSharedObjectc8400fd2fb$inboundSchema,
+  })
+);
 
 export function apiCustomerUpdateResponseDataFromJSON(
   jsonString: string,
@@ -46,17 +48,19 @@ export function apiCustomerUpdateResponseDataFromJSON(
 export const ApiCustomerUpdateResponse$inboundSchema: z.ZodMiniType<
   ApiCustomerUpdateResponse,
   unknown
-> = z.pipe(
-  z.object({
-    request_id: types.string(),
-    data: z.lazy(() => ApiCustomerUpdateResponseData$inboundSchema),
-    warnings: z.array(z.any()),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "request_id": "requestId",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      request_id: types.string(),
+      data: z.lazy(() => ApiCustomerUpdateResponseData$inboundSchema),
+      warnings: z.array(z.any()),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "request_id": "requestId",
+      });
+    }),
+  )
 );
 
 export function apiCustomerUpdateResponseFromJSON(

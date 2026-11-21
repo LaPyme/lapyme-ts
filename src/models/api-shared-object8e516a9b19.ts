@@ -5,7 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -21,21 +21,23 @@ export type ApiSharedObject8e516a9b19 = {
 export const ApiSharedObject8e516a9b19$inboundSchema: z.ZodMiniType<
   ApiSharedObject8e516a9b19,
   unknown
-> = z.pipe(
-  z.object({
-    will_create_payments: types.boolean(),
-    payment_method_count: types.number(),
-    total_amount: types.number(),
-    pending_amount: types.number(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "will_create_payments": "willCreatePayments",
-      "payment_method_count": "paymentMethodCount",
-      "total_amount": "totalAmount",
-      "pending_amount": "pendingAmount",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      will_create_payments: types.boolean(),
+      payment_method_count: types.number(),
+      total_amount: types.number(),
+      pending_amount: types.number(),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "will_create_payments": "willCreatePayments",
+        "payment_method_count": "paymentMethodCount",
+        "total_amount": "totalAmount",
+        "pending_amount": "pendingAmount",
+      });
+    }),
+  )
 );
 
 export function apiSharedObject8e516a9b19FromJSON(

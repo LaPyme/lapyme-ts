@@ -5,17 +5,17 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import {
-  ApiSharedObjectba6d1f3759,
-  ApiSharedObjectba6d1f3759$inboundSchema,
-} from "./api-shared-objectba6d1f3759.js";
+  ApiSharedObjectb0bf734df2,
+  ApiSharedObjectb0bf734df2$inboundSchema,
+} from "./api-shared-objectb0bf734df2.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type ApiCustomerPaymentDetailResponseData = {
-  customerPayment: ApiSharedObjectba6d1f3759;
+  customerPayment: ApiSharedObjectb0bf734df2;
 };
 
 export type ApiCustomerPaymentDetailResponse = {
@@ -27,15 +27,17 @@ export type ApiCustomerPaymentDetailResponse = {
 export const ApiCustomerPaymentDetailResponseData$inboundSchema: z.ZodMiniType<
   ApiCustomerPaymentDetailResponseData,
   unknown
-> = z.pipe(
-  z.object({
-    customer_payment: ApiSharedObjectba6d1f3759$inboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "customer_payment": "customerPayment",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      customer_payment: ApiSharedObjectb0bf734df2$inboundSchema,
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "customer_payment": "customerPayment",
+      });
+    }),
+  )
 );
 
 export function apiCustomerPaymentDetailResponseDataFromJSON(
@@ -53,16 +55,18 @@ export function apiCustomerPaymentDetailResponseDataFromJSON(
 export const ApiCustomerPaymentDetailResponse$inboundSchema: z.ZodMiniType<
   ApiCustomerPaymentDetailResponse,
   unknown
-> = z.pipe(
-  z.object({
-    request_id: types.string(),
-    data: z.lazy(() => ApiCustomerPaymentDetailResponseData$inboundSchema),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "request_id": "requestId",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      request_id: types.string(),
+      data: z.lazy(() => ApiCustomerPaymentDetailResponseData$inboundSchema),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "request_id": "requestId",
+      });
+    }),
+  )
 );
 
 export function apiCustomerPaymentDetailResponseFromJSON(

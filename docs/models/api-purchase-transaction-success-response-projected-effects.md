@@ -8,20 +8,24 @@ import { ApiPurchaseTransactionSuccessResponseProjectedEffects } from "lapyme/mo
 let value: ApiPurchaseTransactionSuccessResponseProjectedEffects = {
   inventory: {
     willReceiveProducts: false,
-    willCreateReceipt: true,
+    willCreateReceipt: false,
     willIncreaseDirectStock: true,
-    warehouseId: null,
-    productLineCount: 852377,
-    totalQuantity: 4391.22,
+    willReturnProducts: true,
+    willDecreaseDirectStock: true,
+    inventoryEffect: "none",
+    warehouseId: "2f5b1694-d739-4927-a706-773f7df46c7f",
+    productLineCount: 964173,
+    totalQuantity: 9610.75,
     purchaseOrderIds: [
-      "b25acd09-88ef-40c1-87a2-e418ecd43c5e",
-      "376cb81f-dc3a-4a0c-a394-392b999e57d3",
+      "e770d78b-25ac-4d09-b88e-f0c17a2e418e",
+      "d43c5e03-76cb-481f-adc3-aa0c394392b9",
+      "9e57d3bc-992e-41f8-950f-16d8ebe5e2a0",
     ],
   },
   accounting: {
-    willCreateJournalEntry: false,
-    currency: "DOL",
-    exchangeRate: 5742.06,
+    willCreateJournalEntry: true,
+    currency: "ARS",
+    exchangeRate: 6358.92,
   },
 };
 ```
@@ -30,5 +34,5 @@ let value: ApiPurchaseTransactionSuccessResponseProjectedEffects = {
 
 | Field                                                                        | Type                                                                         | Required                                                                     | Description                                                                  |
 | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| `inventory`                                                                  | [models.ApiSharedObjectdafaa4a9ee](../models/api-shared-objectdafaa4a9ee.md) | :heavy_check_mark:                                                           | N/A                                                                          |
-| `accounting`                                                                 | [models.ApiSharedObject3c43192c61](../models/api-shared-object3c43192c61.md) | :heavy_check_mark:                                                           | N/A                                                                          |
+| `inventory`                                                                  | [models.ApiSharedObjectb451a3d8de](../models/api-shared-objectb451a3d8de.md) | :heavy_check_mark:                                                           | N/A                                                                          |
+| `accounting`                                                                 | [models.ApiSharedObjectc482130d79](../models/api-shared-objectc482130d79.md) | :heavy_check_mark:                                                           | N/A                                                                          |

@@ -5,7 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import {
@@ -46,27 +46,29 @@ export type ApiPointOfSaleListResponse = {
 export const ApiPointOfSaleListResponseData$inboundSchema: z.ZodMiniType<
   ApiPointOfSaleListResponseData,
   unknown
-> = z.pipe(
-  z.object({
-    object: types.literal("point_of_sale"),
-    id: types.string(),
-    number: types.number(),
-    name: types.nullable(types.string()),
-    country: types.string(),
-    address: types.nullable(types.string()),
-    warehouse_id: types.nullable(types.string()),
-    warehouse_name: types.nullable(types.string()),
-    is_afip_enabled: types.boolean(),
-    is_active: types.boolean(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "warehouse_id": "warehouseId",
-      "warehouse_name": "warehouseName",
-      "is_afip_enabled": "isAfipEnabled",
-      "is_active": "isActive",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      object: types.literal("point_of_sale"),
+      id: types.string(),
+      number: types.number(),
+      name: types.nullable(types.string()),
+      country: types.string(),
+      address: types.nullable(types.string()),
+      warehouse_id: types.nullable(types.string()),
+      warehouse_name: types.nullable(types.string()),
+      is_afip_enabled: types.boolean(),
+      is_active: types.boolean(),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "warehouse_id": "warehouseId",
+        "warehouse_name": "warehouseName",
+        "is_afip_enabled": "isAfipEnabled",
+        "is_active": "isActive",
+      });
+    }),
+  )
 );
 
 export function apiPointOfSaleListResponseDataFromJSON(
@@ -83,22 +85,24 @@ export function apiPointOfSaleListResponseDataFromJSON(
 export const ApiPointOfSaleListResponse$inboundSchema: z.ZodMiniType<
   ApiPointOfSaleListResponse,
   unknown
-> = z.pipe(
-  z.object({
-    request_id: types.string(),
-    data: z.array(z.lazy(() => ApiPointOfSaleListResponseData$inboundSchema)),
-    has_more: types.boolean(),
-    next_cursor: types.nullable(types.string()),
-    object: ApiSharedEnum8d46e1ec20$inboundSchema,
-    url: types.string(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "request_id": "requestId",
-      "has_more": "hasMore",
-      "next_cursor": "nextCursor",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      request_id: types.string(),
+      data: z.array(z.lazy(() => ApiPointOfSaleListResponseData$inboundSchema)),
+      has_more: types.boolean(),
+      next_cursor: types.nullable(types.string()),
+      object: ApiSharedEnum8d46e1ec20$inboundSchema,
+      url: types.string(),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "request_id": "requestId",
+        "has_more": "hasMore",
+        "next_cursor": "nextCursor",
+      });
+    }),
+  )
 );
 
 export function apiPointOfSaleListResponseFromJSON(
