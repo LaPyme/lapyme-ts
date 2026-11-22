@@ -5,7 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -21,18 +21,20 @@ export type ApiSharedObject5884d24e45 = {
 export const ApiSharedObject5884d24e45$inboundSchema: z.ZodMiniType<
   ApiSharedObject5884d24e45,
   unknown
-> = z.pipe(
-  z.object({
-    available: types.number(),
-    on_hand: types.number(),
-    reserved: types.number(),
-    incoming: types.number(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "on_hand": "onHand",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      available: types.number(),
+      on_hand: types.number(),
+      reserved: types.number(),
+      incoming: types.number(),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "on_hand": "onHand",
+      });
+    }),
+  )
 );
 
 export function apiSharedObject5884d24e45FromJSON(

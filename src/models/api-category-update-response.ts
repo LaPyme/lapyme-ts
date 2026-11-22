@@ -5,17 +5,17 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import {
-  ApiSharedObjectd8582ce697,
-  ApiSharedObjectd8582ce697$inboundSchema,
-} from "./api-shared-objectd8582ce697.js";
+  ApiSharedObjectf86e1828bb,
+  ApiSharedObjectf86e1828bb$inboundSchema,
+} from "./api-shared-objectf86e1828bb.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type ApiCategoryUpdateResponseData = {
-  category: ApiSharedObjectd8582ce697;
+  category: ApiSharedObjectf86e1828bb;
 };
 
 export type ApiCategoryUpdateResponse = {
@@ -28,9 +28,11 @@ export type ApiCategoryUpdateResponse = {
 export const ApiCategoryUpdateResponseData$inboundSchema: z.ZodMiniType<
   ApiCategoryUpdateResponseData,
   unknown
-> = z.object({
-  category: ApiSharedObjectd8582ce697$inboundSchema,
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    category: ApiSharedObjectf86e1828bb$inboundSchema,
+  })
+);
 
 export function apiCategoryUpdateResponseDataFromJSON(
   jsonString: string,
@@ -46,17 +48,19 @@ export function apiCategoryUpdateResponseDataFromJSON(
 export const ApiCategoryUpdateResponse$inboundSchema: z.ZodMiniType<
   ApiCategoryUpdateResponse,
   unknown
-> = z.pipe(
-  z.object({
-    request_id: types.string(),
-    data: z.lazy(() => ApiCategoryUpdateResponseData$inboundSchema),
-    warnings: z.array(z.any()),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "request_id": "requestId",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      request_id: types.string(),
+      data: z.lazy(() => ApiCategoryUpdateResponseData$inboundSchema),
+      warnings: z.array(z.any()),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "request_id": "requestId",
+      });
+    }),
+  )
 );
 
 export function apiCategoryUpdateResponseFromJSON(

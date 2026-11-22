@@ -5,7 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -19,16 +19,18 @@ export type ApiSharedObject95929ea589 = {
 export const ApiSharedObject95929ea589$inboundSchema: z.ZodMiniType<
   ApiSharedObject95929ea589,
   unknown
-> = z.pipe(
-  z.object({
-    province_id: types.number(),
-    amount: types.number(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "province_id": "provinceId",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      province_id: types.number(),
+      amount: types.number(),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "province_id": "provinceId",
+      });
+    }),
+  )
 );
 /** @internal */
 export type ApiSharedObject95929ea589$Outbound = {
@@ -40,16 +42,18 @@ export type ApiSharedObject95929ea589$Outbound = {
 export const ApiSharedObject95929ea589$outboundSchema: z.ZodMiniType<
   ApiSharedObject95929ea589$Outbound,
   ApiSharedObject95929ea589
-> = z.pipe(
-  z.object({
-    provinceId: z.int(),
-    amount: z.int(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      provinceId: "province_id",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      provinceId: z.int(),
+      amount: z.int(),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        provinceId: "province_id",
+      });
+    }),
+  )
 );
 
 export function apiSharedObject95929ea589ToJSON(

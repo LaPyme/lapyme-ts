@@ -5,7 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -28,10 +28,12 @@ export type ApiJournalEntryWriteResponse = {
 
 /** @internal */
 export const JournalEntry$inboundSchema: z.ZodMiniType<JournalEntry, unknown> =
-  z.object({
-    object: types.literal("journal_entry"),
-    id: types.string(),
-  });
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      object: types.literal("journal_entry"),
+      id: types.string(),
+    })
+  );
 
 export function journalEntryFromJSON(
   jsonString: string,
@@ -47,17 +49,19 @@ export function journalEntryFromJSON(
 export const ApiJournalEntryWriteResponseData$inboundSchema: z.ZodMiniType<
   ApiJournalEntryWriteResponseData,
   unknown
-> = z.pipe(
-  z.object({
-    journal_entry: z.lazy(() => JournalEntry$inboundSchema),
-    idempotent_replay: types.optional(types.boolean()),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "journal_entry": "journalEntry",
-      "idempotent_replay": "idempotentReplay",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      journal_entry: z.lazy(() => JournalEntry$inboundSchema),
+      idempotent_replay: types.optional(types.boolean()),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "journal_entry": "journalEntry",
+        "idempotent_replay": "idempotentReplay",
+      });
+    }),
+  )
 );
 
 export function apiJournalEntryWriteResponseDataFromJSON(
@@ -74,17 +78,19 @@ export function apiJournalEntryWriteResponseDataFromJSON(
 export const ApiJournalEntryWriteResponse$inboundSchema: z.ZodMiniType<
   ApiJournalEntryWriteResponse,
   unknown
-> = z.pipe(
-  z.object({
-    request_id: types.string(),
-    data: z.lazy(() => ApiJournalEntryWriteResponseData$inboundSchema),
-    warnings: z.array(z.any()),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "request_id": "requestId",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      request_id: types.string(),
+      data: z.lazy(() => ApiJournalEntryWriteResponseData$inboundSchema),
+      warnings: z.array(z.any()),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "request_id": "requestId",
+      });
+    }),
+  )
 );
 
 export function apiJournalEntryWriteResponseFromJSON(

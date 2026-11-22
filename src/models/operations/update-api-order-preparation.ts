@@ -5,7 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
-import { safeParse } from "../../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import * as models from "../index.js";
@@ -15,6 +15,10 @@ export type UpdateApiOrderPreparationRequest = {
    * ID del pedido
    */
   orderId: string;
+  /**
+   * Clave estable para deduplicar reintentos de la misma operación. Opcional en v1; si se envía, un reintento con la misma clave y el mismo cuerpo devuelve el resultado original sin repetir la operación, y con otro cuerpo devuelve 409.
+   */
+  idempotencyKey?: string | undefined;
   body: models.ApiOrderPreparationUpdateRequest;
 };
 
@@ -26,6 +30,7 @@ export type UpdateApiOrderPreparationResponse = {
 /** @internal */
 export type UpdateApiOrderPreparationRequest$Outbound = {
   order_id: string;
+  "Idempotency-Key"?: string | undefined;
   body: models.ApiOrderPreparationUpdateRequest$Outbound;
 };
 
@@ -33,16 +38,20 @@ export type UpdateApiOrderPreparationRequest$Outbound = {
 export const UpdateApiOrderPreparationRequest$outboundSchema: z.ZodMiniType<
   UpdateApiOrderPreparationRequest$Outbound,
   UpdateApiOrderPreparationRequest
-> = z.pipe(
-  z.object({
-    orderId: z.string(),
-    body: models.ApiOrderPreparationUpdateRequest$outboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      orderId: "order_id",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      orderId: z.string(),
+      idempotencyKey: z.optional(z.string()),
+      body: models.ApiOrderPreparationUpdateRequest$outboundSchema,
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        orderId: "order_id",
+        idempotencyKey: "Idempotency-Key",
+      });
+    }),
+  )
 );
 
 export function updateApiOrderPreparationRequestToJSON(
@@ -59,17 +68,19 @@ export function updateApiOrderPreparationRequestToJSON(
 export const UpdateApiOrderPreparationResponse$inboundSchema: z.ZodMiniType<
   UpdateApiOrderPreparationResponse,
   unknown
-> = z.pipe(
-  z.object({
-    Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
-    Result: models.ApiOrderWriteResponse$inboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "Headers": "headers",
-      "Result": "result",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
+      Result: models.ApiOrderWriteResponse$inboundSchema,
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "Headers": "headers",
+        "Result": "result",
+      });
+    }),
+  )
 );
 
 export function updateApiOrderPreparationResponseFromJSON(

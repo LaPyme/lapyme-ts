@@ -5,6 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type ApiApplyTagsRequest = {
   entityIds: Array<string>;
@@ -23,19 +24,21 @@ export type ApiApplyTagsRequest$Outbound = {
 export const ApiApplyTagsRequest$outboundSchema: z.ZodMiniType<
   ApiApplyTagsRequest$Outbound,
   ApiApplyTagsRequest
-> = z.pipe(
-  z.object({
-    entityIds: z.array(z.string()),
-    addTagIds: z.array(z.string()),
-    removeTagIds: z.array(z.string()),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      entityIds: "entity_ids",
-      addTagIds: "add_tag_ids",
-      removeTagIds: "remove_tag_ids",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      entityIds: z.array(z.string()),
+      addTagIds: z.array(z.string()),
+      removeTagIds: z.array(z.string()),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        entityIds: "entity_ids",
+        addTagIds: "add_tag_ids",
+        removeTagIds: "remove_tag_ids",
+      });
+    }),
+  )
 );
 
 export function apiApplyTagsRequestToJSON(

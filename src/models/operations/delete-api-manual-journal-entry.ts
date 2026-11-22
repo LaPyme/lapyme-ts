@@ -5,7 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
-import { safeParse } from "../../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import * as types from "../../types/primitives.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
@@ -18,7 +18,7 @@ export type DeleteApiManualJournalEntryRequest = {
   idempotencyKey: string;
 };
 
-export type Data = {
+export type DeleteApiManualJournalEntryData = {
   deleted?: boolean | undefined;
 };
 
@@ -27,7 +27,7 @@ export type Data = {
  */
 export type DeleteApiManualJournalEntryResponseBody = {
   requestId?: string | undefined;
-  data?: Data | undefined;
+  data?: DeleteApiManualJournalEntryData | undefined;
 };
 
 export type DeleteApiManualJournalEntryResponse = {
@@ -45,17 +45,19 @@ export type DeleteApiManualJournalEntryRequest$Outbound = {
 export const DeleteApiManualJournalEntryRequest$outboundSchema: z.ZodMiniType<
   DeleteApiManualJournalEntryRequest$Outbound,
   DeleteApiManualJournalEntryRequest
-> = z.pipe(
-  z.object({
-    journalEntryId: z.string(),
-    idempotencyKey: z.string(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      journalEntryId: "journal_entry_id",
-      idempotencyKey: "Idempotency-Key",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      journalEntryId: z.string(),
+      idempotencyKey: z.string(),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        journalEntryId: "journal_entry_id",
+        idempotencyKey: "Idempotency-Key",
+      });
+    }),
+  )
 );
 
 export function deleteApiManualJournalEntryRequestToJSON(
@@ -69,33 +71,43 @@ export function deleteApiManualJournalEntryRequestToJSON(
 }
 
 /** @internal */
-export const Data$inboundSchema: z.ZodMiniType<Data, unknown> = z.object({
-  deleted: types.optional(types.boolean()),
-});
+export const DeleteApiManualJournalEntryData$inboundSchema: z.ZodMiniType<
+  DeleteApiManualJournalEntryData,
+  unknown
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    deleted: types.optional(types.boolean()),
+  })
+);
 
-export function dataFromJSON(
+export function deleteApiManualJournalEntryDataFromJSON(
   jsonString: string,
-): SafeParseResult<Data, SDKValidationError> {
+): SafeParseResult<DeleteApiManualJournalEntryData, SDKValidationError> {
   return safeParse(
     jsonString,
-    (x) => Data$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'Data' from JSON`,
+    (x) => DeleteApiManualJournalEntryData$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'DeleteApiManualJournalEntryData' from JSON`,
   );
 }
 
 /** @internal */
 export const DeleteApiManualJournalEntryResponseBody$inboundSchema:
-  z.ZodMiniType<DeleteApiManualJournalEntryResponseBody, unknown> = z.pipe(
-    z.object({
-      request_id: types.optional(types.string()),
-      data: types.optional(z.lazy(() => Data$inboundSchema)),
-    }),
-    z.transform((v) => {
-      return remap$(v, {
-        "request_id": "requestId",
-      });
-    }),
-  );
+  z.ZodMiniType<DeleteApiManualJournalEntryResponseBody, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.pipe(
+        z.object({
+          request_id: types.optional(types.string()),
+          data: types.optional(
+            z.lazy(() => DeleteApiManualJournalEntryData$inboundSchema),
+          ),
+        }),
+        z.transform((v) => {
+          return remap$(v, {
+            "request_id": "requestId",
+          });
+        }),
+      )
+    );
 
 export function deleteApiManualJournalEntryResponseBodyFromJSON(
   jsonString: string,
@@ -117,17 +129,21 @@ export function deleteApiManualJournalEntryResponseBodyFromJSON(
 export const DeleteApiManualJournalEntryResponse$inboundSchema: z.ZodMiniType<
   DeleteApiManualJournalEntryResponse,
   unknown
-> = z.pipe(
-  z.object({
-    Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
-    Result: z.lazy(() => DeleteApiManualJournalEntryResponseBody$inboundSchema),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "Headers": "headers",
-      "Result": "result",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
+      Result: z.lazy(() =>
+        DeleteApiManualJournalEntryResponseBody$inboundSchema
+      ),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "Headers": "headers",
+        "Result": "result",
+      });
+    }),
+  )
 );
 
 export function deleteApiManualJournalEntryResponseFromJSON(

@@ -32,7 +32,7 @@ import { Result } from "../types/fp.js";
  * Crear pedido
  *
  * @remarks
- * Crea un pedido de comercio y su trabajo inicial de preparación. Requiere Idempotency-Key.
+ * Crea un pedido de comercio y su trabajo inicial de preparación. Requiere Idempotency-Key. Si una variante no está disponible en el catálogo de la organización, devuelve 400 VALIDATION_ERROR con el índice de cada línea inválida. Corregí las líneas y reutilizá la misma clave.
  */
 export function ordersCreateOrder(
   client: LapymeCore,
@@ -181,6 +181,7 @@ async function $do(
     M.jsonErr([400, 401, 403, 404, 409], errors.ApiErrorEnvelope$inboundSchema),
     M.jsonErr(429, errors.ApiErrorEnvelope$inboundSchema, { hdrs: true }),
     M.jsonErr(500, errors.ApiErrorEnvelope$inboundSchema),
+    M.jsonErr(503, errors.ApiErrorEnvelope$inboundSchema, { hdrs: true }),
     M.fail("4XX"),
     M.fail("5XX"),
   )(response, req, { extraFields: responseFields });
