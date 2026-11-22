@@ -5,7 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -20,19 +20,21 @@ export type ApiSharedObjectfb7405a472 = {
 export const ApiSharedObjectfb7405a472$inboundSchema: z.ZodMiniType<
   ApiSharedObjectfb7405a472,
   unknown
-> = z.pipe(
-  z.object({
-    tax_rate_id: types.number(),
-    base_amount: types.number(),
-    tax_amount: types.number(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "tax_rate_id": "taxRateId",
-      "base_amount": "baseAmount",
-      "tax_amount": "taxAmount",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      tax_rate_id: types.number(),
+      base_amount: types.number(),
+      tax_amount: types.number(),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "tax_rate_id": "taxRateId",
+        "base_amount": "baseAmount",
+        "tax_amount": "taxAmount",
+      });
+    }),
+  )
 );
 /** @internal */
 export type ApiSharedObjectfb7405a472$Outbound = {
@@ -45,19 +47,21 @@ export type ApiSharedObjectfb7405a472$Outbound = {
 export const ApiSharedObjectfb7405a472$outboundSchema: z.ZodMiniType<
   ApiSharedObjectfb7405a472$Outbound,
   ApiSharedObjectfb7405a472
-> = z.pipe(
-  z.object({
-    taxRateId: z.int(),
-    baseAmount: z.int(),
-    taxAmount: z.int(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      taxRateId: "tax_rate_id",
-      baseAmount: "base_amount",
-      taxAmount: "tax_amount",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      taxRateId: z.int(),
+      baseAmount: z.int(),
+      taxAmount: z.int(),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        taxRateId: "tax_rate_id",
+        baseAmount: "base_amount",
+        taxAmount: "tax_amount",
+      });
+    }),
+  )
 );
 
 export function apiSharedObjectfb7405a472ToJSON(

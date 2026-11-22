@@ -5,9 +5,13 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type ApiPurchaseOrderReceiptRequestItem = {
-  purchaseOrderItemId: string;
+  /**
+   * Omit to receive a product that is not on the order. The product is added to the order with ordered quantity 0, and the received quantity must be greater than 0.
+   */
+  purchaseOrderItemId?: string | undefined;
   productId: string;
   receivedQuantity: number;
 };
@@ -18,7 +22,7 @@ export type ApiPurchaseOrderReceiptRequest = {
 
 /** @internal */
 export type ApiPurchaseOrderReceiptRequestItem$Outbound = {
-  purchase_order_item_id: string;
+  purchase_order_item_id?: string | undefined;
   product_id: string;
   received_quantity: number;
 };
@@ -27,19 +31,21 @@ export type ApiPurchaseOrderReceiptRequestItem$Outbound = {
 export const ApiPurchaseOrderReceiptRequestItem$outboundSchema: z.ZodMiniType<
   ApiPurchaseOrderReceiptRequestItem$Outbound,
   ApiPurchaseOrderReceiptRequestItem
-> = z.pipe(
-  z.object({
-    purchaseOrderItemId: z.string(),
-    productId: z.string(),
-    receivedQuantity: z.int(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      purchaseOrderItemId: "purchase_order_item_id",
-      productId: "product_id",
-      receivedQuantity: "received_quantity",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      purchaseOrderItemId: z.optional(z.string()),
+      productId: z.string(),
+      receivedQuantity: z.number(),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        purchaseOrderItemId: "purchase_order_item_id",
+        productId: "product_id",
+        receivedQuantity: "received_quantity",
+      });
+    }),
+  )
 );
 
 export function apiPurchaseOrderReceiptRequestItemToJSON(
@@ -61,11 +67,13 @@ export type ApiPurchaseOrderReceiptRequest$Outbound = {
 export const ApiPurchaseOrderReceiptRequest$outboundSchema: z.ZodMiniType<
   ApiPurchaseOrderReceiptRequest$Outbound,
   ApiPurchaseOrderReceiptRequest
-> = z.object({
-  items: z.array(
-    z.lazy(() => ApiPurchaseOrderReceiptRequestItem$outboundSchema),
-  ),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    items: z.array(
+      z.lazy(() => ApiPurchaseOrderReceiptRequestItem$outboundSchema),
+    ),
+  })
+);
 
 export function apiPurchaseOrderReceiptRequestToJSON(
   apiPurchaseOrderReceiptRequest: ApiPurchaseOrderReceiptRequest,

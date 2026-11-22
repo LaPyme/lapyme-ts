@@ -5,7 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
-import { safeParse } from "../../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import * as models from "../index.js";
@@ -30,16 +30,18 @@ export type CreateApiSupplierPaymentRequest$Outbound = {
 export const CreateApiSupplierPaymentRequest$outboundSchema: z.ZodMiniType<
   CreateApiSupplierPaymentRequest$Outbound,
   CreateApiSupplierPaymentRequest
-> = z.pipe(
-  z.object({
-    idempotencyKey: z.string(),
-    body: models.ApiSupplierPaymentCreateRequest$outboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      idempotencyKey: "Idempotency-Key",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      idempotencyKey: z.string(),
+      body: models.ApiSupplierPaymentCreateRequest$outboundSchema,
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        idempotencyKey: "Idempotency-Key",
+      });
+    }),
+  )
 );
 
 export function createApiSupplierPaymentRequestToJSON(
@@ -56,17 +58,19 @@ export function createApiSupplierPaymentRequestToJSON(
 export const CreateApiSupplierPaymentResponse$inboundSchema: z.ZodMiniType<
   CreateApiSupplierPaymentResponse,
   unknown
-> = z.pipe(
-  z.object({
-    Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
-    Result: models.ApiSupplierPaymentCreateResponse$inboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "Headers": "headers",
-      "Result": "result",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
+      Result: models.ApiSupplierPaymentCreateResponse$inboundSchema,
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "Headers": "headers",
+        "Result": "result",
+      });
+    }),
+  )
 );
 
 export function createApiSupplierPaymentResponseFromJSON(

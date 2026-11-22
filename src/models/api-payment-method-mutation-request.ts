@@ -5,6 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import {
   ApiSharedEnum377ec234cb,
   ApiSharedEnum377ec234cb$outboundSchema,
@@ -24,6 +25,10 @@ export type ApiPaymentMethodMutationRequest = {
   type?: ApiSharedEnum377ec234cb | undefined;
   bankAccountId?: string | null | undefined;
   linkedAccountId?: string | null | undefined;
+  /**
+   * Solo métodos de tarjeta disponibles en compras. Cuenta bancaria, billetera o tarjeta de crédito corporativa activa y en pesos de la que salen los pagos a proveedores. Omitido mantiene el valor actual; null lo borra. Se borra si el método pasa a solo ventas o deja de ser tarjeta.
+   */
+  supplierSourceBankAccountId?: string | null | undefined;
   feePercentage?: string | null | undefined;
   feeFixed?: number | null | undefined;
   requiresReference?: boolean | undefined;
@@ -42,10 +47,12 @@ export type InstallmentPlan$Outbound = {
 export const InstallmentPlan$outboundSchema: z.ZodMiniType<
   InstallmentPlan$Outbound,
   InstallmentPlan
-> = z.object({
-  code: z.string(),
-  label: z.string(),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    code: z.string(),
+    label: z.string(),
+  })
+);
 
 export function installmentPlanToJSON(
   installmentPlan: InstallmentPlan,
@@ -59,6 +66,7 @@ export type ApiPaymentMethodMutationRequest$Outbound = {
   type?: string | undefined;
   bank_account_id?: string | null | undefined;
   linked_account_id?: string | null | undefined;
+  supplier_source_bank_account_id?: string | null | undefined;
   fee_percentage?: string | null | undefined;
   fee_fixed?: number | null | undefined;
   requires_reference?: boolean | undefined;
@@ -71,32 +79,36 @@ export type ApiPaymentMethodMutationRequest$Outbound = {
 export const ApiPaymentMethodMutationRequest$outboundSchema: z.ZodMiniType<
   ApiPaymentMethodMutationRequest$Outbound,
   ApiPaymentMethodMutationRequest
-> = z.pipe(
-  z.object({
-    name: z.string(),
-    type: z.optional(ApiSharedEnum377ec234cb$outboundSchema),
-    bankAccountId: z.optional(z.nullable(z.string())),
-    linkedAccountId: z.optional(z.nullable(z.string())),
-    feePercentage: z.optional(z.nullable(z.string())),
-    feeFixed: z.optional(z.nullable(z.int())),
-    requiresReference: z.optional(z.boolean()),
-    visibility: z.optional(ApiSharedEnum73bb779813$outboundSchema),
-    installmentPlans: z.optional(
-      z.array(z.lazy(() => InstallmentPlan$outboundSchema)),
-    ),
-    isActive: z.optional(z.boolean()),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      bankAccountId: "bank_account_id",
-      linkedAccountId: "linked_account_id",
-      feePercentage: "fee_percentage",
-      feeFixed: "fee_fixed",
-      requiresReference: "requires_reference",
-      installmentPlans: "installment_plans",
-      isActive: "is_active",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      name: z.string(),
+      type: z.optional(ApiSharedEnum377ec234cb$outboundSchema),
+      bankAccountId: z.optional(z.nullable(z.string())),
+      linkedAccountId: z.optional(z.nullable(z.string())),
+      supplierSourceBankAccountId: z.optional(z.nullable(z.string())),
+      feePercentage: z.optional(z.nullable(z.string())),
+      feeFixed: z.optional(z.nullable(z.int())),
+      requiresReference: z.optional(z.boolean()),
+      visibility: z.optional(ApiSharedEnum73bb779813$outboundSchema),
+      installmentPlans: z.optional(
+        z.array(z.lazy(() => InstallmentPlan$outboundSchema)),
+      ),
+      isActive: z.optional(z.boolean()),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        bankAccountId: "bank_account_id",
+        linkedAccountId: "linked_account_id",
+        supplierSourceBankAccountId: "supplier_source_bank_account_id",
+        feePercentage: "fee_percentage",
+        feeFixed: "fee_fixed",
+        requiresReference: "requires_reference",
+        installmentPlans: "installment_plans",
+        isActive: "is_active",
+      });
+    }),
+  )
 );
 
 export function apiPaymentMethodMutationRequestToJSON(

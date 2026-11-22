@@ -4,6 +4,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type Security = {
   bearerAuth?: string | undefined;
@@ -18,9 +19,11 @@ export type Security$Outbound = {
 export const Security$outboundSchema: z.ZodMiniType<
   Security$Outbound,
   Security
-> = z.object({
-  bearerAuth: z.optional(z.string()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    bearerAuth: z.optional(z.string()),
+  })
+);
 
 export function securityToJSON(security: Security): string {
   return JSON.stringify(Security$outboundSchema.parse(security));

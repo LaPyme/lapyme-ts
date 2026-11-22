@@ -5,17 +5,17 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import {
-  ApiSharedObjecta6cd4a0a4e,
-  ApiSharedObjecta6cd4a0a4e$inboundSchema,
-} from "./api-shared-objecta6cd4a0a4e.js";
+  ApiSharedObjecte1856a1a85,
+  ApiSharedObjecte1856a1a85$inboundSchema,
+} from "./api-shared-objecte1856a1a85.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type ApiPurchaseOrderWriteResponseData = {
-  purchaseOrder: ApiSharedObjecta6cd4a0a4e;
+  purchaseOrder: ApiSharedObjecte1856a1a85;
   idempotentReplay: boolean;
 };
 
@@ -29,17 +29,19 @@ export type ApiPurchaseOrderWriteResponse = {
 export const ApiPurchaseOrderWriteResponseData$inboundSchema: z.ZodMiniType<
   ApiPurchaseOrderWriteResponseData,
   unknown
-> = z.pipe(
-  z.object({
-    purchase_order: ApiSharedObjecta6cd4a0a4e$inboundSchema,
-    idempotent_replay: types.boolean(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "purchase_order": "purchaseOrder",
-      "idempotent_replay": "idempotentReplay",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      purchase_order: ApiSharedObjecte1856a1a85$inboundSchema,
+      idempotent_replay: types.boolean(),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "purchase_order": "purchaseOrder",
+        "idempotent_replay": "idempotentReplay",
+      });
+    }),
+  )
 );
 
 export function apiPurchaseOrderWriteResponseDataFromJSON(
@@ -56,17 +58,19 @@ export function apiPurchaseOrderWriteResponseDataFromJSON(
 export const ApiPurchaseOrderWriteResponse$inboundSchema: z.ZodMiniType<
   ApiPurchaseOrderWriteResponse,
   unknown
-> = z.pipe(
-  z.object({
-    request_id: types.string(),
-    data: z.lazy(() => ApiPurchaseOrderWriteResponseData$inboundSchema),
-    warnings: z.array(z.any()),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "request_id": "requestId",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      request_id: types.string(),
+      data: z.lazy(() => ApiPurchaseOrderWriteResponseData$inboundSchema),
+      warnings: z.array(z.any()),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "request_id": "requestId",
+      });
+    }),
+  )
 );
 
 export function apiPurchaseOrderWriteResponseFromJSON(

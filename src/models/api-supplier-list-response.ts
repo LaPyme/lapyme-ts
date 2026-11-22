@@ -5,13 +5,17 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import {
   ApiSharedEnum8d46e1ec20,
   ApiSharedEnum8d46e1ec20$inboundSchema,
 } from "./api-shared-enum8d46e1ec20.js";
+import {
+  ApiSharedObjected3905a55b,
+  ApiSharedObjected3905a55b$inboundSchema,
+} from "./api-shared-objected3905a55b.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type ApiSupplierListResponseData = {
@@ -26,7 +30,14 @@ export type ApiSupplierListResponseData = {
   taxIdType: string | null;
   taxCategory: string | null;
   paymentTermId: string | null;
+  paymentTermDays: number | null;
+  paymentTermLabel: string | null;
+  /**
+   * Plazos en orden estrictamente creciente. null elimina el plazo. El escalar debe coincidir con el último plazo; reenviar un escalar sin cambios conserva las cuotas.
+   */
+  paymentTermInstallmentDays: Array<number> | null;
   isActive: boolean | null;
+  tags: Array<ApiSharedObjected3905a55b>;
 };
 
 export type ApiSupplierListResponse = {
@@ -48,31 +59,40 @@ export type ApiSupplierListResponse = {
 export const ApiSupplierListResponseData$inboundSchema: z.ZodMiniType<
   ApiSupplierListResponseData,
   unknown
-> = z.pipe(
-  z.object({
-    object: types.literal("supplier"),
-    id: types.string(),
-    name: types.string(),
-    company_name: types.nullable(types.string()),
-    description: types.nullable(types.string()),
-    email: types.nullable(types.string()),
-    phone: types.nullable(types.string()),
-    tax_id: types.nullable(types.string()),
-    tax_id_type: types.nullable(types.string()),
-    tax_category: types.nullable(types.string()),
-    payment_term_id: types.nullable(types.string()),
-    is_active: types.nullable(types.boolean()),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "company_name": "companyName",
-      "tax_id": "taxId",
-      "tax_id_type": "taxIdType",
-      "tax_category": "taxCategory",
-      "payment_term_id": "paymentTermId",
-      "is_active": "isActive",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      object: types.literal("supplier"),
+      id: types.string(),
+      name: types.string(),
+      company_name: types.nullable(types.string()),
+      description: types.nullable(types.string()),
+      email: types.nullable(types.string()),
+      phone: types.nullable(types.string()),
+      tax_id: types.nullable(types.string()),
+      tax_id_type: types.nullable(types.string()),
+      tax_category: types.nullable(types.string()),
+      payment_term_id: types.nullable(types.string()),
+      payment_term_days: types.nullable(types.number()),
+      payment_term_label: types.nullable(types.string()),
+      payment_term_installment_days: types.nullable(z.array(types.number())),
+      is_active: types.nullable(types.boolean()),
+      tags: z.array(ApiSharedObjected3905a55b$inboundSchema),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "company_name": "companyName",
+        "tax_id": "taxId",
+        "tax_id_type": "taxIdType",
+        "tax_category": "taxCategory",
+        "payment_term_id": "paymentTermId",
+        "payment_term_days": "paymentTermDays",
+        "payment_term_label": "paymentTermLabel",
+        "payment_term_installment_days": "paymentTermInstallmentDays",
+        "is_active": "isActive",
+      });
+    }),
+  )
 );
 
 export function apiSupplierListResponseDataFromJSON(
@@ -89,22 +109,24 @@ export function apiSupplierListResponseDataFromJSON(
 export const ApiSupplierListResponse$inboundSchema: z.ZodMiniType<
   ApiSupplierListResponse,
   unknown
-> = z.pipe(
-  z.object({
-    request_id: types.string(),
-    data: z.array(z.lazy(() => ApiSupplierListResponseData$inboundSchema)),
-    has_more: types.boolean(),
-    next_cursor: types.nullable(types.string()),
-    object: ApiSharedEnum8d46e1ec20$inboundSchema,
-    url: types.string(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "request_id": "requestId",
-      "has_more": "hasMore",
-      "next_cursor": "nextCursor",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      request_id: types.string(),
+      data: z.array(z.lazy(() => ApiSupplierListResponseData$inboundSchema)),
+      has_more: types.boolean(),
+      next_cursor: types.nullable(types.string()),
+      object: ApiSharedEnum8d46e1ec20$inboundSchema,
+      url: types.string(),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "request_id": "requestId",
+        "has_more": "hasMore",
+        "next_cursor": "nextCursor",
+      });
+    }),
+  )
 );
 
 export function apiSupplierListResponseFromJSON(

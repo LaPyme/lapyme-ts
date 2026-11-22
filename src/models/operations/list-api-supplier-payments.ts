@@ -5,12 +5,24 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
-import { safeParse } from "../../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../../lib/schemas.js";
+import { ClosedEnum } from "../../types/enums.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import * as models from "../index.js";
 
+export const Include = {
+  Splits: "splits",
+  Applications: "applications",
+  Withholdings: "withholdings",
+} as const;
+export type Include = ClosedEnum<typeof Include>;
+
 export type ListApiSupplierPaymentsRequest = {
+  /**
+   * Detalles opcionales del pago. Usá splits, applications y withholdings para consultar una página completa sin abrir cada pago.
+   */
+  include?: Array<Include> | undefined;
   /**
    * Valor de next_cursor recibido en la respuesta anterior
    */
@@ -43,7 +55,12 @@ export type ListApiSupplierPaymentsResponse = {
 };
 
 /** @internal */
+export const Include$outboundSchema: z.ZodMiniEnum<typeof Include> =
+  /* @__PURE__ */ lazySchema$(() => z.enum(Include));
+
+/** @internal */
 export type ListApiSupplierPaymentsRequest$Outbound = {
+  "include[]"?: Array<string> | undefined;
   cursor?: string | undefined;
   limit: number;
   query?: string | undefined;
@@ -56,27 +73,38 @@ export type ListApiSupplierPaymentsRequest$Outbound = {
 export const ListApiSupplierPaymentsRequest$outboundSchema: z.ZodMiniType<
   ListApiSupplierPaymentsRequest$Outbound,
   ListApiSupplierPaymentsRequest
-> = z.pipe(
-  z.object({
-    cursor: z.optional(z.string()),
-    limit: z._default(z.int(), 50),
-    query: z.optional(z.string()),
-    status: z._default(models.ApiSharedEnum8ef2575a44$outboundSchema, "active"),
-    dateFrom: z.optional(z.pipe(
-      z.date(),
-      z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
-    )),
-    dateTo: z.optional(z.pipe(
-      z.date(),
-      z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
-    )),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      dateFrom: "date_from",
-      dateTo: "date_to",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      include: z.optional(z.array(Include$outboundSchema)),
+      cursor: z.optional(z.string()),
+      limit: z._default(z.int(), 50),
+      query: z.optional(z.string()),
+      status: z._default(
+        models.ApiSharedEnum8ef2575a44$outboundSchema,
+        "active",
+      ),
+      dateFrom: z.optional(
+        z.pipe(
+          z.date(),
+          z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
+        ),
+      ),
+      dateTo: z.optional(
+        z.pipe(
+          z.date(),
+          z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
+        ),
+      ),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        include: "include[]",
+        dateFrom: "date_from",
+        dateTo: "date_to",
+      });
+    }),
+  )
 );
 
 export function listApiSupplierPaymentsRequestToJSON(
@@ -93,17 +121,19 @@ export function listApiSupplierPaymentsRequestToJSON(
 export const ListApiSupplierPaymentsResponse$inboundSchema: z.ZodMiniType<
   ListApiSupplierPaymentsResponse,
   unknown
-> = z.pipe(
-  z.object({
-    Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
-    Result: models.ApiSupplierPaymentListResponse$inboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "Headers": "headers",
-      "Result": "result",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
+      Result: models.ApiSupplierPaymentListResponse$inboundSchema,
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "Headers": "headers",
+        "Result": "result",
+      });
+    }),
+  )
 );
 
 export function listApiSupplierPaymentsResponseFromJSON(

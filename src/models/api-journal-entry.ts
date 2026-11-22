@@ -5,13 +5,13 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import {
-  ApiSharedObject136b444e9e,
-  ApiSharedObject136b444e9e$inboundSchema,
-} from "./api-shared-object136b444e9e.js";
+  ApiSharedObjectbed5d5812a,
+  ApiSharedObjectbed5d5812a$inboundSchema,
+} from "./api-shared-objectbed5d5812a.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type ApiJournalEntry = {
@@ -25,41 +25,49 @@ export type ApiJournalEntry = {
   sourceId: string | null;
   currency: string;
   exchangeRate: number | null;
+  /**
+   * Circuito contable del asiento. null es el circuito General.
+   */
+  circuitId: string | null;
   createdAt: Date;
   updatedAt: Date;
-  lines: Array<ApiSharedObject136b444e9e>;
+  lines: Array<ApiSharedObjectbed5d5812a>;
 };
 
 /** @internal */
 export const ApiJournalEntry$inboundSchema: z.ZodMiniType<
   ApiJournalEntry,
   unknown
-> = z.pipe(
-  z.object({
-    object: types.literal("journal_entry"),
-    id: types.string(),
-    entry_number: types.nullable(types.number()),
-    date: types.date(),
-    description: types.string(),
-    reference: types.nullable(types.string()),
-    source_type: types.nullable(types.string()),
-    source_id: types.nullable(types.string()),
-    currency: types.string(),
-    exchange_rate: types.nullable(types.number()),
-    created_at: types.date(),
-    updated_at: types.date(),
-    lines: z.array(ApiSharedObject136b444e9e$inboundSchema),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "entry_number": "entryNumber",
-      "source_type": "sourceType",
-      "source_id": "sourceId",
-      "exchange_rate": "exchangeRate",
-      "created_at": "createdAt",
-      "updated_at": "updatedAt",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      object: types.literal("journal_entry"),
+      id: types.string(),
+      entry_number: types.nullable(types.number()),
+      date: types.date(),
+      description: types.string(),
+      reference: types.nullable(types.string()),
+      source_type: types.nullable(types.string()),
+      source_id: types.nullable(types.string()),
+      currency: types.string(),
+      exchange_rate: types.nullable(types.number()),
+      circuit_id: types.nullable(types.string()),
+      created_at: types.date(),
+      updated_at: types.date(),
+      lines: z.array(ApiSharedObjectbed5d5812a$inboundSchema),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "entry_number": "entryNumber",
+        "source_type": "sourceType",
+        "source_id": "sourceId",
+        "exchange_rate": "exchangeRate",
+        "circuit_id": "circuitId",
+        "created_at": "createdAt",
+        "updated_at": "updatedAt",
+      });
+    }),
+  )
 );
 
 export function apiJournalEntryFromJSON(

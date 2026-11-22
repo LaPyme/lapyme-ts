@@ -9,7 +9,16 @@ let value: PreviewApiInflationAdjustmentResponse = {
   headers: {
     "key": [],
   },
-  result: {},
+  result: {
+    requestId: "<id>",
+    effectiveScope: {
+      circuitId: "8abec0cb-e3f6-4226-94ca-2340e2f84285",
+      circuitName: "<value>",
+    },
+    data: {
+      "key": "<value>",
+    },
+  },
 };
 ```
 
@@ -18,4 +27,4 @@ let value: PreviewApiInflationAdjustmentResponse = {
 | Field                                                                           | Type                                                                            | Required                                                                        | Description                                                                     |
 | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
 | `headers`                                                                       | Record<string, *string*[]>                                                      | :heavy_check_mark:                                                              | N/A                                                                             |
-| `result`                                                                        | [models.ApiSharedObject682bce59ac](../../models/api-shared-object682bce59ac.md) | :heavy_check_mark:                                                              | N/A                                                                             |
+| `result`                                                                        | [models.ApiSharedObject3e680f0be1](../../models/api-shared-object3e680f0be1.md) | :heavy_check_mark:                                                              | N/A                                                                             |
