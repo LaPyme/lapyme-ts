@@ -5,25 +5,37 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
+import { smartUnion } from "../types/smart-union.js";
 import {
-  ApiSharedObject263c44dc2c,
-  ApiSharedObject263c44dc2c$inboundSchema,
-} from "./api-shared-object263c44dc2c.js";
+  ApiSharedObject18d478a65b,
+  ApiSharedObject18d478a65b$inboundSchema,
+} from "./api-shared-object18d478a65b.js";
 import {
-  ApiSharedObject6f6a8f3873,
-  ApiSharedObject6f6a8f3873$inboundSchema,
-} from "./api-shared-object6f6a8f3873.js";
+  ApiSharedObject308596969e,
+  ApiSharedObject308596969e$inboundSchema,
+} from "./api-shared-object308596969e.js";
+import {
+  ApiSharedObjectbd6833a5e8,
+  ApiSharedObjectbd6833a5e8$inboundSchema,
+} from "./api-shared-objectbd6833a5e8.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
+
+/**
+ * Circuito sobre el que corrió el reporte: `all` para todos los circuitos, o el circuito pedido (`circuit_id` null es General).
+ */
+export type ApiAccountLedgerResponseEffectiveScope =
+  | ApiSharedObjectbd6833a5e8
+  | string;
 
 export type ApiAccountLedgerResponseData = {
   object: "account_ledger";
-  account: ApiSharedObject6f6a8f3873;
+  account: ApiSharedObject18d478a65b;
   openingBalance: number;
   currency: string;
-  lines: Array<ApiSharedObject263c44dc2c>;
+  lines: Array<ApiSharedObject308596969e>;
   closingBalance: number;
   hasMore: boolean;
   nextCursor: string | null;
@@ -31,32 +43,56 @@ export type ApiAccountLedgerResponseData = {
 
 export type ApiAccountLedgerResponse = {
   requestId: string;
+  /**
+   * Circuito sobre el que corrió el reporte: `all` para todos los circuitos, o el circuito pedido (`circuit_id` null es General).
+   */
+  effectiveScope: ApiSharedObjectbd6833a5e8 | string;
   data: ApiAccountLedgerResponseData;
 };
+
+/** @internal */
+export const ApiAccountLedgerResponseEffectiveScope$inboundSchema:
+  z.ZodMiniType<ApiAccountLedgerResponseEffectiveScope, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      smartUnion([ApiSharedObjectbd6833a5e8$inboundSchema, types.string()])
+    );
+
+export function apiAccountLedgerResponseEffectiveScopeFromJSON(
+  jsonString: string,
+): SafeParseResult<ApiAccountLedgerResponseEffectiveScope, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) =>
+      ApiAccountLedgerResponseEffectiveScope$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ApiAccountLedgerResponseEffectiveScope' from JSON`,
+  );
+}
 
 /** @internal */
 export const ApiAccountLedgerResponseData$inboundSchema: z.ZodMiniType<
   ApiAccountLedgerResponseData,
   unknown
-> = z.pipe(
-  z.object({
-    object: types.literal("account_ledger"),
-    account: ApiSharedObject6f6a8f3873$inboundSchema,
-    opening_balance: types.number(),
-    currency: types.string(),
-    lines: z.array(ApiSharedObject263c44dc2c$inboundSchema),
-    closing_balance: types.number(),
-    has_more: types.boolean(),
-    next_cursor: types.nullable(types.string()),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "opening_balance": "openingBalance",
-      "closing_balance": "closingBalance",
-      "has_more": "hasMore",
-      "next_cursor": "nextCursor",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      object: types.literal("account_ledger"),
+      account: ApiSharedObject18d478a65b$inboundSchema,
+      opening_balance: types.number(),
+      currency: types.string(),
+      lines: z.array(ApiSharedObject308596969e$inboundSchema),
+      closing_balance: types.number(),
+      has_more: types.boolean(),
+      next_cursor: types.nullable(types.string()),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "opening_balance": "openingBalance",
+        "closing_balance": "closingBalance",
+        "has_more": "hasMore",
+        "next_cursor": "nextCursor",
+      });
+    }),
+  )
 );
 
 export function apiAccountLedgerResponseDataFromJSON(
@@ -73,16 +109,23 @@ export function apiAccountLedgerResponseDataFromJSON(
 export const ApiAccountLedgerResponse$inboundSchema: z.ZodMiniType<
   ApiAccountLedgerResponse,
   unknown
-> = z.pipe(
-  z.object({
-    request_id: types.string(),
-    data: z.lazy(() => ApiAccountLedgerResponseData$inboundSchema),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "request_id": "requestId",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      request_id: types.string(),
+      effective_scope: smartUnion([
+        ApiSharedObjectbd6833a5e8$inboundSchema,
+        types.string(),
+      ]),
+      data: z.lazy(() => ApiAccountLedgerResponseData$inboundSchema),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "request_id": "requestId",
+        "effective_scope": "effectiveScope",
+      });
+    }),
+  )
 );
 
 export function apiAccountLedgerResponseFromJSON(

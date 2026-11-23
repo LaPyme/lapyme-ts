@@ -5,7 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import {
@@ -13,14 +13,14 @@ import {
   ApiSharedEnum8d46e1ec20$inboundSchema,
 } from "./api-shared-enum8d46e1ec20.js";
 import {
-  ApiSharedObjectbea6e6be70,
-  ApiSharedObjectbea6e6be70$inboundSchema,
-} from "./api-shared-objectbea6e6be70.js";
+  ApiSharedObjecta2bd01d7eb,
+  ApiSharedObjecta2bd01d7eb$inboundSchema,
+} from "./api-shared-objecta2bd01d7eb.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type ApiPaymentMethodListResponse = {
   requestId: string;
-  data: Array<ApiSharedObjectbea6e6be70>;
+  data: Array<ApiSharedObjecta2bd01d7eb>;
   hasMore: boolean;
   nextCursor: string | null;
   /**
@@ -37,22 +37,24 @@ export type ApiPaymentMethodListResponse = {
 export const ApiPaymentMethodListResponse$inboundSchema: z.ZodMiniType<
   ApiPaymentMethodListResponse,
   unknown
-> = z.pipe(
-  z.object({
-    request_id: types.string(),
-    data: z.array(ApiSharedObjectbea6e6be70$inboundSchema),
-    has_more: types.boolean(),
-    next_cursor: types.nullable(types.string()),
-    object: ApiSharedEnum8d46e1ec20$inboundSchema,
-    url: types.string(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "request_id": "requestId",
-      "has_more": "hasMore",
-      "next_cursor": "nextCursor",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      request_id: types.string(),
+      data: z.array(ApiSharedObjecta2bd01d7eb$inboundSchema),
+      has_more: types.boolean(),
+      next_cursor: types.nullable(types.string()),
+      object: ApiSharedEnum8d46e1ec20$inboundSchema,
+      url: types.string(),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "request_id": "requestId",
+        "has_more": "hasMore",
+        "next_cursor": "nextCursor",
+      });
+    }),
+  )
 );
 
 export function apiPaymentMethodListResponseFromJSON(

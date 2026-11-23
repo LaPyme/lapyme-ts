@@ -5,12 +5,16 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
-import { safeParse } from "../../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import * as models from "../index.js";
 
 export type UpdateApiTagRequest = {
+  /**
+   * Clave estable para deduplicar reintentos de la misma operación. Opcional en v1; si se envía, un reintento con la misma clave y el mismo cuerpo devuelve el resultado original sin repetir la operación, y con otro cuerpo devuelve 409.
+   */
+  idempotencyKey?: string | undefined;
   /**
    * ID de la etiqueta
    */
@@ -29,6 +33,7 @@ export type UpdateApiTagResponse = {
 
 /** @internal */
 export type UpdateApiTagRequest$Outbound = {
+  "Idempotency-Key"?: string | undefined;
   tag_id: string;
   "X-Request-Id"?: string | undefined;
   body: models.ApiTagUpdateRequest$Outbound;
@@ -38,18 +43,22 @@ export type UpdateApiTagRequest$Outbound = {
 export const UpdateApiTagRequest$outboundSchema: z.ZodMiniType<
   UpdateApiTagRequest$Outbound,
   UpdateApiTagRequest
-> = z.pipe(
-  z.object({
-    tagId: z.string(),
-    xRequestId: z.optional(z.string()),
-    body: models.ApiTagUpdateRequest$outboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      tagId: "tag_id",
-      xRequestId: "X-Request-Id",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      idempotencyKey: z.optional(z.string()),
+      tagId: z.string(),
+      xRequestId: z.optional(z.string()),
+      body: models.ApiTagUpdateRequest$outboundSchema,
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        idempotencyKey: "Idempotency-Key",
+        tagId: "tag_id",
+        xRequestId: "X-Request-Id",
+      });
+    }),
+  )
 );
 
 export function updateApiTagRequestToJSON(
@@ -64,17 +73,19 @@ export function updateApiTagRequestToJSON(
 export const UpdateApiTagResponse$inboundSchema: z.ZodMiniType<
   UpdateApiTagResponse,
   unknown
-> = z.pipe(
-  z.object({
-    Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
-    Result: models.ApiTagUpdateResponse$inboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "Headers": "headers",
-      "Result": "result",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
+      Result: models.ApiTagUpdateResponse$inboundSchema,
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "Headers": "headers",
+        "Result": "result",
+      });
+    }),
+  )
 );
 
 export function updateApiTagResponseFromJSON(

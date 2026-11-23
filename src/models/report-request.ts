@@ -4,11 +4,22 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
+import {
+  AppliedCollectionsReportRequest,
+  AppliedCollectionsReportRequest$Outbound,
+  AppliedCollectionsReportRequest$outboundSchema,
+} from "./applied-collections-report-request.js";
 import {
   InventoryReportRequest,
   InventoryReportRequest$Outbound,
   InventoryReportRequest$outboundSchema,
 } from "./inventory-report-request.js";
+import {
+  MarketplaceListingsReportRequest,
+  MarketplaceListingsReportRequest$Outbound,
+  MarketplaceListingsReportRequest$outboundSchema,
+} from "./marketplace-listings-report-request.js";
 import {
   PaymentsReportRequest,
   PaymentsReportRequest$Outbound,
@@ -24,30 +35,46 @@ import {
   SalesReportRequest$Outbound,
   SalesReportRequest$outboundSchema,
 } from "./sales-report-request.js";
+import {
+  TreasuryReportRequest,
+  TreasuryReportRequest$Outbound,
+  TreasuryReportRequest$outboundSchema,
+} from "./treasury-report-request.js";
 
 export type ReportRequest =
   | SalesReportRequest
   | PurchasesReportRequest
   | PaymentsReportRequest
-  | InventoryReportRequest;
+  | AppliedCollectionsReportRequest
+  | InventoryReportRequest
+  | MarketplaceListingsReportRequest
+  | TreasuryReportRequest;
 
 /** @internal */
 export type ReportRequest$Outbound =
   | SalesReportRequest$Outbound
   | PurchasesReportRequest$Outbound
   | PaymentsReportRequest$Outbound
-  | InventoryReportRequest$Outbound;
+  | AppliedCollectionsReportRequest$Outbound
+  | InventoryReportRequest$Outbound
+  | MarketplaceListingsReportRequest$Outbound
+  | TreasuryReportRequest$Outbound;
 
 /** @internal */
 export const ReportRequest$outboundSchema: z.ZodMiniType<
   ReportRequest$Outbound,
   ReportRequest
-> = z.union([
-  SalesReportRequest$outboundSchema,
-  PurchasesReportRequest$outboundSchema,
-  PaymentsReportRequest$outboundSchema,
-  InventoryReportRequest$outboundSchema,
-]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.union([
+    SalesReportRequest$outboundSchema,
+    PurchasesReportRequest$outboundSchema,
+    PaymentsReportRequest$outboundSchema,
+    AppliedCollectionsReportRequest$outboundSchema,
+    InventoryReportRequest$outboundSchema,
+    MarketplaceListingsReportRequest$outboundSchema,
+    TreasuryReportRequest$outboundSchema,
+  ])
+);
 
 export function reportRequestToJSON(reportRequest: ReportRequest): string {
   return JSON.stringify(ReportRequest$outboundSchema.parse(reportRequest));

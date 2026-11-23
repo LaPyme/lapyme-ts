@@ -5,6 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type ApiCategoryMutationRequest = {
   name: string;
@@ -23,18 +24,20 @@ export type ApiCategoryMutationRequest$Outbound = {
 export const ApiCategoryMutationRequest$outboundSchema: z.ZodMiniType<
   ApiCategoryMutationRequest$Outbound,
   ApiCategoryMutationRequest
-> = z.pipe(
-  z.object({
-    name: z.string(),
-    parentId: z.optional(z.nullable(z.string())),
-    defaultEconomicActivity: z.optional(z.nullable(z.string())),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      parentId: "parent_id",
-      defaultEconomicActivity: "default_economic_activity",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      name: z.string(),
+      parentId: z.optional(z.nullable(z.string())),
+      defaultEconomicActivity: z.optional(z.nullable(z.string())),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        parentId: "parent_id",
+        defaultEconomicActivity: "default_economic_activity",
+      });
+    }),
+  )
 );
 
 export function apiCategoryMutationRequestToJSON(

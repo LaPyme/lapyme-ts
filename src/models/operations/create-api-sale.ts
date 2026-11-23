@@ -5,12 +5,16 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
-import { safeParse } from "../../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import * as models from "../index.js";
 
 export type CreateApiSaleRequest = {
+  /**
+   * Versión fechada del contrato de creación de ventas. Usá 2026-08-20 en integraciones nuevas. Omitirla conserva el contrato de entrada histórico deprecado; ambos contratos calculan el IVA una sola vez.
+   */
+  lapymeVersion?: models.ApiSharedEnumf007ccd7a1 | undefined;
   /**
    * Clave única para evitar duplicados al reintentar la misma creación de venta.
    */
@@ -29,6 +33,7 @@ export type CreateApiSaleResponse = {
 
 /** @internal */
 export type CreateApiSaleRequest$Outbound = {
+  "Lapyme-Version"?: string | undefined;
   "Idempotency-Key": string;
   "X-Request-Id"?: string | undefined;
   body: models.ApiSaleTransactionRequest$Outbound;
@@ -38,18 +43,22 @@ export type CreateApiSaleRequest$Outbound = {
 export const CreateApiSaleRequest$outboundSchema: z.ZodMiniType<
   CreateApiSaleRequest$Outbound,
   CreateApiSaleRequest
-> = z.pipe(
-  z.object({
-    idempotencyKey: z.string(),
-    xRequestId: z.optional(z.string()),
-    body: models.ApiSaleTransactionRequest$outboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      idempotencyKey: "Idempotency-Key",
-      xRequestId: "X-Request-Id",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      lapymeVersion: z.optional(models.ApiSharedEnumf007ccd7a1$outboundSchema),
+      idempotencyKey: z.string(),
+      xRequestId: z.optional(z.string()),
+      body: models.ApiSaleTransactionRequest$outboundSchema,
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        lapymeVersion: "Lapyme-Version",
+        idempotencyKey: "Idempotency-Key",
+        xRequestId: "X-Request-Id",
+      });
+    }),
+  )
 );
 
 export function createApiSaleRequestToJSON(
@@ -64,17 +73,19 @@ export function createApiSaleRequestToJSON(
 export const CreateApiSaleResponse$inboundSchema: z.ZodMiniType<
   CreateApiSaleResponse,
   unknown
-> = z.pipe(
-  z.object({
-    Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
-    Result: models.ApiSaleTransactionSuccessResponse$inboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "Headers": "headers",
-      "Result": "result",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
+      Result: models.ApiSaleTransactionSuccessResponse$inboundSchema,
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "Headers": "headers",
+        "Result": "result",
+      });
+    }),
+  )
 );
 
 export function createApiSaleResponseFromJSON(

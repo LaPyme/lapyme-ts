@@ -5,21 +5,15 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
-import { ClosedEnum } from "../types/enums.js";
-
-export const ApiManualJournalEntryRequestCurrency = {
-  Pes: "PES",
-  Dol: "DOL",
-  One: "001",
-  Sixty: "060",
-} as const;
-export type ApiManualJournalEntryRequestCurrency = ClosedEnum<
-  typeof ApiManualJournalEntryRequestCurrency
->;
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
+import {
+  ApiSharedEnume7d4eca700,
+  ApiSharedEnume7d4eca700$outboundSchema,
+} from "./api-shared-enume7d4eca700.js";
 
 export type ApiManualJournalEntryRequestLine = {
   accountId: string;
-  currency?: ApiManualJournalEntryRequestCurrency | undefined;
+  currency?: ApiSharedEnume7d4eca700 | undefined;
   debit?: number | null | undefined;
   credit?: number | null | undefined;
   enteredDebit?: number | null | undefined;
@@ -41,11 +35,6 @@ export type ApiManualJournalEntryRequest = {
 };
 
 /** @internal */
-export const ApiManualJournalEntryRequestCurrency$outboundSchema: z.ZodMiniEnum<
-  typeof ApiManualJournalEntryRequestCurrency
-> = z.enum(ApiManualJournalEntryRequestCurrency);
-
-/** @internal */
 export type ApiManualJournalEntryRequestLine$Outbound = {
   account_id: string;
   currency?: string | undefined;
@@ -64,31 +53,33 @@ export type ApiManualJournalEntryRequestLine$Outbound = {
 export const ApiManualJournalEntryRequestLine$outboundSchema: z.ZodMiniType<
   ApiManualJournalEntryRequestLine$Outbound,
   ApiManualJournalEntryRequestLine
-> = z.pipe(
-  z.object({
-    accountId: z.string(),
-    currency: z.optional(ApiManualJournalEntryRequestCurrency$outboundSchema),
-    debit: z.optional(z.nullable(z.int())),
-    credit: z.optional(z.nullable(z.int())),
-    enteredDebit: z.optional(z.nullable(z.int())),
-    enteredCredit: z.optional(z.nullable(z.int())),
-    costCenter1Id: z.optional(z.nullable(z.string())),
-    costCenter2Id: z.optional(z.nullable(z.string())),
-    costCenter3Id: z.optional(z.nullable(z.string())),
-    contactId: z.optional(z.nullable(z.string())),
-    description: z.optional(z.nullable(z.string())),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      accountId: "account_id",
-      enteredDebit: "entered_debit",
-      enteredCredit: "entered_credit",
-      costCenter1Id: "cost_center1_id",
-      costCenter2Id: "cost_center2_id",
-      costCenter3Id: "cost_center3_id",
-      contactId: "contact_id",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      accountId: z.string(),
+      currency: z.optional(ApiSharedEnume7d4eca700$outboundSchema),
+      debit: z.optional(z.nullable(z.int())),
+      credit: z.optional(z.nullable(z.int())),
+      enteredDebit: z.optional(z.nullable(z.int())),
+      enteredCredit: z.optional(z.nullable(z.int())),
+      costCenter1Id: z.optional(z.nullable(z.string())),
+      costCenter2Id: z.optional(z.nullable(z.string())),
+      costCenter3Id: z.optional(z.nullable(z.string())),
+      contactId: z.optional(z.nullable(z.string())),
+      description: z.optional(z.nullable(z.string())),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        accountId: "account_id",
+        enteredDebit: "entered_debit",
+        enteredCredit: "entered_credit",
+        costCenter1Id: "cost_center1_id",
+        costCenter2Id: "cost_center2_id",
+        costCenter3Id: "cost_center3_id",
+        contactId: "contact_id",
+      });
+    }),
+  )
 );
 
 export function apiManualJournalEntryRequestLineToJSON(
@@ -115,29 +106,31 @@ export type ApiManualJournalEntryRequest$Outbound = {
 export const ApiManualJournalEntryRequest$outboundSchema: z.ZodMiniType<
   ApiManualJournalEntryRequest$Outbound,
   ApiManualJournalEntryRequest
-> = z.pipe(
-  z.object({
-    occurredAt: z.pipe(
-      z.date(),
-      z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
-    ),
-    description: z.string(),
-    reference: z.optional(z.nullable(z.string())),
-    exchangeRate: z.optional(z.nullable(z.number())),
-    expectedUpdatedAt: z.optional(
-      z.pipe(z.date(), z.transform(v => v.toISOString())),
-    ),
-    lines: z.array(
-      z.lazy(() => ApiManualJournalEntryRequestLine$outboundSchema),
-    ),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      occurredAt: "occurred_at",
-      exchangeRate: "exchange_rate",
-      expectedUpdatedAt: "expected_updated_at",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      occurredAt: z.pipe(
+        z.date(),
+        z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
+      ),
+      description: z.string(),
+      reference: z.optional(z.nullable(z.string())),
+      exchangeRate: z.optional(z.nullable(z.number())),
+      expectedUpdatedAt: z.optional(
+        z.pipe(z.date(), z.transform(v => v.toISOString())),
+      ),
+      lines: z.array(
+        z.lazy(() => ApiManualJournalEntryRequestLine$outboundSchema),
+      ),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        occurredAt: "occurred_at",
+        exchangeRate: "exchange_rate",
+        expectedUpdatedAt: "expected_updated_at",
+      });
+    }),
+  )
 );
 
 export function apiManualJournalEntryRequestToJSON(

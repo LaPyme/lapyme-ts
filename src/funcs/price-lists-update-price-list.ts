@@ -10,9 +10,8 @@ import { matchStatusCode } from "../lib/http.js";
 import * as M from "../lib/matchers.js";
 import { compactMap } from "../lib/primitives.js";
 import { safeParse } from "../lib/schemas.js";
-import { RequestOptions } from "../lib/sdks.js";
+import { encodePath, RequestOptions } from "../lib/sdks.js";
 import { extractSecurity, resolveGlobalSecurity } from "../lib/security.js";
-import { pathToFunc } from "../lib/url.js";
 import {
   ConnectionError,
   InvalidRequestError,
@@ -32,7 +31,7 @@ import { Result } from "../types/fp.js";
  * Actualizar lista de precios
  *
  * @remarks
- * Actualiza una lista de precios y devuelve el detalle persistido, incluyendo si se disparó la sincronización de precios.
+ * Actualiza una lista de precios y devuelve el detalle persistido, incluyendo si se disparó la sincronización de precios. Si cambia cómo se calcula la lista (manual, desde el precio base u otra lista, o desde el costo), se borran los ajustes por producto en porcentaje que no corresponden al nuevo cálculo. Al pasar de manual a automática se borran también los precios fijos por producto.
  */
 export function priceListsUpdatePriceList(
   client: LapymeCore,
@@ -98,11 +97,23 @@ async function $do(
       charEncoding: "percent",
     }),
   };
-  const path = pathToFunc("/api/v1/price-lists/{price_list_id}")(pathParams);
+  const pathResult = encodePath(
+    "/api/v1/price-lists/{price_list_id}",
+    pathParams,
+  );
+  if (!pathResult.ok) {
+    return [pathResult, { status: "invalid" }];
+  }
+  const path = pathResult.value;
 
   const headers = new Headers(compactMap({
     "Content-Type": "application/json",
     Accept: "application/json",
+    "Idempotency-Key": encodeSimple(
+      "Idempotency-Key",
+      payload["Idempotency-Key"],
+      { explode: false, charEncoding: "none" },
+    ),
     "X-Request-Id": encodeSimple("X-Request-Id", payload["X-Request-Id"], {
       explode: false,
       charEncoding: "none",
@@ -187,6 +198,7 @@ async function $do(
     M.jsonErr([400, 401, 403, 404, 409], errors.ApiErrorEnvelope$inboundSchema),
     M.jsonErr(429, errors.ApiErrorEnvelope$inboundSchema, { hdrs: true }),
     M.jsonErr(500, errors.ApiErrorEnvelope$inboundSchema),
+    M.jsonErr(503, errors.ApiErrorEnvelope$inboundSchema, { hdrs: true }),
     M.fail("4XX"),
     M.fail("5XX"),
   )(response, req, { extraFields: responseFields });

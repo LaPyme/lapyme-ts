@@ -5,6 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import { ClosedEnum } from "../types/enums.js";
 
 export const AutomaticPricingMode = {
@@ -18,6 +19,7 @@ export type ApiPriceListMutationRequest = {
   isAutomatic?: boolean | undefined;
   automaticPricingMode?: AutomaticPricingMode | undefined;
   adjustmentPercentage?: number | null | undefined;
+  sourcePriceListId?: string | null | undefined;
   defaultEconomicActivity?: string | null | undefined;
   taxInclusive?: boolean | undefined;
 };
@@ -25,7 +27,7 @@ export type ApiPriceListMutationRequest = {
 /** @internal */
 export const AutomaticPricingMode$outboundSchema: z.ZodMiniEnum<
   typeof AutomaticPricingMode
-> = z.enum(AutomaticPricingMode);
+> = /* @__PURE__ */ lazySchema$(() => z.enum(AutomaticPricingMode));
 
 /** @internal */
 export type ApiPriceListMutationRequest$Outbound = {
@@ -33,6 +35,7 @@ export type ApiPriceListMutationRequest$Outbound = {
   is_automatic: boolean;
   automatic_pricing_mode: string;
   adjustment_percentage?: number | null | undefined;
+  source_price_list_id?: string | null | undefined;
   default_economic_activity?: string | null | undefined;
   tax_inclusive: boolean;
 };
@@ -41,27 +44,31 @@ export type ApiPriceListMutationRequest$Outbound = {
 export const ApiPriceListMutationRequest$outboundSchema: z.ZodMiniType<
   ApiPriceListMutationRequest$Outbound,
   ApiPriceListMutationRequest
-> = z.pipe(
-  z.object({
-    name: z.string(),
-    isAutomatic: z._default(z.boolean(), true),
-    automaticPricingMode: z._default(
-      AutomaticPricingMode$outboundSchema,
-      "base_price_adjustment",
-    ),
-    adjustmentPercentage: z.optional(z.nullable(z.number())),
-    defaultEconomicActivity: z.optional(z.nullable(z.string())),
-    taxInclusive: z._default(z.boolean(), true),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      isAutomatic: "is_automatic",
-      automaticPricingMode: "automatic_pricing_mode",
-      adjustmentPercentage: "adjustment_percentage",
-      defaultEconomicActivity: "default_economic_activity",
-      taxInclusive: "tax_inclusive",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      name: z.string(),
+      isAutomatic: z._default(z.boolean(), true),
+      automaticPricingMode: z._default(
+        AutomaticPricingMode$outboundSchema,
+        "base_price_adjustment",
+      ),
+      adjustmentPercentage: z.optional(z.nullable(z.number())),
+      sourcePriceListId: z.optional(z.nullable(z.string())),
+      defaultEconomicActivity: z.optional(z.nullable(z.string())),
+      taxInclusive: z._default(z.boolean(), true),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        isAutomatic: "is_automatic",
+        automaticPricingMode: "automatic_pricing_mode",
+        adjustmentPercentage: "adjustment_percentage",
+        sourcePriceListId: "source_price_list_id",
+        defaultEconomicActivity: "default_economic_activity",
+        taxInclusive: "tax_inclusive",
+      });
+    }),
+  )
 );
 
 export function apiPriceListMutationRequestToJSON(

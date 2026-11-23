@@ -5,14 +5,26 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
+import { smartUnion } from "../types/smart-union.js";
 import {
-  ApiSharedObject136b444e9e,
-  ApiSharedObject136b444e9e$inboundSchema,
-} from "./api-shared-object136b444e9e.js";
+  ApiSharedObjectbd6833a5e8,
+  ApiSharedObjectbd6833a5e8$inboundSchema,
+} from "./api-shared-objectbd6833a5e8.js";
+import {
+  ApiSharedObjectbed5d5812a,
+  ApiSharedObjectbed5d5812a$inboundSchema,
+} from "./api-shared-objectbed5d5812a.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
+
+/**
+ * Circuito sobre el que corrió el reporte: `all` para todos los circuitos, o el circuito pedido (`circuit_id` null es General).
+ */
+export type ApiJournalEntriesListResponseEffectiveScope =
+  | ApiSharedObjectbd6833a5e8
+  | string;
 
 export type ApiJournalEntriesListResponseData = {
   object: "journal_entry";
@@ -25,13 +37,21 @@ export type ApiJournalEntriesListResponseData = {
   sourceId: string | null;
   currency: string;
   exchangeRate: number | null;
+  /**
+   * Circuito contable del asiento. null es el circuito General.
+   */
+  circuitId: string | null;
   createdAt: Date;
   updatedAt: Date;
-  lines: Array<ApiSharedObject136b444e9e>;
+  lines: Array<ApiSharedObjectbed5d5812a>;
 };
 
 export type ApiJournalEntriesListResponse = {
   requestId: string;
+  /**
+   * Circuito sobre el que corrió el reporte: `all` para todos los circuitos, o el circuito pedido (`circuit_id` null es General).
+   */
+  effectiveScope: ApiSharedObjectbd6833a5e8 | string;
   object: "list";
   url: string;
   data: Array<ApiJournalEntriesListResponseData>;
@@ -40,35 +60,62 @@ export type ApiJournalEntriesListResponse = {
 };
 
 /** @internal */
+export const ApiJournalEntriesListResponseEffectiveScope$inboundSchema:
+  z.ZodMiniType<ApiJournalEntriesListResponseEffectiveScope, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      smartUnion([ApiSharedObjectbd6833a5e8$inboundSchema, types.string()])
+    );
+
+export function apiJournalEntriesListResponseEffectiveScopeFromJSON(
+  jsonString: string,
+): SafeParseResult<
+  ApiJournalEntriesListResponseEffectiveScope,
+  SDKValidationError
+> {
+  return safeParse(
+    jsonString,
+    (x) =>
+      ApiJournalEntriesListResponseEffectiveScope$inboundSchema.parse(
+        JSON.parse(x),
+      ),
+    `Failed to parse 'ApiJournalEntriesListResponseEffectiveScope' from JSON`,
+  );
+}
+
+/** @internal */
 export const ApiJournalEntriesListResponseData$inboundSchema: z.ZodMiniType<
   ApiJournalEntriesListResponseData,
   unknown
-> = z.pipe(
-  z.object({
-    object: types.literal("journal_entry"),
-    id: types.string(),
-    entry_number: types.nullable(types.number()),
-    date: types.date(),
-    description: types.string(),
-    reference: types.nullable(types.string()),
-    source_type: types.nullable(types.string()),
-    source_id: types.nullable(types.string()),
-    currency: types.string(),
-    exchange_rate: types.nullable(types.number()),
-    created_at: types.date(),
-    updated_at: types.date(),
-    lines: z.array(ApiSharedObject136b444e9e$inboundSchema),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "entry_number": "entryNumber",
-      "source_type": "sourceType",
-      "source_id": "sourceId",
-      "exchange_rate": "exchangeRate",
-      "created_at": "createdAt",
-      "updated_at": "updatedAt",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      object: types.literal("journal_entry"),
+      id: types.string(),
+      entry_number: types.nullable(types.number()),
+      date: types.date(),
+      description: types.string(),
+      reference: types.nullable(types.string()),
+      source_type: types.nullable(types.string()),
+      source_id: types.nullable(types.string()),
+      currency: types.string(),
+      exchange_rate: types.nullable(types.number()),
+      circuit_id: types.nullable(types.string()),
+      created_at: types.date(),
+      updated_at: types.date(),
+      lines: z.array(ApiSharedObjectbed5d5812a$inboundSchema),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "entry_number": "entryNumber",
+        "source_type": "sourceType",
+        "source_id": "sourceId",
+        "exchange_rate": "exchangeRate",
+        "circuit_id": "circuitId",
+        "created_at": "createdAt",
+        "updated_at": "updatedAt",
+      });
+    }),
+  )
 );
 
 export function apiJournalEntriesListResponseDataFromJSON(
@@ -85,24 +132,31 @@ export function apiJournalEntriesListResponseDataFromJSON(
 export const ApiJournalEntriesListResponse$inboundSchema: z.ZodMiniType<
   ApiJournalEntriesListResponse,
   unknown
-> = z.pipe(
-  z.object({
-    request_id: types.string(),
-    object: types.literal("list"),
-    url: types.string(),
-    data: z.array(
-      z.lazy(() => ApiJournalEntriesListResponseData$inboundSchema),
-    ),
-    has_more: types.boolean(),
-    next_cursor: types.nullable(types.string()),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "request_id": "requestId",
-      "has_more": "hasMore",
-      "next_cursor": "nextCursor",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      request_id: types.string(),
+      effective_scope: smartUnion([
+        ApiSharedObjectbd6833a5e8$inboundSchema,
+        types.string(),
+      ]),
+      object: types.literal("list"),
+      url: types.string(),
+      data: z.array(
+        z.lazy(() => ApiJournalEntriesListResponseData$inboundSchema),
+      ),
+      has_more: types.boolean(),
+      next_cursor: types.nullable(types.string()),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "request_id": "requestId",
+        "effective_scope": "effectiveScope",
+        "has_more": "hasMore",
+        "next_cursor": "nextCursor",
+      });
+    }),
+  )
 );
 
 export function apiJournalEntriesListResponseFromJSON(

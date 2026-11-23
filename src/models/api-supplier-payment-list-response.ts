@@ -5,29 +5,41 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
-import {
-  ApiSharedEnum6cfb146157,
-  ApiSharedEnum6cfb146157$inboundSchema,
-} from "./api-shared-enum6cfb146157.js";
 import {
   ApiSharedEnum8d46e1ec20,
   ApiSharedEnum8d46e1ec20$inboundSchema,
 } from "./api-shared-enum8d46e1ec20.js";
 import {
-  ApiSharedObject0fb80a7625,
-  ApiSharedObject0fb80a7625$inboundSchema,
-} from "./api-shared-object0fb80a7625.js";
+  ApiSharedEnumffb4886f2b,
+  ApiSharedEnumffb4886f2b$inboundSchema,
+} from "./api-shared-enumffb4886f2b.js";
 import {
-  ApiSharedObject2a73ed97c3,
-  ApiSharedObject2a73ed97c3$inboundSchema,
-} from "./api-shared-object2a73ed97c3.js";
+  ApiSharedObject3734fb4ff5,
+  ApiSharedObject3734fb4ff5$inboundSchema,
+} from "./api-shared-object3734fb4ff5.js";
 import {
-  ApiSharedObject78bf4093ef,
-  ApiSharedObject78bf4093ef$inboundSchema,
-} from "./api-shared-object78bf4093ef.js";
+  ApiSharedObject59213d7914,
+  ApiSharedObject59213d7914$inboundSchema,
+} from "./api-shared-object59213d7914.js";
+import {
+  ApiSharedObject7e70bcc878,
+  ApiSharedObject7e70bcc878$inboundSchema,
+} from "./api-shared-object7e70bcc878.js";
+import {
+  ApiSharedObjectaf3c3f0696,
+  ApiSharedObjectaf3c3f0696$inboundSchema,
+} from "./api-shared-objectaf3c3f0696.js";
+import {
+  ApiSharedObjectb991eeb2eb,
+  ApiSharedObjectb991eeb2eb$inboundSchema,
+} from "./api-shared-objectb991eeb2eb.js";
+import {
+  ApiSharedObjectdffd4a033e,
+  ApiSharedObjectdffd4a033e$inboundSchema,
+} from "./api-shared-objectdffd4a033e.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type ApiSupplierPaymentListResponseData = {
@@ -36,14 +48,17 @@ export type ApiSupplierPaymentListResponseData = {
   amount: number;
   balance: number;
   formattedPaymentNumber: string | null;
-  currency: ApiSharedEnum6cfb146157;
-  paymentMethod: ApiSharedObject78bf4093ef | null;
+  currency: ApiSharedEnumffb4886f2b;
+  paymentMethod: ApiSharedObjectaf3c3f0696 | null;
   paymentMethodCount: number;
-  relatedEntity: ApiSharedObject2a73ed97c3 | null;
-  createdBy: ApiSharedObject0fb80a7625 | null;
+  relatedEntity: ApiSharedObject59213d7914 | null;
+  createdBy: ApiSharedObject7e70bcc878 | null;
   createdAt: Date;
   createdAtCursor: string;
   updatedAt: Date;
+  splits?: Array<ApiSharedObject3734fb4ff5> | undefined;
+  applications?: Array<ApiSharedObjectdffd4a033e> | undefined;
+  withholdings?: Array<ApiSharedObjectb991eeb2eb> | undefined;
   purchaseCount?: number | undefined;
 };
 
@@ -66,37 +81,46 @@ export type ApiSupplierPaymentListResponse = {
 export const ApiSupplierPaymentListResponseData$inboundSchema: z.ZodMiniType<
   ApiSupplierPaymentListResponseData,
   unknown
-> = z.pipe(
-  z.object({
-    id: types.string(),
-    payment_date: types.string(),
-    amount: types.number(),
-    balance: types.number(),
-    formatted_payment_number: types.nullable(types.string()),
-    currency: ApiSharedEnum6cfb146157$inboundSchema,
-    payment_method: types.nullable(ApiSharedObject78bf4093ef$inboundSchema),
-    payment_method_count: types.number(),
-    related_entity: types.nullable(ApiSharedObject2a73ed97c3$inboundSchema),
-    created_by: types.nullable(ApiSharedObject0fb80a7625$inboundSchema),
-    created_at: types.date(),
-    created_at_cursor: types.string(),
-    updated_at: types.date(),
-    purchase_count: types.optional(types.number()),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "payment_date": "paymentDate",
-      "formatted_payment_number": "formattedPaymentNumber",
-      "payment_method": "paymentMethod",
-      "payment_method_count": "paymentMethodCount",
-      "related_entity": "relatedEntity",
-      "created_by": "createdBy",
-      "created_at": "createdAt",
-      "created_at_cursor": "createdAtCursor",
-      "updated_at": "updatedAt",
-      "purchase_count": "purchaseCount",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      id: types.string(),
+      payment_date: types.string(),
+      amount: types.number(),
+      balance: types.number(),
+      formatted_payment_number: types.nullable(types.string()),
+      currency: ApiSharedEnumffb4886f2b$inboundSchema,
+      payment_method: types.nullable(ApiSharedObjectaf3c3f0696$inboundSchema),
+      payment_method_count: types.number(),
+      related_entity: types.nullable(ApiSharedObject59213d7914$inboundSchema),
+      created_by: types.nullable(ApiSharedObject7e70bcc878$inboundSchema),
+      created_at: types.date(),
+      created_at_cursor: types.string(),
+      updated_at: types.date(),
+      splits: types.optional(z.array(ApiSharedObject3734fb4ff5$inboundSchema)),
+      applications: types.optional(
+        z.array(ApiSharedObjectdffd4a033e$inboundSchema),
+      ),
+      withholdings: types.optional(
+        z.array(ApiSharedObjectb991eeb2eb$inboundSchema),
+      ),
+      purchase_count: types.optional(types.number()),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "payment_date": "paymentDate",
+        "formatted_payment_number": "formattedPaymentNumber",
+        "payment_method": "paymentMethod",
+        "payment_method_count": "paymentMethodCount",
+        "related_entity": "relatedEntity",
+        "created_by": "createdBy",
+        "created_at": "createdAt",
+        "created_at_cursor": "createdAtCursor",
+        "updated_at": "updatedAt",
+        "purchase_count": "purchaseCount",
+      });
+    }),
+  )
 );
 
 export function apiSupplierPaymentListResponseDataFromJSON(
@@ -114,24 +138,26 @@ export function apiSupplierPaymentListResponseDataFromJSON(
 export const ApiSupplierPaymentListResponse$inboundSchema: z.ZodMiniType<
   ApiSupplierPaymentListResponse,
   unknown
-> = z.pipe(
-  z.object({
-    request_id: types.string(),
-    data: z.array(
-      z.lazy(() => ApiSupplierPaymentListResponseData$inboundSchema),
-    ),
-    has_more: types.boolean(),
-    next_cursor: types.nullable(types.string()),
-    object: ApiSharedEnum8d46e1ec20$inboundSchema,
-    url: types.string(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "request_id": "requestId",
-      "has_more": "hasMore",
-      "next_cursor": "nextCursor",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      request_id: types.string(),
+      data: z.array(
+        z.lazy(() => ApiSupplierPaymentListResponseData$inboundSchema),
+      ),
+      has_more: types.boolean(),
+      next_cursor: types.nullable(types.string()),
+      object: ApiSharedEnum8d46e1ec20$inboundSchema,
+      url: types.string(),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "request_id": "requestId",
+        "has_more": "hasMore",
+        "next_cursor": "nextCursor",
+      });
+    }),
+  )
 );
 
 export function apiSupplierPaymentListResponseFromJSON(
