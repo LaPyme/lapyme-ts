@@ -5,17 +5,66 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
+import { smartUnion } from "../types/smart-union.js";
 import {
-  ApiSharedObjectba6d1f3759,
-  ApiSharedObjectba6d1f3759$inboundSchema,
-} from "./api-shared-objectba6d1f3759.js";
+  ApiSharedEnum65e97ceeee,
+  ApiSharedEnum65e97ceeee$inboundSchema,
+} from "./api-shared-enum65e97ceeee.js";
+import {
+  ApiSharedEnumffb4886f2b,
+  ApiSharedEnumffb4886f2b$inboundSchema,
+} from "./api-shared-enumffb4886f2b.js";
+import {
+  ApiSharedObject31607d73d9,
+  ApiSharedObject31607d73d9$inboundSchema,
+} from "./api-shared-object31607d73d9.js";
+import {
+  ApiSharedObject9c74883242,
+  ApiSharedObject9c74883242$inboundSchema,
+} from "./api-shared-object9c74883242.js";
+import {
+  ApiSharedObjectf94fd1d888,
+  ApiSharedObjectf94fd1d888$inboundSchema,
+} from "./api-shared-objectf94fd1d888.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
+export type ApiCustomerPaymentCreateResponseExchangeRate = string | number;
+
+export type ApiCustomerPaymentCreateResponseCustomerPayment = {
+  id: string;
+  type: "customer";
+  status: ApiSharedEnum65e97ceeee;
+  contactId: string | null;
+  contactName: string | null;
+  paymentNumber: number | null;
+  formattedPaymentNumber: string | null;
+  paymentDate: string;
+  currency: ApiSharedEnumffb4886f2b;
+  settlementCurrency?: ApiSharedEnumffb4886f2b | null | undefined;
+  settlementTotalAmount?: number | null | undefined;
+  exchangeRate?: string | number | null | undefined;
+  totalAmount: number;
+  balance: number;
+  notes?: string | null | undefined;
+  createdAt: Date;
+  createdByName: string | null;
+  splits?: Array<ApiSharedObject9c74883242> | undefined;
+  applications?: Array<ApiSharedObjectf94fd1d888> | undefined;
+  creditApplications?: Array<ApiSharedObjectf94fd1d888> | undefined;
+  journalLineApplications?: Array<ApiSharedObjectf94fd1d888> | undefined;
+  advanceApplications?: Array<ApiSharedObjectf94fd1d888> | undefined;
+  /**
+   * Créditos manuales y otros créditos contables que aplicó la cobranza, sin notas de crédito ni anticipos.
+   */
+  otherCreditApplications?: Array<ApiSharedObjectf94fd1d888> | undefined;
+  withholdings?: Array<ApiSharedObject31607d73d9> | undefined;
+};
+
 export type ApiCustomerPaymentCreateResponseData = {
-  customerPayment: ApiSharedObjectba6d1f3759;
+  customerPayment: ApiCustomerPaymentCreateResponseCustomerPayment;
   idempotentReplay: boolean;
 };
 
@@ -26,20 +75,134 @@ export type ApiCustomerPaymentCreateResponse = {
 };
 
 /** @internal */
+export const ApiCustomerPaymentCreateResponseExchangeRate$inboundSchema:
+  z.ZodMiniType<ApiCustomerPaymentCreateResponseExchangeRate, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      smartUnion([types.string(), types.number()])
+    );
+
+export function apiCustomerPaymentCreateResponseExchangeRateFromJSON(
+  jsonString: string,
+): SafeParseResult<
+  ApiCustomerPaymentCreateResponseExchangeRate,
+  SDKValidationError
+> {
+  return safeParse(
+    jsonString,
+    (x) =>
+      ApiCustomerPaymentCreateResponseExchangeRate$inboundSchema.parse(
+        JSON.parse(x),
+      ),
+    `Failed to parse 'ApiCustomerPaymentCreateResponseExchangeRate' from JSON`,
+  );
+}
+
+/** @internal */
+export const ApiCustomerPaymentCreateResponseCustomerPayment$inboundSchema:
+  z.ZodMiniType<ApiCustomerPaymentCreateResponseCustomerPayment, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.pipe(
+        z.object({
+          id: types.string(),
+          type: types.literal("customer"),
+          status: ApiSharedEnum65e97ceeee$inboundSchema,
+          contact_id: types.nullable(types.string()),
+          contact_name: types.nullable(types.string()),
+          payment_number: types.nullable(types.number()),
+          formatted_payment_number: types.nullable(types.string()),
+          payment_date: types.string(),
+          currency: ApiSharedEnumffb4886f2b$inboundSchema,
+          settlement_currency: z.optional(
+            z.nullable(ApiSharedEnumffb4886f2b$inboundSchema),
+          ),
+          settlement_total_amount: z.optional(z.nullable(types.number())),
+          exchange_rate: z.optional(
+            z.nullable(smartUnion([types.string(), types.number()])),
+          ),
+          total_amount: types.number(),
+          balance: types.number(),
+          notes: z.optional(z.nullable(types.string())),
+          created_at: types.date(),
+          created_by_name: types.nullable(types.string()),
+          splits: types.optional(
+            z.array(ApiSharedObject9c74883242$inboundSchema),
+          ),
+          applications: types.optional(
+            z.array(ApiSharedObjectf94fd1d888$inboundSchema),
+          ),
+          credit_applications: types.optional(
+            z.array(ApiSharedObjectf94fd1d888$inboundSchema),
+          ),
+          journal_line_applications: types.optional(
+            z.array(ApiSharedObjectf94fd1d888$inboundSchema),
+          ),
+          advance_applications: types.optional(
+            z.array(ApiSharedObjectf94fd1d888$inboundSchema),
+          ),
+          other_credit_applications: types.optional(
+            z.array(ApiSharedObjectf94fd1d888$inboundSchema),
+          ),
+          withholdings: types.optional(
+            z.array(ApiSharedObject31607d73d9$inboundSchema),
+          ),
+        }),
+        z.transform((v) => {
+          return remap$(v, {
+            "contact_id": "contactId",
+            "contact_name": "contactName",
+            "payment_number": "paymentNumber",
+            "formatted_payment_number": "formattedPaymentNumber",
+            "payment_date": "paymentDate",
+            "settlement_currency": "settlementCurrency",
+            "settlement_total_amount": "settlementTotalAmount",
+            "exchange_rate": "exchangeRate",
+            "total_amount": "totalAmount",
+            "created_at": "createdAt",
+            "created_by_name": "createdByName",
+            "credit_applications": "creditApplications",
+            "journal_line_applications": "journalLineApplications",
+            "advance_applications": "advanceApplications",
+            "other_credit_applications": "otherCreditApplications",
+          });
+        }),
+      )
+    );
+
+export function apiCustomerPaymentCreateResponseCustomerPaymentFromJSON(
+  jsonString: string,
+): SafeParseResult<
+  ApiCustomerPaymentCreateResponseCustomerPayment,
+  SDKValidationError
+> {
+  return safeParse(
+    jsonString,
+    (x) =>
+      ApiCustomerPaymentCreateResponseCustomerPayment$inboundSchema.parse(
+        JSON.parse(x),
+      ),
+    `Failed to parse 'ApiCustomerPaymentCreateResponseCustomerPayment' from JSON`,
+  );
+}
+
+/** @internal */
 export const ApiCustomerPaymentCreateResponseData$inboundSchema: z.ZodMiniType<
   ApiCustomerPaymentCreateResponseData,
   unknown
-> = z.pipe(
-  z.object({
-    customer_payment: ApiSharedObjectba6d1f3759$inboundSchema,
-    idempotent_replay: types.boolean(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "customer_payment": "customerPayment",
-      "idempotent_replay": "idempotentReplay",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      customer_payment: z.lazy(() =>
+        ApiCustomerPaymentCreateResponseCustomerPayment$inboundSchema
+      ),
+      idempotent_replay: types.boolean(),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "customer_payment": "customerPayment",
+        "idempotent_replay": "idempotentReplay",
+      });
+    }),
+  )
 );
 
 export function apiCustomerPaymentCreateResponseDataFromJSON(
@@ -57,17 +220,19 @@ export function apiCustomerPaymentCreateResponseDataFromJSON(
 export const ApiCustomerPaymentCreateResponse$inboundSchema: z.ZodMiniType<
   ApiCustomerPaymentCreateResponse,
   unknown
-> = z.pipe(
-  z.object({
-    request_id: types.string(),
-    data: z.lazy(() => ApiCustomerPaymentCreateResponseData$inboundSchema),
-    warnings: z.array(z.any()),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "request_id": "requestId",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      request_id: types.string(),
+      data: z.lazy(() => ApiCustomerPaymentCreateResponseData$inboundSchema),
+      warnings: z.array(z.any()),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "request_id": "requestId",
+      });
+    }),
+  )
 );
 
 export function apiCustomerPaymentCreateResponseFromJSON(

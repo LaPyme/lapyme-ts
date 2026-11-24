@@ -10,9 +10,8 @@ import { matchStatusCode } from "../lib/http.js";
 import * as M from "../lib/matchers.js";
 import { compactMap } from "../lib/primitives.js";
 import { safeParse } from "../lib/schemas.js";
-import { RequestOptions } from "../lib/sdks.js";
+import { encodePath, RequestOptions } from "../lib/sdks.js";
 import { extractSecurity, resolveGlobalSecurity } from "../lib/security.js";
-import { pathToFunc } from "../lib/url.js";
 import {
   ConnectionError,
   InvalidRequestError,
@@ -32,7 +31,7 @@ import { Result } from "../types/fp.js";
  * Actualizar producto
  *
  * @remarks
- * Actualiza un producto y devuelve el detalle persistido.
+ * Actualiza solo los campos enviados y devuelve el detalle persistido. Para un combo existente, product_type y components son opcionales: omitir components conserva la composición y omitir los campos de precio conserva el precio guardado. Si se envía components, reemplaza la composición completa. No permite convertir otros productos en combos. La actualización de un combo requiere Idempotency-Key para deduplicar reintentos.
  */
 export function productsUpdate(
   client: LapymeCore,
@@ -98,11 +97,20 @@ async function $do(
       charEncoding: "percent",
     }),
   };
-  const path = pathToFunc("/api/v1/products/{product_id}")(pathParams);
+  const pathResult = encodePath("/api/v1/products/{product_id}", pathParams);
+  if (!pathResult.ok) {
+    return [pathResult, { status: "invalid" }];
+  }
+  const path = pathResult.value;
 
   const headers = new Headers(compactMap({
     "Content-Type": "application/json",
     Accept: "application/json",
+    "Idempotency-Key": encodeSimple(
+      "Idempotency-Key",
+      payload["Idempotency-Key"],
+      { explode: false, charEncoding: "none" },
+    ),
     "X-Request-Id": encodeSimple("X-Request-Id", payload["X-Request-Id"], {
       explode: false,
       charEncoding: "none",
@@ -187,6 +195,7 @@ async function $do(
     M.jsonErr([400, 401, 403, 404, 409], errors.ApiErrorEnvelope$inboundSchema),
     M.jsonErr(429, errors.ApiErrorEnvelope$inboundSchema, { hdrs: true }),
     M.jsonErr(500, errors.ApiErrorEnvelope$inboundSchema),
+    M.jsonErr(503, errors.ApiErrorEnvelope$inboundSchema, { hdrs: true }),
     M.fail("4XX"),
     M.fail("5XX"),
   )(response, req, { extraFields: responseFields });

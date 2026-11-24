@@ -5,7 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
-import { safeParse } from "../../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import * as models from "../index.js";
@@ -24,13 +24,13 @@ export type ListApiSuppliersRequest = {
    */
   query?: string | undefined;
   /**
-   * Alias de query
-   */
-  search?: string | undefined;
-  /**
    * Filtra por estado activo
    */
   isActive?: boolean | undefined;
+  /**
+   * Estados exactos a incluir. Enviá ambos para incluir proveedores activos e inactivos.
+   */
+  status?: Array<models.ApiSharedEnumd952d5ce8e> | undefined;
 };
 
 export type ListApiSuppliersResponse = {
@@ -43,27 +43,31 @@ export type ListApiSuppliersRequest$Outbound = {
   cursor?: string | undefined;
   limit: number;
   query?: string | undefined;
-  search?: string | undefined;
   is_active?: boolean | undefined;
+  status?: Array<string> | undefined;
 };
 
 /** @internal */
 export const ListApiSuppliersRequest$outboundSchema: z.ZodMiniType<
   ListApiSuppliersRequest$Outbound,
   ListApiSuppliersRequest
-> = z.pipe(
-  z.object({
-    cursor: z.optional(z.string()),
-    limit: z._default(z.int(), 50),
-    query: z.optional(z.string()),
-    search: z.optional(z.string()),
-    isActive: z.optional(z.boolean()),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      isActive: "is_active",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      cursor: z.optional(z.string()),
+      limit: z._default(z.int(), 50),
+      query: z.optional(z.string()),
+      isActive: z.optional(z.boolean()),
+      status: z.optional(
+        z.array(models.ApiSharedEnumd952d5ce8e$outboundSchema),
+      ),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        isActive: "is_active",
+      });
+    }),
+  )
 );
 
 export function listApiSuppliersRequestToJSON(
@@ -78,17 +82,19 @@ export function listApiSuppliersRequestToJSON(
 export const ListApiSuppliersResponse$inboundSchema: z.ZodMiniType<
   ListApiSuppliersResponse,
   unknown
-> = z.pipe(
-  z.object({
-    Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
-    Result: models.ApiSupplierListResponse$inboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "Headers": "headers",
-      "Result": "result",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
+      Result: models.ApiSupplierListResponse$inboundSchema,
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "Headers": "headers",
+        "Result": "result",
+      });
+    }),
+  )
 );
 
 export function listApiSuppliersResponseFromJSON(

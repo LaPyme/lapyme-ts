@@ -5,7 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
-import { safeParse } from "../../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../../lib/schemas.js";
 import { ClosedEnum } from "../../types/enums.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
@@ -38,10 +38,6 @@ export type ListApiPurchasesRequest = {
    * Texto de búsqueda por proveedor, CUIT o número de factura del proveedor
    */
   query?: string | undefined;
-  /**
-   * Alias de query
-   */
-  search?: string | undefined;
   /**
    * Fecha inicial para el filtro
    */
@@ -76,14 +72,13 @@ export type ListApiPurchasesResponse = {
 /** @internal */
 export const ListApiPurchasesAmountAttribute$outboundSchema: z.ZodMiniEnum<
   typeof ListApiPurchasesAmountAttribute
-> = z.enum(ListApiPurchasesAmountAttribute);
+> = /* @__PURE__ */ lazySchema$(() => z.enum(ListApiPurchasesAmountAttribute));
 
 /** @internal */
 export type ListApiPurchasesRequest$Outbound = {
   cursor?: string | undefined;
   limit: number;
   query?: string | undefined;
-  search?: string | undefined;
   date_from?: string | undefined;
   date_to?: string | undefined;
   date_attribute: string;
@@ -96,41 +91,42 @@ export type ListApiPurchasesRequest$Outbound = {
 export const ListApiPurchasesRequest$outboundSchema: z.ZodMiniType<
   ListApiPurchasesRequest$Outbound,
   ListApiPurchasesRequest
-> = z.pipe(
-  z.object({
-    cursor: z.optional(z.string()),
-    limit: z._default(z.int(), 50),
-    query: z.optional(z.string()),
-    search: z.optional(z.string()),
-    dateFrom: z.optional(z.pipe(
-      z.date(),
-      z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
-    )),
-    dateTo: z.optional(z.pipe(
-      z.date(),
-      z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
-    )),
-    dateAttribute: z._default(
-      models.ApiSharedEnume975a7c122$outboundSchema,
-      "invoiceDate",
-    ),
-    amountAttribute: z._default(
-      ListApiPurchasesAmountAttribute$outboundSchema,
-      "balance",
-    ),
-    minBalance: z.optional(z.int()),
-    maxBalance: z.optional(z.int()),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      dateFrom: "date_from",
-      dateTo: "date_to",
-      dateAttribute: "date_attribute",
-      amountAttribute: "amount_attribute",
-      minBalance: "min_balance",
-      maxBalance: "max_balance",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      cursor: z.optional(z.string()),
+      limit: z._default(z.int(), 50),
+      query: z.optional(z.string()),
+      dateFrom: z.optional(z.pipe(
+        z.date(),
+        z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
+      )),
+      dateTo: z.optional(z.pipe(
+        z.date(),
+        z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
+      )),
+      dateAttribute: z._default(
+        models.ApiSharedEnume975a7c122$outboundSchema,
+        "invoiceDate",
+      ),
+      amountAttribute: z._default(
+        ListApiPurchasesAmountAttribute$outboundSchema,
+        "balance",
+      ),
+      minBalance: z.optional(z.int()),
+      maxBalance: z.optional(z.int()),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        dateFrom: "date_from",
+        dateTo: "date_to",
+        dateAttribute: "date_attribute",
+        amountAttribute: "amount_attribute",
+        minBalance: "min_balance",
+        maxBalance: "max_balance",
+      });
+    }),
+  )
 );
 
 export function listApiPurchasesRequestToJSON(
@@ -145,17 +141,19 @@ export function listApiPurchasesRequestToJSON(
 export const ListApiPurchasesResponse$inboundSchema: z.ZodMiniType<
   ListApiPurchasesResponse,
   unknown
-> = z.pipe(
-  z.object({
-    Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
-    Result: models.ApiPurchaseListResponse$inboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "Headers": "headers",
-      "Result": "result",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
+      Result: models.ApiPurchaseListResponse$inboundSchema,
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "Headers": "headers",
+        "Result": "result",
+      });
+    }),
+  )
 );
 
 export function listApiPurchasesResponseFromJSON(

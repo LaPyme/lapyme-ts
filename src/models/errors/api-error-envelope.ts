@@ -5,6 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
+import { lazySchema as lazySchema$ } from "../../lib/schemas.js";
 import * as types from "../../types/primitives.js";
 import * as models from "../index.js";
 import { LapymeError } from "./lapyme-error.js";
@@ -40,23 +41,25 @@ export class ApiErrorEnvelope extends LapymeError {
 export const ApiErrorEnvelope$inboundSchema: z.ZodMiniType<
   ApiErrorEnvelope,
   unknown
-> = z.pipe(
-  z.object({
-    request_id: types.string(),
-    error: z.lazy(() => models.ErrorT$inboundSchema),
-    request$: z.custom<Request>(x => x instanceof Request),
-    response$: z.custom<Response>(x => x instanceof Response),
-    body$: z.string(),
-  }),
-  z.transform((v) => {
-    const remapped = remap$(v, {
-      "request_id": "requestId",
-    });
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      request_id: types.string(),
+      error: z.lazy(() => models.ErrorT$inboundSchema),
+      request$: z.custom<Request>(x => x instanceof Request),
+      response$: z.custom<Response>(x => x instanceof Response),
+      body$: z.string(),
+    }),
+    z.transform((v) => {
+      const remapped = remap$(v, {
+        "request_id": "requestId",
+      });
 
-    return new ApiErrorEnvelope(remapped, {
-      request: v.request$,
-      response: v.response$,
-      body: v.body$,
-    });
-  }),
+      return new ApiErrorEnvelope(remapped, {
+        request: v.request$,
+        response: v.response$,
+        body: v.body$,
+      });
+    }),
+  )
 );

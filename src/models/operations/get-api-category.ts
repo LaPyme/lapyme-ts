@@ -5,7 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
-import { safeParse } from "../../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import * as models from "../index.js";
@@ -28,15 +28,17 @@ export type GetApiCategoryRequest$Outbound = {
 export const GetApiCategoryRequest$outboundSchema: z.ZodMiniType<
   GetApiCategoryRequest$Outbound,
   GetApiCategoryRequest
-> = z.pipe(
-  z.object({
-    categoryId: z.string(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      categoryId: "category_id",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      categoryId: z.string(),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        categoryId: "category_id",
+      });
+    }),
+  )
 );
 
 export function getApiCategoryRequestToJSON(
@@ -51,17 +53,19 @@ export function getApiCategoryRequestToJSON(
 export const GetApiCategoryResponse$inboundSchema: z.ZodMiniType<
   GetApiCategoryResponse,
   unknown
-> = z.pipe(
-  z.object({
-    Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
-    Result: models.ApiCategoryDetailResponse$inboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "Headers": "headers",
-      "Result": "result",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
+      Result: models.ApiCategoryDetailResponse$inboundSchema,
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "Headers": "headers",
+        "Result": "result",
+      });
+    }),
+  )
 );
 
 export function getApiCategoryResponseFromJSON(

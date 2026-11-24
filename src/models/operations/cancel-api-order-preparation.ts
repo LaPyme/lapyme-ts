@@ -5,7 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
-import { safeParse } from "../../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import * as models from "../index.js";
@@ -19,6 +19,10 @@ export type CancelApiOrderPreparationRequest = {
    * ID de la preparación
    */
   preparationId: string;
+  /**
+   * Clave estable para deduplicar reintentos de la misma operación. Opcional en v1; si se envía, un reintento con la misma clave y el mismo cuerpo devuelve el resultado original sin repetir la operación, y con otro cuerpo devuelve 409.
+   */
+  idempotencyKey?: string | undefined;
   body?: models.ApiOrderOptionalReasonRequest | undefined;
 };
 
@@ -31,6 +35,7 @@ export type CancelApiOrderPreparationResponse = {
 export type CancelApiOrderPreparationRequest$Outbound = {
   order_id: string;
   preparation_id: string;
+  "Idempotency-Key"?: string | undefined;
   body?: models.ApiOrderOptionalReasonRequest$Outbound | undefined;
 };
 
@@ -38,18 +43,22 @@ export type CancelApiOrderPreparationRequest$Outbound = {
 export const CancelApiOrderPreparationRequest$outboundSchema: z.ZodMiniType<
   CancelApiOrderPreparationRequest$Outbound,
   CancelApiOrderPreparationRequest
-> = z.pipe(
-  z.object({
-    orderId: z.string(),
-    preparationId: z.string(),
-    body: z.optional(models.ApiOrderOptionalReasonRequest$outboundSchema),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      orderId: "order_id",
-      preparationId: "preparation_id",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      orderId: z.string(),
+      preparationId: z.string(),
+      idempotencyKey: z.optional(z.string()),
+      body: z.optional(models.ApiOrderOptionalReasonRequest$outboundSchema),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        orderId: "order_id",
+        preparationId: "preparation_id",
+        idempotencyKey: "Idempotency-Key",
+      });
+    }),
+  )
 );
 
 export function cancelApiOrderPreparationRequestToJSON(
@@ -66,17 +75,19 @@ export function cancelApiOrderPreparationRequestToJSON(
 export const CancelApiOrderPreparationResponse$inboundSchema: z.ZodMiniType<
   CancelApiOrderPreparationResponse,
   unknown
-> = z.pipe(
-  z.object({
-    Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
-    Result: models.ApiOrderWriteResponse$inboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "Headers": "headers",
-      "Result": "result",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
+      Result: models.ApiOrderWriteResponse$inboundSchema,
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "Headers": "headers",
+        "Result": "result",
+      });
+    }),
+  )
 );
 
 export function cancelApiOrderPreparationResponseFromJSON(

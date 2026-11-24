@@ -5,7 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
-import { safeParse } from "../../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import * as models from "../index.js";
@@ -56,27 +56,36 @@ export type ListApiCustomerPaymentsRequest$Outbound = {
 export const ListApiCustomerPaymentsRequest$outboundSchema: z.ZodMiniType<
   ListApiCustomerPaymentsRequest$Outbound,
   ListApiCustomerPaymentsRequest
-> = z.pipe(
-  z.object({
-    cursor: z.optional(z.string()),
-    limit: z._default(z.int(), 50),
-    query: z.optional(z.string()),
-    status: z._default(models.ApiSharedEnum8ef2575a44$outboundSchema, "active"),
-    dateFrom: z.optional(z.pipe(
-      z.date(),
-      z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
-    )),
-    dateTo: z.optional(z.pipe(
-      z.date(),
-      z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
-    )),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      dateFrom: "date_from",
-      dateTo: "date_to",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      cursor: z.optional(z.string()),
+      limit: z._default(z.int(), 50),
+      query: z.optional(z.string()),
+      status: z._default(
+        models.ApiSharedEnum8ef2575a44$outboundSchema,
+        "active",
+      ),
+      dateFrom: z.optional(
+        z.pipe(
+          z.date(),
+          z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
+        ),
+      ),
+      dateTo: z.optional(
+        z.pipe(
+          z.date(),
+          z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
+        ),
+      ),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        dateFrom: "date_from",
+        dateTo: "date_to",
+      });
+    }),
+  )
 );
 
 export function listApiCustomerPaymentsRequestToJSON(
@@ -93,17 +102,19 @@ export function listApiCustomerPaymentsRequestToJSON(
 export const ListApiCustomerPaymentsResponse$inboundSchema: z.ZodMiniType<
   ListApiCustomerPaymentsResponse,
   unknown
-> = z.pipe(
-  z.object({
-    Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
-    Result: models.ApiCustomerPaymentListResponse$inboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "Headers": "headers",
-      "Result": "result",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
+      Result: models.ApiCustomerPaymentListResponse$inboundSchema,
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "Headers": "headers",
+        "Result": "result",
+      });
+    }),
+  )
 );
 
 export function listApiCustomerPaymentsResponseFromJSON(

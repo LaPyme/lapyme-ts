@@ -5,7 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -22,20 +22,22 @@ export type ApiSharedObjectfd1bf60b79 = {
 export const ApiSharedObjectfd1bf60b79$inboundSchema: z.ZodMiniType<
   ApiSharedObjectfd1bf60b79,
   unknown
-> = z.pipe(
-  z.object({
-    id: types.string(),
-    code: types.string(),
-    label: types.string(),
-    sort_order: types.number(),
-    is_active: types.boolean(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "sort_order": "sortOrder",
-      "is_active": "isActive",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      id: types.string(),
+      code: types.string(),
+      label: types.string(),
+      sort_order: types.number(),
+      is_active: types.boolean(),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "sort_order": "sortOrder",
+        "is_active": "isActive",
+      });
+    }),
+  )
 );
 
 export function apiSharedObjectfd1bf60b79FromJSON(
