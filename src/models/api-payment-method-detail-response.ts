@@ -5,34 +5,36 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import {
-  ApiSharedObjectbea6e6be70,
-  ApiSharedObjectbea6e6be70$inboundSchema,
-} from "./api-shared-objectbea6e6be70.js";
+  ApiSharedObjecta2bd01d7eb,
+  ApiSharedObjecta2bd01d7eb$inboundSchema,
+} from "./api-shared-objecta2bd01d7eb.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type ApiPaymentMethodDetailResponse = {
   requestId: string;
-  data: ApiSharedObjectbea6e6be70;
+  data: ApiSharedObjecta2bd01d7eb;
 };
 
 /** @internal */
 export const ApiPaymentMethodDetailResponse$inboundSchema: z.ZodMiniType<
   ApiPaymentMethodDetailResponse,
   unknown
-> = z.pipe(
-  z.object({
-    request_id: types.string(),
-    data: ApiSharedObjectbea6e6be70$inboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "request_id": "requestId",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      request_id: types.string(),
+      data: ApiSharedObjecta2bd01d7eb$inboundSchema,
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "request_id": "requestId",
+      });
+    }),
+  )
 );
 
 export function apiPaymentMethodDetailResponseFromJSON(

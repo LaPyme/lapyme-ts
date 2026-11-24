@@ -5,7 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
-import { safeParse } from "../../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import * as models from "../index.js";
@@ -19,6 +19,10 @@ export type UpdateApiProductRequest = {
    * ID opcional de la solicitud para trazabilidad. Si se omite, el servidor genera uno.
    */
   xRequestId?: string | undefined;
+  /**
+   * Clave estable obligatoria al actualizar un combo existente, aunque se omita product_type. Reutilizala solo para reintentar exactamente la misma actualización.
+   */
+  idempotencyKey?: string | undefined;
   body: models.ApiProductUpdateRequest;
 };
 
@@ -31,6 +35,7 @@ export type UpdateApiProductResponse = {
 export type UpdateApiProductRequest$Outbound = {
   product_id: string;
   "X-Request-Id"?: string | undefined;
+  "Idempotency-Key"?: string | undefined;
   body: models.ApiProductUpdateRequest$Outbound;
 };
 
@@ -38,18 +43,22 @@ export type UpdateApiProductRequest$Outbound = {
 export const UpdateApiProductRequest$outboundSchema: z.ZodMiniType<
   UpdateApiProductRequest$Outbound,
   UpdateApiProductRequest
-> = z.pipe(
-  z.object({
-    productId: z.string(),
-    xRequestId: z.optional(z.string()),
-    body: models.ApiProductUpdateRequest$outboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      productId: "product_id",
-      xRequestId: "X-Request-Id",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      productId: z.string(),
+      xRequestId: z.optional(z.string()),
+      idempotencyKey: z.optional(z.string()),
+      body: models.ApiProductUpdateRequest$outboundSchema,
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        productId: "product_id",
+        xRequestId: "X-Request-Id",
+        idempotencyKey: "Idempotency-Key",
+      });
+    }),
+  )
 );
 
 export function updateApiProductRequestToJSON(
@@ -64,17 +73,19 @@ export function updateApiProductRequestToJSON(
 export const UpdateApiProductResponse$inboundSchema: z.ZodMiniType<
   UpdateApiProductResponse,
   unknown
-> = z.pipe(
-  z.object({
-    Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
-    Result: models.ApiProductUpdateResponse$inboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "Headers": "headers",
-      "Result": "result",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
+      Result: models.ApiProductUpdateResponse$inboundSchema,
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "Headers": "headers",
+        "Result": "result",
+      });
+    }),
+  )
 );
 
 export function updateApiProductResponseFromJSON(

@@ -5,6 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type ApiSharedObject6dbe49c4ef = {
   warehouseId: string;
@@ -21,16 +22,18 @@ export type ApiSharedObject6dbe49c4ef$Outbound = {
 export const ApiSharedObject6dbe49c4ef$outboundSchema: z.ZodMiniType<
   ApiSharedObject6dbe49c4ef$Outbound,
   ApiSharedObject6dbe49c4ef
-> = z.pipe(
-  z.object({
-    warehouseId: z.string(),
-    quantity: z.number(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      warehouseId: "warehouse_id",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      warehouseId: z.string(),
+      quantity: z.number(),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        warehouseId: "warehouse_id",
+      });
+    }),
+  )
 );
 
 export function apiSharedObject6dbe49c4efToJSON(

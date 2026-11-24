@@ -5,7 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import {
@@ -24,15 +24,19 @@ export type ApiInventoryMovementListResponseData = {
   movementType: string;
   quantity: number;
   balance: number;
+  reservedBalance: number;
+  incomingBalance: number;
   quantityChange: number;
   reservedQuantityChange: number;
   incomingQuantityChange: number;
   reason: string | null;
   notes: string | null;
   createdAt: Date;
+  createdBy: string;
   createdByName: string | null;
   warehouseName: string | null;
   targetWarehouseName: string | null;
+  otherWarehouseName: string | null;
   referenceType: ApiSharedEnumed1129741e | null;
   referenceId: string | null;
   referenceLabel: string | null;
@@ -57,41 +61,51 @@ export type ApiInventoryMovementListResponse = {
 export const ApiInventoryMovementListResponseData$inboundSchema: z.ZodMiniType<
   ApiInventoryMovementListResponseData,
   unknown
-> = z.pipe(
-  z.object({
-    object: types.literal("inventory_movement"),
-    id: types.string(),
-    movement_type: types.string(),
-    quantity: types.number(),
-    balance: types.number(),
-    quantity_change: types.number(),
-    reserved_quantity_change: types.number(),
-    incoming_quantity_change: types.number(),
-    reason: types.nullable(types.string()),
-    notes: types.nullable(types.string()),
-    created_at: types.date(),
-    created_by_name: types.nullable(types.string()),
-    warehouse_name: types.nullable(types.string()),
-    target_warehouse_name: types.nullable(types.string()),
-    reference_type: types.nullable(ApiSharedEnumed1129741e$inboundSchema),
-    reference_id: types.nullable(types.string()),
-    reference_label: types.nullable(types.string()),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "movement_type": "movementType",
-      "quantity_change": "quantityChange",
-      "reserved_quantity_change": "reservedQuantityChange",
-      "incoming_quantity_change": "incomingQuantityChange",
-      "created_at": "createdAt",
-      "created_by_name": "createdByName",
-      "warehouse_name": "warehouseName",
-      "target_warehouse_name": "targetWarehouseName",
-      "reference_type": "referenceType",
-      "reference_id": "referenceId",
-      "reference_label": "referenceLabel",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      object: types.literal("inventory_movement"),
+      id: types.string(),
+      movement_type: types.string(),
+      quantity: types.number(),
+      balance: types.number(),
+      reserved_balance: types.number(),
+      incoming_balance: types.number(),
+      quantity_change: types.number(),
+      reserved_quantity_change: types.number(),
+      incoming_quantity_change: types.number(),
+      reason: types.nullable(types.string()),
+      notes: types.nullable(types.string()),
+      created_at: types.date(),
+      created_by: types.string(),
+      created_by_name: types.nullable(types.string()),
+      warehouse_name: types.nullable(types.string()),
+      target_warehouse_name: types.nullable(types.string()),
+      other_warehouse_name: types.nullable(types.string()),
+      reference_type: types.nullable(ApiSharedEnumed1129741e$inboundSchema),
+      reference_id: types.nullable(types.string()),
+      reference_label: types.nullable(types.string()),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "movement_type": "movementType",
+        "reserved_balance": "reservedBalance",
+        "incoming_balance": "incomingBalance",
+        "quantity_change": "quantityChange",
+        "reserved_quantity_change": "reservedQuantityChange",
+        "incoming_quantity_change": "incomingQuantityChange",
+        "created_at": "createdAt",
+        "created_by": "createdBy",
+        "created_by_name": "createdByName",
+        "warehouse_name": "warehouseName",
+        "target_warehouse_name": "targetWarehouseName",
+        "other_warehouse_name": "otherWarehouseName",
+        "reference_type": "referenceType",
+        "reference_id": "referenceId",
+        "reference_label": "referenceLabel",
+      });
+    }),
+  )
 );
 
 export function apiInventoryMovementListResponseDataFromJSON(
@@ -109,24 +123,26 @@ export function apiInventoryMovementListResponseDataFromJSON(
 export const ApiInventoryMovementListResponse$inboundSchema: z.ZodMiniType<
   ApiInventoryMovementListResponse,
   unknown
-> = z.pipe(
-  z.object({
-    request_id: types.string(),
-    data: z.array(
-      z.lazy(() => ApiInventoryMovementListResponseData$inboundSchema),
-    ),
-    has_more: types.boolean(),
-    next_cursor: types.nullable(types.string()),
-    object: ApiSharedEnum8d46e1ec20$inboundSchema,
-    url: types.string(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "request_id": "requestId",
-      "has_more": "hasMore",
-      "next_cursor": "nextCursor",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      request_id: types.string(),
+      data: z.array(
+        z.lazy(() => ApiInventoryMovementListResponseData$inboundSchema),
+      ),
+      has_more: types.boolean(),
+      next_cursor: types.nullable(types.string()),
+      object: ApiSharedEnum8d46e1ec20$inboundSchema,
+      url: types.string(),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "request_id": "requestId",
+        "has_more": "hasMore",
+        "next_cursor": "nextCursor",
+      });
+    }),
+  )
 );
 
 export function apiInventoryMovementListResponseFromJSON(

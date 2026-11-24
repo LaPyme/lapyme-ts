@@ -33,7 +33,7 @@ export class Purchases extends ClientSDK {
    * Crear compra
    *
    * @remarks
-   * Registra una compra y devuelve la operación creada junto con sus efectos de stock y contabilidad.
+   * Registra una compra confirmada y devuelve sus efectos de stock y contabilidad. Omití el campo status. Si lo enviás, la solicitud devuelve 422.
    */
   async createPurchase(
     request: operations.CreateApiPurchaseRequest,

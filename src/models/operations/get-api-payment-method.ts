@@ -5,7 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
-import { safeParse } from "../../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import * as models from "../index.js";
@@ -28,15 +28,17 @@ export type GetApiPaymentMethodRequest$Outbound = {
 export const GetApiPaymentMethodRequest$outboundSchema: z.ZodMiniType<
   GetApiPaymentMethodRequest$Outbound,
   GetApiPaymentMethodRequest
-> = z.pipe(
-  z.object({
-    paymentMethodId: z.string(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      paymentMethodId: "payment_method_id",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      paymentMethodId: z.string(),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        paymentMethodId: "payment_method_id",
+      });
+    }),
+  )
 );
 
 export function getApiPaymentMethodRequestToJSON(
@@ -51,17 +53,19 @@ export function getApiPaymentMethodRequestToJSON(
 export const GetApiPaymentMethodResponse$inboundSchema: z.ZodMiniType<
   GetApiPaymentMethodResponse,
   unknown
-> = z.pipe(
-  z.object({
-    Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
-    Result: models.ApiPaymentMethodDetailResponse$inboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "Headers": "headers",
-      "Result": "result",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
+      Result: models.ApiPaymentMethodDetailResponse$inboundSchema,
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "Headers": "headers",
+        "Result": "result",
+      });
+    }),
+  )
 );
 
 export function getApiPaymentMethodResponseFromJSON(

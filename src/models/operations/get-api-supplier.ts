@@ -5,7 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
-import { safeParse } from "../../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import * as models from "../index.js";
@@ -28,15 +28,17 @@ export type GetApiSupplierRequest$Outbound = {
 export const GetApiSupplierRequest$outboundSchema: z.ZodMiniType<
   GetApiSupplierRequest$Outbound,
   GetApiSupplierRequest
-> = z.pipe(
-  z.object({
-    supplierId: z.string(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      supplierId: "supplier_id",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      supplierId: z.string(),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        supplierId: "supplier_id",
+      });
+    }),
+  )
 );
 
 export function getApiSupplierRequestToJSON(
@@ -51,17 +53,19 @@ export function getApiSupplierRequestToJSON(
 export const GetApiSupplierResponse$inboundSchema: z.ZodMiniType<
   GetApiSupplierResponse,
   unknown
-> = z.pipe(
-  z.object({
-    Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
-    Result: models.ApiSupplierDetailResponse$inboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "Headers": "headers",
-      "Result": "result",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
+      Result: models.ApiSupplierDetailResponse$inboundSchema,
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "Headers": "headers",
+        "Result": "result",
+      });
+    }),
+  )
 );
 
 export function getApiSupplierResponseFromJSON(

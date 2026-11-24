@@ -5,7 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
-import { safeParse } from "../../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import * as models from "../index.js";
@@ -31,15 +31,17 @@ export type GetApiWarehouseByIdRequest$Outbound = {
 export const GetApiWarehouseByIdRequest$outboundSchema: z.ZodMiniType<
   GetApiWarehouseByIdRequest$Outbound,
   GetApiWarehouseByIdRequest
-> = z.pipe(
-  z.object({
-    warehouseId: z.string(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      warehouseId: "warehouse_id",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      warehouseId: z.string(),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        warehouseId: "warehouse_id",
+      });
+    }),
+  )
 );
 
 export function getApiWarehouseByIdRequestToJSON(
@@ -54,17 +56,19 @@ export function getApiWarehouseByIdRequestToJSON(
 export const GetApiWarehouseByIdResponse$inboundSchema: z.ZodMiniType<
   GetApiWarehouseByIdResponse,
   unknown
-> = z.pipe(
-  z.object({
-    Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
-    Result: models.ApiWarehouseDetailResponse$inboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "Headers": "headers",
-      "Result": "result",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
+      Result: models.ApiWarehouseDetailResponse$inboundSchema,
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "Headers": "headers",
+        "Result": "result",
+      });
+    }),
+  )
 );
 
 export function getApiWarehouseByIdResponseFromJSON(

@@ -5,7 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -23,24 +23,26 @@ export type ApiSharedObjectf20bf16616 = {
 export const ApiSharedObjectf20bf16616$inboundSchema: z.ZodMiniType<
   ApiSharedObjectf20bf16616,
   unknown
-> = z.pipe(
-  z.object({
-    warehouse_id: types.string(),
-    warehouse_name: types.string(),
-    quantity: types.number(),
-    on_hand: types.number(),
-    reserved_quantity: types.number(),
-    incoming_quantity: types.number(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "warehouse_id": "warehouseId",
-      "warehouse_name": "warehouseName",
-      "on_hand": "onHand",
-      "reserved_quantity": "reservedQuantity",
-      "incoming_quantity": "incomingQuantity",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      warehouse_id: types.string(),
+      warehouse_name: types.string(),
+      quantity: types.number(),
+      on_hand: types.number(),
+      reserved_quantity: types.number(),
+      incoming_quantity: types.number(),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "warehouse_id": "warehouseId",
+        "warehouse_name": "warehouseName",
+        "on_hand": "onHand",
+        "reserved_quantity": "reservedQuantity",
+        "incoming_quantity": "incomingQuantity",
+      });
+    }),
+  )
 );
 
 export function apiSharedObjectf20bf16616FromJSON(

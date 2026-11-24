@@ -5,7 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import {
@@ -13,14 +13,14 @@ import {
   ApiSharedEnum8d46e1ec20$inboundSchema,
 } from "./api-shared-enum8d46e1ec20.js";
 import {
-  ApiSharedObjectd8582ce697,
-  ApiSharedObjectd8582ce697$inboundSchema,
-} from "./api-shared-objectd8582ce697.js";
+  ApiSharedObjectf86e1828bb,
+  ApiSharedObjectf86e1828bb$inboundSchema,
+} from "./api-shared-objectf86e1828bb.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type ApiCategoryListResponse = {
   requestId: string;
-  data: Array<ApiSharedObjectd8582ce697>;
+  data: Array<ApiSharedObjectf86e1828bb>;
   hasMore: boolean;
   nextCursor: string | null;
   /**
@@ -37,22 +37,24 @@ export type ApiCategoryListResponse = {
 export const ApiCategoryListResponse$inboundSchema: z.ZodMiniType<
   ApiCategoryListResponse,
   unknown
-> = z.pipe(
-  z.object({
-    request_id: types.string(),
-    data: z.array(ApiSharedObjectd8582ce697$inboundSchema),
-    has_more: types.boolean(),
-    next_cursor: types.nullable(types.string()),
-    object: ApiSharedEnum8d46e1ec20$inboundSchema,
-    url: types.string(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "request_id": "requestId",
-      "has_more": "hasMore",
-      "next_cursor": "nextCursor",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      request_id: types.string(),
+      data: z.array(ApiSharedObjectf86e1828bb$inboundSchema),
+      has_more: types.boolean(),
+      next_cursor: types.nullable(types.string()),
+      object: ApiSharedEnum8d46e1ec20$inboundSchema,
+      url: types.string(),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "request_id": "requestId",
+        "has_more": "hasMore",
+        "next_cursor": "nextCursor",
+      });
+    }),
+  )
 );
 
 export function apiCategoryListResponseFromJSON(

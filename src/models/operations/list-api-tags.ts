@@ -5,7 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
-import { safeParse } from "../../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import * as models from "../index.js";
@@ -14,7 +14,7 @@ export type ListApiTagsRequest = {
   /**
    * Scope del catálogo de etiquetas
    */
-  scope: models.ApiSharedEnuma1951b6358;
+  scope: models.ApiSharedEnum09f8155a9a;
   /**
    * Incluye etiquetas archivadas en la respuesta
    */
@@ -36,16 +36,18 @@ export type ListApiTagsRequest$Outbound = {
 export const ListApiTagsRequest$outboundSchema: z.ZodMiniType<
   ListApiTagsRequest$Outbound,
   ListApiTagsRequest
-> = z.pipe(
-  z.object({
-    scope: models.ApiSharedEnuma1951b6358$outboundSchema,
-    includeArchived: z._default(z.boolean(), false),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      includeArchived: "include_archived",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      scope: models.ApiSharedEnum09f8155a9a$outboundSchema,
+      includeArchived: z._default(z.boolean(), false),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        includeArchived: "include_archived",
+      });
+    }),
+  )
 );
 
 export function listApiTagsRequestToJSON(
@@ -60,17 +62,19 @@ export function listApiTagsRequestToJSON(
 export const ListApiTagsResponse$inboundSchema: z.ZodMiniType<
   ListApiTagsResponse,
   unknown
-> = z.pipe(
-  z.object({
-    Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
-    Result: models.ApiTagsListResponse$inboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "Headers": "headers",
-      "Result": "result",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
+      Result: models.ApiTagsListResponse$inboundSchema,
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "Headers": "headers",
+        "Result": "result",
+      });
+    }),
+  )
 );
 
 export function listApiTagsResponseFromJSON(
