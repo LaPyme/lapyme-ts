@@ -5,7 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
-import { safeParse } from "../../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import * as types from "../../types/primitives.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
@@ -37,15 +37,17 @@ export type GetApiAccountingAccountRequest$Outbound = {
 export const GetApiAccountingAccountRequest$outboundSchema: z.ZodMiniType<
   GetApiAccountingAccountRequest$Outbound,
   GetApiAccountingAccountRequest
-> = z.pipe(
-  z.object({
-    accountId: z.string(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      accountId: "account_id",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      accountId: z.string(),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        accountId: "account_id",
+      });
+    }),
+  )
 );
 
 export function getApiAccountingAccountRequestToJSON(
@@ -62,16 +64,18 @@ export function getApiAccountingAccountRequestToJSON(
 export const GetApiAccountingAccountResponseBody$inboundSchema: z.ZodMiniType<
   GetApiAccountingAccountResponseBody,
   unknown
-> = z.pipe(
-  z.object({
-    request_id: types.optional(types.string()),
-    data: types.optional(models.ApiAccountingAccount$inboundSchema),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "request_id": "requestId",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      request_id: types.optional(types.string()),
+      data: types.optional(models.ApiAccountingAccount$inboundSchema),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "request_id": "requestId",
+      });
+    }),
+  )
 );
 
 export function getApiAccountingAccountResponseBodyFromJSON(
@@ -89,17 +93,19 @@ export function getApiAccountingAccountResponseBodyFromJSON(
 export const GetApiAccountingAccountResponse$inboundSchema: z.ZodMiniType<
   GetApiAccountingAccountResponse,
   unknown
-> = z.pipe(
-  z.object({
-    Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
-    Result: z.lazy(() => GetApiAccountingAccountResponseBody$inboundSchema),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "Headers": "headers",
-      "Result": "result",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
+      Result: z.lazy(() => GetApiAccountingAccountResponseBody$inboundSchema),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "Headers": "headers",
+        "Result": "result",
+      });
+    }),
+  )
 );
 
 export function getApiAccountingAccountResponseFromJSON(

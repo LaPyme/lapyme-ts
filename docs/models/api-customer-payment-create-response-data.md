@@ -15,7 +15,7 @@ let value: ApiCustomerPaymentCreateResponseData = {
     paymentNumber: 790450,
     formattedPaymentNumber: "<value>",
     paymentDate: "<value>",
-    currency: "PES",
+    currency: "ARS",
     totalAmount: 783901,
     balance: 111225,
     createdAt: new Date("2024-05-01T06:17:09.879Z"),
@@ -27,7 +27,7 @@ let value: ApiCustomerPaymentCreateResponseData = {
 
 ## Fields
 
-| Field                                                                        | Type                                                                         | Required                                                                     | Description                                                                  |
-| ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| `customerPayment`                                                            | [models.ApiSharedObjectba6d1f3759](../models/api-shared-objectba6d1f3759.md) | :heavy_check_mark:                                                           | N/A                                                                          |
-| `idempotentReplay`                                                           | *boolean*                                                                    | :heavy_check_mark:                                                           | N/A                                                                          |
+| Field                                                                                                                        | Type                                                                                                                         | Required                                                                                                                     | Description                                                                                                                  |
+| ---------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `customerPayment`                                                                                                            | [models.ApiCustomerPaymentCreateResponseCustomerPayment](../models/api-customer-payment-create-response-customer-payment.md) | :heavy_check_mark:                                                                                                           | N/A                                                                                                                          |
+| `idempotentReplay`                                                                                                           | *boolean*                                                                                                                    | :heavy_check_mark:                                                                                                           | N/A                                                                                                                          |

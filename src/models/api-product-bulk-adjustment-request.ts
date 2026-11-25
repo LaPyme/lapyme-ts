@@ -5,6 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import { ClosedEnum } from "../types/enums.js";
 import {
   ApiSharedEnumff49232140,
@@ -54,18 +55,17 @@ export type ApiProductBulkAdjustmentRequest = {
 };
 
 /** @internal */
-export const Target$outboundSchema: z.ZodMiniEnum<typeof Target> = z.enum(
-  Target,
-);
+export const Target$outboundSchema: z.ZodMiniEnum<typeof Target> =
+  /* @__PURE__ */ lazySchema$(() => z.enum(Target));
 
 /** @internal */
 export const OperationType$outboundSchema: z.ZodMiniEnum<typeof OperationType> =
-  z.enum(OperationType);
+  /* @__PURE__ */ lazySchema$(() => z.enum(OperationType));
 
 /** @internal */
 export const AdjustmentType$outboundSchema: z.ZodMiniEnum<
   typeof AdjustmentType
-> = z.enum(AdjustmentType);
+> = /* @__PURE__ */ lazySchema$(() => z.enum(AdjustmentType));
 
 /** @internal */
 export type SelectionSpecific$Outbound = {
@@ -77,10 +77,12 @@ export type SelectionSpecific$Outbound = {
 export const SelectionSpecific$outboundSchema: z.ZodMiniType<
   SelectionSpecific$Outbound,
   SelectionSpecific
-> = z.object({
-  type: z.literal("specific"),
-  ids: z.array(z.string()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    type: z.literal("specific"),
+    ids: z.array(z.string()),
+  })
+);
 
 export function selectionSpecificToJSON(
   selectionSpecific: SelectionSpecific,
@@ -100,16 +102,18 @@ export type SelectionAll$Outbound = {
 export const SelectionAll$outboundSchema: z.ZodMiniType<
   SelectionAll$Outbound,
   SelectionAll
-> = z.pipe(
-  z.object({
-    type: z.literal("all"),
-    excludedIds: z.optional(z.array(z.string())),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      excludedIds: "excluded_ids",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      type: z.literal("all"),
+      excludedIds: z.optional(z.array(z.string())),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        excludedIds: "excluded_ids",
+      });
+    }),
+  )
 );
 
 export function selectionAllToJSON(selectionAll: SelectionAll): string {
@@ -125,10 +129,12 @@ export type Selection$Outbound =
 export const Selection$outboundSchema: z.ZodMiniType<
   Selection$Outbound,
   Selection
-> = z.union([
-  z.lazy(() => SelectionAll$outboundSchema),
-  z.lazy(() => SelectionSpecific$outboundSchema),
-]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.union([
+    z.lazy(() => SelectionAll$outboundSchema),
+    z.lazy(() => SelectionSpecific$outboundSchema),
+  ])
+);
 
 export function selectionToJSON(selection: Selection): string {
   return JSON.stringify(Selection$outboundSchema.parse(selection));
@@ -151,30 +157,32 @@ export type ApiProductBulkAdjustmentRequest$Outbound = {
 export const ApiProductBulkAdjustmentRequest$outboundSchema: z.ZodMiniType<
   ApiProductBulkAdjustmentRequest$Outbound,
   ApiProductBulkAdjustmentRequest
-> = z.pipe(
-  z.object({
-    target: Target$outboundSchema,
-    operationType: OperationType$outboundSchema,
-    adjustmentType: AdjustmentType$outboundSchema,
-    adjustmentValue: z.number(),
-    search: z.optional(z.string()),
-    category: z.optional(z.array(z.string())),
-    productType: z.optional(z.array(ApiSharedEnumff49232140$outboundSchema)),
-    defaultSupplierId: z.optional(z.string()),
-    selection: z.union([
-      z.lazy(() => SelectionAll$outboundSchema),
-      z.lazy(() => SelectionSpecific$outboundSchema),
-    ]),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      operationType: "operation_type",
-      adjustmentType: "adjustment_type",
-      adjustmentValue: "adjustment_value",
-      productType: "product_type",
-      defaultSupplierId: "default_supplier_id",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      target: Target$outboundSchema,
+      operationType: OperationType$outboundSchema,
+      adjustmentType: AdjustmentType$outboundSchema,
+      adjustmentValue: z.number(),
+      search: z.optional(z.string()),
+      category: z.optional(z.array(z.string())),
+      productType: z.optional(z.array(ApiSharedEnumff49232140$outboundSchema)),
+      defaultSupplierId: z.optional(z.string()),
+      selection: z.union([
+        z.lazy(() => SelectionAll$outboundSchema),
+        z.lazy(() => SelectionSpecific$outboundSchema),
+      ]),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        operationType: "operation_type",
+        adjustmentType: "adjustment_type",
+        adjustmentValue: "adjustment_value",
+        productType: "product_type",
+        defaultSupplierId: "default_supplier_id",
+      });
+    }),
+  )
 );
 
 export function apiProductBulkAdjustmentRequestToJSON(

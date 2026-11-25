@@ -5,12 +5,16 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
-import { safeParse } from "../../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import * as models from "../index.js";
 
 export type UpdateApiCustomerRequest = {
+  /**
+   * Clave estable para deduplicar reintentos de la misma operación. Opcional en v1; si se envía, un reintento con la misma clave y el mismo cuerpo devuelve el resultado original sin repetir la operación, y con otro cuerpo devuelve 409.
+   */
+  idempotencyKey?: string | undefined;
   /**
    * ID del cliente
    */
@@ -29,6 +33,7 @@ export type UpdateApiCustomerResponse = {
 
 /** @internal */
 export type UpdateApiCustomerRequest$Outbound = {
+  "Idempotency-Key"?: string | undefined;
   customer_id: string;
   "X-Request-Id"?: string | undefined;
   body: models.ApiCustomerUpdateRequest$Outbound;
@@ -38,18 +43,22 @@ export type UpdateApiCustomerRequest$Outbound = {
 export const UpdateApiCustomerRequest$outboundSchema: z.ZodMiniType<
   UpdateApiCustomerRequest$Outbound,
   UpdateApiCustomerRequest
-> = z.pipe(
-  z.object({
-    customerId: z.string(),
-    xRequestId: z.optional(z.string()),
-    body: models.ApiCustomerUpdateRequest$outboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      customerId: "customer_id",
-      xRequestId: "X-Request-Id",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      idempotencyKey: z.optional(z.string()),
+      customerId: z.string(),
+      xRequestId: z.optional(z.string()),
+      body: models.ApiCustomerUpdateRequest$outboundSchema,
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        idempotencyKey: "Idempotency-Key",
+        customerId: "customer_id",
+        xRequestId: "X-Request-Id",
+      });
+    }),
+  )
 );
 
 export function updateApiCustomerRequestToJSON(
@@ -64,17 +73,19 @@ export function updateApiCustomerRequestToJSON(
 export const UpdateApiCustomerResponse$inboundSchema: z.ZodMiniType<
   UpdateApiCustomerResponse,
   unknown
-> = z.pipe(
-  z.object({
-    Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
-    Result: models.ApiCustomerUpdateResponse$inboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "Headers": "headers",
-      "Result": "result",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
+      Result: models.ApiCustomerUpdateResponse$inboundSchema,
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "Headers": "headers",
+        "Result": "result",
+      });
+    }),
+  )
 );
 
 export function updateApiCustomerResponseFromJSON(

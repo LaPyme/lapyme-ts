@@ -5,7 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
-import { safeParse } from "../../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import * as models from "../index.js";
@@ -31,15 +31,17 @@ export type GetApiPriceListByIdRequest$Outbound = {
 export const GetApiPriceListByIdRequest$outboundSchema: z.ZodMiniType<
   GetApiPriceListByIdRequest$Outbound,
   GetApiPriceListByIdRequest
-> = z.pipe(
-  z.object({
-    priceListId: z.string(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      priceListId: "price_list_id",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      priceListId: z.string(),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        priceListId: "price_list_id",
+      });
+    }),
+  )
 );
 
 export function getApiPriceListByIdRequestToJSON(
@@ -54,17 +56,19 @@ export function getApiPriceListByIdRequestToJSON(
 export const GetApiPriceListByIdResponse$inboundSchema: z.ZodMiniType<
   GetApiPriceListByIdResponse,
   unknown
-> = z.pipe(
-  z.object({
-    Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
-    Result: models.ApiPriceListDetailResponse$inboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "Headers": "headers",
-      "Result": "result",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
+      Result: models.ApiPriceListDetailResponse$inboundSchema,
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "Headers": "headers",
+        "Result": "result",
+      });
+    }),
+  )
 );
 
 export function getApiPriceListByIdResponseFromJSON(

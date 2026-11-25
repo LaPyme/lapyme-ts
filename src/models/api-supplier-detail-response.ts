@@ -5,34 +5,36 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import {
-  ApiSharedObjectac822ca2fd,
-  ApiSharedObjectac822ca2fd$inboundSchema,
-} from "./api-shared-objectac822ca2fd.js";
+  ApiSharedObjectcee24e628c,
+  ApiSharedObjectcee24e628c$inboundSchema,
+} from "./api-shared-objectcee24e628c.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type ApiSupplierDetailResponse = {
   requestId: string;
-  data: ApiSharedObjectac822ca2fd;
+  data: ApiSharedObjectcee24e628c;
 };
 
 /** @internal */
 export const ApiSupplierDetailResponse$inboundSchema: z.ZodMiniType<
   ApiSupplierDetailResponse,
   unknown
-> = z.pipe(
-  z.object({
-    request_id: types.string(),
-    data: ApiSharedObjectac822ca2fd$inboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "request_id": "requestId",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      request_id: types.string(),
+      data: ApiSharedObjectcee24e628c$inboundSchema,
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "request_id": "requestId",
+      });
+    }),
+  )
 );
 
 export function apiSupplierDetailResponseFromJSON(

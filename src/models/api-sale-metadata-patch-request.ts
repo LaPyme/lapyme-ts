@@ -5,11 +5,35 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
+import {
+  ApiSharedObject601104d793,
+  ApiSharedObject601104d793$Outbound,
+  ApiSharedObject601104d793$outboundSchema,
+} from "./api-shared-object601104d793.js";
+import {
+  ApiSharedObject937856e041,
+  ApiSharedObject937856e041$Outbound,
+  ApiSharedObject937856e041$outboundSchema,
+} from "./api-shared-object937856e041.js";
 
 /**
- * Actualizacion parcial de metadatos operativos de venta. Envia al menos un campo. integration_source e integration_id deben enviarse juntos; para limpiar la referencia externa, envia ambos en null.
+ * Actualizá los vencimientos y otros metadatos operativos de la venta. Enviá al menos un campo. integration_source e integration_id deben enviarse juntos; para limpiar la referencia externa, envia ambos en null.
  */
 export type ApiSaleMetadataPatchRequest = {
+  /**
+   * Vencimientos en centavos de la moneda de la venta. En la creación, si se omite, se usa el plazo del cliente. En la edición, si se omite, se conservan las cuotas. Mandá null o [] para quitarlas y conservar el vencimiento final, o una fila para fijar un vencimiento único. Si se incluye due_date, tiene que coincidir con la última fila.
+   */
+  installments?: Array<ApiSharedObject937856e041> | null | undefined;
+  /**
+   * Fecha de factura de una venta fiscal pendiente. Los vencimientos existentes conservan sus fechas. Para cambiar la fecha de un comprobante no fiscal, editá el comprobante completo.
+   */
+  invoiceDate?: Date | undefined;
+  /**
+   * Vencimiento final. Para cambiarlo en una venta en cuotas, enviá también los vencimientos.
+   */
+  dueDate?: Date | undefined;
+  metafields?: Array<ApiSharedObject601104d793> | undefined;
   /**
    * Notas operativas de la venta. Enviar null o string vacio para limpiar.
    */
@@ -30,6 +54,10 @@ export type ApiSaleMetadataPatchRequest = {
 
 /** @internal */
 export type ApiSaleMetadataPatchRequest$Outbound = {
+  installments?: Array<ApiSharedObject937856e041$Outbound> | null | undefined;
+  invoice_date?: string | undefined;
+  due_date?: string | undefined;
+  metafields?: Array<ApiSharedObject601104d793$Outbound> | undefined;
   notes?: string | null | undefined;
   integration_source?: string | null | undefined;
   integration_id?: string | null | undefined;
@@ -40,20 +68,36 @@ export type ApiSaleMetadataPatchRequest$Outbound = {
 export const ApiSaleMetadataPatchRequest$outboundSchema: z.ZodMiniType<
   ApiSaleMetadataPatchRequest$Outbound,
   ApiSaleMetadataPatchRequest
-> = z.pipe(
-  z.object({
-    notes: z.optional(z.nullable(z.string())),
-    integrationSource: z.optional(z.nullable(z.string())),
-    integrationId: z.optional(z.nullable(z.string())),
-    salespersonId: z.optional(z.string()),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      integrationSource: "integration_source",
-      integrationId: "integration_id",
-      salespersonId: "salesperson_id",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      installments: z.optional(
+        z.nullable(z.array(ApiSharedObject937856e041$outboundSchema)),
+      ),
+      invoiceDate: z.optional(z.pipe(
+        z.date(),
+        z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
+      )),
+      dueDate: z.optional(z.pipe(
+        z.date(),
+        z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
+      )),
+      metafields: z.optional(z.array(ApiSharedObject601104d793$outboundSchema)),
+      notes: z.optional(z.nullable(z.string())),
+      integrationSource: z.optional(z.nullable(z.string())),
+      integrationId: z.optional(z.nullable(z.string())),
+      salespersonId: z.optional(z.string()),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        invoiceDate: "invoice_date",
+        dueDate: "due_date",
+        integrationSource: "integration_source",
+        integrationId: "integration_id",
+        salespersonId: "salesperson_id",
+      });
+    }),
+  )
 );
 
 export function apiSaleMetadataPatchRequestToJSON(

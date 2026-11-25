@@ -5,6 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type ApiStockTransferRequestItem = {
   productId: string;
@@ -14,7 +15,10 @@ export type ApiStockTransferRequestItem = {
 export type ApiStockTransferRequest = {
   sourceWarehouseId: string;
   targetWarehouseId: string;
-  transferDate: Date;
+  /**
+   * Fecha ISO (YYYY-MM-DD) u hora ISO 8601 completa.
+   */
+  transferDate: string;
   notes?: string | undefined;
   items: Array<ApiStockTransferRequestItem>;
   saveAsDraft?: boolean | undefined;
@@ -31,16 +35,18 @@ export type ApiStockTransferRequestItem$Outbound = {
 export const ApiStockTransferRequestItem$outboundSchema: z.ZodMiniType<
   ApiStockTransferRequestItem$Outbound,
   ApiStockTransferRequestItem
-> = z.pipe(
-  z.object({
-    productId: z.string(),
-    quantity: z.int(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      productId: "product_id",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      productId: z.string(),
+      quantity: z.int(),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        productId: "product_id",
+      });
+    }),
+  )
 );
 
 export function apiStockTransferRequestItemToJSON(
@@ -68,25 +74,27 @@ export type ApiStockTransferRequest$Outbound = {
 export const ApiStockTransferRequest$outboundSchema: z.ZodMiniType<
   ApiStockTransferRequest$Outbound,
   ApiStockTransferRequest
-> = z.pipe(
-  z.object({
-    sourceWarehouseId: z.string(),
-    targetWarehouseId: z.string(),
-    transferDate: z.pipe(z.date(), z.transform(v => v.toISOString())),
-    notes: z.optional(z.string()),
-    items: z.array(z.lazy(() => ApiStockTransferRequestItem$outboundSchema)),
-    saveAsDraft: z.optional(z.boolean()),
-    markAsReceived: z.optional(z.boolean()),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      sourceWarehouseId: "source_warehouse_id",
-      targetWarehouseId: "target_warehouse_id",
-      transferDate: "transfer_date",
-      saveAsDraft: "save_as_draft",
-      markAsReceived: "mark_as_received",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      sourceWarehouseId: z.string(),
+      targetWarehouseId: z.string(),
+      transferDate: z.string(),
+      notes: z.optional(z.string()),
+      items: z.array(z.lazy(() => ApiStockTransferRequestItem$outboundSchema)),
+      saveAsDraft: z.optional(z.boolean()),
+      markAsReceived: z.optional(z.boolean()),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        sourceWarehouseId: "source_warehouse_id",
+        targetWarehouseId: "target_warehouse_id",
+        transferDate: "transfer_date",
+        saveAsDraft: "save_as_draft",
+        markAsReceived: "mark_as_received",
+      });
+    }),
+  )
 );
 
 export function apiStockTransferRequestToJSON(

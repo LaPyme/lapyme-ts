@@ -5,11 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
-import { ClosedEnum } from "../types/enums.js";
-import {
-  ApiSharedEnum6cfb146157,
-  ApiSharedEnum6cfb146157$outboundSchema,
-} from "./api-shared-enum6cfb146157.js";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import {
   ApiSharedEnum822a963f55,
   ApiSharedEnum822a963f55$outboundSchema,
@@ -27,40 +23,40 @@ import {
   ApiSharedEnumf0d69c3d87$outboundSchema,
 } from "./api-shared-enumf0d69c3d87.js";
 import {
+  ApiSharedEnumffb4886f2b,
+  ApiSharedEnumffb4886f2b$outboundSchema,
+} from "./api-shared-enumffb4886f2b.js";
+import {
+  ApiSharedObject9254c089fd,
+  ApiSharedObject9254c089fd$Outbound,
+  ApiSharedObject9254c089fd$outboundSchema,
+} from "./api-shared-object9254c089fd.js";
+import {
   ApiSharedObject95929ea589,
   ApiSharedObject95929ea589$Outbound,
   ApiSharedObject95929ea589$outboundSchema,
 } from "./api-shared-object95929ea589.js";
+import {
+  ApiSharedObjectbea003a73d,
+  ApiSharedObjectbea003a73d$Outbound,
+  ApiSharedObjectbea003a73d$outboundSchema,
+} from "./api-shared-objectbea003a73d.js";
+import {
+  ApiSharedObjecte304e86be7,
+  ApiSharedObjecte304e86be7$Outbound,
+  ApiSharedObjecte304e86be7$outboundSchema,
+} from "./api-shared-objecte304e86be7.js";
 import {
   ApiSharedObjectfb7405a472,
   ApiSharedObjectfb7405a472$Outbound,
   ApiSharedObjectfb7405a472$outboundSchema,
 } from "./api-shared-objectfb7405a472.js";
 
-export type ApiPurchaseTransactionRequestItem = {
-  productId?: string | undefined;
-  name?: string | undefined;
-  quantity: number;
-  unitCost: number;
-  subtotal?: number | undefined;
-  total?: number | undefined;
-  taxRateId?: number | undefined;
-  isExempt?: boolean | undefined;
-  discountPercentage?: number | undefined;
-  purchaseOrderItemId?: string | undefined;
-  vatCategory?: ApiSharedEnum822a963f55 | null | undefined;
-};
-
-export const ApiPurchaseTransactionRequestStatus = {
-  Draft: "draft",
-  Confirmed: "confirmed",
-} as const;
-export type ApiPurchaseTransactionRequestStatus = ClosedEnum<
-  typeof ApiPurchaseTransactionRequestStatus
->;
-
 export type ApiPurchaseTransactionRequest = {
   supplierId?: string | undefined;
+  /**
+   * Tipo de comprobante de La Pyme. Para documentos fuera de la RG 1415, como resúmenes bancarios con IVA, usá 1099 (Otros comprobantes, código ARCA 099) o 1090 (NC otros comprobantes, código ARCA 090). Son solo de compras: ventas, pedidos y presupuestos los rechazan. 90 y 95 son Comprobante X y Nota de Crédito X y no van al Libro IVA Digital.
+   */
   voucherType: number;
   /**
    * Rol del comprobante dentro del flujo de importacion.
@@ -74,6 +70,10 @@ export type ApiPurchaseTransactionRequest = {
    * Estado de nacionalizacion de la factura comercial de importacion.
    */
   importNationalizationStatus?: ApiSharedEnumf0d69c3d87 | null | undefined;
+  /**
+   * Compra recibida a cuyo costo promedio suma este comprobante sin productos. null lo quita.
+   */
+  costTargetPurchaseId?: string | null | undefined;
   /**
    * Numero de despacho aduanero informado por el proveedor. Hasta 32 caracteres.
    */
@@ -94,7 +94,16 @@ export type ApiPurchaseTransactionRequest = {
    * Fecha de vencimiento en formato YYYY-MM-DD.
    */
   dueDate?: Date | undefined;
+  /**
+   * Vencimientos en centavos. Omití las cuotas y el plazo para aplicar el plazo del proveedor al crear o conservar las cuotas al actualizar. Enviá null o [] para quitarlas, o una fila para fijar un único vencimiento. Si enviás due_date junto a las cuotas, debe coincidir con la última fecha.
+   */
+  installments?: Array<ApiSharedObjecte304e86be7> | null | undefined;
+  /**
+   * Días desde la fecha de factura, en orden estrictamente creciente y sin repetir. El total a pagar en la moneda de la compra se divide en cuotas iguales, con el resto en la última. Un plazo fija un único vencimiento y [0] usa la fecha de factura. Omití installments. Si enviás due_date, debe coincidir con la fecha final. En una creación, este plazo tiene prioridad sobre el del proveedor. En una actualización, enviá el plazo sin items.
+   */
+  paymentTermInstallmentDays?: Array<number> | undefined;
   paymentTermId?: ApiSharedEnumd34af90520 | null | undefined;
+  paymentTermDays?: number | null | undefined;
   vatPerceptionAmount?: number | undefined;
   nationalTaxAmount?: number | undefined;
   grossIncomeTaxAmount?: number | undefined;
@@ -104,8 +113,12 @@ export type ApiPurchaseTransactionRequest = {
   otherTaxAmount?: number | undefined;
   warehouseId?: string | null | undefined;
   productsReceived?: boolean | undefined;
+  /**
+   * If true, a supplier credit note returns product quantities from the selected warehouse. Requires warehouseId. Invalid on non-credit purchases.
+   */
+  productsReturned?: boolean | undefined;
   updateProductVariantCost?: boolean | undefined;
-  items?: Array<ApiPurchaseTransactionRequestItem> | undefined;
+  items?: Array<ApiSharedObject9254c089fd> | undefined;
   subtotal?: number | undefined;
   taxAmount?: number | undefined;
   total?: number | undefined;
@@ -114,74 +127,13 @@ export type ApiPurchaseTransactionRequest = {
   nonTaxedAmount?: number | undefined;
   baseAmount?: number | undefined;
   vatBreakdown?: Array<ApiSharedObjectfb7405a472> | undefined;
+  manualAccountAllocations?: ApiSharedObjectbea003a73d | undefined;
   notes?: string | undefined;
-  currency: ApiSharedEnum6cfb146157;
+  currency: ApiSharedEnumffb4886f2b;
   exchangeRate?: number | undefined;
   pdfPath?: string | undefined;
   vatCategory?: ApiSharedEnum822a963f55 | null | undefined;
-  status?: ApiPurchaseTransactionRequestStatus | undefined;
 };
-
-/** @internal */
-export type ApiPurchaseTransactionRequestItem$Outbound = {
-  product_id?: string | undefined;
-  name?: string | undefined;
-  quantity: number;
-  unit_cost: number;
-  subtotal?: number | undefined;
-  total?: number | undefined;
-  tax_rate_id?: number | undefined;
-  is_exempt?: boolean | undefined;
-  discount_percentage?: number | undefined;
-  purchase_order_item_id?: string | undefined;
-  vat_category?: string | null | undefined;
-};
-
-/** @internal */
-export const ApiPurchaseTransactionRequestItem$outboundSchema: z.ZodMiniType<
-  ApiPurchaseTransactionRequestItem$Outbound,
-  ApiPurchaseTransactionRequestItem
-> = z.pipe(
-  z.object({
-    productId: z.optional(z.string()),
-    name: z.optional(z.string()),
-    quantity: z.number(),
-    unitCost: z.int(),
-    subtotal: z.optional(z.int()),
-    total: z.optional(z.int()),
-    taxRateId: z.optional(z.int()),
-    isExempt: z.optional(z.boolean()),
-    discountPercentage: z.optional(z.number()),
-    purchaseOrderItemId: z.optional(z.string()),
-    vatCategory: z.optional(z.nullable(ApiSharedEnum822a963f55$outboundSchema)),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      productId: "product_id",
-      unitCost: "unit_cost",
-      taxRateId: "tax_rate_id",
-      isExempt: "is_exempt",
-      discountPercentage: "discount_percentage",
-      purchaseOrderItemId: "purchase_order_item_id",
-      vatCategory: "vat_category",
-    });
-  }),
-);
-
-export function apiPurchaseTransactionRequestItemToJSON(
-  apiPurchaseTransactionRequestItem: ApiPurchaseTransactionRequestItem,
-): string {
-  return JSON.stringify(
-    ApiPurchaseTransactionRequestItem$outboundSchema.parse(
-      apiPurchaseTransactionRequestItem,
-    ),
-  );
-}
-
-/** @internal */
-export const ApiPurchaseTransactionRequestStatus$outboundSchema: z.ZodMiniEnum<
-  typeof ApiPurchaseTransactionRequestStatus
-> = z.enum(ApiPurchaseTransactionRequestStatus);
 
 /** @internal */
 export type ApiPurchaseTransactionRequest$Outbound = {
@@ -190,12 +142,16 @@ export type ApiPurchaseTransactionRequest$Outbound = {
   import_document_role?: string | null | undefined;
   import_source_purchase_id?: string | undefined;
   import_nationalization_status?: string | null | undefined;
+  cost_target_purchase_id?: string | null | undefined;
   customs_dispatch_number?: string | undefined;
   supplier_invoice_number?: string | undefined;
   invoice_date?: string | undefined;
   account_date?: string | undefined;
   due_date?: string | undefined;
+  installments?: Array<ApiSharedObjecte304e86be7$Outbound> | null | undefined;
+  payment_term_installment_days?: Array<number> | undefined;
   payment_term_id?: string | null | undefined;
+  payment_term_days?: number | null | undefined;
   vat_perception_amount?: number | undefined;
   national_tax_amount?: number | undefined;
   gross_income_tax_amount?: number | undefined;
@@ -207,8 +163,9 @@ export type ApiPurchaseTransactionRequest$Outbound = {
   other_tax_amount?: number | undefined;
   warehouse_id?: string | null | undefined;
   products_received?: boolean | undefined;
+  products_returned?: boolean | undefined;
   update_product_variant_cost?: boolean | undefined;
-  items?: Array<ApiPurchaseTransactionRequestItem$Outbound> | undefined;
+  items?: Array<ApiSharedObject9254c089fd$Outbound> | undefined;
   subtotal?: number | undefined;
   tax_amount?: number | undefined;
   total?: number | undefined;
@@ -217,109 +174,127 @@ export type ApiPurchaseTransactionRequest$Outbound = {
   non_taxed_amount?: number | undefined;
   base_amount?: number | undefined;
   vat_breakdown?: Array<ApiSharedObjectfb7405a472$Outbound> | undefined;
+  manual_account_allocations?: ApiSharedObjectbea003a73d$Outbound | undefined;
   notes?: string | undefined;
   currency: string;
   exchange_rate?: number | undefined;
   pdf_path?: string | undefined;
   vat_category?: string | null | undefined;
-  status?: string | undefined;
 };
 
 /** @internal */
 export const ApiPurchaseTransactionRequest$outboundSchema: z.ZodMiniType<
   ApiPurchaseTransactionRequest$Outbound,
   ApiPurchaseTransactionRequest
-> = z.pipe(
-  z.object({
-    supplierId: z.optional(z.string()),
-    voucherType: z.int(),
-    importDocumentRole: z.optional(
-      z.nullable(ApiSharedEnum9e7af09974$outboundSchema),
-    ),
-    importSourcePurchaseId: z.optional(z.string()),
-    importNationalizationStatus: z.optional(
-      z.nullable(ApiSharedEnumf0d69c3d87$outboundSchema),
-    ),
-    customsDispatchNumber: z.optional(z.string()),
-    supplierInvoiceNumber: z.optional(z.string()),
-    invoiceDate: z.optional(z.pipe(
-      z.date(),
-      z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
-    )),
-    accountDate: z.optional(z.pipe(
-      z.date(),
-      z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
-    )),
-    dueDate: z.optional(z.pipe(
-      z.date(),
-      z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
-    )),
-    paymentTermId: z.optional(
-      z.nullable(ApiSharedEnumd34af90520$outboundSchema),
-    ),
-    vatPerceptionAmount: z.optional(z.int()),
-    nationalTaxAmount: z.optional(z.int()),
-    grossIncomeTaxAmount: z.optional(z.int()),
-    grossIncomeTaxBreakdown: z.optional(
-      z.array(ApiSharedObject95929ea589$outboundSchema),
-    ),
-    municipalTaxAmount: z.optional(z.int()),
-    internalTaxAmount: z.optional(z.int()),
-    otherTaxAmount: z.optional(z.int()),
-    warehouseId: z.optional(z.nullable(z.string())),
-    productsReceived: z.optional(z.boolean()),
-    updateProductVariantCost: z.optional(z.boolean()),
-    items: z.optional(z.array(z.lazy(() =>
-      ApiPurchaseTransactionRequestItem$outboundSchema
-    ))),
-    subtotal: z.optional(z.int()),
-    taxAmount: z.optional(z.int()),
-    total: z.optional(z.int()),
-    discount: z.optional(z.int()),
-    exemptAmount: z.optional(z.int()),
-    nonTaxedAmount: z.optional(z.int()),
-    baseAmount: z.optional(z.int()),
-    vatBreakdown: z.optional(z.array(ApiSharedObjectfb7405a472$outboundSchema)),
-    notes: z.optional(z.string()),
-    currency: ApiSharedEnum6cfb146157$outboundSchema,
-    exchangeRate: z.optional(z.number()),
-    pdfPath: z.optional(z.string()),
-    vatCategory: z.optional(z.nullable(ApiSharedEnum822a963f55$outboundSchema)),
-    status: z.optional(ApiPurchaseTransactionRequestStatus$outboundSchema),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      supplierId: "supplier_id",
-      voucherType: "voucher_type",
-      importDocumentRole: "import_document_role",
-      importSourcePurchaseId: "import_source_purchase_id",
-      importNationalizationStatus: "import_nationalization_status",
-      customsDispatchNumber: "customs_dispatch_number",
-      supplierInvoiceNumber: "supplier_invoice_number",
-      invoiceDate: "invoice_date",
-      accountDate: "account_date",
-      dueDate: "due_date",
-      paymentTermId: "payment_term_id",
-      vatPerceptionAmount: "vat_perception_amount",
-      nationalTaxAmount: "national_tax_amount",
-      grossIncomeTaxAmount: "gross_income_tax_amount",
-      grossIncomeTaxBreakdown: "gross_income_tax_breakdown",
-      municipalTaxAmount: "municipal_tax_amount",
-      internalTaxAmount: "internal_tax_amount",
-      otherTaxAmount: "other_tax_amount",
-      warehouseId: "warehouse_id",
-      productsReceived: "products_received",
-      updateProductVariantCost: "update_product_variant_cost",
-      taxAmount: "tax_amount",
-      exemptAmount: "exempt_amount",
-      nonTaxedAmount: "non_taxed_amount",
-      baseAmount: "base_amount",
-      vatBreakdown: "vat_breakdown",
-      exchangeRate: "exchange_rate",
-      pdfPath: "pdf_path",
-      vatCategory: "vat_category",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      supplierId: z.optional(z.string()),
+      voucherType: z.int(),
+      importDocumentRole: z.optional(
+        z.nullable(ApiSharedEnum9e7af09974$outboundSchema),
+      ),
+      importSourcePurchaseId: z.optional(z.string()),
+      importNationalizationStatus: z.optional(
+        z.nullable(ApiSharedEnumf0d69c3d87$outboundSchema),
+      ),
+      costTargetPurchaseId: z.optional(z.nullable(z.string())),
+      customsDispatchNumber: z.optional(z.string()),
+      supplierInvoiceNumber: z.optional(z.string()),
+      invoiceDate: z.optional(z.pipe(
+        z.date(),
+        z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
+      )),
+      accountDate: z.optional(z.pipe(
+        z.date(),
+        z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
+      )),
+      dueDate: z.optional(z.pipe(
+        z.date(),
+        z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
+      )),
+      installments: z.optional(
+        z.nullable(z.array(ApiSharedObjecte304e86be7$outboundSchema)),
+      ),
+      paymentTermInstallmentDays: z.optional(z.array(z.int())),
+      paymentTermId: z.optional(
+        z.nullable(ApiSharedEnumd34af90520$outboundSchema),
+      ),
+      paymentTermDays: z.optional(z.nullable(z.int())),
+      vatPerceptionAmount: z.optional(z.int()),
+      nationalTaxAmount: z.optional(z.int()),
+      grossIncomeTaxAmount: z.optional(z.int()),
+      grossIncomeTaxBreakdown: z.optional(
+        z.array(ApiSharedObject95929ea589$outboundSchema),
+      ),
+      municipalTaxAmount: z.optional(z.int()),
+      internalTaxAmount: z.optional(z.int()),
+      otherTaxAmount: z.optional(z.int()),
+      warehouseId: z.optional(z.nullable(z.string())),
+      productsReceived: z.optional(z.boolean()),
+      productsReturned: z.optional(z.boolean()),
+      updateProductVariantCost: z.optional(z.boolean()),
+      items: z.optional(z.array(ApiSharedObject9254c089fd$outboundSchema)),
+      subtotal: z.optional(z.int()),
+      taxAmount: z.optional(z.int()),
+      total: z.optional(z.int()),
+      discount: z.optional(z.int()),
+      exemptAmount: z.optional(z.int()),
+      nonTaxedAmount: z.optional(z.int()),
+      baseAmount: z.optional(z.int()),
+      vatBreakdown: z.optional(
+        z.array(ApiSharedObjectfb7405a472$outboundSchema),
+      ),
+      manualAccountAllocations: z.optional(
+        ApiSharedObjectbea003a73d$outboundSchema,
+      ),
+      notes: z.optional(z.string()),
+      currency: ApiSharedEnumffb4886f2b$outboundSchema,
+      exchangeRate: z.optional(z.number()),
+      pdfPath: z.optional(z.string()),
+      vatCategory: z.optional(
+        z.nullable(ApiSharedEnum822a963f55$outboundSchema),
+      ),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        supplierId: "supplier_id",
+        voucherType: "voucher_type",
+        importDocumentRole: "import_document_role",
+        importSourcePurchaseId: "import_source_purchase_id",
+        importNationalizationStatus: "import_nationalization_status",
+        costTargetPurchaseId: "cost_target_purchase_id",
+        customsDispatchNumber: "customs_dispatch_number",
+        supplierInvoiceNumber: "supplier_invoice_number",
+        invoiceDate: "invoice_date",
+        accountDate: "account_date",
+        dueDate: "due_date",
+        paymentTermInstallmentDays: "payment_term_installment_days",
+        paymentTermId: "payment_term_id",
+        paymentTermDays: "payment_term_days",
+        vatPerceptionAmount: "vat_perception_amount",
+        nationalTaxAmount: "national_tax_amount",
+        grossIncomeTaxAmount: "gross_income_tax_amount",
+        grossIncomeTaxBreakdown: "gross_income_tax_breakdown",
+        municipalTaxAmount: "municipal_tax_amount",
+        internalTaxAmount: "internal_tax_amount",
+        otherTaxAmount: "other_tax_amount",
+        warehouseId: "warehouse_id",
+        productsReceived: "products_received",
+        productsReturned: "products_returned",
+        updateProductVariantCost: "update_product_variant_cost",
+        taxAmount: "tax_amount",
+        exemptAmount: "exempt_amount",
+        nonTaxedAmount: "non_taxed_amount",
+        baseAmount: "base_amount",
+        vatBreakdown: "vat_breakdown",
+        manualAccountAllocations: "manual_account_allocations",
+        exchangeRate: "exchange_rate",
+        pdfPath: "pdf_path",
+        vatCategory: "vat_category",
+      });
+    }),
+  )
 );
 
 export function apiPurchaseTransactionRequestToJSON(

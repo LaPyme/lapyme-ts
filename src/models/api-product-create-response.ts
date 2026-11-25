@@ -5,18 +5,26 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import {
-  ApiSharedObjectd371740910,
-  ApiSharedObjectd371740910$inboundSchema,
-} from "./api-shared-objectd371740910.js";
+  ApiSharedObjectcbcdbf3dfa,
+  ApiSharedObjectcbcdbf3dfa$inboundSchema,
+} from "./api-shared-objectcbcdbf3dfa.js";
+import {
+  ApiSharedObjectf175881c66,
+  ApiSharedObjectf175881c66$inboundSchema,
+} from "./api-shared-objectf175881c66.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type ApiProductCreateResponseData = {
-  product: ApiSharedObjectd371740910;
+  product: ApiSharedObjectf175881c66;
   idempotentReplay: boolean;
+  /**
+   * USD conversions used by this save. Empty when no conversion was resolved or costs are hidden. Create replay returns the original evidence.
+   */
+  costConversions: Array<ApiSharedObjectcbcdbf3dfa>;
 };
 
 export type ApiProductCreateResponse = {
@@ -29,16 +37,20 @@ export type ApiProductCreateResponse = {
 export const ApiProductCreateResponseData$inboundSchema: z.ZodMiniType<
   ApiProductCreateResponseData,
   unknown
-> = z.pipe(
-  z.object({
-    product: ApiSharedObjectd371740910$inboundSchema,
-    idempotent_replay: types.boolean(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "idempotent_replay": "idempotentReplay",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      product: ApiSharedObjectf175881c66$inboundSchema,
+      idempotent_replay: types.boolean(),
+      cost_conversions: z.array(ApiSharedObjectcbcdbf3dfa$inboundSchema),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "idempotent_replay": "idempotentReplay",
+        "cost_conversions": "costConversions",
+      });
+    }),
+  )
 );
 
 export function apiProductCreateResponseDataFromJSON(
@@ -55,17 +67,19 @@ export function apiProductCreateResponseDataFromJSON(
 export const ApiProductCreateResponse$inboundSchema: z.ZodMiniType<
   ApiProductCreateResponse,
   unknown
-> = z.pipe(
-  z.object({
-    request_id: types.string(),
-    data: z.lazy(() => ApiProductCreateResponseData$inboundSchema),
-    warnings: z.array(z.any()),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "request_id": "requestId",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      request_id: types.string(),
+      data: z.lazy(() => ApiProductCreateResponseData$inboundSchema),
+      warnings: z.array(z.any()),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "request_id": "requestId",
+      });
+    }),
+  )
 );
 
 export function apiProductCreateResponseFromJSON(

@@ -5,17 +5,17 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import {
-  ApiSharedObjectac822ca2fd,
-  ApiSharedObjectac822ca2fd$inboundSchema,
-} from "./api-shared-objectac822ca2fd.js";
+  ApiSharedObjectcee24e628c,
+  ApiSharedObjectcee24e628c$inboundSchema,
+} from "./api-shared-objectcee24e628c.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type ApiSupplierUpdateResponseData = {
-  supplier: ApiSharedObjectac822ca2fd;
+  supplier: ApiSharedObjectcee24e628c;
 };
 
 export type ApiSupplierUpdateResponse = {
@@ -28,9 +28,11 @@ export type ApiSupplierUpdateResponse = {
 export const ApiSupplierUpdateResponseData$inboundSchema: z.ZodMiniType<
   ApiSupplierUpdateResponseData,
   unknown
-> = z.object({
-  supplier: ApiSharedObjectac822ca2fd$inboundSchema,
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    supplier: ApiSharedObjectcee24e628c$inboundSchema,
+  })
+);
 
 export function apiSupplierUpdateResponseDataFromJSON(
   jsonString: string,
@@ -46,17 +48,19 @@ export function apiSupplierUpdateResponseDataFromJSON(
 export const ApiSupplierUpdateResponse$inboundSchema: z.ZodMiniType<
   ApiSupplierUpdateResponse,
   unknown
-> = z.pipe(
-  z.object({
-    request_id: types.string(),
-    data: z.lazy(() => ApiSupplierUpdateResponseData$inboundSchema),
-    warnings: z.array(z.any()),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "request_id": "requestId",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      request_id: types.string(),
+      data: z.lazy(() => ApiSupplierUpdateResponseData$inboundSchema),
+      warnings: z.array(z.any()),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "request_id": "requestId",
+      });
+    }),
+  )
 );
 
 export function apiSupplierUpdateResponseFromJSON(

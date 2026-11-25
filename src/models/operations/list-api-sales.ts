@@ -5,11 +5,33 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
-import { safeParse } from "../../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../../lib/schemas.js";
 import { ClosedEnum } from "../../types/enums.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import * as models from "../index.js";
+
+export const ListApiSalesField = {
+  Installments: "installments",
+  NextOpenInstallment: "nextOpenInstallment",
+  OverdueOpenTotal: "overdueOpenTotal",
+  BalanceAboveSchedule: "balanceAboveSchedule",
+  Id: "id",
+  InvoicePdf: "invoicePdf",
+  Document: "document",
+  Customer: "customer",
+  Amounts: "amounts",
+  Items: "items",
+  Payments: "payments",
+  Applications: "applications",
+  Fiscal: "fiscal",
+  Integration: "integration",
+  ReversesVoucher: "reversesVoucher",
+  Audit: "audit",
+  Tags: "tags",
+  Metafields: "metafields",
+} as const;
+export type ListApiSalesField = ClosedEnum<typeof ListApiSalesField>;
 
 export const PaymentStatus = {
   Paid: "paid",
@@ -33,9 +55,9 @@ export type ListApiSalesAmountAttribute = ClosedEnum<
 
 export type ListApiSalesRequest = {
   /**
-   * Comma-separated top-level sale sections to include. Omit for the endpoint default. List default: id, document, customer, amounts, reversesVoucher, integration, audit. Detail default: id, document, customer, amounts, items, payments, applications, fiscal, reversesVoucher, integration, audit.
+   * Comma-separated top-level sale sections to include. Omit for the list default: id, document, customer, amounts, reversesVoucher, integration, audit, tags, metafields.
    */
-  fields?: Array<models.ApiSharedEnumd1f2fb458d> | undefined;
+  fields?: Array<ListApiSalesField> | undefined;
   /**
    * Valor de next_cursor recibido en la respuesta anterior
    */
@@ -45,13 +67,9 @@ export type ListApiSalesRequest = {
    */
   limit?: number | undefined;
   /**
-   * Texto de búsqueda por cliente, CUIT, número de comprobante o ID de integración
+   * Texto de búsqueda por cliente, CUIT, número de comprobante, ID de integración, producto, SKU, código de barras o variante
    */
   query?: string | undefined;
-  /**
-   * Alias de query
-   */
-  search?: string | undefined;
   /**
    * Filtra por cliente
    */
@@ -116,13 +134,18 @@ export type ListApiSalesResponse = {
 };
 
 /** @internal */
+export const ListApiSalesField$outboundSchema: z.ZodMiniEnum<
+  typeof ListApiSalesField
+> = /* @__PURE__ */ lazySchema$(() => z.enum(ListApiSalesField));
+
+/** @internal */
 export const PaymentStatus$outboundSchema: z.ZodMiniEnum<typeof PaymentStatus> =
-  z.enum(PaymentStatus);
+  /* @__PURE__ */ lazySchema$(() => z.enum(PaymentStatus));
 
 /** @internal */
 export const ListApiSalesAmountAttribute$outboundSchema: z.ZodMiniEnum<
   typeof ListApiSalesAmountAttribute
-> = z.enum(ListApiSalesAmountAttribute);
+> = /* @__PURE__ */ lazySchema$(() => z.enum(ListApiSalesAmountAttribute));
 
 /** @internal */
 export type ListApiSalesRequest$Outbound = {
@@ -130,7 +153,6 @@ export type ListApiSalesRequest$Outbound = {
   cursor?: string | undefined;
   limit: number;
   query?: string | undefined;
-  search?: string | undefined;
   customer_id?: string | undefined;
   date_from?: string | undefined;
   date_to?: string | undefined;
@@ -151,60 +173,61 @@ export type ListApiSalesRequest$Outbound = {
 export const ListApiSalesRequest$outboundSchema: z.ZodMiniType<
   ListApiSalesRequest$Outbound,
   ListApiSalesRequest
-> = z.pipe(
-  z.object({
-    fields: z.optional(z.array(models.ApiSharedEnumd1f2fb458d$outboundSchema)),
-    cursor: z.optional(z.string()),
-    limit: z._default(z.int(), 50),
-    query: z.optional(z.string()),
-    search: z.optional(z.string()),
-    customerId: z.optional(z.string()),
-    dateFrom: z.optional(z.pipe(
-      z.date(),
-      z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
-    )),
-    dateTo: z.optional(z.pipe(
-      z.date(),
-      z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
-    )),
-    dateAttribute: z._default(
-      models.ApiSharedEnume975a7c122$outboundSchema,
-      "invoiceDate",
-    ),
-    integrationSources: z.optional(z.array(z.string())),
-    pointOfSaleIds: z.optional(z.array(z.string())),
-    registerIds: z.optional(z.array(z.string())),
-    sellerIds: z.optional(z.array(z.string())),
-    invoiceStatuses: z.optional(
-      z.array(models.ApiSharedEnum9ac70a3316$outboundSchema),
-    ),
-    paymentStatuses: z.optional(z.array(PaymentStatus$outboundSchema)),
-    voucherTypes: z.optional(z.array(z.string())),
-    amountAttribute: z._default(
-      ListApiSalesAmountAttribute$outboundSchema,
-      "balance",
-    ),
-    minAmount: z.optional(z.int()),
-    maxAmount: z.optional(z.int()),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      customerId: "customer_id",
-      dateFrom: "date_from",
-      dateTo: "date_to",
-      dateAttribute: "date_attribute",
-      integrationSources: "integration_sources",
-      pointOfSaleIds: "point_of_sale_ids",
-      registerIds: "register_ids",
-      sellerIds: "seller_ids",
-      invoiceStatuses: "invoice_statuses",
-      paymentStatuses: "payment_statuses",
-      voucherTypes: "voucher_types",
-      amountAttribute: "amount_attribute",
-      minAmount: "min_amount",
-      maxAmount: "max_amount",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      fields: z.optional(z.array(ListApiSalesField$outboundSchema)),
+      cursor: z.optional(z.string()),
+      limit: z._default(z.int(), 50),
+      query: z.optional(z.string()),
+      customerId: z.optional(z.string()),
+      dateFrom: z.optional(z.pipe(
+        z.date(),
+        z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
+      )),
+      dateTo: z.optional(z.pipe(
+        z.date(),
+        z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
+      )),
+      dateAttribute: z._default(
+        models.ApiSharedEnume975a7c122$outboundSchema,
+        "invoiceDate",
+      ),
+      integrationSources: z.optional(z.array(z.string())),
+      pointOfSaleIds: z.optional(z.array(z.string())),
+      registerIds: z.optional(z.array(z.string())),
+      sellerIds: z.optional(z.array(z.string())),
+      invoiceStatuses: z.optional(
+        z.array(models.ApiSharedEnum9ac70a3316$outboundSchema),
+      ),
+      paymentStatuses: z.optional(z.array(PaymentStatus$outboundSchema)),
+      voucherTypes: z.optional(z.array(z.string())),
+      amountAttribute: z._default(
+        ListApiSalesAmountAttribute$outboundSchema,
+        "balance",
+      ),
+      minAmount: z.optional(z.int()),
+      maxAmount: z.optional(z.int()),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        customerId: "customer_id",
+        dateFrom: "date_from",
+        dateTo: "date_to",
+        dateAttribute: "date_attribute",
+        integrationSources: "integration_sources",
+        pointOfSaleIds: "point_of_sale_ids",
+        registerIds: "register_ids",
+        sellerIds: "seller_ids",
+        invoiceStatuses: "invoice_statuses",
+        paymentStatuses: "payment_statuses",
+        voucherTypes: "voucher_types",
+        amountAttribute: "amount_attribute",
+        minAmount: "min_amount",
+        maxAmount: "max_amount",
+      });
+    }),
+  )
 );
 
 export function listApiSalesRequestToJSON(
@@ -219,17 +242,19 @@ export function listApiSalesRequestToJSON(
 export const ListApiSalesResponse$inboundSchema: z.ZodMiniType<
   ListApiSalesResponse,
   unknown
-> = z.pipe(
-  z.object({
-    Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
-    Result: models.ApiSaleListResponse$inboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "Headers": "headers",
-      "Result": "result",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
+      Result: models.ApiSaleListResponse$inboundSchema,
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "Headers": "headers",
+        "Result": "result",
+      });
+    }),
+  )
 );
 
 export function listApiSalesResponseFromJSON(

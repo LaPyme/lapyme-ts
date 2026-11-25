@@ -5,7 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -27,18 +27,20 @@ export type ApiApplyTagsResponse = {
 export const ApiApplyTagsResponseData$inboundSchema: z.ZodMiniType<
   ApiApplyTagsResponseData,
   unknown
-> = z.pipe(
-  z.object({
-    entity_ids: z.array(types.string()),
-    added: types.number(),
-    removed: types.number(),
-    total: types.number(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "entity_ids": "entityIds",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      entity_ids: z.array(types.string()),
+      added: types.number(),
+      removed: types.number(),
+      total: types.number(),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "entity_ids": "entityIds",
+      });
+    }),
+  )
 );
 
 export function apiApplyTagsResponseDataFromJSON(
@@ -55,17 +57,19 @@ export function apiApplyTagsResponseDataFromJSON(
 export const ApiApplyTagsResponse$inboundSchema: z.ZodMiniType<
   ApiApplyTagsResponse,
   unknown
-> = z.pipe(
-  z.object({
-    request_id: types.string(),
-    data: z.lazy(() => ApiApplyTagsResponseData$inboundSchema),
-    warnings: z.array(z.any()),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "request_id": "requestId",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      request_id: types.string(),
+      data: z.lazy(() => ApiApplyTagsResponseData$inboundSchema),
+      warnings: z.array(z.any()),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "request_id": "requestId",
+      });
+    }),
+  )
 );
 
 export function apiApplyTagsResponseFromJSON(

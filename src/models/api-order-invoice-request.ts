@@ -5,6 +5,12 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
+import {
+  ApiSharedObject601104d793,
+  ApiSharedObject601104d793$Outbound,
+  ApiSharedObject601104d793$outboundSchema,
+} from "./api-shared-object601104d793.js";
 
 export type ApiOrderInvoiceRequestLine = {
   orderLineId: string;
@@ -12,6 +18,7 @@ export type ApiOrderInvoiceRequestLine = {
 };
 
 export type ApiOrderInvoiceRequest = {
+  metafields?: Array<ApiSharedObject601104d793> | undefined;
   voucherType: number;
   pointOfSaleId: string;
   invoiceDate: Date;
@@ -30,17 +37,19 @@ export type ApiOrderInvoiceRequestLine$Outbound = {
 export const ApiOrderInvoiceRequestLine$outboundSchema: z.ZodMiniType<
   ApiOrderInvoiceRequestLine$Outbound,
   ApiOrderInvoiceRequestLine
-> = z.pipe(
-  z.object({
-    orderLineId: z.string(),
-    quantityToInvoice: z.int(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      orderLineId: "order_line_id",
-      quantityToInvoice: "quantity_to_invoice",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      orderLineId: z.string(),
+      quantityToInvoice: z.number(),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        orderLineId: "order_line_id",
+        quantityToInvoice: "quantity_to_invoice",
+      });
+    }),
+  )
 );
 
 export function apiOrderInvoiceRequestLineToJSON(
@@ -53,6 +62,7 @@ export function apiOrderInvoiceRequestLineToJSON(
 
 /** @internal */
 export type ApiOrderInvoiceRequest$Outbound = {
+  metafields?: Array<ApiSharedObject601104d793$Outbound> | undefined;
   voucher_type: number;
   point_of_sale_id: string;
   invoice_date: string;
@@ -65,31 +75,32 @@ export type ApiOrderInvoiceRequest$Outbound = {
 export const ApiOrderInvoiceRequest$outboundSchema: z.ZodMiniType<
   ApiOrderInvoiceRequest$Outbound,
   ApiOrderInvoiceRequest
-> = z.pipe(
-  z.object({
-    voucherType: z.int(),
-    pointOfSaleId: z.string(),
-    invoiceDate: z.pipe(
-      z.date(),
-      z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
-    ),
-    dueDate: z.optional(z.pipe(
-      z.date(),
-      z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
-    )),
-    notes: z.optional(z.string()),
-    lines: z.array(z.lazy(() =>
-      ApiOrderInvoiceRequestLine$outboundSchema
-    )),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      voucherType: "voucher_type",
-      pointOfSaleId: "point_of_sale_id",
-      invoiceDate: "invoice_date",
-      dueDate: "due_date",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      metafields: z.optional(z.array(ApiSharedObject601104d793$outboundSchema)),
+      voucherType: z.int(),
+      pointOfSaleId: z.string(),
+      invoiceDate: z.pipe(
+        z.date(),
+        z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
+      ),
+      dueDate: z.optional(z.pipe(
+        z.date(),
+        z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
+      )),
+      notes: z.optional(z.string()),
+      lines: z.array(z.lazy(() => ApiOrderInvoiceRequestLine$outboundSchema)),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        voucherType: "voucher_type",
+        pointOfSaleId: "point_of_sale_id",
+        invoiceDate: "invoice_date",
+        dueDate: "due_date",
+      });
+    }),
+  )
 );
 
 export function apiOrderInvoiceRequestToJSON(

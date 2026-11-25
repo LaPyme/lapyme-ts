@@ -4,7 +4,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -18,10 +18,12 @@ export type ApiSharedObject8aeeceaf0f = {
 export const ApiSharedObject8aeeceaf0f$inboundSchema: z.ZodMiniType<
   ApiSharedObject8aeeceaf0f,
   unknown
-> = z.object({
-  id: types.string(),
-  name: types.string(),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    id: types.string(),
+    name: types.string(),
+  })
+);
 
 export function apiSharedObject8aeeceaf0fFromJSON(
   jsonString: string,

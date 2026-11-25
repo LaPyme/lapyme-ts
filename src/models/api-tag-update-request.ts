@@ -4,6 +4,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import {
   ApiSharedEnum599647cb76,
   ApiSharedEnum599647cb76$outboundSchema,
@@ -28,12 +29,14 @@ export type ApiTagUpdateRequest$Outbound = {
 export const ApiTagUpdateRequest$outboundSchema: z.ZodMiniType<
   ApiTagUpdateRequest$Outbound,
   ApiTagUpdateRequest
-> = z.object({
-  name: z.optional(z.string()),
-  color: z.optional(z.nullable(ApiSharedEnum599647cb76$outboundSchema)),
-  description: z.optional(z.nullable(z.string())),
-  archived: z.optional(z.boolean()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    name: z.optional(z.string()),
+    color: z.optional(z.nullable(ApiSharedEnum599647cb76$outboundSchema)),
+    description: z.optional(z.nullable(z.string())),
+    archived: z.optional(z.boolean()),
+  })
+);
 
 export function apiTagUpdateRequestToJSON(
   apiTagUpdateRequest: ApiTagUpdateRequest,
