@@ -5,7 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import {
@@ -24,19 +24,21 @@ export type ApiSharedObjecta9f7340006 = {
 export const ApiSharedObjecta9f7340006$inboundSchema: z.ZodMiniType<
   ApiSharedObjecta9f7340006,
   unknown
-> = z.pipe(
-  z.object({
-    total_quantity: types.number(),
-    warehouse_count: types.number(),
-    by_warehouse: z.array(ApiSharedObjectf20bf16616$inboundSchema),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "total_quantity": "totalQuantity",
-      "warehouse_count": "warehouseCount",
-      "by_warehouse": "byWarehouse",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      total_quantity: types.number(),
+      warehouse_count: types.number(),
+      by_warehouse: z.array(ApiSharedObjectf20bf16616$inboundSchema),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "total_quantity": "totalQuantity",
+        "warehouse_count": "warehouseCount",
+        "by_warehouse": "byWarehouse",
+      });
+    }),
+  )
 );
 
 export function apiSharedObjecta9f7340006FromJSON(

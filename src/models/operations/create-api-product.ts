@@ -5,7 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
-import { safeParse } from "../../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import * as models from "../index.js";
@@ -19,7 +19,7 @@ export type CreateApiProductRequest = {
    * ID opcional de la solicitud para trazabilidad. Si se omite, el servidor genera uno.
    */
   xRequestId?: string | undefined;
-  body: models.ApiProductMutationRequest;
+  body: models.ApiProductMutationRequestUnion;
 };
 
 export type CreateApiProductResponse = {
@@ -31,25 +31,27 @@ export type CreateApiProductResponse = {
 export type CreateApiProductRequest$Outbound = {
   "Idempotency-Key": string;
   "X-Request-Id"?: string | undefined;
-  body: models.ApiProductMutationRequest$Outbound;
+  body: models.ApiProductMutationRequestUnion$Outbound;
 };
 
 /** @internal */
 export const CreateApiProductRequest$outboundSchema: z.ZodMiniType<
   CreateApiProductRequest$Outbound,
   CreateApiProductRequest
-> = z.pipe(
-  z.object({
-    idempotencyKey: z.string(),
-    xRequestId: z.optional(z.string()),
-    body: models.ApiProductMutationRequest$outboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      idempotencyKey: "Idempotency-Key",
-      xRequestId: "X-Request-Id",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      idempotencyKey: z.string(),
+      xRequestId: z.optional(z.string()),
+      body: models.ApiProductMutationRequestUnion$outboundSchema,
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        idempotencyKey: "Idempotency-Key",
+        xRequestId: "X-Request-Id",
+      });
+    }),
+  )
 );
 
 export function createApiProductRequestToJSON(
@@ -64,17 +66,19 @@ export function createApiProductRequestToJSON(
 export const CreateApiProductResponse$inboundSchema: z.ZodMiniType<
   CreateApiProductResponse,
   unknown
-> = z.pipe(
-  z.object({
-    Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
-    Result: models.ApiProductCreateResponse$inboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "Headers": "headers",
-      "Result": "result",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
+      Result: models.ApiProductCreateResponse$inboundSchema,
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "Headers": "headers",
+        "Result": "result",
+      });
+    }),
+  )
 );
 
 export function createApiProductResponseFromJSON(

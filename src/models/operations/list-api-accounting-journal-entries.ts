@@ -5,7 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
-import { safeParse } from "../../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import * as models from "../index.js";
@@ -39,6 +39,10 @@ export type ListApiAccountingJournalEntriesRequest = {
    * Fecha final del asiento
    */
   dateTo?: Date | undefined;
+  /**
+   * Circuito contable del reporte: `general`, el id de un circuito de la organización (ver `accounting_circuits` en GET /api/v1/organization), o `all`. Omitido es `all`, todos los circuitos. Un id que no es de la organización devuelve 400 `circuit_not_found`.
+   */
+  circuitId?: string | undefined;
 };
 
 export type ListApiAccountingJournalEntriesResponse = {
@@ -55,6 +59,7 @@ export type ListApiAccountingJournalEntriesRequest$Outbound = {
   account_id?: string | undefined;
   date_from?: string | undefined;
   date_to?: string | undefined;
+  circuit_id: string;
 };
 
 /** @internal */
@@ -62,31 +67,35 @@ export const ListApiAccountingJournalEntriesRequest$outboundSchema:
   z.ZodMiniType<
     ListApiAccountingJournalEntriesRequest$Outbound,
     ListApiAccountingJournalEntriesRequest
-  > = z.pipe(
-    z.object({
-      cursor: z.optional(z.string()),
-      limit: z._default(z.int(), 50),
-      sourceType: z.optional(z.string()),
-      sourceId: z.optional(z.string()),
-      accountId: z.optional(z.string()),
-      dateFrom: z.optional(z.pipe(
-        z.date(),
-        z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
-      )),
-      dateTo: z.optional(z.pipe(
-        z.date(),
-        z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
-      )),
-    }),
-    z.transform((v) => {
-      return remap$(v, {
-        sourceType: "source_type",
-        sourceId: "source_id",
-        accountId: "account_id",
-        dateFrom: "date_from",
-        dateTo: "date_to",
-      });
-    }),
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.pipe(
+      z.object({
+        cursor: z.optional(z.string()),
+        limit: z._default(z.int(), 50),
+        sourceType: z.optional(z.string()),
+        sourceId: z.optional(z.string()),
+        accountId: z.optional(z.string()),
+        dateFrom: z.optional(z.pipe(
+          z.date(),
+          z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
+        )),
+        dateTo: z.optional(z.pipe(
+          z.date(),
+          z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
+        )),
+        circuitId: z._default(z.string(), "all"),
+      }),
+      z.transform((v) => {
+        return remap$(v, {
+          sourceType: "source_type",
+          sourceId: "source_id",
+          accountId: "account_id",
+          dateFrom: "date_from",
+          dateTo: "date_to",
+          circuitId: "circuit_id",
+        });
+      }),
+    )
   );
 
 export function listApiAccountingJournalEntriesRequestToJSON(
@@ -102,18 +111,21 @@ export function listApiAccountingJournalEntriesRequestToJSON(
 
 /** @internal */
 export const ListApiAccountingJournalEntriesResponse$inboundSchema:
-  z.ZodMiniType<ListApiAccountingJournalEntriesResponse, unknown> = z.pipe(
-    z.object({
-      Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
-      Result: models.ApiJournalEntriesListResponse$inboundSchema,
-    }),
-    z.transform((v) => {
-      return remap$(v, {
-        "Headers": "headers",
-        "Result": "result",
-      });
-    }),
-  );
+  z.ZodMiniType<ListApiAccountingJournalEntriesResponse, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.pipe(
+        z.object({
+          Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
+          Result: models.ApiJournalEntriesListResponse$inboundSchema,
+        }),
+        z.transform((v) => {
+          return remap$(v, {
+            "Headers": "headers",
+            "Result": "result",
+          });
+        }),
+      )
+    );
 
 export function listApiAccountingJournalEntriesResponseFromJSON(
   jsonString: string,

@@ -5,7 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
-import { safeParse } from "../../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import * as models from "../index.js";
@@ -33,16 +33,18 @@ export type CreateApiManualJournalEntryRequest$Outbound = {
 export const CreateApiManualJournalEntryRequest$outboundSchema: z.ZodMiniType<
   CreateApiManualJournalEntryRequest$Outbound,
   CreateApiManualJournalEntryRequest
-> = z.pipe(
-  z.object({
-    idempotencyKey: z.string(),
-    body: models.ApiManualJournalEntryRequest$outboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      idempotencyKey: "Idempotency-Key",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      idempotencyKey: z.string(),
+      body: models.ApiManualJournalEntryRequest$outboundSchema,
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        idempotencyKey: "Idempotency-Key",
+      });
+    }),
+  )
 );
 
 export function createApiManualJournalEntryRequestToJSON(
@@ -59,17 +61,19 @@ export function createApiManualJournalEntryRequestToJSON(
 export const CreateApiManualJournalEntryResponse$inboundSchema: z.ZodMiniType<
   CreateApiManualJournalEntryResponse,
   unknown
-> = z.pipe(
-  z.object({
-    Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
-    Result: models.ApiJournalEntryWriteResponse$inboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "Headers": "headers",
-      "Result": "result",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
+      Result: models.ApiJournalEntryWriteResponse$inboundSchema,
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "Headers": "headers",
+        "Result": "result",
+      });
+    }),
+  )
 );
 
 export function createApiManualJournalEntryResponseFromJSON(

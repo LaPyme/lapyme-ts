@@ -1,5 +1,7 @@
 # Totals
 
+Opcional. Si se envía, se verifica contra los totales calculados y un desvío rechaza el pedido. Si se omite, se calculan a partir de las líneas.
+
 ## Example Usage
 
 ```typescript

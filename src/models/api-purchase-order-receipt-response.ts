@@ -5,14 +5,30 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
+import * as discriminatedUnionTypes from "../types/discriminated-union.js";
+import { discriminatedUnion } from "../types/discriminated-union.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import {
-  ApiSharedObjecta6cd4a0a4e,
-  ApiSharedObjecta6cd4a0a4e$inboundSchema,
-} from "./api-shared-objecta6cd4a0a4e.js";
+  ApiSharedObject5f7a7d7ad7,
+  ApiSharedObject5f7a7d7ad7$inboundSchema,
+} from "./api-shared-object5f7a7d7ad7.js";
+import {
+  ApiSharedObjectb659f2ee96,
+  ApiSharedObjectb659f2ee96$inboundSchema,
+} from "./api-shared-objectb659f2ee96.js";
+import {
+  ApiSharedObjectc57c6a5b8b,
+  ApiSharedObjectc57c6a5b8b$inboundSchema,
+} from "./api-shared-objectc57c6a5b8b.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
+
+export type ApiPurchaseOrderReceiptResponseLotWarning =
+  | (ApiSharedObjectc57c6a5b8b & { code: "missing_lot_number" })
+  | (ApiSharedObjectc57c6a5b8b & { code: "serial_already_on_hand" })
+  | ApiSharedObjectb659f2ee96
+  | discriminatedUnionTypes.Unknown<"code">;
 
 export type AffectedProduct = {
   sku: string;
@@ -23,12 +39,20 @@ export type Receipt = {
   object: "receipt";
   id: string;
   purchaseOrderWarehouseId: string | null;
+  lotWarnings?:
+    | Array<
+      | (ApiSharedObjectc57c6a5b8b & { code: "missing_lot_number" })
+      | (ApiSharedObjectc57c6a5b8b & { code: "serial_already_on_hand" })
+      | ApiSharedObjectb659f2ee96
+      | discriminatedUnionTypes.Unknown<"code">
+    >
+    | undefined;
   affectedProducts: Array<AffectedProduct>;
 };
 
 export type ApiPurchaseOrderReceiptResponseData = {
   receipt: Receipt;
-  purchaseOrder: ApiSharedObjecta6cd4a0a4e;
+  purchaseOrder: ApiSharedObject5f7a7d7ad7;
   idempotentReplay: boolean;
 };
 
@@ -39,19 +63,55 @@ export type ApiPurchaseOrderReceiptResponse = {
 };
 
 /** @internal */
+export const ApiPurchaseOrderReceiptResponseLotWarning$inboundSchema:
+  z.ZodMiniType<ApiPurchaseOrderReceiptResponseLotWarning, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      discriminatedUnion("code", {
+        missing_lot_number: z.intersection(
+          ApiSharedObjectc57c6a5b8b$inboundSchema,
+          z.object({ code: z.literal("missing_lot_number") }),
+        ),
+        serial_already_on_hand: z.intersection(
+          ApiSharedObjectc57c6a5b8b$inboundSchema,
+          z.object({ code: z.literal("serial_already_on_hand") }),
+        ),
+        numbers_ignored_already_received:
+          ApiSharedObjectb659f2ee96$inboundSchema,
+      })
+    );
+
+export function apiPurchaseOrderReceiptResponseLotWarningFromJSON(
+  jsonString: string,
+): SafeParseResult<
+  ApiPurchaseOrderReceiptResponseLotWarning,
+  SDKValidationError
+> {
+  return safeParse(
+    jsonString,
+    (x) =>
+      ApiPurchaseOrderReceiptResponseLotWarning$inboundSchema.parse(
+        JSON.parse(x),
+      ),
+    `Failed to parse 'ApiPurchaseOrderReceiptResponseLotWarning' from JSON`,
+  );
+}
+
+/** @internal */
 export const AffectedProduct$inboundSchema: z.ZodMiniType<
   AffectedProduct,
   unknown
-> = z.pipe(
-  z.object({
-    sku: types.string(),
-    warehouse_id: types.string(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "warehouse_id": "warehouseId",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      sku: types.string(),
+      warehouse_id: types.string(),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "warehouse_id": "warehouseId",
+      });
+    }),
+  )
 );
 
 export function affectedProductFromJSON(
@@ -65,20 +125,36 @@ export function affectedProductFromJSON(
 }
 
 /** @internal */
-export const Receipt$inboundSchema: z.ZodMiniType<Receipt, unknown> = z.pipe(
-  z.object({
-    object: types.literal("receipt"),
-    id: types.string(),
-    purchase_order_warehouse_id: types.nullable(types.string()),
-    affected_products: z.array(z.lazy(() => AffectedProduct$inboundSchema)),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "purchase_order_warehouse_id": "purchaseOrderWarehouseId",
-      "affected_products": "affectedProducts",
-    });
-  }),
-);
+export const Receipt$inboundSchema: z.ZodMiniType<Receipt, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.pipe(
+      z.object({
+        object: types.literal("receipt"),
+        id: types.string(),
+        purchase_order_warehouse_id: types.nullable(types.string()),
+        lot_warnings: types.optional(z.array(discriminatedUnion("code", {
+          missing_lot_number: z.intersection(
+            ApiSharedObjectc57c6a5b8b$inboundSchema,
+            z.object({ code: z.literal("missing_lot_number") }),
+          ),
+          serial_already_on_hand: z.intersection(
+            ApiSharedObjectc57c6a5b8b$inboundSchema,
+            z.object({ code: z.literal("serial_already_on_hand") }),
+          ),
+          numbers_ignored_already_received:
+            ApiSharedObjectb659f2ee96$inboundSchema,
+        }))),
+        affected_products: z.array(z.lazy(() => AffectedProduct$inboundSchema)),
+      }),
+      z.transform((v) => {
+        return remap$(v, {
+          "purchase_order_warehouse_id": "purchaseOrderWarehouseId",
+          "lot_warnings": "lotWarnings",
+          "affected_products": "affectedProducts",
+        });
+      }),
+    )
+  );
 
 export function receiptFromJSON(
   jsonString: string,
@@ -94,18 +170,20 @@ export function receiptFromJSON(
 export const ApiPurchaseOrderReceiptResponseData$inboundSchema: z.ZodMiniType<
   ApiPurchaseOrderReceiptResponseData,
   unknown
-> = z.pipe(
-  z.object({
-    receipt: z.lazy(() => Receipt$inboundSchema),
-    purchase_order: ApiSharedObjecta6cd4a0a4e$inboundSchema,
-    idempotent_replay: types.boolean(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "purchase_order": "purchaseOrder",
-      "idempotent_replay": "idempotentReplay",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      receipt: z.lazy(() => Receipt$inboundSchema),
+      purchase_order: ApiSharedObject5f7a7d7ad7$inboundSchema,
+      idempotent_replay: types.boolean(),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "purchase_order": "purchaseOrder",
+        "idempotent_replay": "idempotentReplay",
+      });
+    }),
+  )
 );
 
 export function apiPurchaseOrderReceiptResponseDataFromJSON(
@@ -123,17 +201,19 @@ export function apiPurchaseOrderReceiptResponseDataFromJSON(
 export const ApiPurchaseOrderReceiptResponse$inboundSchema: z.ZodMiniType<
   ApiPurchaseOrderReceiptResponse,
   unknown
-> = z.pipe(
-  z.object({
-    request_id: types.string(),
-    data: z.lazy(() => ApiPurchaseOrderReceiptResponseData$inboundSchema),
-    warnings: z.array(z.any()),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "request_id": "requestId",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      request_id: types.string(),
+      data: z.lazy(() => ApiPurchaseOrderReceiptResponseData$inboundSchema),
+      warnings: z.array(z.any()),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "request_id": "requestId",
+      });
+    }),
+  )
 );
 
 export function apiPurchaseOrderReceiptResponseFromJSON(

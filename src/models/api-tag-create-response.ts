@@ -5,17 +5,17 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import {
-  ApiSharedObject0c53a4e5c2,
-  ApiSharedObject0c53a4e5c2$inboundSchema,
-} from "./api-shared-object0c53a4e5c2.js";
+  ApiSharedObjected3905a55b,
+  ApiSharedObjected3905a55b$inboundSchema,
+} from "./api-shared-objected3905a55b.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type ApiTagCreateResponseData = {
-  tag: ApiSharedObject0c53a4e5c2;
+  tag: ApiSharedObjected3905a55b;
   idempotentReplay: boolean;
 };
 
@@ -29,16 +29,18 @@ export type ApiTagCreateResponse = {
 export const ApiTagCreateResponseData$inboundSchema: z.ZodMiniType<
   ApiTagCreateResponseData,
   unknown
-> = z.pipe(
-  z.object({
-    tag: ApiSharedObject0c53a4e5c2$inboundSchema,
-    idempotent_replay: types.boolean(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "idempotent_replay": "idempotentReplay",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      tag: ApiSharedObjected3905a55b$inboundSchema,
+      idempotent_replay: types.boolean(),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "idempotent_replay": "idempotentReplay",
+      });
+    }),
+  )
 );
 
 export function apiTagCreateResponseDataFromJSON(
@@ -55,17 +57,19 @@ export function apiTagCreateResponseDataFromJSON(
 export const ApiTagCreateResponse$inboundSchema: z.ZodMiniType<
   ApiTagCreateResponse,
   unknown
-> = z.pipe(
-  z.object({
-    request_id: types.string(),
-    data: z.lazy(() => ApiTagCreateResponseData$inboundSchema),
-    warnings: z.array(z.any()),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "request_id": "requestId",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      request_id: types.string(),
+      data: z.lazy(() => ApiTagCreateResponseData$inboundSchema),
+      warnings: z.array(z.any()),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "request_id": "requestId",
+      });
+    }),
+  )
 );
 
 export function apiTagCreateResponseFromJSON(

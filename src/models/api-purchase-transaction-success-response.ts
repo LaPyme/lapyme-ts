@@ -5,42 +5,62 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
+import * as discriminatedUnionTypes from "../types/discriminated-union.js";
+import { discriminatedUnion } from "../types/discriminated-union.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
-import {
-  ApiSharedEnum6cfb146157,
-  ApiSharedEnum6cfb146157$inboundSchema,
-} from "./api-shared-enum6cfb146157.js";
 import {
   ApiSharedEnum9e7af09974,
   ApiSharedEnum9e7af09974$inboundSchema,
 } from "./api-shared-enum9e7af09974.js";
 import {
-  ApiSharedEnumd34af90520,
-  ApiSharedEnumd34af90520$inboundSchema,
-} from "./api-shared-enumd34af90520.js";
+  ApiSharedEnumde48b709b2,
+  ApiSharedEnumde48b709b2$inboundSchema,
+} from "./api-shared-enumde48b709b2.js";
 import {
   ApiSharedEnumf0d69c3d87,
   ApiSharedEnumf0d69c3d87$inboundSchema,
 } from "./api-shared-enumf0d69c3d87.js";
 import {
-  ApiSharedObject3c43192c61,
-  ApiSharedObject3c43192c61$inboundSchema,
-} from "./api-shared-object3c43192c61.js";
+  ApiSharedEnumffb4886f2b,
+  ApiSharedEnumffb4886f2b$inboundSchema,
+} from "./api-shared-enumffb4886f2b.js";
+import {
+  ApiSharedObject2271643e7e,
+  ApiSharedObject2271643e7e$inboundSchema,
+} from "./api-shared-object2271643e7e.js";
+import {
+  ApiSharedObjectb451a3d8de,
+  ApiSharedObjectb451a3d8de$inboundSchema,
+} from "./api-shared-objectb451a3d8de.js";
+import {
+  ApiSharedObjectb659f2ee96,
+  ApiSharedObjectb659f2ee96$inboundSchema,
+} from "./api-shared-objectb659f2ee96.js";
+import {
+  ApiSharedObjectc482130d79,
+  ApiSharedObjectc482130d79$inboundSchema,
+} from "./api-shared-objectc482130d79.js";
+import {
+  ApiSharedObjectc57c6a5b8b,
+  ApiSharedObjectc57c6a5b8b$inboundSchema,
+} from "./api-shared-objectc57c6a5b8b.js";
 import {
   ApiSharedObjectc671832641,
   ApiSharedObjectc671832641$inboundSchema,
 } from "./api-shared-objectc671832641.js";
 import {
-  ApiSharedObjectdafaa4a9ee,
-  ApiSharedObjectdafaa4a9ee$inboundSchema,
-} from "./api-shared-objectdafaa4a9ee.js";
-import {
-  ApiSharedObjectedd0c22535,
-  ApiSharedObjectedd0c22535$inboundSchema,
-} from "./api-shared-objectedd0c22535.js";
+  ApiSharedObjecte304e86be7,
+  ApiSharedObjecte304e86be7$inboundSchema,
+} from "./api-shared-objecte304e86be7.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
+
+export type ApiPurchaseTransactionSuccessResponseLotWarning =
+  | (ApiSharedObjectc57c6a5b8b & { code: "missing_lot_number" })
+  | (ApiSharedObjectc57c6a5b8b & { code: "serial_already_on_hand" })
+  | ApiSharedObjectb659f2ee96
+  | discriminatedUnionTypes.Unknown<"code">;
 
 export type NormalizedPurchase = {
   supplierId: string | null;
@@ -61,7 +81,7 @@ export type NormalizedPurchase = {
    * Fecha de vencimiento en formato YYYY-MM-DD.
    */
   dueDate: string | null;
-  paymentTermId: ApiSharedEnumd34af90520 | null;
+  paymentTermDays: number | null;
   /**
    * Rol del comprobante dentro del flujo de importacion.
    */
@@ -75,13 +95,19 @@ export type NormalizedPurchase = {
    */
   importNationalizationStatus: ApiSharedEnumf0d69c3d87 | null;
   /**
+   * Compra a cuyo costo suma este comprobante.
+   */
+  costTargetPurchaseId: string | null;
+  /**
    * Numero de despacho aduanero informado por el proveedor. Hasta 32 caracteres.
    */
   customsDispatchNumber: string | null;
   warehouseId: string | null;
   productsReceived: boolean;
+  productsReturned: boolean;
+  inventoryEffect: ApiSharedEnumde48b709b2;
   updateProductVariantCost: boolean;
-  currency: ApiSharedEnum6cfb146157;
+  currency: ApiSharedEnumffb4886f2b;
   exchangeRate: number;
   subtotal: number | null;
   taxAmount: number | null;
@@ -98,18 +124,28 @@ export type NormalizedPurchase = {
   otherTaxAmount: number | null;
   notes: string | null;
   pdfPath: string | null;
-  items: Array<ApiSharedObjectedd0c22535>;
+  manualAccountAllocations: { [k: string]: string };
+  items: Array<ApiSharedObject2271643e7e>;
 };
 
 export type ApiPurchaseTransactionSuccessResponseProjectedEffects = {
-  inventory: ApiSharedObjectdafaa4a9ee;
-  accounting: ApiSharedObject3c43192c61;
+  inventory: ApiSharedObjectb451a3d8de;
+  accounting: ApiSharedObjectc482130d79;
 };
 
 export type ApiPurchaseTransactionSuccessResponseData = {
   purchaseId: string;
   receiptCreated: boolean;
+  lotWarnings?:
+    | Array<
+      | (ApiSharedObjectc57c6a5b8b & { code: "missing_lot_number" })
+      | (ApiSharedObjectc57c6a5b8b & { code: "serial_already_on_hand" })
+      | ApiSharedObjectb659f2ee96
+      | discriminatedUnionTypes.Unknown<"code">
+    >
+    | undefined;
   idempotentReplay: boolean;
+  installments: Array<ApiSharedObjecte304e86be7>;
   normalizedPurchase: NormalizedPurchase;
   projectedEffects: ApiPurchaseTransactionSuccessResponseProjectedEffects;
 };
@@ -121,76 +157,122 @@ export type ApiPurchaseTransactionSuccessResponse = {
 };
 
 /** @internal */
+export const ApiPurchaseTransactionSuccessResponseLotWarning$inboundSchema:
+  z.ZodMiniType<ApiPurchaseTransactionSuccessResponseLotWarning, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      discriminatedUnion("code", {
+        missing_lot_number: z.intersection(
+          ApiSharedObjectc57c6a5b8b$inboundSchema,
+          z.object({ code: z.literal("missing_lot_number") }),
+        ),
+        serial_already_on_hand: z.intersection(
+          ApiSharedObjectc57c6a5b8b$inboundSchema,
+          z.object({ code: z.literal("serial_already_on_hand") }),
+        ),
+        numbers_ignored_already_received:
+          ApiSharedObjectb659f2ee96$inboundSchema,
+      })
+    );
+
+export function apiPurchaseTransactionSuccessResponseLotWarningFromJSON(
+  jsonString: string,
+): SafeParseResult<
+  ApiPurchaseTransactionSuccessResponseLotWarning,
+  SDKValidationError
+> {
+  return safeParse(
+    jsonString,
+    (x) =>
+      ApiPurchaseTransactionSuccessResponseLotWarning$inboundSchema.parse(
+        JSON.parse(x),
+      ),
+    `Failed to parse 'ApiPurchaseTransactionSuccessResponseLotWarning' from JSON`,
+  );
+}
+
+/** @internal */
 export const NormalizedPurchase$inboundSchema: z.ZodMiniType<
   NormalizedPurchase,
   unknown
-> = z.pipe(
-  z.object({
-    supplier_id: types.nullable(types.string()),
-    voucher_type: types.number(),
-    supplier_invoice_number: types.nullable(types.string()),
-    invoice_date: types.nullable(types.string()),
-    account_date: types.nullable(types.string()),
-    due_date: types.nullable(types.string()),
-    payment_term_id: types.nullable(ApiSharedEnumd34af90520$inboundSchema),
-    import_document_role: types.nullable(ApiSharedEnum9e7af09974$inboundSchema),
-    import_source_purchase_id: types.nullable(types.string()),
-    import_nationalization_status: types.nullable(
-      ApiSharedEnumf0d69c3d87$inboundSchema,
-    ),
-    customs_dispatch_number: types.nullable(types.string()),
-    warehouse_id: types.nullable(types.string()),
-    products_received: types.boolean(),
-    update_product_variant_cost: types.boolean(),
-    currency: ApiSharedEnum6cfb146157$inboundSchema,
-    exchange_rate: types.number(),
-    subtotal: types.nullable(types.number()),
-    tax_amount: types.nullable(types.number()),
-    total: types.nullable(types.number()),
-    discount: types.nullable(types.number()),
-    exempt_amount: types.nullable(types.number()),
-    non_taxed_amount: types.nullable(types.number()),
-    base_amount: types.nullable(types.number()),
-    vat_perception_amount: types.nullable(types.number()),
-    national_tax_amount: types.nullable(types.number()),
-    gross_income_tax_amount: types.nullable(types.number()),
-    municipal_tax_amount: types.nullable(types.number()),
-    internal_tax_amount: types.nullable(types.number()),
-    other_tax_amount: types.nullable(types.number()),
-    notes: types.nullable(types.string()),
-    pdf_path: types.nullable(types.string()),
-    items: z.array(ApiSharedObjectedd0c22535$inboundSchema),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "supplier_id": "supplierId",
-      "voucher_type": "voucherType",
-      "supplier_invoice_number": "supplierInvoiceNumber",
-      "invoice_date": "invoiceDate",
-      "account_date": "accountDate",
-      "due_date": "dueDate",
-      "payment_term_id": "paymentTermId",
-      "import_document_role": "importDocumentRole",
-      "import_source_purchase_id": "importSourcePurchaseId",
-      "import_nationalization_status": "importNationalizationStatus",
-      "customs_dispatch_number": "customsDispatchNumber",
-      "warehouse_id": "warehouseId",
-      "products_received": "productsReceived",
-      "update_product_variant_cost": "updateProductVariantCost",
-      "exchange_rate": "exchangeRate",
-      "tax_amount": "taxAmount",
-      "exempt_amount": "exemptAmount",
-      "non_taxed_amount": "nonTaxedAmount",
-      "base_amount": "baseAmount",
-      "vat_perception_amount": "vatPerceptionAmount",
-      "national_tax_amount": "nationalTaxAmount",
-      "gross_income_tax_amount": "grossIncomeTaxAmount",
-      "municipal_tax_amount": "municipalTaxAmount",
-      "internal_tax_amount": "internalTaxAmount",
-      "other_tax_amount": "otherTaxAmount",
-      "pdf_path": "pdfPath",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      supplier_id: types.nullable(types.string()),
+      voucher_type: types.number(),
+      supplier_invoice_number: types.nullable(types.string()),
+      invoice_date: types.nullable(types.string()),
+      account_date: types.nullable(types.string()),
+      due_date: types.nullable(types.string()),
+      payment_term_days: types.nullable(types.number()),
+      import_document_role: types.nullable(
+        ApiSharedEnum9e7af09974$inboundSchema,
+      ),
+      import_source_purchase_id: types.nullable(types.string()),
+      import_nationalization_status: types.nullable(
+        ApiSharedEnumf0d69c3d87$inboundSchema,
+      ),
+      cost_target_purchase_id: types.nullable(types.string()),
+      customs_dispatch_number: types.nullable(types.string()),
+      warehouse_id: types.nullable(types.string()),
+      products_received: types.boolean(),
+      products_returned: types.boolean(),
+      inventory_effect: ApiSharedEnumde48b709b2$inboundSchema,
+      update_product_variant_cost: types.boolean(),
+      currency: ApiSharedEnumffb4886f2b$inboundSchema,
+      exchange_rate: types.number(),
+      subtotal: types.nullable(types.number()),
+      tax_amount: types.nullable(types.number()),
+      total: types.nullable(types.number()),
+      discount: types.nullable(types.number()),
+      exempt_amount: types.nullable(types.number()),
+      non_taxed_amount: types.nullable(types.number()),
+      base_amount: types.nullable(types.number()),
+      vat_perception_amount: types.nullable(types.number()),
+      national_tax_amount: types.nullable(types.number()),
+      gross_income_tax_amount: types.nullable(types.number()),
+      municipal_tax_amount: types.nullable(types.number()),
+      internal_tax_amount: types.nullable(types.number()),
+      other_tax_amount: types.nullable(types.number()),
+      notes: types.nullable(types.string()),
+      pdf_path: types.nullable(types.string()),
+      manual_account_allocations: z.record(z.string(), types.string()),
+      items: z.array(ApiSharedObject2271643e7e$inboundSchema),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "supplier_id": "supplierId",
+        "voucher_type": "voucherType",
+        "supplier_invoice_number": "supplierInvoiceNumber",
+        "invoice_date": "invoiceDate",
+        "account_date": "accountDate",
+        "due_date": "dueDate",
+        "payment_term_days": "paymentTermDays",
+        "import_document_role": "importDocumentRole",
+        "import_source_purchase_id": "importSourcePurchaseId",
+        "import_nationalization_status": "importNationalizationStatus",
+        "cost_target_purchase_id": "costTargetPurchaseId",
+        "customs_dispatch_number": "customsDispatchNumber",
+        "warehouse_id": "warehouseId",
+        "products_received": "productsReceived",
+        "products_returned": "productsReturned",
+        "inventory_effect": "inventoryEffect",
+        "update_product_variant_cost": "updateProductVariantCost",
+        "exchange_rate": "exchangeRate",
+        "tax_amount": "taxAmount",
+        "exempt_amount": "exemptAmount",
+        "non_taxed_amount": "nonTaxedAmount",
+        "base_amount": "baseAmount",
+        "vat_perception_amount": "vatPerceptionAmount",
+        "national_tax_amount": "nationalTaxAmount",
+        "gross_income_tax_amount": "grossIncomeTaxAmount",
+        "municipal_tax_amount": "municipalTaxAmount",
+        "internal_tax_amount": "internalTaxAmount",
+        "other_tax_amount": "otherTaxAmount",
+        "pdf_path": "pdfPath",
+        "manual_account_allocations": "manualAccountAllocations",
+      });
+    }),
+  )
 );
 
 export function normalizedPurchaseFromJSON(
@@ -208,10 +290,12 @@ export const ApiPurchaseTransactionSuccessResponseProjectedEffects$inboundSchema
   z.ZodMiniType<
     ApiPurchaseTransactionSuccessResponseProjectedEffects,
     unknown
-  > = z.object({
-    inventory: ApiSharedObjectdafaa4a9ee$inboundSchema,
-    accounting: ApiSharedObject3c43192c61$inboundSchema,
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      inventory: ApiSharedObjectb451a3d8de$inboundSchema,
+      accounting: ApiSharedObjectc482130d79$inboundSchema,
+    })
+  );
 
 export function apiPurchaseTransactionSuccessResponseProjectedEffectsFromJSON(
   jsonString: string,
@@ -231,26 +315,43 @@ export function apiPurchaseTransactionSuccessResponseProjectedEffectsFromJSON(
 
 /** @internal */
 export const ApiPurchaseTransactionSuccessResponseData$inboundSchema:
-  z.ZodMiniType<ApiPurchaseTransactionSuccessResponseData, unknown> = z.pipe(
-    z.object({
-      purchase_id: types.string(),
-      receipt_created: types.boolean(),
-      idempotent_replay: types.boolean(),
-      normalized_purchase: z.lazy(() => NormalizedPurchase$inboundSchema),
-      projected_effects: z.lazy(() =>
-        ApiPurchaseTransactionSuccessResponseProjectedEffects$inboundSchema
-      ),
-    }),
-    z.transform((v) => {
-      return remap$(v, {
-        "purchase_id": "purchaseId",
-        "receipt_created": "receiptCreated",
-        "idempotent_replay": "idempotentReplay",
-        "normalized_purchase": "normalizedPurchase",
-        "projected_effects": "projectedEffects",
-      });
-    }),
-  );
+  z.ZodMiniType<ApiPurchaseTransactionSuccessResponseData, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.pipe(
+        z.object({
+          purchase_id: types.string(),
+          receipt_created: types.boolean(),
+          lot_warnings: types.optional(z.array(discriminatedUnion("code", {
+            missing_lot_number: z.intersection(
+              ApiSharedObjectc57c6a5b8b$inboundSchema,
+              z.object({ code: z.literal("missing_lot_number") }),
+            ),
+            serial_already_on_hand: z.intersection(
+              ApiSharedObjectc57c6a5b8b$inboundSchema,
+              z.object({ code: z.literal("serial_already_on_hand") }),
+            ),
+            numbers_ignored_already_received:
+              ApiSharedObjectb659f2ee96$inboundSchema,
+          }))),
+          idempotent_replay: types.boolean(),
+          installments: z.array(ApiSharedObjecte304e86be7$inboundSchema),
+          normalized_purchase: z.lazy(() => NormalizedPurchase$inboundSchema),
+          projected_effects: z.lazy(() =>
+            ApiPurchaseTransactionSuccessResponseProjectedEffects$inboundSchema
+          ),
+        }),
+        z.transform((v) => {
+          return remap$(v, {
+            "purchase_id": "purchaseId",
+            "receipt_created": "receiptCreated",
+            "lot_warnings": "lotWarnings",
+            "idempotent_replay": "idempotentReplay",
+            "normalized_purchase": "normalizedPurchase",
+            "projected_effects": "projectedEffects",
+          });
+        }),
+      )
+    );
 
 export function apiPurchaseTransactionSuccessResponseDataFromJSON(
   jsonString: string,
@@ -272,17 +373,21 @@ export function apiPurchaseTransactionSuccessResponseDataFromJSON(
 export const ApiPurchaseTransactionSuccessResponse$inboundSchema: z.ZodMiniType<
   ApiPurchaseTransactionSuccessResponse,
   unknown
-> = z.pipe(
-  z.object({
-    request_id: types.string(),
-    data: z.lazy(() => ApiPurchaseTransactionSuccessResponseData$inboundSchema),
-    warnings: z.array(ApiSharedObjectc671832641$inboundSchema),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "request_id": "requestId",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      request_id: types.string(),
+      data: z.lazy(() =>
+        ApiPurchaseTransactionSuccessResponseData$inboundSchema
+      ),
+      warnings: z.array(ApiSharedObjectc671832641$inboundSchema),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "request_id": "requestId",
+      });
+    }),
+  )
 );
 
 export function apiPurchaseTransactionSuccessResponseFromJSON(

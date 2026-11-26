@@ -5,17 +5,17 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import {
-  ApiSharedObject16ba66a421,
-  ApiSharedObject16ba66a421$inboundSchema,
-} from "./api-shared-object16ba66a421.js";
+  ApiSharedObjectaaccd788d6,
+  ApiSharedObjectaaccd788d6$inboundSchema,
+} from "./api-shared-objectaaccd788d6.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type ApiPriceListCreateResponseData = {
-  priceList: ApiSharedObject16ba66a421;
+  priceList: ApiSharedObjectaaccd788d6;
   idempotentReplay: boolean;
 };
 
@@ -29,17 +29,19 @@ export type ApiPriceListCreateResponse = {
 export const ApiPriceListCreateResponseData$inboundSchema: z.ZodMiniType<
   ApiPriceListCreateResponseData,
   unknown
-> = z.pipe(
-  z.object({
-    price_list: ApiSharedObject16ba66a421$inboundSchema,
-    idempotent_replay: types.boolean(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "price_list": "priceList",
-      "idempotent_replay": "idempotentReplay",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      price_list: ApiSharedObjectaaccd788d6$inboundSchema,
+      idempotent_replay: types.boolean(),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "price_list": "priceList",
+        "idempotent_replay": "idempotentReplay",
+      });
+    }),
+  )
 );
 
 export function apiPriceListCreateResponseDataFromJSON(
@@ -56,17 +58,19 @@ export function apiPriceListCreateResponseDataFromJSON(
 export const ApiPriceListCreateResponse$inboundSchema: z.ZodMiniType<
   ApiPriceListCreateResponse,
   unknown
-> = z.pipe(
-  z.object({
-    request_id: types.string(),
-    data: z.lazy(() => ApiPriceListCreateResponseData$inboundSchema),
-    warnings: z.array(z.any()),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "request_id": "requestId",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      request_id: types.string(),
+      data: z.lazy(() => ApiPriceListCreateResponseData$inboundSchema),
+      warnings: z.array(z.any()),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "request_id": "requestId",
+      });
+    }),
+  )
 );
 
 export function apiPriceListCreateResponseFromJSON(

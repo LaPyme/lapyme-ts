@@ -5,7 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
-import { safeParse } from "../../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import * as models from "../index.js";
@@ -24,10 +24,6 @@ export type ListApiPointsOfSaleRequest = {
    */
   query?: string | undefined;
   /**
-   * Alias de query
-   */
-  search?: string | undefined;
-  /**
    * Incluye puntos de venta inactivos
    */
   includeInactive?: boolean | undefined;
@@ -43,7 +39,6 @@ export type ListApiPointsOfSaleRequest$Outbound = {
   cursor?: string | undefined;
   limit: number;
   query?: string | undefined;
-  search?: string | undefined;
   include_inactive: boolean;
 };
 
@@ -51,19 +46,20 @@ export type ListApiPointsOfSaleRequest$Outbound = {
 export const ListApiPointsOfSaleRequest$outboundSchema: z.ZodMiniType<
   ListApiPointsOfSaleRequest$Outbound,
   ListApiPointsOfSaleRequest
-> = z.pipe(
-  z.object({
-    cursor: z.optional(z.string()),
-    limit: z._default(z.int(), 50),
-    query: z.optional(z.string()),
-    search: z.optional(z.string()),
-    includeInactive: z._default(z.boolean(), false),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      includeInactive: "include_inactive",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      cursor: z.optional(z.string()),
+      limit: z._default(z.int(), 50),
+      query: z.optional(z.string()),
+      includeInactive: z._default(z.boolean(), false),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        includeInactive: "include_inactive",
+      });
+    }),
+  )
 );
 
 export function listApiPointsOfSaleRequestToJSON(
@@ -78,17 +74,19 @@ export function listApiPointsOfSaleRequestToJSON(
 export const ListApiPointsOfSaleResponse$inboundSchema: z.ZodMiniType<
   ListApiPointsOfSaleResponse,
   unknown
-> = z.pipe(
-  z.object({
-    Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
-    Result: models.ApiPointOfSaleListResponse$inboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "Headers": "headers",
-      "Result": "result",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
+      Result: models.ApiPointOfSaleListResponse$inboundSchema,
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "Headers": "headers",
+        "Result": "result",
+      });
+    }),
+  )
 );
 
 export function listApiPointsOfSaleResponseFromJSON(

@@ -5,15 +5,19 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
-import {
-  ApiSharedEnum6cfb146157,
-  ApiSharedEnum6cfb146157$outboundSchema,
-} from "./api-shared-enum6cfb146157.js";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import {
   ApiSharedEnumcc76b6d63a,
   ApiSharedEnumcc76b6d63a$outboundSchema,
 } from "./api-shared-enumcc76b6d63a.js";
+import {
+  ApiSharedEnumffb4886f2b,
+  ApiSharedEnumffb4886f2b$outboundSchema,
+} from "./api-shared-enumffb4886f2b.js";
 
+/**
+ * Opcional. Si se envía, se verifica contra los totales calculados y un desvío rechaza el pedido. Si se omite, se calculan a partir de las líneas.
+ */
 export type Totals = {
   subtotal: number;
   taxAmount: number;
@@ -21,7 +25,7 @@ export type Totals = {
 };
 
 export type ApiOrderCreateRequestLine = {
-  productId?: string | undefined;
+  productId?: string | null | undefined;
   productNameSnapshot: string;
   skuSnapshot: string;
   orderedQuantity: number;
@@ -32,14 +36,35 @@ export type ApiOrderCreateRequestLine = {
 };
 
 export type ApiOrderCreateRequest = {
+  /**
+   * Referencia del pedido en tu canal. Solo se puede establecer al crear; se eliminan espacios al principio y al final. No es única: usá Idempotency-Key para reintentos. Se muestra y se puede buscar en Pedidos, sin cambiar la numeración ni los vínculos de integraciones.
+   */
+  externalOrderReference?: string | undefined;
   customerId: string;
   assignedWarehouseId: string;
   deliveryMethod?: ApiSharedEnumcc76b6d63a | undefined;
-  orderDate?: Date | undefined;
-  currency?: ApiSharedEnum6cfb146157 | undefined;
+  /**
+   * Fecha ISO (YYYY-MM-DD) u hora ISO 8601 completa.
+   */
+  orderDate?: string | undefined;
+  currency?: ApiSharedEnumffb4886f2b | undefined;
+  /**
+   * Comprobante del pedido. 90 es un Comprobante X: los renglones sin tax_rate_id van al 0% y el precio de lista es el final. null es una Factura, cuya letra se elige al facturar; sus renglones llevan el IVA del producto.
+   */
+  voucherType?: 90 | null | undefined;
   notes?: string | undefined;
+  /**
+   * Descuento global en centavos. No lo envíes junto con discount_percentage.
+   */
   discountAmount?: number | undefined;
-  totals: Totals;
+  /**
+   * Descuento global como porcentaje de 0 a 100 sobre las líneas. El pedido lo conserva y recalcula discount_amount. Enviar discount_amount y discount_percentage juntos responde 400.
+   */
+  discountPercentage?: number | undefined;
+  /**
+   * Opcional. Si se envía, se verifica contra los totales calculados y un desvío rechaza el pedido. Si se omite, se calculan a partir de las líneas.
+   */
+  totals?: Totals | undefined;
   lines: Array<ApiOrderCreateRequestLine>;
 };
 
@@ -51,18 +76,20 @@ export type Totals$Outbound = {
 };
 
 /** @internal */
-export const Totals$outboundSchema: z.ZodMiniType<Totals$Outbound, Totals> = z
-  .pipe(
-    z.object({
-      subtotal: z.int(),
-      taxAmount: z.int(),
-      total: z.int(),
-    }),
-    z.transform((v) => {
-      return remap$(v, {
-        taxAmount: "tax_amount",
-      });
-    }),
+export const Totals$outboundSchema: z.ZodMiniType<Totals$Outbound, Totals> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.pipe(
+      z.object({
+        subtotal: z.int(),
+        taxAmount: z.int(),
+        total: z.int(),
+      }),
+      z.transform((v) => {
+        return remap$(v, {
+          taxAmount: "tax_amount",
+        });
+      }),
+    )
   );
 
 export function totalsToJSON(totals: Totals): string {
@@ -71,7 +98,7 @@ export function totalsToJSON(totals: Totals): string {
 
 /** @internal */
 export type ApiOrderCreateRequestLine$Outbound = {
-  product_id?: string | undefined;
+  product_id?: string | null | undefined;
   product_name_snapshot: string;
   sku_snapshot: string;
   ordered_quantity: number;
@@ -85,29 +112,31 @@ export type ApiOrderCreateRequestLine$Outbound = {
 export const ApiOrderCreateRequestLine$outboundSchema: z.ZodMiniType<
   ApiOrderCreateRequestLine$Outbound,
   ApiOrderCreateRequestLine
-> = z.pipe(
-  z.object({
-    productId: z.optional(z.string()),
-    productNameSnapshot: z.string(),
-    skuSnapshot: z.string(),
-    orderedQuantity: z.int(),
-    unitPrice: z.int(),
-    taxRateId: z.optional(z.int()),
-    discountAmount: z.optional(z.int()),
-    discountPercentage: z.optional(z.number()),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      productId: "product_id",
-      productNameSnapshot: "product_name_snapshot",
-      skuSnapshot: "sku_snapshot",
-      orderedQuantity: "ordered_quantity",
-      unitPrice: "unit_price",
-      taxRateId: "tax_rate_id",
-      discountAmount: "discount_amount",
-      discountPercentage: "discount_percentage",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      productId: z.optional(z.nullable(z.string())),
+      productNameSnapshot: z.string(),
+      skuSnapshot: z.string(),
+      orderedQuantity: z.number(),
+      unitPrice: z.int(),
+      taxRateId: z.optional(z.int()),
+      discountAmount: z.optional(z.int()),
+      discountPercentage: z.optional(z.number()),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        productId: "product_id",
+        productNameSnapshot: "product_name_snapshot",
+        skuSnapshot: "sku_snapshot",
+        orderedQuantity: "ordered_quantity",
+        unitPrice: "unit_price",
+        taxRateId: "tax_rate_id",
+        discountAmount: "discount_amount",
+        discountPercentage: "discount_percentage",
+      });
+    }),
+  )
 );
 
 export function apiOrderCreateRequestLineToJSON(
@@ -120,14 +149,17 @@ export function apiOrderCreateRequestLineToJSON(
 
 /** @internal */
 export type ApiOrderCreateRequest$Outbound = {
+  external_order_reference?: string | undefined;
   customer_id: string;
   assigned_warehouse_id: string;
   delivery_method?: string | undefined;
   order_date?: string | undefined;
   currency?: string | undefined;
+  voucher_type?: 90 | null | undefined;
   notes?: string | undefined;
   discount_amount?: number | undefined;
-  totals: Totals$Outbound;
+  discount_percentage?: number | undefined;
+  totals?: Totals$Outbound | undefined;
   lines: Array<ApiOrderCreateRequestLine$Outbound>;
 };
 
@@ -135,27 +167,35 @@ export type ApiOrderCreateRequest$Outbound = {
 export const ApiOrderCreateRequest$outboundSchema: z.ZodMiniType<
   ApiOrderCreateRequest$Outbound,
   ApiOrderCreateRequest
-> = z.pipe(
-  z.object({
-    customerId: z.string(),
-    assignedWarehouseId: z.string(),
-    deliveryMethod: z.optional(ApiSharedEnumcc76b6d63a$outboundSchema),
-    orderDate: z.optional(z.pipe(z.date(), z.transform(v => v.toISOString()))),
-    currency: z.optional(ApiSharedEnum6cfb146157$outboundSchema),
-    notes: z.optional(z.string()),
-    discountAmount: z.optional(z.int()),
-    totals: z.lazy(() => Totals$outboundSchema),
-    lines: z.array(z.lazy(() => ApiOrderCreateRequestLine$outboundSchema)),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      customerId: "customer_id",
-      assignedWarehouseId: "assigned_warehouse_id",
-      deliveryMethod: "delivery_method",
-      orderDate: "order_date",
-      discountAmount: "discount_amount",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      externalOrderReference: z.optional(z.string()),
+      customerId: z.string(),
+      assignedWarehouseId: z.string(),
+      deliveryMethod: z.optional(ApiSharedEnumcc76b6d63a$outboundSchema),
+      orderDate: z.optional(z.string()),
+      currency: z.optional(ApiSharedEnumffb4886f2b$outboundSchema),
+      voucherType: z.optional(z.nullable(z.literal(90))),
+      notes: z.optional(z.string()),
+      discountAmount: z.optional(z.int()),
+      discountPercentage: z.optional(z.number()),
+      totals: z.optional(z.lazy(() => Totals$outboundSchema)),
+      lines: z.array(z.lazy(() => ApiOrderCreateRequestLine$outboundSchema)),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        externalOrderReference: "external_order_reference",
+        customerId: "customer_id",
+        assignedWarehouseId: "assigned_warehouse_id",
+        deliveryMethod: "delivery_method",
+        orderDate: "order_date",
+        voucherType: "voucher_type",
+        discountAmount: "discount_amount",
+        discountPercentage: "discount_percentage",
+      });
+    }),
+  )
 );
 
 export function apiOrderCreateRequestToJSON(

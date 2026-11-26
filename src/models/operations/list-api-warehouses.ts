@@ -5,7 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
-import { safeParse } from "../../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import * as models from "../index.js";
@@ -23,10 +23,6 @@ export type ListApiWarehousesRequest = {
    * Texto de búsqueda por nombre
    */
   query?: string | undefined;
-  /**
-   * Alias de query
-   */
-  search?: string | undefined;
 };
 
 export type ListApiWarehousesResponse = {
@@ -39,19 +35,19 @@ export type ListApiWarehousesRequest$Outbound = {
   cursor?: string | undefined;
   limit: number;
   query?: string | undefined;
-  search?: string | undefined;
 };
 
 /** @internal */
 export const ListApiWarehousesRequest$outboundSchema: z.ZodMiniType<
   ListApiWarehousesRequest$Outbound,
   ListApiWarehousesRequest
-> = z.object({
-  cursor: z.optional(z.string()),
-  limit: z._default(z.int(), 50),
-  query: z.optional(z.string()),
-  search: z.optional(z.string()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    cursor: z.optional(z.string()),
+    limit: z._default(z.int(), 50),
+    query: z.optional(z.string()),
+  })
+);
 
 export function listApiWarehousesRequestToJSON(
   listApiWarehousesRequest: ListApiWarehousesRequest,
@@ -65,17 +61,19 @@ export function listApiWarehousesRequestToJSON(
 export const ListApiWarehousesResponse$inboundSchema: z.ZodMiniType<
   ListApiWarehousesResponse,
   unknown
-> = z.pipe(
-  z.object({
-    Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
-    Result: models.ApiWarehouseListResponse$inboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "Headers": "headers",
-      "Result": "result",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
+      Result: models.ApiWarehouseListResponse$inboundSchema,
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "Headers": "headers",
+        "Result": "result",
+      });
+    }),
+  )
 );
 
 export function listApiWarehousesResponseFromJSON(

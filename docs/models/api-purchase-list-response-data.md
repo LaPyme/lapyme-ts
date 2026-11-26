@@ -6,23 +6,40 @@
 import { ApiPurchaseListResponseData } from "lapyme/models";
 
 let value: ApiPurchaseListResponseData = {
+  installments: [
+    {
+      dueDate: new Date("2024-08-10"),
+      amount: 116916,
+      position: 789198,
+      openAmount: 402203,
+      settlement: "pending",
+      isOverdue: true,
+    },
+  ],
+  nextOpenInstallment: {
+    dueDate: new Date("2024-11-19"),
+    openAmount: 92845,
+  },
+  overdueOpenTotal: 342663,
+  balanceAboveSchedule: 283557,
   object: "purchase",
-  id: "e531c605-9548-4206-8ff4-d5378e8992f1",
+  id: "8206ff4d-5378-4e89-892f-1211f80d31af",
   voucherType: "<value>",
   invoiceDate: "<value>",
-  accountDate: null,
+  accountDate: "<value>",
   dueDate: "<value>",
-  total: 31770,
-  balance: 226117,
-  warehouseId: null,
-  currency: "Balboa",
+  total: 451694,
+  balance: 760959,
+  warehouseId: "248fc62b-a044-4fd4-9ea2-b29db8aaf6c2",
+  currency: "Qatari Rial",
   exchangeRate: "<value>",
   supplierInvoiceNumber: "<value>",
-  createdAt: new Date("2024-09-22T00:08:56.190Z"),
+  createdAt: new Date("2025-08-26T14:08:30.738Z"),
   supplier: {
-    id: "fd77c624-8fc6-42ba-a044-fd4ea2b29db8",
+    id: "f74be50a-bc92-453e-9d9c-78cca32019bd",
     name: "<value>",
   },
+  tags: [],
 };
 ```
 
@@ -30,6 +47,10 @@ let value: ApiPurchaseListResponseData = {
 
 | Field                                                                                         | Type                                                                                          | Required                                                                                      | Description                                                                                   |
 | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| `installments`                                                                                | [models.ApiSharedObject524ac46285](../models/api-shared-object524ac46285.md)[]                | :heavy_check_mark:                                                                            | N/A                                                                                           |
+| `nextOpenInstallment`                                                                         | [models.ApiSharedObject1112460e21](../models/api-shared-object1112460e21.md)                  | :heavy_check_mark:                                                                            | N/A                                                                                           |
+| `overdueOpenTotal`                                                                            | *number*                                                                                      | :heavy_check_mark:                                                                            | Saldo vencido, en centavos.                                                                   |
+| `balanceAboveSchedule`                                                                        | *number*                                                                                      | :heavy_check_mark:                                                                            | Saldo por encima del cronograma, en centavos.                                                 |
 | `object`                                                                                      | *"purchase"*                                                                                  | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `id`                                                                                          | *string*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `voucherType`                                                                                 | *string*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
@@ -43,4 +64,5 @@ let value: ApiPurchaseListResponseData = {
 | `exchangeRate`                                                                                | *string*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `supplierInvoiceNumber`                                                                       | *string*                                                                                      | :heavy_check_mark:                                                                            | Numero de comprobante del proveedor. Hasta 120 caracteres.                                    |
 | `createdAt`                                                                                   | [Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date) | :heavy_check_mark:                                                                            | N/A                                                                                           |
-| `supplier`                                                                                    | [models.ApiSharedObjectf28d5cf256](../models/api-shared-objectf28d5cf256.md)                  | :heavy_check_mark:                                                                            | N/A                                                                                           |
+| `supplier`                                                                                    | [models.ApiSharedObject91cc200368](../models/api-shared-object91cc200368.md)                  | :heavy_check_mark:                                                                            | N/A                                                                                           |
+| `tags`                                                                                        | [models.ApiSharedObjected3905a55b](../models/api-shared-objected3905a55b.md)[]                | :heavy_check_mark:                                                                            | N/A                                                                                           |
