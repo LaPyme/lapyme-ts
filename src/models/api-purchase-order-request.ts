@@ -5,9 +5,13 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type ApiPurchaseOrderRequestItem = {
   productId: string;
+  /**
+   * Greater than 0. An update may keep 0 on a line that already has 0: a product added while receiving.
+   */
   orderedQuantity: number;
   expectedUnitCost?: number | undefined;
 };
@@ -32,19 +36,21 @@ export type ApiPurchaseOrderRequestItem$Outbound = {
 export const ApiPurchaseOrderRequestItem$outboundSchema: z.ZodMiniType<
   ApiPurchaseOrderRequestItem$Outbound,
   ApiPurchaseOrderRequestItem
-> = z.pipe(
-  z.object({
-    productId: z.string(),
-    orderedQuantity: z.number(),
-    expectedUnitCost: z.optional(z.int()),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      productId: "product_id",
-      orderedQuantity: "ordered_quantity",
-      expectedUnitCost: "expected_unit_cost",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      productId: z.string(),
+      orderedQuantity: z.number(),
+      expectedUnitCost: z.optional(z.int()),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        productId: "product_id",
+        orderedQuantity: "ordered_quantity",
+        expectedUnitCost: "expected_unit_cost",
+      });
+    }),
+  )
 );
 
 export function apiPurchaseOrderRequestItemToJSON(
@@ -71,31 +77,31 @@ export type ApiPurchaseOrderRequest$Outbound = {
 export const ApiPurchaseOrderRequest$outboundSchema: z.ZodMiniType<
   ApiPurchaseOrderRequest$Outbound,
   ApiPurchaseOrderRequest
-> = z.pipe(
-  z.object({
-    supplierId: z.string(),
-    orderDate: z.pipe(
-      z.date(),
-      z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
-    ),
-    expectedDate: z.optional(z.pipe(
-      z.date(),
-      z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
-    )),
-    warehouseId: z.string(),
-    notes: z.optional(z.string()),
-    items: z.array(z.lazy(() =>
-      ApiPurchaseOrderRequestItem$outboundSchema
-    )),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      supplierId: "supplier_id",
-      orderDate: "order_date",
-      expectedDate: "expected_date",
-      warehouseId: "warehouse_id",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      supplierId: z.string(),
+      orderDate: z.pipe(
+        z.date(),
+        z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
+      ),
+      expectedDate: z.optional(z.pipe(
+        z.date(),
+        z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
+      )),
+      warehouseId: z.string(),
+      notes: z.optional(z.string()),
+      items: z.array(z.lazy(() => ApiPurchaseOrderRequestItem$outboundSchema)),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        supplierId: "supplier_id",
+        orderDate: "order_date",
+        expectedDate: "expected_date",
+        warehouseId: "warehouse_id",
+      });
+    }),
+  )
 );
 
 export function apiPurchaseOrderRequestToJSON(

@@ -5,7 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
-import { safeParse } from "../../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import * as models from "../index.js";
@@ -24,10 +24,6 @@ export type ListApiStockTransfersRequest = {
    */
   query?: string | undefined;
   /**
-   * Alias de query
-   */
-  search?: string | undefined;
-  /**
    * Fecha inicial
    */
   dateFrom?: Date | undefined;
@@ -38,7 +34,7 @@ export type ListApiStockTransfersRequest = {
   /**
    * Estados de la transferencia. Puede repetirse o enviarse separada por comas.
    */
-  statuses?: Array<models.ApiSharedEnumc66b046f05> | undefined;
+  statuses?: Array<models.ApiSharedEnum736f0d077b> | undefined;
   /**
    * Depósito de origen
    */
@@ -59,7 +55,6 @@ export type ListApiStockTransfersRequest$Outbound = {
   cursor?: string | undefined;
   limit: number;
   query?: string | undefined;
-  search?: string | undefined;
   date_from?: string | undefined;
   date_to?: string | undefined;
   statuses?: Array<string> | undefined;
@@ -71,34 +66,35 @@ export type ListApiStockTransfersRequest$Outbound = {
 export const ListApiStockTransfersRequest$outboundSchema: z.ZodMiniType<
   ListApiStockTransfersRequest$Outbound,
   ListApiStockTransfersRequest
-> = z.pipe(
-  z.object({
-    cursor: z.optional(z.string()),
-    limit: z._default(z.int(), 50),
-    query: z.optional(z.string()),
-    search: z.optional(z.string()),
-    dateFrom: z.optional(z.pipe(
-      z.date(),
-      z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
-    )),
-    dateTo: z.optional(z.pipe(
-      z.date(),
-      z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
-    )),
-    statuses: z.optional(
-      z.array(models.ApiSharedEnumc66b046f05$outboundSchema),
-    ),
-    sourceWarehouseId: z.optional(z.string()),
-    targetWarehouseId: z.optional(z.string()),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      dateFrom: "date_from",
-      dateTo: "date_to",
-      sourceWarehouseId: "source_warehouse_id",
-      targetWarehouseId: "target_warehouse_id",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      cursor: z.optional(z.string()),
+      limit: z._default(z.int(), 50),
+      query: z.optional(z.string()),
+      dateFrom: z.optional(z.pipe(
+        z.date(),
+        z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
+      )),
+      dateTo: z.optional(z.pipe(
+        z.date(),
+        z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
+      )),
+      statuses: z.optional(
+        z.array(models.ApiSharedEnum736f0d077b$outboundSchema),
+      ),
+      sourceWarehouseId: z.optional(z.string()),
+      targetWarehouseId: z.optional(z.string()),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        dateFrom: "date_from",
+        dateTo: "date_to",
+        sourceWarehouseId: "source_warehouse_id",
+        targetWarehouseId: "target_warehouse_id",
+      });
+    }),
+  )
 );
 
 export function listApiStockTransfersRequestToJSON(
@@ -115,17 +111,19 @@ export function listApiStockTransfersRequestToJSON(
 export const ListApiStockTransfersResponse$inboundSchema: z.ZodMiniType<
   ListApiStockTransfersResponse,
   unknown
-> = z.pipe(
-  z.object({
-    Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
-    Result: models.ApiTransferListResponse$inboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "Headers": "headers",
-      "Result": "result",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
+      Result: models.ApiTransferListResponse$inboundSchema,
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "Headers": "headers",
+        "Result": "result",
+      });
+    }),
+  )
 );
 
 export function listApiStockTransfersResponseFromJSON(

@@ -5,6 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type ApiSharedObjectdaa374f786 = {
   journalLineId: string;
@@ -21,17 +22,19 @@ export type ApiSharedObjectdaa374f786$Outbound = {
 export const ApiSharedObjectdaa374f786$outboundSchema: z.ZodMiniType<
   ApiSharedObjectdaa374f786$Outbound,
   ApiSharedObjectdaa374f786
-> = z.pipe(
-  z.object({
-    journalLineId: z.string(),
-    appliedAmount: z.int(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      journalLineId: "journal_line_id",
-      appliedAmount: "applied_amount",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      journalLineId: z.string(),
+      appliedAmount: z.int(),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        journalLineId: "journal_line_id",
+        appliedAmount: "applied_amount",
+      });
+    }),
+  )
 );
 
 export function apiSharedObjectdaa374f786ToJSON(

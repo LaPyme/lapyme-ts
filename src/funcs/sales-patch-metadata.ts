@@ -10,9 +10,8 @@ import { matchStatusCode } from "../lib/http.js";
 import * as M from "../lib/matchers.js";
 import { compactMap } from "../lib/primitives.js";
 import { safeParse } from "../lib/schemas.js";
-import { RequestOptions } from "../lib/sdks.js";
+import { encodePath, RequestOptions } from "../lib/sdks.js";
 import { extractSecurity, resolveGlobalSecurity } from "../lib/security.js";
-import { pathToFunc } from "../lib/url.js";
 import {
   ConnectionError,
   InvalidRequestError,
@@ -32,7 +31,7 @@ import { Result } from "../types/fp.js";
  * Actualizar metadatos de venta
  *
  * @remarks
- * Actualiza solo metadatos operativos de una venta: notas, referencia de integracion externa y vendedor. No permite modificar items, importes, pagos ni datos fiscales.
+ * Actualizá vencimientos, notas, la referencia externa o el vendedor. Al editar un vencimiento en cuotas, los pagos y créditos previos se aplican a las cuotas más próximas.
  */
 export function salesPatchMetadata(
   client: LapymeCore,
@@ -98,11 +97,20 @@ async function $do(
       charEncoding: "percent",
     }),
   };
-  const path = pathToFunc("/api/v1/sales/{sale_id}")(pathParams);
+  const pathResult = encodePath("/api/v1/sales/{sale_id}", pathParams);
+  if (!pathResult.ok) {
+    return [pathResult, { status: "invalid" }];
+  }
+  const path = pathResult.value;
 
   const headers = new Headers(compactMap({
     "Content-Type": "application/json",
     Accept: "application/json",
+    "Idempotency-Key": encodeSimple(
+      "Idempotency-Key",
+      payload["Idempotency-Key"],
+      { explode: false, charEncoding: "none" },
+    ),
   }));
 
   const secConfig = await extractSecurity(client._options.bearerAuth);
@@ -183,6 +191,7 @@ async function $do(
     M.jsonErr([400, 401, 403, 404, 409], errors.ApiErrorEnvelope$inboundSchema),
     M.jsonErr(429, errors.ApiErrorEnvelope$inboundSchema, { hdrs: true }),
     M.jsonErr(500, errors.ApiErrorEnvelope$inboundSchema),
+    M.jsonErr(503, errors.ApiErrorEnvelope$inboundSchema, { hdrs: true }),
     M.fail("4XX"),
     M.fail("5XX"),
   )(response, req, { extraFields: responseFields });

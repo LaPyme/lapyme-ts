@@ -5,12 +5,16 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
-import { safeParse } from "../../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import * as models from "../index.js";
 
 export type ApplyApiSaleTagsRequest = {
+  /**
+   * Clave estable para deduplicar reintentos de la misma operación. Opcional en v1; si se envía, un reintento con la misma clave y el mismo cuerpo devuelve el resultado original sin repetir la operación, y con otro cuerpo devuelve 409.
+   */
+  idempotencyKey?: string | undefined;
   /**
    * ID opcional de la solicitud para trazabilidad. Si se omite, el servidor genera uno.
    */
@@ -25,6 +29,7 @@ export type ApplyApiSaleTagsResponse = {
 
 /** @internal */
 export type ApplyApiSaleTagsRequest$Outbound = {
+  "Idempotency-Key"?: string | undefined;
   "X-Request-Id"?: string | undefined;
   body: models.ApiApplyTagsRequest$Outbound;
 };
@@ -33,16 +38,20 @@ export type ApplyApiSaleTagsRequest$Outbound = {
 export const ApplyApiSaleTagsRequest$outboundSchema: z.ZodMiniType<
   ApplyApiSaleTagsRequest$Outbound,
   ApplyApiSaleTagsRequest
-> = z.pipe(
-  z.object({
-    xRequestId: z.optional(z.string()),
-    body: models.ApiApplyTagsRequest$outboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      xRequestId: "X-Request-Id",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      idempotencyKey: z.optional(z.string()),
+      xRequestId: z.optional(z.string()),
+      body: models.ApiApplyTagsRequest$outboundSchema,
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        idempotencyKey: "Idempotency-Key",
+        xRequestId: "X-Request-Id",
+      });
+    }),
+  )
 );
 
 export function applyApiSaleTagsRequestToJSON(
@@ -57,17 +66,19 @@ export function applyApiSaleTagsRequestToJSON(
 export const ApplyApiSaleTagsResponse$inboundSchema: z.ZodMiniType<
   ApplyApiSaleTagsResponse,
   unknown
-> = z.pipe(
-  z.object({
-    Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
-    Result: models.ApiApplyTagsResponse$inboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "Headers": "headers",
-      "Result": "result",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
+      Result: models.ApiApplyTagsResponse$inboundSchema,
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "Headers": "headers",
+        "Result": "result",
+      });
+    }),
+  )
 );
 
 export function applyApiSaleTagsResponseFromJSON(

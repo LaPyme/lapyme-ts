@@ -6,20 +6,16 @@
 import { ListApiCustomersResponse } from "lapyme/models/operations";
 
 let value: ListApiCustomersResponse = {
-  headers: {
-    "key": [
-      "<value 1>",
-      "<value 2>",
-    ],
-  },
+  headers: {},
   result: {
     requestId: "<id>",
     data: [
       {
         object: "customer",
         id: "3af7fc7d-ed5f-40a9-91dd-638af09d8aaa",
+        code: "<value>",
         name: "<value>",
-        companyName: "Murray, Schneider and Harris",
+        companyName: "Schneider Inc",
         description:
           "drat till however failing boo christen via grimy emergent",
         email: "Aiden.Leffler32@hotmail.com",
@@ -27,22 +23,29 @@ let value: ListApiCustomersResponse = {
         address: null,
         apartment: "<value>",
         city: "East Cleo",
+        deliveryCarrier: "<value>",
+        deliveryAddress: "<value>",
         taxId: "<id>",
         taxIdType: "<value>",
         taxCategory: "<value>",
         contactType: "<value>",
-        defaultPriceListId: "704cd4d0-0ead-4f05-8d63-3a40ee71fb8d",
-        paymentTermId: null,
+        defaultPriceListId: null,
+        defaultDiscountPercentage: 7962.85,
+        defaultPriceListIsBase: false,
+        paymentTermDays: 873006,
+        paymentTermLabel: null,
+        paymentTermInstallmentDays: null,
         provinceId: "<id>",
         isActive: false,
-        createdAt: new Date("2024-03-20T23:15:47.099Z"),
-        updatedAt: new Date("2025-07-08T04:07:38.854Z"),
+        createdAt: new Date("2026-11-30T10:45:25.665Z"),
+        updatedAt: new Date("2024-02-12T14:17:31.771Z"),
+        tags: [],
       },
     ],
-    hasMore: true,
+    hasMore: false,
     nextCursor: "<value>",
     object: "list",
-    url: "https://brilliant-distinction.net/",
+    url: "https://essential-pharmacopoeia.biz/",
   },
 };
 ```

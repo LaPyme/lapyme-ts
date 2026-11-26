@@ -5,17 +5,22 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import {
-  ApiSharedObjectd371740910,
-  ApiSharedObjectd371740910$inboundSchema,
-} from "./api-shared-objectd371740910.js";
+  ApiSharedObjectcbcdbf3dfa,
+  ApiSharedObjectcbcdbf3dfa$inboundSchema,
+} from "./api-shared-objectcbcdbf3dfa.js";
+import {
+  ApiSharedObjectd595e319f3,
+  ApiSharedObjectd595e319f3$inboundSchema,
+} from "./api-shared-objectd595e319f3.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type ApiProductUpdateResponseData = {
-  product: ApiSharedObjectd371740910;
+  product: ApiSharedObjectd595e319f3;
+  costConversions: Array<ApiSharedObjectcbcdbf3dfa>;
 };
 
 export type ApiProductUpdateResponse = {
@@ -28,9 +33,19 @@ export type ApiProductUpdateResponse = {
 export const ApiProductUpdateResponseData$inboundSchema: z.ZodMiniType<
   ApiProductUpdateResponseData,
   unknown
-> = z.object({
-  product: ApiSharedObjectd371740910$inboundSchema,
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      product: ApiSharedObjectd595e319f3$inboundSchema,
+      cost_conversions: z.array(ApiSharedObjectcbcdbf3dfa$inboundSchema),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "cost_conversions": "costConversions",
+      });
+    }),
+  )
+);
 
 export function apiProductUpdateResponseDataFromJSON(
   jsonString: string,
@@ -46,17 +61,19 @@ export function apiProductUpdateResponseDataFromJSON(
 export const ApiProductUpdateResponse$inboundSchema: z.ZodMiniType<
   ApiProductUpdateResponse,
   unknown
-> = z.pipe(
-  z.object({
-    request_id: types.string(),
-    data: z.lazy(() => ApiProductUpdateResponseData$inboundSchema),
-    warnings: z.array(z.any()),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "request_id": "requestId",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      request_id: types.string(),
+      data: z.lazy(() => ApiProductUpdateResponseData$inboundSchema),
+      warnings: z.array(z.any()),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "request_id": "requestId",
+      });
+    }),
+  )
 );
 
 export function apiProductUpdateResponseFromJSON(

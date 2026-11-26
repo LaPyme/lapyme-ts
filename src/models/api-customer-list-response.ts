@@ -5,18 +5,23 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import {
   ApiSharedEnum8d46e1ec20,
   ApiSharedEnum8d46e1ec20$inboundSchema,
 } from "./api-shared-enum8d46e1ec20.js";
+import {
+  ApiSharedObjected3905a55b,
+  ApiSharedObjected3905a55b$inboundSchema,
+} from "./api-shared-objected3905a55b.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type ApiCustomerListResponseData = {
   object: "customer";
   id: string;
+  code: string | null;
   name: string;
   companyName: string | null;
   description: string | null;
@@ -25,16 +30,29 @@ export type ApiCustomerListResponseData = {
   address: string | null;
   apartment: string | null;
   city: string | null;
+  deliveryCarrier: string | null;
+  deliveryAddress: string | null;
   taxId: string | null;
   taxIdType: string | null;
   taxCategory: string | null;
   contactType: string | null;
   defaultPriceListId: string | null;
-  paymentTermId: string | null;
+  /**
+   * Acuerdo comercial del cliente. No se aplica automáticamente al crear documentos; enviá el descuento de cada línea explícitamente.
+   */
+  defaultDiscountPercentage: number | null;
+  defaultPriceListIsBase: boolean;
+  paymentTermDays: number | null;
+  paymentTermLabel: string | null;
+  /**
+   * Plazos en orden estrictamente creciente. null elimina el plazo. El escalar debe coincidir con el último plazo; reenviar un escalar sin cambios conserva las cuotas.
+   */
+  paymentTermInstallmentDays: Array<number> | null;
   provinceId: string | null;
   isActive: boolean | null;
   createdAt: Date;
   updatedAt: Date;
+  tags: Array<ApiSharedObjected3905a55b>;
 };
 
 export type ApiCustomerListResponse = {
@@ -56,44 +74,60 @@ export type ApiCustomerListResponse = {
 export const ApiCustomerListResponseData$inboundSchema: z.ZodMiniType<
   ApiCustomerListResponseData,
   unknown
-> = z.pipe(
-  z.object({
-    object: types.literal("customer"),
-    id: types.string(),
-    name: types.string(),
-    company_name: types.nullable(types.string()),
-    description: types.nullable(types.string()),
-    email: types.nullable(types.string()),
-    phone: types.nullable(types.string()),
-    address: types.nullable(types.string()),
-    apartment: types.nullable(types.string()),
-    city: types.nullable(types.string()),
-    tax_id: types.nullable(types.string()),
-    tax_id_type: types.nullable(types.string()),
-    tax_category: types.nullable(types.string()),
-    contact_type: types.nullable(types.string()),
-    default_price_list_id: types.nullable(types.string()),
-    payment_term_id: types.nullable(types.string()),
-    province_id: types.nullable(types.string()),
-    is_active: types.nullable(types.boolean()),
-    created_at: types.date(),
-    updated_at: types.date(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "company_name": "companyName",
-      "tax_id": "taxId",
-      "tax_id_type": "taxIdType",
-      "tax_category": "taxCategory",
-      "contact_type": "contactType",
-      "default_price_list_id": "defaultPriceListId",
-      "payment_term_id": "paymentTermId",
-      "province_id": "provinceId",
-      "is_active": "isActive",
-      "created_at": "createdAt",
-      "updated_at": "updatedAt",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      object: types.literal("customer"),
+      id: types.string(),
+      code: types.nullable(types.string()),
+      name: types.string(),
+      company_name: types.nullable(types.string()),
+      description: types.nullable(types.string()),
+      email: types.nullable(types.string()),
+      phone: types.nullable(types.string()),
+      address: types.nullable(types.string()),
+      apartment: types.nullable(types.string()),
+      city: types.nullable(types.string()),
+      delivery_carrier: types.nullable(types.string()),
+      delivery_address: types.nullable(types.string()),
+      tax_id: types.nullable(types.string()),
+      tax_id_type: types.nullable(types.string()),
+      tax_category: types.nullable(types.string()),
+      contact_type: types.nullable(types.string()),
+      default_price_list_id: types.nullable(types.string()),
+      default_discount_percentage: types.nullable(types.number()),
+      default_price_list_is_base: types.boolean(),
+      payment_term_days: types.nullable(types.number()),
+      payment_term_label: types.nullable(types.string()),
+      payment_term_installment_days: types.nullable(z.array(types.number())),
+      province_id: types.nullable(types.string()),
+      is_active: types.nullable(types.boolean()),
+      created_at: types.date(),
+      updated_at: types.date(),
+      tags: z.array(ApiSharedObjected3905a55b$inboundSchema),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "company_name": "companyName",
+        "delivery_carrier": "deliveryCarrier",
+        "delivery_address": "deliveryAddress",
+        "tax_id": "taxId",
+        "tax_id_type": "taxIdType",
+        "tax_category": "taxCategory",
+        "contact_type": "contactType",
+        "default_price_list_id": "defaultPriceListId",
+        "default_discount_percentage": "defaultDiscountPercentage",
+        "default_price_list_is_base": "defaultPriceListIsBase",
+        "payment_term_days": "paymentTermDays",
+        "payment_term_label": "paymentTermLabel",
+        "payment_term_installment_days": "paymentTermInstallmentDays",
+        "province_id": "provinceId",
+        "is_active": "isActive",
+        "created_at": "createdAt",
+        "updated_at": "updatedAt",
+      });
+    }),
+  )
 );
 
 export function apiCustomerListResponseDataFromJSON(
@@ -110,22 +144,24 @@ export function apiCustomerListResponseDataFromJSON(
 export const ApiCustomerListResponse$inboundSchema: z.ZodMiniType<
   ApiCustomerListResponse,
   unknown
-> = z.pipe(
-  z.object({
-    request_id: types.string(),
-    data: z.array(z.lazy(() => ApiCustomerListResponseData$inboundSchema)),
-    has_more: types.boolean(),
-    next_cursor: types.nullable(types.string()),
-    object: ApiSharedEnum8d46e1ec20$inboundSchema,
-    url: types.string(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "request_id": "requestId",
-      "has_more": "hasMore",
-      "next_cursor": "nextCursor",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      request_id: types.string(),
+      data: z.array(z.lazy(() => ApiCustomerListResponseData$inboundSchema)),
+      has_more: types.boolean(),
+      next_cursor: types.nullable(types.string()),
+      object: ApiSharedEnum8d46e1ec20$inboundSchema,
+      url: types.string(),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "request_id": "requestId",
+        "has_more": "hasMore",
+        "next_cursor": "nextCursor",
+      });
+    }),
+  )
 );
 
 export function apiCustomerListResponseFromJSON(

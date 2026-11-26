@@ -5,7 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
-import { safeParse } from "../../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import * as models from "../index.js";
@@ -38,18 +38,20 @@ export type CreateApiOrderInvoiceRequest$Outbound = {
 export const CreateApiOrderInvoiceRequest$outboundSchema: z.ZodMiniType<
   CreateApiOrderInvoiceRequest$Outbound,
   CreateApiOrderInvoiceRequest
-> = z.pipe(
-  z.object({
-    orderId: z.string(),
-    idempotencyKey: z.string(),
-    body: models.ApiOrderInvoiceRequest$outboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      orderId: "order_id",
-      idempotencyKey: "Idempotency-Key",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      orderId: z.string(),
+      idempotencyKey: z.string(),
+      body: models.ApiOrderInvoiceRequest$outboundSchema,
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        orderId: "order_id",
+        idempotencyKey: "Idempotency-Key",
+      });
+    }),
+  )
 );
 
 export function createApiOrderInvoiceRequestToJSON(
@@ -66,17 +68,19 @@ export function createApiOrderInvoiceRequestToJSON(
 export const CreateApiOrderInvoiceResponse$inboundSchema: z.ZodMiniType<
   CreateApiOrderInvoiceResponse,
   unknown
-> = z.pipe(
-  z.object({
-    Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
-    Result: models.ApiOrderWriteResponse$inboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "Headers": "headers",
-      "Result": "result",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
+      Result: models.ApiOrderWriteResponse$inboundSchema,
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "Headers": "headers",
+        "Result": "result",
+      });
+    }),
+  )
 );
 
 export function createApiOrderInvoiceResponseFromJSON(

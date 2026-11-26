@@ -4,6 +4,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type ApiOrderOptionalReasonRequest = {
   reason?: string | undefined;
@@ -18,9 +19,11 @@ export type ApiOrderOptionalReasonRequest$Outbound = {
 export const ApiOrderOptionalReasonRequest$outboundSchema: z.ZodMiniType<
   ApiOrderOptionalReasonRequest$Outbound,
   ApiOrderOptionalReasonRequest
-> = z.object({
-  reason: z.optional(z.string()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    reason: z.optional(z.string()),
+  })
+);
 
 export function apiOrderOptionalReasonRequestToJSON(
   apiOrderOptionalReasonRequest: ApiOrderOptionalReasonRequest,

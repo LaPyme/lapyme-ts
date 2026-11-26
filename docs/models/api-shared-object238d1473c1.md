@@ -1,0 +1,41 @@
+# ApiSharedObject238d1473c1
+
+## Example Usage
+
+```typescript
+import { ApiSharedObject238d1473c1 } from "lapyme/models";
+
+let value: ApiSharedObject238d1473c1 = {
+  object: "accounts_payable",
+  functionalCurrency: "ARS",
+  summary: {
+    total: 37077,
+    undated: 433268,
+    current: 808386,
+    overdue: 168530,
+  },
+  buckets: [],
+  isFilteredSubset: false,
+  groups: [
+    {
+      contactId: "0d6f73f7-d7bf-4c30-8e26-8d96e8406fbd",
+      contactName: "<value>",
+      totalBalance: 281818,
+      overdueBalance: 16042,
+      documentCount: 219054,
+      buckets: [],
+    },
+  ],
+};
+```
+
+## Fields
+
+| Field                                                                                                                                                                                                                                          | Type                                                                                                                                                                                                                                           | Required                                                                                                                                                                                                                                       | Description                                                                                                                                                                                                                                    |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `object`                                                                                                                                                                                                                                       | [models.ApiSharedEnum08c2c3face](../models/api-shared-enum08c2c3face.md)                                                                                                                                                                       | :heavy_check_mark:                                                                                                                                                                                                                             | N/A                                                                                                                                                                                                                                            |
+| `functionalCurrency`                                                                                                                                                                                                                           | [models.ApiSharedEnumd709360a4b](../models/api-shared-enumd709360a4b.md)                                                                                                                                                                       | :heavy_check_mark:                                                                                                                                                                                                                             | Moneda de todos los importes del reporte. Un comprobante en dólares ya viene convertido a pesos en `functional_balance`.                                                                                                                       |
+| `summary`                                                                                                                                                                                                                                      | [models.ApiSharedObject824a704f0f](../models/api-shared-object824a704f0f.md)                                                                                                                                                                   | :heavy_check_mark:                                                                                                                                                                                                                             | N/A                                                                                                                                                                                                                                            |
+| `buckets`                                                                                                                                                                                                                                      | [models.ApiSharedObject6f9fa68da4](../models/api-shared-object6f9fa68da4.md)[]                                                                                                                                                                 | :heavy_check_mark:                                                                                                                                                                                                                             | Saldo por tramo de vencimiento, siempre los seis en este orden: undated (sin vencimiento), current (a vencer), 1_30, 31_60, 61_90 y 90_plus (días de mora). Importes en pesos, en unidades menores.                                            |
+| `isFilteredSubset`                                                                                                                                                                                                                             | *boolean*                                                                                                                                                                                                                                      | :heavy_check_mark:                                                                                                                                                                                                                             | true si el saldo no es el de toda la organización: filtraste por contacto, fechas o un circuito (en una organización con circuitos), o la clave delega a un usuario que solo ve parte de los datos (propios, clientes o sucursales asignados). |
+| `groups`                                                                                                                                                                                                                                       | [models.ApiSharedObjectc45bc0fd9e](../models/api-shared-objectc45bc0fd9e.md)[]                                                                                                                                                                 | :heavy_check_mark:                                                                                                                                                                                                                             | Un grupo por contacto con saldo abierto.                                                                                                                                                                                                       |

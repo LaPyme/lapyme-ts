@@ -5,138 +5,140 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import { ClosedEnum } from "../types/enums.js";
 import {
-  ApiSharedEnum6cfb146157,
-  ApiSharedEnum6cfb146157$outboundSchema,
-} from "./api-shared-enum6cfb146157.js";
+  ApiSharedEnum5f0db377e3,
+  ApiSharedEnum5f0db377e3$outboundSchema,
+} from "./api-shared-enum5f0db377e3.js";
 import {
-  ApiSharedEnumff49232140,
-  ApiSharedEnumff49232140$outboundSchema,
-} from "./api-shared-enumff49232140.js";
+  ApiSharedEnuma7f3605118,
+  ApiSharedEnuma7f3605118$outboundSchema,
+} from "./api-shared-enuma7f3605118.js";
 import {
-  ApiSharedObject6dbe49c4ef,
-  ApiSharedObject6dbe49c4ef$Outbound,
-  ApiSharedObject6dbe49c4ef$outboundSchema,
-} from "./api-shared-object6dbe49c4ef.js";
+  ApiSharedEnumffb4886f2b,
+  ApiSharedEnumffb4886f2b$outboundSchema,
+} from "./api-shared-enumffb4886f2b.js";
+import {
+  ApiSharedObject36a21b422e,
+  ApiSharedObject36a21b422e$Outbound,
+  ApiSharedObject36a21b422e$outboundSchema,
+} from "./api-shared-object36a21b422e.js";
+import {
+  ApiSharedObjectf75f18ac6e,
+  ApiSharedObjectf75f18ac6e$Outbound,
+  ApiSharedObjectf75f18ac6e$outboundSchema,
+} from "./api-shared-objectf75f18ac6e.js";
 
-export const ApiProductUpdateRequestVisibility = {
-  Both: "both",
-  Sales: "sales",
-  Purchases: "purchases",
+export const ApiProductUpdateRequestProductType = {
+  Product: "product",
+  Service: "service",
+  Kit: "kit",
+  Combo: "combo",
 } as const;
-export type ApiProductUpdateRequestVisibility = ClosedEnum<
-  typeof ApiProductUpdateRequestVisibility
+export type ApiProductUpdateRequestProductType = ClosedEnum<
+  typeof ApiProductUpdateRequestProductType
 >;
 
-export const ApiProductUpdateRequestUnitOfMeasure = {
-  Ten: "10",
-  Eleven: "11",
-  Twelve: "12",
-  Thirteen: "13",
-  Fourteen: "14",
-  Fifteen: "15",
-  Sixteen: "16",
-  Seventeen: "17",
-  Eighteen: "18",
-  Nineteen: "19",
-  Twenty: "20",
-  TwentyOne: "21",
-  TwentyTwo: "22",
-  TwentyThree: "23",
-  TwentyFour: "24",
-  TwentyFive: "25",
-  TwentySix: "26",
-  TwentySeven: "27",
-  TwentyEight: "28",
-  TwentyNine: "29",
-  Thirty: "30",
-  ThirtyOne: "31",
-  ThirtyTwo: "32",
-  ThirtyThree: "33",
-  ThirtyFour: "34",
-  ThirtyFive: "35",
-  ThirtySix: "36",
-  ThirtySeven: "37",
-  FortyOne: "41",
-  FortySeven: "47",
-  FortyEight: "48",
-  FortyNine: "49",
-  Fifty: "50",
-  FiftyOne: "51",
-  FiftyTwo: "52",
-  FiftyThree: "53",
-  FiftyFour: "54",
-  FiftyFive: "55",
-  SixtyOne: "61",
-  SixtyTwo: "62",
-  SixtyThree: "63",
-  NinetySeven: "97",
-  NinetyEight: "98",
-  NinetyNine: "99",
-  Zero: "00",
-  One: "01",
-  Two: "02",
-  Three: "03",
-  Four: "04",
-  Five: "05",
-  Six: "06",
-  Seven: "07",
-  Eight: "08",
-  Nine: "09",
+export const Tracking = {
+  None: "none",
+  Lot: "lot",
+  Serial: "serial",
 } as const;
-export type ApiProductUpdateRequestUnitOfMeasure = ClosedEnum<
-  typeof ApiProductUpdateRequestUnitOfMeasure
+export type Tracking = ClosedEnum<typeof Tracking>;
+
+export const ApiProductUpdateRequestPricingMode = {
+  Automatic: "automatic",
+  Manual: "manual",
+} as const;
+export type ApiProductUpdateRequestPricingMode = ClosedEnum<
+  typeof ApiProductUpdateRequestPricingMode
 >;
 
 export type ApiProductUpdateRequest = {
+  /**
+   * Identificador del producto en el catálogo; se normaliza al guardar.
+   */
+  handle?: string | undefined;
   name?: string | undefined;
   description?: string | null | undefined;
   categoryId?: string | null | undefined;
-  visibility?: ApiProductUpdateRequestVisibility | undefined;
+  visibility?: ApiSharedEnuma7f3605118 | undefined;
+  availableInPos?: boolean | undefined;
+  /**
+   * External product image URL reference. La Pyme displays it best effort and does not copy, ingest, or host the image.
+   */
   imageUrl?: string | null | undefined;
-  productType?: ApiSharedEnumff49232140 | undefined;
+  productType?: ApiProductUpdateRequestProductType | undefined;
+  tracking?: Tracking | undefined;
   sku?: string | undefined;
+  supplierSku?: string | null | undefined;
   barcode?: string | null | undefined;
-  unitOfMeasure?: ApiProductUpdateRequestUnitOfMeasure | undefined;
-  currency?: ApiSharedEnum6cfb146157 | undefined;
+  unitOfMeasure?: ApiSharedEnum5f0db377e3 | undefined;
+  currency?: ApiSharedEnumffb4886f2b | undefined;
+  arsReferenceExchangeRate?: number | null | undefined;
   cost?: number | undefined;
-  price?: number | undefined;
+  /**
+   * Precio manual en centavos. En combos existentes, omitilo para conservar el precio guardado.
+   */
+  price?: number | null | undefined;
   promotionalPrice?: number | null | undefined;
+  /**
+   * Markup percentage used to calculate the sale price from cost and organization rounding rules. The price adds the product's IVA rate only when the organization's sales prices include IVA and the organization is Responsable Inscripto; for any other tax category the cost already includes IVA. Mutually exclusive with price; send null to switch back to manual pricing.
+   */
   markupPercentage?: number | null | undefined;
   taxRateId?: number | undefined;
   isExempt?: boolean | undefined;
   defaultSupplierId?: string | null | undefined;
   defaultSalesAccountId?: string | null | undefined;
   defaultPurchaseAccountId?: string | null | undefined;
-  warehouseStocks?: Array<ApiSharedObject6dbe49c4ef> | undefined;
+  warehouseStocks?: Array<ApiSharedObject36a21b422e> | undefined;
   isActive?: boolean | undefined;
+  pricingMode?: ApiProductUpdateRequestPricingMode | undefined;
+  priceAdjustmentPercentage?: number | null | undefined;
+  /**
+   * Solo para combos existentes. Omití la clave para conservar la composición; enviarla reemplaza todos los componentes.
+   */
+  components?: Array<ApiSharedObjectf75f18ac6e> | undefined;
 };
 
 /** @internal */
-export const ApiProductUpdateRequestVisibility$outboundSchema: z.ZodMiniEnum<
-  typeof ApiProductUpdateRequestVisibility
-> = z.enum(ApiProductUpdateRequestVisibility);
+export const ApiProductUpdateRequestProductType$outboundSchema: z.ZodMiniEnum<
+  typeof ApiProductUpdateRequestProductType
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.enum(ApiProductUpdateRequestProductType)
+);
 
 /** @internal */
-export const ApiProductUpdateRequestUnitOfMeasure$outboundSchema: z.ZodMiniEnum<
-  typeof ApiProductUpdateRequestUnitOfMeasure
-> = z.enum(ApiProductUpdateRequestUnitOfMeasure);
+export const Tracking$outboundSchema: z.ZodMiniEnum<typeof Tracking> =
+  /* @__PURE__ */ lazySchema$(() => z.enum(Tracking));
+
+/** @internal */
+export const ApiProductUpdateRequestPricingMode$outboundSchema: z.ZodMiniEnum<
+  typeof ApiProductUpdateRequestPricingMode
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.enum(ApiProductUpdateRequestPricingMode)
+);
 
 /** @internal */
 export type ApiProductUpdateRequest$Outbound = {
+  handle?: string | undefined;
   name?: string | undefined;
   description?: string | null | undefined;
   category_id?: string | null | undefined;
   visibility?: string | undefined;
+  available_in_pos?: boolean | undefined;
   image_url?: string | null | undefined;
   product_type?: string | undefined;
+  tracking?: string | undefined;
   sku?: string | undefined;
+  supplier_sku?: string | null | undefined;
   barcode?: string | null | undefined;
-  unit_of_measure?: string | undefined;
+  unit_of_measure: string;
   currency?: string | undefined;
+  ars_reference_exchange_rate?: number | null | undefined;
   cost?: number | undefined;
-  price?: number | undefined;
+  price?: number | null | undefined;
   promotional_price?: number | null | undefined;
   markup_percentage?: number | null | undefined;
   tax_rate_id?: number | undefined;
@@ -144,59 +146,79 @@ export type ApiProductUpdateRequest$Outbound = {
   default_supplier_id?: string | null | undefined;
   default_sales_account_id?: string | null | undefined;
   default_purchase_account_id?: string | null | undefined;
-  warehouse_stocks?: Array<ApiSharedObject6dbe49c4ef$Outbound> | undefined;
+  warehouse_stocks?: Array<ApiSharedObject36a21b422e$Outbound> | undefined;
   is_active?: boolean | undefined;
+  pricing_mode?: string | undefined;
+  price_adjustment_percentage?: number | null | undefined;
+  components?: Array<ApiSharedObjectf75f18ac6e$Outbound> | undefined;
 };
 
 /** @internal */
 export const ApiProductUpdateRequest$outboundSchema: z.ZodMiniType<
   ApiProductUpdateRequest$Outbound,
   ApiProductUpdateRequest
-> = z.pipe(
-  z.object({
-    name: z.optional(z.string()),
-    description: z.optional(z.nullable(z.string())),
-    categoryId: z.optional(z.nullable(z.string())),
-    visibility: z.optional(ApiProductUpdateRequestVisibility$outboundSchema),
-    imageUrl: z.optional(z.nullable(z.string())),
-    productType: z.optional(ApiSharedEnumff49232140$outboundSchema),
-    sku: z.optional(z.string()),
-    barcode: z.optional(z.nullable(z.string())),
-    unitOfMeasure: z.optional(
-      ApiProductUpdateRequestUnitOfMeasure$outboundSchema,
-    ),
-    currency: z.optional(ApiSharedEnum6cfb146157$outboundSchema),
-    cost: z.optional(z.int()),
-    price: z.optional(z.int()),
-    promotionalPrice: z.optional(z.nullable(z.int())),
-    markupPercentage: z.optional(z.nullable(z.number())),
-    taxRateId: z.optional(z.int()),
-    isExempt: z.optional(z.boolean()),
-    defaultSupplierId: z.optional(z.nullable(z.string())),
-    defaultSalesAccountId: z.optional(z.nullable(z.string())),
-    defaultPurchaseAccountId: z.optional(z.nullable(z.string())),
-    warehouseStocks: z.optional(
-      z.array(ApiSharedObject6dbe49c4ef$outboundSchema),
-    ),
-    isActive: z.optional(z.boolean()),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      categoryId: "category_id",
-      imageUrl: "image_url",
-      productType: "product_type",
-      unitOfMeasure: "unit_of_measure",
-      promotionalPrice: "promotional_price",
-      markupPercentage: "markup_percentage",
-      taxRateId: "tax_rate_id",
-      isExempt: "is_exempt",
-      defaultSupplierId: "default_supplier_id",
-      defaultSalesAccountId: "default_sales_account_id",
-      defaultPurchaseAccountId: "default_purchase_account_id",
-      warehouseStocks: "warehouse_stocks",
-      isActive: "is_active",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      handle: z.optional(z.string()),
+      name: z.optional(z.string()),
+      description: z.optional(z.nullable(z.string())),
+      categoryId: z.optional(z.nullable(z.string())),
+      visibility: z.optional(ApiSharedEnuma7f3605118$outboundSchema),
+      availableInPos: z.optional(z.boolean()),
+      imageUrl: z.optional(z.nullable(z.string())),
+      productType: z.optional(
+        ApiProductUpdateRequestProductType$outboundSchema,
+      ),
+      tracking: z.optional(Tracking$outboundSchema),
+      sku: z.optional(z.string()),
+      supplierSku: z.optional(z.nullable(z.string())),
+      barcode: z.optional(z.nullable(z.string())),
+      unitOfMeasure: z._default(ApiSharedEnum5f0db377e3$outboundSchema, "07"),
+      currency: z.optional(ApiSharedEnumffb4886f2b$outboundSchema),
+      arsReferenceExchangeRate: z.optional(z.nullable(z.number())),
+      cost: z.optional(z.int()),
+      price: z.optional(z.nullable(z.int())),
+      promotionalPrice: z.optional(z.nullable(z.int())),
+      markupPercentage: z.optional(z.nullable(z.number())),
+      taxRateId: z.optional(z.int()),
+      isExempt: z.optional(z.boolean()),
+      defaultSupplierId: z.optional(z.nullable(z.string())),
+      defaultSalesAccountId: z.optional(z.nullable(z.string())),
+      defaultPurchaseAccountId: z.optional(z.nullable(z.string())),
+      warehouseStocks: z.optional(
+        z.array(ApiSharedObject36a21b422e$outboundSchema),
+      ),
+      isActive: z.optional(z.boolean()),
+      pricingMode: z.optional(
+        ApiProductUpdateRequestPricingMode$outboundSchema,
+      ),
+      priceAdjustmentPercentage: z.optional(z.nullable(z.number())),
+      components: z.optional(z.array(ApiSharedObjectf75f18ac6e$outboundSchema)),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        categoryId: "category_id",
+        availableInPos: "available_in_pos",
+        imageUrl: "image_url",
+        productType: "product_type",
+        supplierSku: "supplier_sku",
+        unitOfMeasure: "unit_of_measure",
+        arsReferenceExchangeRate: "ars_reference_exchange_rate",
+        promotionalPrice: "promotional_price",
+        markupPercentage: "markup_percentage",
+        taxRateId: "tax_rate_id",
+        isExempt: "is_exempt",
+        defaultSupplierId: "default_supplier_id",
+        defaultSalesAccountId: "default_sales_account_id",
+        defaultPurchaseAccountId: "default_purchase_account_id",
+        warehouseStocks: "warehouse_stocks",
+        isActive: "is_active",
+        pricingMode: "pricing_mode",
+        priceAdjustmentPercentage: "price_adjustment_percentage",
+      });
+    }),
+  )
 );
 
 export function apiProductUpdateRequestToJSON(

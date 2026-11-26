@@ -5,7 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
-import { safeParse } from "../../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import * as models from "../index.js";
@@ -38,18 +38,20 @@ export type CreateApiPriceListRequest$Outbound = {
 export const CreateApiPriceListRequest$outboundSchema: z.ZodMiniType<
   CreateApiPriceListRequest$Outbound,
   CreateApiPriceListRequest
-> = z.pipe(
-  z.object({
-    idempotencyKey: z.string(),
-    xRequestId: z.optional(z.string()),
-    body: models.ApiPriceListMutationRequest$outboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      idempotencyKey: "Idempotency-Key",
-      xRequestId: "X-Request-Id",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      idempotencyKey: z.string(),
+      xRequestId: z.optional(z.string()),
+      body: models.ApiPriceListMutationRequest$outboundSchema,
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        idempotencyKey: "Idempotency-Key",
+        xRequestId: "X-Request-Id",
+      });
+    }),
+  )
 );
 
 export function createApiPriceListRequestToJSON(
@@ -64,17 +66,19 @@ export function createApiPriceListRequestToJSON(
 export const CreateApiPriceListResponse$inboundSchema: z.ZodMiniType<
   CreateApiPriceListResponse,
   unknown
-> = z.pipe(
-  z.object({
-    Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
-    Result: models.ApiPriceListCreateResponse$inboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "Headers": "headers",
-      "Result": "result",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
+      Result: models.ApiPriceListCreateResponse$inboundSchema,
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "Headers": "headers",
+        "Result": "result",
+      });
+    }),
+  )
 );
 
 export function createApiPriceListResponseFromJSON(

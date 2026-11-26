@@ -5,7 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import {
@@ -21,13 +21,13 @@ import {
   ApiSharedObject5884d24e45$inboundSchema,
 } from "./api-shared-object5884d24e45.js";
 import {
+  ApiSharedObject743a1706af,
+  ApiSharedObject743a1706af$inboundSchema,
+} from "./api-shared-object743a1706af.js";
+import {
   ApiSharedObject8aeeceaf0f,
   ApiSharedObject8aeeceaf0f$inboundSchema,
 } from "./api-shared-object8aeeceaf0f.js";
-import {
-  ApiSharedObjectadcf6da6ce,
-  ApiSharedObjectadcf6da6ce$inboundSchema,
-} from "./api-shared-objectadcf6da6ce.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type ApiInventoryListResponseItem = {
@@ -43,7 +43,7 @@ export type ApiInventoryListResponseItem = {
 };
 
 export type ApiInventoryListResponseData = {
-  warehouse: ApiSharedObjectadcf6da6ce;
+  warehouse: ApiSharedObject743a1706af;
   items: Array<ApiInventoryListResponseItem>;
 };
 
@@ -66,27 +66,29 @@ export type ApiInventoryListResponse = {
 export const ApiInventoryListResponseItem$inboundSchema: z.ZodMiniType<
   ApiInventoryListResponseItem,
   unknown
-> = z.pipe(
-  z.object({
-    object: types.literal("inventory_item"),
-    product_id: types.string(),
-    product_name: types.string(),
-    sku: types.string(),
-    variant_options: types.nullable(z.record(z.string(), types.string())),
-    option_names: z.array(types.string()),
-    category: types.nullable(ApiSharedObject8aeeceaf0f$inboundSchema),
-    product_type: ApiSharedEnumff49232140$inboundSchema,
-    stock: ApiSharedObject5884d24e45$inboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "product_id": "productId",
-      "product_name": "productName",
-      "variant_options": "variantOptions",
-      "option_names": "optionNames",
-      "product_type": "productType",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      object: types.literal("inventory_item"),
+      product_id: types.string(),
+      product_name: types.string(),
+      sku: types.string(),
+      variant_options: types.nullable(z.record(z.string(), types.string())),
+      option_names: z.array(types.string()),
+      category: types.nullable(ApiSharedObject8aeeceaf0f$inboundSchema),
+      product_type: ApiSharedEnumff49232140$inboundSchema,
+      stock: ApiSharedObject5884d24e45$inboundSchema,
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "product_id": "productId",
+        "product_name": "productName",
+        "variant_options": "variantOptions",
+        "option_names": "optionNames",
+        "product_type": "productType",
+      });
+    }),
+  )
 );
 
 export function apiInventoryListResponseItemFromJSON(
@@ -103,10 +105,12 @@ export function apiInventoryListResponseItemFromJSON(
 export const ApiInventoryListResponseData$inboundSchema: z.ZodMiniType<
   ApiInventoryListResponseData,
   unknown
-> = z.object({
-  warehouse: ApiSharedObjectadcf6da6ce$inboundSchema,
-  items: z.array(z.lazy(() => ApiInventoryListResponseItem$inboundSchema)),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    warehouse: ApiSharedObject743a1706af$inboundSchema,
+    items: z.array(z.lazy(() => ApiInventoryListResponseItem$inboundSchema)),
+  })
+);
 
 export function apiInventoryListResponseDataFromJSON(
   jsonString: string,
@@ -122,22 +126,24 @@ export function apiInventoryListResponseDataFromJSON(
 export const ApiInventoryListResponse$inboundSchema: z.ZodMiniType<
   ApiInventoryListResponse,
   unknown
-> = z.pipe(
-  z.object({
-    request_id: types.string(),
-    data: z.lazy(() => ApiInventoryListResponseData$inboundSchema),
-    has_more: types.boolean(),
-    next_cursor: types.nullable(types.string()),
-    object: ApiSharedEnum8d46e1ec20$inboundSchema,
-    url: types.string(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "request_id": "requestId",
-      "has_more": "hasMore",
-      "next_cursor": "nextCursor",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      request_id: types.string(),
+      data: z.lazy(() => ApiInventoryListResponseData$inboundSchema),
+      has_more: types.boolean(),
+      next_cursor: types.nullable(types.string()),
+      object: ApiSharedEnum8d46e1ec20$inboundSchema,
+      url: types.string(),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "request_id": "requestId",
+        "has_more": "hasMore",
+        "next_cursor": "nextCursor",
+      });
+    }),
+  )
 );
 
 export function apiInventoryListResponseFromJSON(
