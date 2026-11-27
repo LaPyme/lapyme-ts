@@ -5,12 +5,13 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import { ClosedEnum } from "../types/enums.js";
 import {
-  ApiSharedObject1dbe66a4f8,
-  ApiSharedObject1dbe66a4f8$Outbound,
-  ApiSharedObject1dbe66a4f8$outboundSchema,
-} from "./api-shared-object1dbe66a4f8.js";
+  ApiSharedObjectc2dbdba87b,
+  ApiSharedObjectc2dbdba87b$Outbound,
+  ApiSharedObjectc2dbdba87b$outboundSchema,
+} from "./api-shared-objectc2dbdba87b.js";
 
 export const ApiOrderPreparationUpdateRequestStatus = {
   InProgress: "in_progress",
@@ -21,38 +22,45 @@ export type ApiOrderPreparationUpdateRequestStatus = ClosedEnum<
 
 export type ApiOrderPreparationUpdateRequest = {
   status?: ApiOrderPreparationUpdateRequestStatus | undefined;
+  preparationGroupId?: string | undefined;
   warehouseId?: string | undefined;
-  items?: Array<ApiSharedObject1dbe66a4f8> | undefined;
+  items?: Array<ApiSharedObjectc2dbdba87b> | undefined;
 };
 
 /** @internal */
 export const ApiOrderPreparationUpdateRequestStatus$outboundSchema:
-  z.ZodMiniEnum<typeof ApiOrderPreparationUpdateRequestStatus> = z.enum(
-    ApiOrderPreparationUpdateRequestStatus,
-  );
+  z.ZodMiniEnum<typeof ApiOrderPreparationUpdateRequestStatus> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.enum(ApiOrderPreparationUpdateRequestStatus)
+    );
 
 /** @internal */
 export type ApiOrderPreparationUpdateRequest$Outbound = {
   status?: string | undefined;
+  preparation_group_id?: string | undefined;
   warehouse_id?: string | undefined;
-  items?: Array<ApiSharedObject1dbe66a4f8$Outbound> | undefined;
+  items?: Array<ApiSharedObjectc2dbdba87b$Outbound> | undefined;
 };
 
 /** @internal */
 export const ApiOrderPreparationUpdateRequest$outboundSchema: z.ZodMiniType<
   ApiOrderPreparationUpdateRequest$Outbound,
   ApiOrderPreparationUpdateRequest
-> = z.pipe(
-  z.object({
-    status: z.optional(ApiOrderPreparationUpdateRequestStatus$outboundSchema),
-    warehouseId: z.optional(z.string()),
-    items: z.optional(z.array(ApiSharedObject1dbe66a4f8$outboundSchema)),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      warehouseId: "warehouse_id",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      status: z.optional(ApiOrderPreparationUpdateRequestStatus$outboundSchema),
+      preparationGroupId: z.optional(z.string()),
+      warehouseId: z.optional(z.string()),
+      items: z.optional(z.array(ApiSharedObjectc2dbdba87b$outboundSchema)),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        preparationGroupId: "preparation_group_id",
+        warehouseId: "warehouse_id",
+      });
+    }),
+  )
 );
 
 export function apiOrderPreparationUpdateRequestToJSON(

@@ -5,7 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import {
   ApiSharedEnumd8087f784e,
@@ -21,15 +21,17 @@ export type ApiSharedObject3563932f8e = {
 export const ApiSharedObject3563932f8e$inboundSchema: z.ZodMiniType<
   ApiSharedObject3563932f8e,
   unknown
-> = z.pipe(
-  z.object({
-    invoice_status: ApiSharedEnumd8087f784e$inboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "invoice_status": "invoiceStatus",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      invoice_status: ApiSharedEnumd8087f784e$inboundSchema,
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "invoice_status": "invoiceStatus",
+      });
+    }),
+  )
 );
 
 export function apiSharedObject3563932f8eFromJSON(

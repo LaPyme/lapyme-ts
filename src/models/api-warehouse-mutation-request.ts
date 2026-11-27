@@ -5,6 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type ApiWarehouseMutationRequest = {
   name: string;
@@ -23,17 +24,19 @@ export type ApiWarehouseMutationRequest$Outbound = {
 export const ApiWarehouseMutationRequest$outboundSchema: z.ZodMiniType<
   ApiWarehouseMutationRequest$Outbound,
   ApiWarehouseMutationRequest
-> = z.pipe(
-  z.object({
-    name: z.string(),
-    address: z.optional(z.nullable(z.string())),
-    isDefault: z._default(z.boolean(), false),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      isDefault: "is_default",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      name: z.string(),
+      address: z.optional(z.nullable(z.string())),
+      isDefault: z._default(z.boolean(), false),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        isDefault: "is_default",
+      });
+    }),
+  )
 );
 
 export function apiWarehouseMutationRequestToJSON(

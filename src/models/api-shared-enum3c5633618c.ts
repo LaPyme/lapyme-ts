@@ -4,6 +4,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import * as openEnums from "../types/enums.js";
 import { OpenEnum } from "../types/enums.js";
 
@@ -17,4 +18,6 @@ export type ApiSharedEnum3c5633618c = OpenEnum<typeof ApiSharedEnum3c5633618c>;
 export const ApiSharedEnum3c5633618c$inboundSchema: z.ZodMiniType<
   ApiSharedEnum3c5633618c,
   unknown
-> = openEnums.inboundSchema(ApiSharedEnum3c5633618c);
+> = /* @__PURE__ */ lazySchema$(() =>
+  openEnums.inboundSchema(ApiSharedEnum3c5633618c)
+);

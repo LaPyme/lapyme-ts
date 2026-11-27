@@ -5,7 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
-import { safeParse } from "../../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import * as types from "../../types/primitives.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
@@ -13,6 +13,12 @@ import * as models from "../index.js";
 
 export type ListApiAccountingAccountsRequest = {
   includeInactive?: boolean | undefined;
+  isActive?: boolean | undefined;
+  isPostable?: boolean | undefined;
+  type?: models.ApiSharedEnum5433445ffc | undefined;
+  parentId?: string | undefined;
+  systemRole?: models.ApiSharedEnum87e38e3147 | undefined;
+  isInflationAdjustable?: boolean | undefined;
 };
 
 /**
@@ -24,6 +30,10 @@ export type ListApiAccountingAccountsResponseBody = {
   data?: Array<models.ApiAccountingAccount> | undefined;
   hasMore?: boolean | undefined;
   nextCursor?: string | null | undefined;
+  /**
+   * Requested list path.
+   */
+  url?: string | undefined;
 };
 
 export type ListApiAccountingAccountsResponse = {
@@ -34,21 +44,40 @@ export type ListApiAccountingAccountsResponse = {
 /** @internal */
 export type ListApiAccountingAccountsRequest$Outbound = {
   include_inactive: boolean;
+  is_active?: boolean | undefined;
+  is_postable?: boolean | undefined;
+  type?: string | undefined;
+  parent_id?: string | undefined;
+  system_role?: string | undefined;
+  is_inflation_adjustable?: boolean | undefined;
 };
 
 /** @internal */
 export const ListApiAccountingAccountsRequest$outboundSchema: z.ZodMiniType<
   ListApiAccountingAccountsRequest$Outbound,
   ListApiAccountingAccountsRequest
-> = z.pipe(
-  z.object({
-    includeInactive: z._default(z.boolean(), false),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      includeInactive: "include_inactive",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      includeInactive: z._default(z.boolean(), false),
+      isActive: z.optional(z.boolean()),
+      isPostable: z.optional(z.boolean()),
+      type: z.optional(models.ApiSharedEnum5433445ffc$outboundSchema),
+      parentId: z.optional(z.string()),
+      systemRole: z.optional(models.ApiSharedEnum87e38e3147$outboundSchema),
+      isInflationAdjustable: z.optional(z.boolean()),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        includeInactive: "include_inactive",
+        isActive: "is_active",
+        isPostable: "is_postable",
+        parentId: "parent_id",
+        systemRole: "system_role",
+        isInflationAdjustable: "is_inflation_adjustable",
+      });
+    }),
+  )
 );
 
 export function listApiAccountingAccountsRequestToJSON(
@@ -65,21 +94,24 @@ export function listApiAccountingAccountsRequestToJSON(
 export const ListApiAccountingAccountsResponseBody$inboundSchema: z.ZodMiniType<
   ListApiAccountingAccountsResponseBody,
   unknown
-> = z.pipe(
-  z.object({
-    request_id: types.optional(types.string()),
-    object: types.optional(models.ApiSharedEnume0cf0306aa$inboundSchema),
-    data: types.optional(z.array(models.ApiAccountingAccount$inboundSchema)),
-    has_more: types.optional(types.boolean()),
-    next_cursor: z.optional(z.nullable(types.string())),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "request_id": "requestId",
-      "has_more": "hasMore",
-      "next_cursor": "nextCursor",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      request_id: types.optional(types.string()),
+      object: types.optional(models.ApiSharedEnume0cf0306aa$inboundSchema),
+      data: types.optional(z.array(models.ApiAccountingAccount$inboundSchema)),
+      has_more: types.optional(types.boolean()),
+      next_cursor: z.optional(z.nullable(types.string())),
+      url: types.optional(types.string()),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "request_id": "requestId",
+        "has_more": "hasMore",
+        "next_cursor": "nextCursor",
+      });
+    }),
+  )
 );
 
 export function listApiAccountingAccountsResponseBodyFromJSON(
@@ -97,17 +129,19 @@ export function listApiAccountingAccountsResponseBodyFromJSON(
 export const ListApiAccountingAccountsResponse$inboundSchema: z.ZodMiniType<
   ListApiAccountingAccountsResponse,
   unknown
-> = z.pipe(
-  z.object({
-    Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
-    Result: z.lazy(() => ListApiAccountingAccountsResponseBody$inboundSchema),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "Headers": "headers",
-      "Result": "result",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
+      Result: z.lazy(() => ListApiAccountingAccountsResponseBody$inboundSchema),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "Headers": "headers",
+        "Result": "result",
+      });
+    }),
+  )
 );
 
 export function listApiAccountingAccountsResponseFromJSON(

@@ -5,13 +5,31 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import { ClosedEnum } from "../types/enums.js";
+import {
+  ApiSharedObject43cc2c66f0,
+  ApiSharedObject43cc2c66f0$Outbound,
+  ApiSharedObject43cc2c66f0$outboundSchema,
+} from "./api-shared-object43cc2c66f0.js";
+import {
+  ApiSharedObject7b350f629a,
+  ApiSharedObject7b350f629a$Outbound,
+  ApiSharedObject7b350f629a$outboundSchema,
+} from "./api-shared-object7b350f629a.js";
+import {
+  ApiSharedObjecta5d1522378,
+  ApiSharedObjecta5d1522378$Outbound,
+  ApiSharedObjecta5d1522378$outboundSchema,
+} from "./api-shared-objecta5d1522378.js";
 
-export const Mode = {
+export const ApiStockMovementRequestMode = {
   Delta: "delta",
   Replace: "replace",
 } as const;
-export type Mode = ClosedEnum<typeof Mode>;
+export type ApiStockMovementRequestMode = ClosedEnum<
+  typeof ApiStockMovementRequestMode
+>;
 
 export const Direction = {
   Inbound: "inbound",
@@ -19,49 +37,125 @@ export const Direction = {
 } as const;
 export type Direction = ClosedEnum<typeof Direction>;
 
-export type ApiStockMovementRequestItem = {
+export type ComponentLotTarget = {
   productId: string;
+  lotTargets: Array<ApiSharedObject43cc2c66f0>;
+};
+
+export type ApiStockMovementRequestItem = {
+  /**
+   * Select an inventory number by code or lot_id. Serial quantity is one. Unavailable outbound codes return line warnings.
+   */
+  lots?: Array<ApiSharedObjecta5d1522378> | undefined;
+  componentLots?: Array<ApiSharedObject7b350f629a> | undefined;
+  lotTargets?: Array<ApiSharedObject43cc2c66f0> | undefined;
+  componentLotTargets?: Array<ComponentLotTarget> | undefined;
+  productId: string;
+  /**
+   * Debe ser mayor a cero para movimientos delta. Las correcciones por reemplazo aceptan cualquier cantidad final finita, incluidos valores negativos.
+   */
   quantity: number;
+  /**
+   * Solo para mode replace: stock disponible que observaste para este producto o combo en el depósito. Si cambió, el movimiento completo devuelve STATE_CONFLICT (409). No se acepta en mode delta.
+   */
+  expectedQuantity?: number | undefined;
 };
 
 export type ApiStockMovementRequest = {
   warehouseId: string;
-  mode: Mode;
+  mode: ApiStockMovementRequestMode;
   direction?: Direction | undefined;
-  operationDate: Date;
+  /**
+   * Fecha ISO (YYYY-MM-DD) u hora ISO 8601 completa.
+   */
+  operationDate: string;
   reason: string;
   notes?: string | undefined;
   items: Array<ApiStockMovementRequestItem>;
 };
 
 /** @internal */
-export const Mode$outboundSchema: z.ZodMiniEnum<typeof Mode> = z.enum(Mode);
+export const ApiStockMovementRequestMode$outboundSchema: z.ZodMiniEnum<
+  typeof ApiStockMovementRequestMode
+> = /* @__PURE__ */ lazySchema$(() => z.enum(ApiStockMovementRequestMode));
 
 /** @internal */
-export const Direction$outboundSchema: z.ZodMiniEnum<typeof Direction> = z.enum(
-  Direction,
+export const Direction$outboundSchema: z.ZodMiniEnum<typeof Direction> =
+  /* @__PURE__ */ lazySchema$(() => z.enum(Direction));
+
+/** @internal */
+export type ComponentLotTarget$Outbound = {
+  product_id: string;
+  lot_targets: Array<ApiSharedObject43cc2c66f0$Outbound>;
+};
+
+/** @internal */
+export const ComponentLotTarget$outboundSchema: z.ZodMiniType<
+  ComponentLotTarget$Outbound,
+  ComponentLotTarget
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      productId: z.string(),
+      lotTargets: z.array(ApiSharedObject43cc2c66f0$outboundSchema),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        productId: "product_id",
+        lotTargets: "lot_targets",
+      });
+    }),
+  )
 );
+
+export function componentLotTargetToJSON(
+  componentLotTarget: ComponentLotTarget,
+): string {
+  return JSON.stringify(
+    ComponentLotTarget$outboundSchema.parse(componentLotTarget),
+  );
+}
 
 /** @internal */
 export type ApiStockMovementRequestItem$Outbound = {
+  lots?: Array<ApiSharedObjecta5d1522378$Outbound> | undefined;
+  component_lots?: Array<ApiSharedObject7b350f629a$Outbound> | undefined;
+  lot_targets?: Array<ApiSharedObject43cc2c66f0$Outbound> | undefined;
+  component_lot_targets?: Array<ComponentLotTarget$Outbound> | undefined;
   product_id: string;
   quantity: number;
+  expected_quantity?: number | undefined;
 };
 
 /** @internal */
 export const ApiStockMovementRequestItem$outboundSchema: z.ZodMiniType<
   ApiStockMovementRequestItem$Outbound,
   ApiStockMovementRequestItem
-> = z.pipe(
-  z.object({
-    productId: z.string(),
-    quantity: z.number(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      productId: "product_id",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      lots: z.optional(z.array(ApiSharedObjecta5d1522378$outboundSchema)),
+      componentLots: z.optional(
+        z.array(ApiSharedObject7b350f629a$outboundSchema),
+      ),
+      lotTargets: z.optional(z.array(ApiSharedObject43cc2c66f0$outboundSchema)),
+      componentLotTargets: z.optional(
+        z.array(z.lazy(() => ComponentLotTarget$outboundSchema)),
+      ),
+      productId: z.string(),
+      quantity: z.number(),
+      expectedQuantity: z.optional(z.number()),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        componentLots: "component_lots",
+        lotTargets: "lot_targets",
+        componentLotTargets: "component_lot_targets",
+        productId: "product_id",
+        expectedQuantity: "expected_quantity",
+      });
+    }),
+  )
 );
 
 export function apiStockMovementRequestItemToJSON(
@@ -89,22 +183,24 @@ export type ApiStockMovementRequest$Outbound = {
 export const ApiStockMovementRequest$outboundSchema: z.ZodMiniType<
   ApiStockMovementRequest$Outbound,
   ApiStockMovementRequest
-> = z.pipe(
-  z.object({
-    warehouseId: z.string(),
-    mode: Mode$outboundSchema,
-    direction: z.optional(Direction$outboundSchema),
-    operationDate: z.pipe(z.date(), z.transform(v => v.toISOString())),
-    reason: z.string(),
-    notes: z.optional(z.string()),
-    items: z.array(z.lazy(() => ApiStockMovementRequestItem$outboundSchema)),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      warehouseId: "warehouse_id",
-      operationDate: "operation_date",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      warehouseId: z.string(),
+      mode: ApiStockMovementRequestMode$outboundSchema,
+      direction: z.optional(Direction$outboundSchema),
+      operationDate: z.string(),
+      reason: z.string(),
+      notes: z.optional(z.string()),
+      items: z.array(z.lazy(() => ApiStockMovementRequestItem$outboundSchema)),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        warehouseId: "warehouse_id",
+        operationDate: "operation_date",
+      });
+    }),
+  )
 );
 
 export function apiStockMovementRequestToJSON(

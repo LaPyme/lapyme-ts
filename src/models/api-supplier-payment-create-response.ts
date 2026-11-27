@@ -5,17 +5,17 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import {
-  ApiSharedObjectdd60033a21,
-  ApiSharedObjectdd60033a21$inboundSchema,
-} from "./api-shared-objectdd60033a21.js";
+  ApiSharedObjectfcdc8e7531,
+  ApiSharedObjectfcdc8e7531$inboundSchema,
+} from "./api-shared-objectfcdc8e7531.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type ApiSupplierPaymentCreateResponseData = {
-  supplierPayment: ApiSharedObjectdd60033a21;
+  supplierPayment: ApiSharedObjectfcdc8e7531;
   idempotentReplay: boolean;
 };
 
@@ -29,17 +29,19 @@ export type ApiSupplierPaymentCreateResponse = {
 export const ApiSupplierPaymentCreateResponseData$inboundSchema: z.ZodMiniType<
   ApiSupplierPaymentCreateResponseData,
   unknown
-> = z.pipe(
-  z.object({
-    supplier_payment: ApiSharedObjectdd60033a21$inboundSchema,
-    idempotent_replay: types.boolean(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "supplier_payment": "supplierPayment",
-      "idempotent_replay": "idempotentReplay",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      supplier_payment: ApiSharedObjectfcdc8e7531$inboundSchema,
+      idempotent_replay: types.boolean(),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "supplier_payment": "supplierPayment",
+        "idempotent_replay": "idempotentReplay",
+      });
+    }),
+  )
 );
 
 export function apiSupplierPaymentCreateResponseDataFromJSON(
@@ -57,17 +59,19 @@ export function apiSupplierPaymentCreateResponseDataFromJSON(
 export const ApiSupplierPaymentCreateResponse$inboundSchema: z.ZodMiniType<
   ApiSupplierPaymentCreateResponse,
   unknown
-> = z.pipe(
-  z.object({
-    request_id: types.string(),
-    data: z.lazy(() => ApiSupplierPaymentCreateResponseData$inboundSchema),
-    warnings: z.array(z.any()),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "request_id": "requestId",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      request_id: types.string(),
+      data: z.lazy(() => ApiSupplierPaymentCreateResponseData$inboundSchema),
+      warnings: z.array(z.any()),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "request_id": "requestId",
+      });
+    }),
+  )
 );
 
 export function apiSupplierPaymentCreateResponseFromJSON(

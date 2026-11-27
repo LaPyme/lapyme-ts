@@ -5,12 +5,16 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
-import { safeParse } from "../../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import * as models from "../index.js";
 
 export type UpdateApiWarehouseRequest = {
+  /**
+   * Clave estable para deduplicar reintentos de la misma operación. Opcional en v1; si se envía, un reintento con la misma clave y el mismo cuerpo devuelve el resultado original sin repetir la operación, y con otro cuerpo devuelve 409.
+   */
+  idempotencyKey?: string | undefined;
   /**
    * ID del depósito
    */
@@ -29,6 +33,7 @@ export type UpdateApiWarehouseResponse = {
 
 /** @internal */
 export type UpdateApiWarehouseRequest$Outbound = {
+  "Idempotency-Key"?: string | undefined;
   warehouse_id: string;
   "X-Request-Id"?: string | undefined;
   body: models.ApiWarehouseUpdateRequest$Outbound;
@@ -38,18 +43,22 @@ export type UpdateApiWarehouseRequest$Outbound = {
 export const UpdateApiWarehouseRequest$outboundSchema: z.ZodMiniType<
   UpdateApiWarehouseRequest$Outbound,
   UpdateApiWarehouseRequest
-> = z.pipe(
-  z.object({
-    warehouseId: z.string(),
-    xRequestId: z.optional(z.string()),
-    body: models.ApiWarehouseUpdateRequest$outboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      warehouseId: "warehouse_id",
-      xRequestId: "X-Request-Id",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      idempotencyKey: z.optional(z.string()),
+      warehouseId: z.string(),
+      xRequestId: z.optional(z.string()),
+      body: models.ApiWarehouseUpdateRequest$outboundSchema,
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        idempotencyKey: "Idempotency-Key",
+        warehouseId: "warehouse_id",
+        xRequestId: "X-Request-Id",
+      });
+    }),
+  )
 );
 
 export function updateApiWarehouseRequestToJSON(
@@ -64,17 +73,19 @@ export function updateApiWarehouseRequestToJSON(
 export const UpdateApiWarehouseResponse$inboundSchema: z.ZodMiniType<
   UpdateApiWarehouseResponse,
   unknown
-> = z.pipe(
-  z.object({
-    Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
-    Result: models.ApiWarehouseUpdateResponse$inboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "Headers": "headers",
-      "Result": "result",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
+      Result: models.ApiWarehouseUpdateResponse$inboundSchema,
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "Headers": "headers",
+        "Result": "result",
+      });
+    }),
+  )
 );
 
 export function updateApiWarehouseResponseFromJSON(

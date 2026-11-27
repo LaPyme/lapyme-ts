@@ -9,24 +9,25 @@ let value: ApiSaleTransactionSuccessResponseProjectedEffects = {
   inventory: {
     willAffectStock: false,
     warehouseIds: [
-      "e006673b-6b7a-40d8-8190-6929677cdaf6",
-      "77c813f1-7bc9-4a75-af6c-6672dd64813d",
+      "1822a77b-83df-4d4b-afe3-62da423a76c9",
+      "90366136-32e7-4153-84c5-1f225205cf88",
+      "0334ea8e-4169-47c0-a7b3-903dc4b1f283",
     ],
-    productLineCount: 68286,
-    totalQuantity: 3190.65,
+    productLineCount: 905282,
+    totalQuantity: 8770.01,
   },
   accounting: {
     willCreateSaleEntry: false,
-    willCreatePaymentEntry: true,
+    willCreatePaymentEntry: false,
   },
   fiscal: {
-    invoiceStatus: "not_required",
+    invoiceStatus: "pending",
   },
   payments: {
-    willCreatePayments: false,
-    paymentMethodCount: 631396,
-    totalAmount: 3899.13,
-    pendingAmount: 5394.58,
+    willCreatePayments: true,
+    paymentMethodCount: 779716,
+    totalAmount: 9.3,
+    pendingAmount: 1588.85,
   },
 };
 ```

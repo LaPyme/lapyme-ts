@@ -5,17 +5,17 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import {
-  ApiSharedObjectadcf6da6ce,
-  ApiSharedObjectadcf6da6ce$inboundSchema,
-} from "./api-shared-objectadcf6da6ce.js";
+  ApiSharedObject743a1706af,
+  ApiSharedObject743a1706af$inboundSchema,
+} from "./api-shared-object743a1706af.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type ApiWarehouseCreateResponseData = {
-  warehouse: ApiSharedObjectadcf6da6ce;
+  warehouse: ApiSharedObject743a1706af;
   idempotentReplay: boolean;
 };
 
@@ -29,16 +29,18 @@ export type ApiWarehouseCreateResponse = {
 export const ApiWarehouseCreateResponseData$inboundSchema: z.ZodMiniType<
   ApiWarehouseCreateResponseData,
   unknown
-> = z.pipe(
-  z.object({
-    warehouse: ApiSharedObjectadcf6da6ce$inboundSchema,
-    idempotent_replay: types.boolean(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "idempotent_replay": "idempotentReplay",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      warehouse: ApiSharedObject743a1706af$inboundSchema,
+      idempotent_replay: types.boolean(),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "idempotent_replay": "idempotentReplay",
+      });
+    }),
+  )
 );
 
 export function apiWarehouseCreateResponseDataFromJSON(
@@ -55,17 +57,19 @@ export function apiWarehouseCreateResponseDataFromJSON(
 export const ApiWarehouseCreateResponse$inboundSchema: z.ZodMiniType<
   ApiWarehouseCreateResponse,
   unknown
-> = z.pipe(
-  z.object({
-    request_id: types.string(),
-    data: z.lazy(() => ApiWarehouseCreateResponseData$inboundSchema),
-    warnings: z.array(z.any()),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "request_id": "requestId",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      request_id: types.string(),
+      data: z.lazy(() => ApiWarehouseCreateResponseData$inboundSchema),
+      warnings: z.array(z.any()),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "request_id": "requestId",
+      });
+    }),
+  )
 );
 
 export function apiWarehouseCreateResponseFromJSON(

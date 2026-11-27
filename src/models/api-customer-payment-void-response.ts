@@ -5,7 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import {
@@ -27,15 +27,17 @@ export type ApiCustomerPaymentVoidResponse = {
 export const ApiCustomerPaymentVoidResponseData$inboundSchema: z.ZodMiniType<
   ApiCustomerPaymentVoidResponseData,
   unknown
-> = z.pipe(
-  z.object({
-    customer_payment: ApiSharedObjectee9c57275f$inboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "customer_payment": "customerPayment",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      customer_payment: ApiSharedObjectee9c57275f$inboundSchema,
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "customer_payment": "customerPayment",
+      });
+    }),
+  )
 );
 
 export function apiCustomerPaymentVoidResponseDataFromJSON(
@@ -53,16 +55,18 @@ export function apiCustomerPaymentVoidResponseDataFromJSON(
 export const ApiCustomerPaymentVoidResponse$inboundSchema: z.ZodMiniType<
   ApiCustomerPaymentVoidResponse,
   unknown
-> = z.pipe(
-  z.object({
-    request_id: types.string(),
-    data: z.lazy(() => ApiCustomerPaymentVoidResponseData$inboundSchema),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "request_id": "requestId",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      request_id: types.string(),
+      data: z.lazy(() => ApiCustomerPaymentVoidResponseData$inboundSchema),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "request_id": "requestId",
+      });
+    }),
+  )
 );
 
 export function apiCustomerPaymentVoidResponseFromJSON(

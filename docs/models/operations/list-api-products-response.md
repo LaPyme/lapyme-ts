@@ -6,7 +6,14 @@
 import { ListApiProductsResponse } from "lapyme/models/operations";
 
 let value: ListApiProductsResponse = {
-  headers: {},
+  headers: {
+    "key": [
+      "<value 1>",
+      "<value 2>",
+      "<value 3>",
+    ],
+    "key1": [],
+  },
   result: {
     requestId: "<id>",
     data: [
@@ -19,30 +26,51 @@ let value: ListApiProductsResponse = {
           name: "<value>",
         },
         sku: "<value>",
-        barcode: "<value>",
-        currency: "Lek",
-        cost: 4169.96,
-        price: 11.65,
+        supplierSku: "<value>",
+        barcode: null,
+        imageUrl: "https://well-made-story.net/",
+        currency: "Uzbekistan Sum",
+        cost: 5916.14,
+        price: 2482.28,
+        markupPercentage: 7190.07,
         taxRate: {
-          id: 9545.45,
-          value: 8570.91,
+          id: 5953.74,
+          value: 2985.8,
         },
         defaultSupplier: {
-          id: "e2939b22-6734-418f-802e-69ca6e74fd88",
+          id: "1a0859f3-d6fb-4826-b911-99d39354733b",
           name: "<value>",
         },
-        productType: "kit",
+        productType: "product",
+        visibility: "sales",
+        availableInPos: true,
         isActive: true,
         organizationSlug: "<value>",
-        createdAt: new Date("2025-01-03T08:44:42.602Z"),
-        updatedAt: new Date("2025-02-15T09:21:59.181Z"),
+        createdAt: new Date("2024-10-27T14:21:11.876Z"),
+        updatedAt: new Date("2024-04-19T13:58:04.110Z"),
+        tracking: "lot",
         object: "product",
+        variantGroupId: "f02e69ca-6e74-4fd8-883d-4560ac201130",
+        tags: [
+          {
+            object: "tag",
+            id: "75a399b6-0212-4a82-9b75-ca998fb65f13",
+            scope: "purchase_order",
+            name: "<value>",
+            slug: "<value>",
+            color: "teal",
+            description: "huzzah heavenly until by t-shirt geez however",
+            archivedAt: new Date("2026-12-06T07:31:36.084Z"),
+            createdAt: new Date("2026-08-04T02:33:18.776Z"),
+            updatedAt: new Date("2026-03-09T19:55:25.442Z"),
+          },
+        ],
       },
     ],
     hasMore: true,
     nextCursor: "<value>",
     object: "list",
-    url: "https://descriptive-analogy.com",
+    url: "https://authorized-strait.org/",
   },
 };
 ```
