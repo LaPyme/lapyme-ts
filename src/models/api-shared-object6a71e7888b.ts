@@ -5,7 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -21,21 +21,23 @@ export type ApiSharedObject6a71e7888b = {
 export const ApiSharedObject6a71e7888b$inboundSchema: z.ZodMiniType<
   ApiSharedObject6a71e7888b,
   unknown
-> = z.pipe(
-  z.object({
-    will_affect_stock: types.boolean(),
-    warehouse_ids: z.array(types.string()),
-    product_line_count: types.number(),
-    total_quantity: types.number(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "will_affect_stock": "willAffectStock",
-      "warehouse_ids": "warehouseIds",
-      "product_line_count": "productLineCount",
-      "total_quantity": "totalQuantity",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      will_affect_stock: types.boolean(),
+      warehouse_ids: z.array(types.string()),
+      product_line_count: types.number(),
+      total_quantity: types.number(),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "will_affect_stock": "willAffectStock",
+        "warehouse_ids": "warehouseIds",
+        "product_line_count": "productLineCount",
+        "total_quantity": "totalQuantity",
+      });
+    }),
+  )
 );
 
 export function apiSharedObject6a71e7888bFromJSON(

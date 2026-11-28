@@ -4,6 +4,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import { ClosedEnum } from "../types/enums.js";
 
 export const ApiSharedEnum8ef2575a44 = {
@@ -18,4 +19,4 @@ export type ApiSharedEnum8ef2575a44 = ClosedEnum<
 /** @internal */
 export const ApiSharedEnum8ef2575a44$outboundSchema: z.ZodMiniEnum<
   typeof ApiSharedEnum8ef2575a44
-> = z.enum(ApiSharedEnum8ef2575a44);
+> = /* @__PURE__ */ lazySchema$(() => z.enum(ApiSharedEnum8ef2575a44));

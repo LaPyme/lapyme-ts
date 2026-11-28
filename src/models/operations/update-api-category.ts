@@ -5,7 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
-import { safeParse } from "../../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import * as models from "../index.js";
@@ -32,18 +32,20 @@ export type UpdateApiCategoryRequest$Outbound = {
 export const UpdateApiCategoryRequest$outboundSchema: z.ZodMiniType<
   UpdateApiCategoryRequest$Outbound,
   UpdateApiCategoryRequest
-> = z.pipe(
-  z.object({
-    categoryId: z.string(),
-    idempotencyKey: z.string(),
-    body: models.ApiCategoryMutationRequest$outboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      categoryId: "category_id",
-      idempotencyKey: "Idempotency-Key",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      categoryId: z.string(),
+      idempotencyKey: z.string(),
+      body: models.ApiCategoryMutationRequest$outboundSchema,
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        categoryId: "category_id",
+        idempotencyKey: "Idempotency-Key",
+      });
+    }),
+  )
 );
 
 export function updateApiCategoryRequestToJSON(
@@ -58,17 +60,19 @@ export function updateApiCategoryRequestToJSON(
 export const UpdateApiCategoryResponse$inboundSchema: z.ZodMiniType<
   UpdateApiCategoryResponse,
   unknown
-> = z.pipe(
-  z.object({
-    Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
-    Result: models.ApiCategoryUpdateResponse$inboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "Headers": "headers",
-      "Result": "result",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
+      Result: models.ApiCategoryUpdateResponse$inboundSchema,
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "Headers": "headers",
+        "Result": "result",
+      });
+    }),
+  )
 );
 
 export function updateApiCategoryResponseFromJSON(

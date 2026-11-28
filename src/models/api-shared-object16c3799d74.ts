@@ -4,7 +4,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import {
@@ -23,10 +23,12 @@ export type ApiSharedObject16c3799d74 = {
 export const ApiSharedObject16c3799d74$inboundSchema: z.ZodMiniType<
   ApiSharedObject16c3799d74,
   unknown
-> = z.object({
-  type: ApiSharedEnum539fdceccc$inboundSchema,
-  value: types.number(),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    type: ApiSharedEnum539fdceccc$inboundSchema,
+    value: types.number(),
+  })
+);
 /** @internal */
 export type ApiSharedObject16c3799d74$Outbound = {
   type: string;
@@ -37,10 +39,12 @@ export type ApiSharedObject16c3799d74$Outbound = {
 export const ApiSharedObject16c3799d74$outboundSchema: z.ZodMiniType<
   ApiSharedObject16c3799d74$Outbound,
   ApiSharedObject16c3799d74
-> = z.object({
-  type: ApiSharedEnum539fdceccc$outboundSchema,
-  value: z.number(),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    type: ApiSharedEnum539fdceccc$outboundSchema,
+    value: z.number(),
+  })
+);
 
 export function apiSharedObject16c3799d74ToJSON(
   apiSharedObject16c3799d74: ApiSharedObject16c3799d74,

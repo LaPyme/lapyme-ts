@@ -5,12 +5,19 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
-import { safeParse } from "../../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import * as models from "../index.js";
 
 export type ListApiOrdersRequest = {
+  /**
+   * Coincidencia exacta, sensible a mayúsculas, de la referencia externa dentro de tu organización. Puede devolver varios pedidos. Combinable con query y paginación por cursor.
+   */
+  externalOrderReference?: string | undefined;
+  /**
+   * Busca por número de pedido, referencia externa, nombre o identificación fiscal del cliente. No busca en observaciones.
+   */
   query?: string | undefined;
   cursor?: string | undefined;
   limit?: number | undefined;
@@ -27,6 +34,7 @@ export type ListApiOrdersResponse = {
 
 /** @internal */
 export type ListApiOrdersRequest$Outbound = {
+  external_order_reference?: string | undefined;
   query?: string | undefined;
   cursor?: string | undefined;
   limit: number;
@@ -40,31 +48,35 @@ export type ListApiOrdersRequest$Outbound = {
 export const ListApiOrdersRequest$outboundSchema: z.ZodMiniType<
   ListApiOrdersRequest$Outbound,
   ListApiOrdersRequest
-> = z.pipe(
-  z.object({
-    query: z.optional(z.string()),
-    cursor: z.optional(z.string()),
-    limit: z._default(z.int(), 50),
-    dateFrom: z.optional(z.pipe(
-      z.date(),
-      z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
-    )),
-    dateTo: z.optional(z.pipe(
-      z.date(),
-      z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
-    )),
-    status: z.optional(models.ApiSharedEnum4ac9200c4a$outboundSchema),
-    preparationStatus: z.optional(
-      models.ApiSharedEnumb49e56b125$outboundSchema,
-    ),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      dateFrom: "date_from",
-      dateTo: "date_to",
-      preparationStatus: "preparation_status",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      externalOrderReference: z.optional(z.string()),
+      query: z.optional(z.string()),
+      cursor: z.optional(z.string()),
+      limit: z._default(z.int(), 50),
+      dateFrom: z.optional(z.pipe(
+        z.date(),
+        z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
+      )),
+      dateTo: z.optional(z.pipe(
+        z.date(),
+        z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
+      )),
+      status: z.optional(models.ApiSharedEnum4ac9200c4a$outboundSchema),
+      preparationStatus: z.optional(
+        models.ApiSharedEnumb49e56b125$outboundSchema,
+      ),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        externalOrderReference: "external_order_reference",
+        dateFrom: "date_from",
+        dateTo: "date_to",
+        preparationStatus: "preparation_status",
+      });
+    }),
+  )
 );
 
 export function listApiOrdersRequestToJSON(
@@ -79,17 +91,19 @@ export function listApiOrdersRequestToJSON(
 export const ListApiOrdersResponse$inboundSchema: z.ZodMiniType<
   ListApiOrdersResponse,
   unknown
-> = z.pipe(
-  z.object({
-    Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
-    Result: models.ApiOrderListResponse$inboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "Headers": "headers",
-      "Result": "result",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
+      Result: models.ApiOrderListResponse$inboundSchema,
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "Headers": "headers",
+        "Result": "result",
+      });
+    }),
+  )
 );
 
 export function listApiOrdersResponseFromJSON(

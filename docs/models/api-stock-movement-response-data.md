@@ -15,9 +15,10 @@ let value: ApiStockMovementResponseData = {
 
 ## Fields
 
-| Field                | Type                 | Required             | Description          |
-| -------------------- | -------------------- | -------------------- | -------------------- |
-| `stockMovementId`    | *string*             | :heavy_check_mark:   | N/A                  |
-| `transactionGroupId` | *string*             | :heavy_check_mark:   | N/A                  |
-| `affectedProductIds` | *string*[]           | :heavy_check_mark:   | N/A                  |
-| `idempotentReplay`   | *boolean*            | :heavy_check_mark:   | N/A                  |
+| Field                                                                          | Type                                                                           | Required                                                                       | Description                                                                    |
+| ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
+| `items`                                                                        | [models.ApiSharedObject0440e56bc9](../models/api-shared-object0440e56bc9.md)[] | :heavy_minus_sign:                                                             | N/A                                                                            |
+| `stockMovementId`                                                              | *string*                                                                       | :heavy_check_mark:                                                             | N/A                                                                            |
+| `transactionGroupId`                                                           | *string*                                                                       | :heavy_check_mark:                                                             | N/A                                                                            |
+| `affectedProductIds`                                                           | *string*[]                                                                     | :heavy_check_mark:                                                             | N/A                                                                            |
+| `idempotentReplay`                                                             | *boolean*                                                                      | :heavy_check_mark:                                                             | N/A                                                                            |

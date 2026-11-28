@@ -1,0 +1,29 @@
+# CommissionsReportRequest
+
+## Example Usage
+
+```typescript
+import { CommissionsReportRequest } from "lapyme/models";
+
+let value: CommissionsReportRequest = {
+  source: "commissions",
+  period: {
+    startDate: new Date("2026-01-01"),
+    endDate: new Date("2026-03-31"),
+  },
+  measures: [],
+};
+```
+
+## Fields
+
+| Field                                                                                                                               | Type                                                                                                                                | Required                                                                                                                            | Description                                                                                                                         |
+| ----------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| `source`                                                                                                                            | *"commissions"*                                                                                                                     | :heavy_check_mark:                                                                                                                  | N/A                                                                                                                                 |
+| `period`                                                                                                                            | [models.ReportPeriod](../models/report-period.md)                                                                                   | :heavy_check_mark:                                                                                                                  | N/A                                                                                                                                 |
+| `dimensions`                                                                                                                        | [models.CommissionsReportRequestDimension](../models/commissions-report-request-dimension.md)[]                                     | :heavy_minus_sign:                                                                                                                  | N/A                                                                                                                                 |
+| `measures`                                                                                                                          | [models.CommissionsReportRequestMeasure](../models/commissions-report-request-measure.md)[]                                         | :heavy_check_mark:                                                                                                                  | N/A                                                                                                                                 |
+| `dimensionFilters`                                                                                                                  | [models.CommissionsReportRequestDimensionFilters](../models/commissions-report-request-dimension-filters.md)                        | :heavy_minus_sign:                                                                                                                  | Filtros por dimensión. Cada clave debe ser una dimensión filtrable para la fuente. El valor es un array de IDs o valores a incluir. |
+| `filters`                                                                                                                           | Record<string, *any*>[]                                                                                                             | :heavy_minus_sign:                                                                                                                  | N/A                                                                                                                                 |
+| `includeTotals`                                                                                                                     | *boolean*                                                                                                                           | :heavy_minus_sign:                                                                                                                  | N/A                                                                                                                                 |
+| `reportingCurrency`                                                                                                                 | [models.ApiSharedEnum6440f2bcc2](../models/api-shared-enum6440f2bcc2.md)                                                            | :heavy_minus_sign:                                                                                                                  | Currency used for all monetary measures in the report.                                                                              |

@@ -5,17 +5,17 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import {
-  ApiSharedObject1cf33bb430,
-  ApiSharedObject1cf33bb430$inboundSchema,
-} from "./api-shared-object1cf33bb430.js";
+  ApiSharedObject8fb14147bc,
+  ApiSharedObject8fb14147bc$inboundSchema,
+} from "./api-shared-object8fb14147bc.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type ApiOrderWriteResponseData = {
-  order: ApiSharedObject1cf33bb430;
+  order: ApiSharedObject8fb14147bc;
   idempotentReplay?: boolean | undefined;
   result?: any | undefined;
 };
@@ -30,17 +30,19 @@ export type ApiOrderWriteResponse = {
 export const ApiOrderWriteResponseData$inboundSchema: z.ZodMiniType<
   ApiOrderWriteResponseData,
   unknown
-> = z.pipe(
-  z.object({
-    order: ApiSharedObject1cf33bb430$inboundSchema,
-    idempotent_replay: types.optional(types.boolean()),
-    result: types.optional(z.any()),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "idempotent_replay": "idempotentReplay",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      order: ApiSharedObject8fb14147bc$inboundSchema,
+      idempotent_replay: types.optional(types.boolean()),
+      result: types.optional(z.any()),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "idempotent_replay": "idempotentReplay",
+      });
+    }),
+  )
 );
 
 export function apiOrderWriteResponseDataFromJSON(
@@ -57,17 +59,19 @@ export function apiOrderWriteResponseDataFromJSON(
 export const ApiOrderWriteResponse$inboundSchema: z.ZodMiniType<
   ApiOrderWriteResponse,
   unknown
-> = z.pipe(
-  z.object({
-    request_id: types.string(),
-    data: z.lazy(() => ApiOrderWriteResponseData$inboundSchema),
-    warnings: z.array(z.any()),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "request_id": "requestId",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      request_id: types.string(),
+      data: z.lazy(() => ApiOrderWriteResponseData$inboundSchema),
+      warnings: z.array(z.any()),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "request_id": "requestId",
+      });
+    }),
+  )
 );
 
 export function apiOrderWriteResponseFromJSON(

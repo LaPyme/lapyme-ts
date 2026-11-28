@@ -5,7 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
-import { safeParse } from "../../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import * as models from "../index.js";
@@ -24,10 +24,6 @@ export type ListApiPaymentMethodsRequest = {
    */
   query?: string | undefined;
   /**
-   * Alias de query
-   */
-  search?: string | undefined;
-  /**
    * Filtra por estado activo. Si se omite, el endpoint usa true por defecto.
    */
   isActive?: boolean | undefined;
@@ -43,7 +39,6 @@ export type ListApiPaymentMethodsRequest$Outbound = {
   cursor?: string | undefined;
   limit: number;
   query?: string | undefined;
-  search?: string | undefined;
   is_active?: boolean | undefined;
 };
 
@@ -51,19 +46,20 @@ export type ListApiPaymentMethodsRequest$Outbound = {
 export const ListApiPaymentMethodsRequest$outboundSchema: z.ZodMiniType<
   ListApiPaymentMethodsRequest$Outbound,
   ListApiPaymentMethodsRequest
-> = z.pipe(
-  z.object({
-    cursor: z.optional(z.string()),
-    limit: z._default(z.int(), 50),
-    query: z.optional(z.string()),
-    search: z.optional(z.string()),
-    isActive: z.optional(z.boolean()),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      isActive: "is_active",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      cursor: z.optional(z.string()),
+      limit: z._default(z.int(), 50),
+      query: z.optional(z.string()),
+      isActive: z.optional(z.boolean()),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        isActive: "is_active",
+      });
+    }),
+  )
 );
 
 export function listApiPaymentMethodsRequestToJSON(
@@ -80,17 +76,19 @@ export function listApiPaymentMethodsRequestToJSON(
 export const ListApiPaymentMethodsResponse$inboundSchema: z.ZodMiniType<
   ListApiPaymentMethodsResponse,
   unknown
-> = z.pipe(
-  z.object({
-    Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
-    Result: models.ApiPaymentMethodListResponse$inboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "Headers": "headers",
-      "Result": "result",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
+      Result: models.ApiPaymentMethodListResponse$inboundSchema,
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "Headers": "headers",
+        "Result": "result",
+      });
+    }),
+  )
 );
 
 export function listApiPaymentMethodsResponseFromJSON(

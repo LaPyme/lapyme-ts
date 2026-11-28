@@ -107,7 +107,6 @@ async function $do(
     "max_balance": payload?.max_balance,
     "min_balance": payload?.min_balance,
     "query": payload?.query,
-    "search": payload?.search,
   });
 
   const headers = new Headers(compactMap({
@@ -193,6 +192,7 @@ async function $do(
     M.jsonErr([400, 401, 403], errors.ApiErrorEnvelope$inboundSchema),
     M.jsonErr(429, errors.ApiErrorEnvelope$inboundSchema, { hdrs: true }),
     M.jsonErr(500, errors.ApiErrorEnvelope$inboundSchema),
+    M.jsonErr(503, errors.ApiErrorEnvelope$inboundSchema, { hdrs: true }),
     M.fail("4XX"),
     M.fail("5XX"),
   )(response, req, { extraFields: responseFields });

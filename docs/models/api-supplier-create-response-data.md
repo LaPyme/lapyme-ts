@@ -17,16 +17,35 @@ let value: ApiSupplierCreateResponseData = {
     taxId: "<id>",
     taxIdType: "<value>",
     taxCategory: "<value>",
-    paymentTermId: "<id>",
+    paymentTermDays: 138029,
+    paymentTermLabel: "<value>",
+    paymentTermInstallmentDays: [
+      767496,
+    ],
     isActive: true,
-    country: "Gibraltar",
+    tags: [
+      {
+        object: "tag",
+        id: "75a399b6-0212-4a82-9b75-ca998fb65f13",
+        scope: "purchase_order",
+        name: "<value>",
+        slug: "<value>",
+        color: "teal",
+        description: "huzzah heavenly until by t-shirt geez however",
+        archivedAt: new Date("2026-12-06T07:31:36.084Z"),
+        createdAt: new Date("2026-08-04T02:33:18.776Z"),
+        updatedAt: new Date("2026-03-09T19:55:25.442Z"),
+      },
+    ],
+    defaultAccountId: "1213e900-d3a9-4d96-b658-124d9faf1119",
+    country: "Pitcairn Islands",
     provinceId: "<id>",
-    city: "Fort Bernardton",
-    address: "38500 E 3rd Street",
+    city: null,
+    address: "498 Prohaska Fork",
     apartment: "<value>",
-    postalCode: "53435-1128",
-    createdAt: new Date("2025-09-17T03:40:21.450Z"),
-    updatedAt: new Date("2026-12-17T07:31:45.520Z"),
+    postalCode: "64125-5140",
+    createdAt: new Date("2024-04-03T17:39:42.222Z"),
+    updatedAt: new Date("2026-10-15T05:43:47.991Z"),
   },
   idempotentReplay: false,
 };
@@ -36,5 +55,5 @@ let value: ApiSupplierCreateResponseData = {
 
 | Field                                                                        | Type                                                                         | Required                                                                     | Description                                                                  |
 | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| `supplier`                                                                   | [models.ApiSharedObjectac822ca2fd](../models/api-shared-objectac822ca2fd.md) | :heavy_check_mark:                                                           | N/A                                                                          |
+| `supplier`                                                                   | [models.ApiSharedObject22d695f6dd](../models/api-shared-object22d695f6dd.md) | :heavy_check_mark:                                                           | N/A                                                                          |
 | `idempotentReplay`                                                           | *boolean*                                                                    | :heavy_check_mark:                                                           | N/A                                                                          |

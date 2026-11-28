@@ -5,7 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
-import { safeParse } from "../../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import * as models from "../index.js";
@@ -15,6 +15,10 @@ export type CloseApiPurchaseOrderRequest = {
    * ID de la orden de compra
    */
   purchaseOrderId: string;
+  /**
+   * Clave estable para deduplicar reintentos de la misma operación. Opcional en v1; si se envía, un reintento con la misma clave y el mismo cuerpo devuelve el resultado original sin repetir la operación, y con otro cuerpo devuelve 409.
+   */
+  idempotencyKey?: string | undefined;
 };
 
 export type CloseApiPurchaseOrderResponse = {
@@ -25,21 +29,26 @@ export type CloseApiPurchaseOrderResponse = {
 /** @internal */
 export type CloseApiPurchaseOrderRequest$Outbound = {
   purchase_order_id: string;
+  "Idempotency-Key"?: string | undefined;
 };
 
 /** @internal */
 export const CloseApiPurchaseOrderRequest$outboundSchema: z.ZodMiniType<
   CloseApiPurchaseOrderRequest$Outbound,
   CloseApiPurchaseOrderRequest
-> = z.pipe(
-  z.object({
-    purchaseOrderId: z.string(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      purchaseOrderId: "purchase_order_id",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      purchaseOrderId: z.string(),
+      idempotencyKey: z.optional(z.string()),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        purchaseOrderId: "purchase_order_id",
+        idempotencyKey: "Idempotency-Key",
+      });
+    }),
+  )
 );
 
 export function closeApiPurchaseOrderRequestToJSON(
@@ -56,17 +65,19 @@ export function closeApiPurchaseOrderRequestToJSON(
 export const CloseApiPurchaseOrderResponse$inboundSchema: z.ZodMiniType<
   CloseApiPurchaseOrderResponse,
   unknown
-> = z.pipe(
-  z.object({
-    Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
-    Result: models.ApiPurchaseOrderWriteResponse$inboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "Headers": "headers",
-      "Result": "result",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
+      Result: models.ApiPurchaseOrderWriteResponse$inboundSchema,
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "Headers": "headers",
+        "Result": "result",
+      });
+    }),
+  )
 );
 
 export function closeApiPurchaseOrderResponseFromJSON(

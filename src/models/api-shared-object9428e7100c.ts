@@ -5,7 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -19,17 +19,19 @@ export type ApiSharedObject9428e7100c = {
 export const ApiSharedObject9428e7100c$inboundSchema: z.ZodMiniType<
   ApiSharedObject9428e7100c,
   unknown
-> = z.pipe(
-  z.object({
-    will_create_sale_entry: types.boolean(),
-    will_create_payment_entry: types.boolean(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "will_create_sale_entry": "willCreateSaleEntry",
-      "will_create_payment_entry": "willCreatePaymentEntry",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      will_create_sale_entry: types.boolean(),
+      will_create_payment_entry: types.boolean(),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "will_create_sale_entry": "willCreateSaleEntry",
+        "will_create_payment_entry": "willCreatePaymentEntry",
+      });
+    }),
+  )
 );
 
 export function apiSharedObject9428e7100cFromJSON(

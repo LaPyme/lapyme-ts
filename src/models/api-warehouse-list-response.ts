@@ -5,7 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import {
@@ -45,27 +45,29 @@ export type ApiWarehouseListResponse = {
 export const ApiWarehouseListResponseData$inboundSchema: z.ZodMiniType<
   ApiWarehouseListResponseData,
   unknown
-> = z.pipe(
-  z.object({
-    object: types.literal("warehouse"),
-    id: types.string(),
-    name: types.string(),
-    address: types.nullable(types.string()),
-    is_default: types.boolean(),
-    is_active: types.boolean(),
-    points_of_sale_count: types.number(),
-    member_count: types.number(),
-    register_count: types.number(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "is_default": "isDefault",
-      "is_active": "isActive",
-      "points_of_sale_count": "pointsOfSaleCount",
-      "member_count": "memberCount",
-      "register_count": "registerCount",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      object: types.literal("warehouse"),
+      id: types.string(),
+      name: types.string(),
+      address: types.nullable(types.string()),
+      is_default: types.boolean(),
+      is_active: types.boolean(),
+      points_of_sale_count: types.number(),
+      member_count: types.number(),
+      register_count: types.number(),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "is_default": "isDefault",
+        "is_active": "isActive",
+        "points_of_sale_count": "pointsOfSaleCount",
+        "member_count": "memberCount",
+        "register_count": "registerCount",
+      });
+    }),
+  )
 );
 
 export function apiWarehouseListResponseDataFromJSON(
@@ -82,22 +84,24 @@ export function apiWarehouseListResponseDataFromJSON(
 export const ApiWarehouseListResponse$inboundSchema: z.ZodMiniType<
   ApiWarehouseListResponse,
   unknown
-> = z.pipe(
-  z.object({
-    request_id: types.string(),
-    data: z.array(z.lazy(() => ApiWarehouseListResponseData$inboundSchema)),
-    has_more: types.boolean(),
-    next_cursor: types.nullable(types.string()),
-    object: ApiSharedEnum8d46e1ec20$inboundSchema,
-    url: types.string(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "request_id": "requestId",
-      "has_more": "hasMore",
-      "next_cursor": "nextCursor",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      request_id: types.string(),
+      data: z.array(z.lazy(() => ApiWarehouseListResponseData$inboundSchema)),
+      has_more: types.boolean(),
+      next_cursor: types.nullable(types.string()),
+      object: ApiSharedEnum8d46e1ec20$inboundSchema,
+      url: types.string(),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "request_id": "requestId",
+        "has_more": "hasMore",
+        "next_cursor": "nextCursor",
+      });
+    }),
+  )
 );
 
 export function apiWarehouseListResponseFromJSON(

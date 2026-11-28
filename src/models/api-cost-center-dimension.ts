@@ -5,7 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -24,23 +24,25 @@ export type ApiCostCenterDimension = {
 export const ApiCostCenterDimension$inboundSchema: z.ZodMiniType<
   ApiCostCenterDimension,
   unknown
-> = z.pipe(
-  z.object({
-    object: types.literal("cost_center_dimension"),
-    id: types.string(),
-    name: types.string(),
-    position: types.number(),
-    is_active: types.boolean(),
-    is_required: types.boolean(),
-    show_in_sales: types.boolean(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "is_active": "isActive",
-      "is_required": "isRequired",
-      "show_in_sales": "showInSales",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      object: types.literal("cost_center_dimension"),
+      id: types.string(),
+      name: types.string(),
+      position: types.number(),
+      is_active: types.boolean(),
+      is_required: types.boolean(),
+      show_in_sales: types.boolean(),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "is_active": "isActive",
+        "is_required": "isRequired",
+        "show_in_sales": "showInSales",
+      });
+    }),
+  )
 );
 
 export function apiCostCenterDimensionFromJSON(
