@@ -5,7 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
-import { safeParse } from "../../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import * as types from "../../types/primitives.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
@@ -37,15 +37,17 @@ export type GetApiAccountingJournalEntryRequest$Outbound = {
 export const GetApiAccountingJournalEntryRequest$outboundSchema: z.ZodMiniType<
   GetApiAccountingJournalEntryRequest$Outbound,
   GetApiAccountingJournalEntryRequest
-> = z.pipe(
-  z.object({
-    journalEntryId: z.string(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      journalEntryId: "journal_entry_id",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      journalEntryId: z.string(),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        journalEntryId: "journal_entry_id",
+      });
+    }),
+  )
 );
 
 export function getApiAccountingJournalEntryRequestToJSON(
@@ -60,17 +62,20 @@ export function getApiAccountingJournalEntryRequestToJSON(
 
 /** @internal */
 export const GetApiAccountingJournalEntryResponseBody$inboundSchema:
-  z.ZodMiniType<GetApiAccountingJournalEntryResponseBody, unknown> = z.pipe(
-    z.object({
-      request_id: types.optional(types.string()),
-      data: types.optional(models.ApiJournalEntry$inboundSchema),
-    }),
-    z.transform((v) => {
-      return remap$(v, {
-        "request_id": "requestId",
-      });
-    }),
-  );
+  z.ZodMiniType<GetApiAccountingJournalEntryResponseBody, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.pipe(
+        z.object({
+          request_id: types.optional(types.string()),
+          data: types.optional(models.ApiJournalEntry$inboundSchema),
+        }),
+        z.transform((v) => {
+          return remap$(v, {
+            "request_id": "requestId",
+          });
+        }),
+      )
+    );
 
 export function getApiAccountingJournalEntryResponseBodyFromJSON(
   jsonString: string,
@@ -92,19 +97,21 @@ export function getApiAccountingJournalEntryResponseBodyFromJSON(
 export const GetApiAccountingJournalEntryResponse$inboundSchema: z.ZodMiniType<
   GetApiAccountingJournalEntryResponse,
   unknown
-> = z.pipe(
-  z.object({
-    Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
-    Result: z.lazy(() =>
-      GetApiAccountingJournalEntryResponseBody$inboundSchema
-    ),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "Headers": "headers",
-      "Result": "result",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
+      Result: z.lazy(() =>
+        GetApiAccountingJournalEntryResponseBody$inboundSchema
+      ),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "Headers": "headers",
+        "Result": "result",
+      });
+    }),
+  )
 );
 
 export function getApiAccountingJournalEntryResponseFromJSON(

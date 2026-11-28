@@ -12,11 +12,60 @@
 
 ## list
 
-Lista los productos de la organización con precios. Soporta búsqueda y filtros por categoría, tipo y estado.
+Lista los productos de la organización con precios. Filtra por categoría, tipo, estado, etiquetas, campos personalizados y recargo de la variante. Ordena por producto, categoría o SKU.
 
-### Example Usage
+### Example Usage: con_recargo
 
-<!-- UsageSnippet language="typescript" operationID="listApiProducts" method="get" path="/api/v1/products" -->
+<!-- UsageSnippet language="typescript" operationID="listApiProducts" method="get" path="/api/v1/products" example="con_recargo" -->
+```typescript
+import { Lapyme } from "lapyme";
+
+const lapyme = new Lapyme({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const result = await lapyme.products.list({
+    markupPricing: true,
+  });
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { LapymeCore } from "lapyme/core.js";
+import { productsList } from "lapyme/funcs/products-list.js";
+
+// Use `LapymeCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const lapyme = new LapymeCore({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const res = await productsList(lapyme, {
+    markupPricing: true,
+  });
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("productsList failed:", res.error);
+  }
+}
+
+run();
+```
+### Example Usage: precios
+
+<!-- UsageSnippet language="typescript" operationID="listApiProducts" method="get" path="/api/v1/products" example="precios" -->
 ```typescript
 import { Lapyme } from "lapyme";
 
@@ -59,6 +108,55 @@ async function run() {
 
 run();
 ```
+### Example Usage: sin_recargo
+
+<!-- UsageSnippet language="typescript" operationID="listApiProducts" method="get" path="/api/v1/products" example="sin_recargo" -->
+```typescript
+import { Lapyme } from "lapyme";
+
+const lapyme = new Lapyme({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const result = await lapyme.products.list({
+    markupPricing: false,
+  });
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { LapymeCore } from "lapyme/core.js";
+import { productsList } from "lapyme/funcs/products-list.js";
+
+// Use `LapymeCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const lapyme = new LapymeCore({
+  bearerAuth: process.env["LAPYME_BEARER_AUTH"] ?? "",
+});
+
+async function run() {
+  const res = await productsList(lapyme, {
+    markupPricing: false,
+  });
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("productsList failed:", res.error);
+  }
+}
+
+run();
+```
 
 ### Parameters
 
@@ -80,11 +178,12 @@ run();
 | errors.ApiErrorEnvelope   | 400, 401, 403             | application/json          |
 | errors.ApiErrorEnvelope   | 429                       | application/json          |
 | errors.ApiErrorEnvelope   | 500                       | application/json          |
+| errors.ApiErrorEnvelope   | 503                       | application/json          |
 | errors.LapymeDefaultError | 4XX, 5XX                  | \*/\*                     |
 
 ## create
 
-Crea un producto, servicio, combo o kit con su información comercial y de inventario.
+Crea un producto simple, servicio o kit; un producto con hasta tres opciones y 250 variantes; o un combo con su composición completa y no vacía. La creación de un combo persiste producto, precio y componentes de forma atómica.
 
 ### Example Usage
 
@@ -101,7 +200,16 @@ async function run() {
     idempotencyKey: "<value>",
     body: {
       name: "<value>",
+      visibility: "both",
+      availableInPos: true,
+      productType: "product",
       sku: "<value>",
+      unitOfMeasure: "07",
+      currency: "ARS",
+      cost: 0,
+      taxRateId: 5,
+      isExempt: false,
+      isActive: true,
     },
   });
 
@@ -130,7 +238,16 @@ async function run() {
     idempotencyKey: "<value>",
     body: {
       name: "<value>",
+      visibility: "both",
+      availableInPos: true,
+      productType: "product",
       sku: "<value>",
+      unitOfMeasure: "07",
+      currency: "ARS",
+      cost: 0,
+      taxRateId: 5,
+      isExempt: false,
+      isActive: true,
     },
   });
   if (res.ok) {
@@ -164,15 +281,16 @@ run();
 | errors.ApiErrorEnvelope   | 400, 401, 403, 404, 409   | application/json          |
 | errors.ApiErrorEnvelope   | 429                       | application/json          |
 | errors.ApiErrorEnvelope   | 500                       | application/json          |
+| errors.ApiErrorEnvelope   | 503                       | application/json          |
 | errors.LapymeDefaultError | 4XX, 5XX                  | \*/\*                     |
 
 ## getProductById
 
-Devuelve el detalle persistido del producto.
+Devuelve el detalle persistido de la variante, incluido su recargo. Los combos también devuelven el modo de precio y el ajuste sobre la suma de componentes.
 
 ### Example Usage
 
-<!-- UsageSnippet language="typescript" operationID="getApiProductById" method="get" path="/api/v1/products/{product_id}" -->
+<!-- UsageSnippet language="typescript" operationID="getApiProductById" method="get" path="/api/v1/products/{product_id}" example="combo_manual" -->
 ```typescript
 import { Lapyme } from "lapyme";
 
@@ -240,11 +358,12 @@ run();
 | errors.ApiErrorEnvelope   | 400, 401, 403, 404        | application/json          |
 | errors.ApiErrorEnvelope   | 429                       | application/json          |
 | errors.ApiErrorEnvelope   | 500                       | application/json          |
+| errors.ApiErrorEnvelope   | 503                       | application/json          |
 | errors.LapymeDefaultError | 4XX, 5XX                  | \*/\*                     |
 
 ## update
 
-Actualiza un producto y devuelve el detalle persistido.
+Actualiza solo los campos enviados y devuelve el detalle persistido. Para un combo existente, product_type y components son opcionales: omitir components conserva la composición y omitir los campos de precio conserva el precio guardado. Si se envía components, reemplaza la composición completa. No permite convertir otros productos en combos. La actualización de un combo requiere Idempotency-Key para deduplicar reintentos.
 
 ### Example Usage
 
@@ -318,6 +437,7 @@ run();
 | errors.ApiErrorEnvelope   | 400, 401, 403, 404, 409   | application/json          |
 | errors.ApiErrorEnvelope   | 429                       | application/json          |
 | errors.ApiErrorEnvelope   | 500                       | application/json          |
+| errors.ApiErrorEnvelope   | 503                       | application/json          |
 | errors.LapymeDefaultError | 4XX, 5XX                  | \*/\*                     |
 
 ## applyProductTags
@@ -403,7 +523,8 @@ run();
 
 | Error Type                | Status Code               | Content Type              |
 | ------------------------- | ------------------------- | ------------------------- |
-| errors.ApiErrorEnvelope   | 400, 401, 403             | application/json          |
+| errors.ApiErrorEnvelope   | 400, 401, 403, 409        | application/json          |
 | errors.ApiErrorEnvelope   | 429                       | application/json          |
 | errors.ApiErrorEnvelope   | 500                       | application/json          |
+| errors.ApiErrorEnvelope   | 503                       | application/json          |
 | errors.LapymeDefaultError | 4XX, 5XX                  | \*/\*                     |

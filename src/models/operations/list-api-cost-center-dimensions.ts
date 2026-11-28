@@ -5,7 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
-import { safeParse } from "../../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import * as types from "../../types/primitives.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
@@ -24,6 +24,10 @@ export type ListApiCostCenterDimensionsResponseBody = {
   data?: Array<models.ApiCostCenterDimension> | undefined;
   hasMore?: boolean | undefined;
   nextCursor?: string | null | undefined;
+  /**
+   * Requested list path.
+   */
+  url?: string | undefined;
 };
 
 export type ListApiCostCenterDimensionsResponse = {
@@ -40,15 +44,17 @@ export type ListApiCostCenterDimensionsRequest$Outbound = {
 export const ListApiCostCenterDimensionsRequest$outboundSchema: z.ZodMiniType<
   ListApiCostCenterDimensionsRequest$Outbound,
   ListApiCostCenterDimensionsRequest
-> = z.pipe(
-  z.object({
-    includeInactive: z._default(z.boolean(), false),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      includeInactive: "include_inactive",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      includeInactive: z._default(z.boolean(), false),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        includeInactive: "include_inactive",
+      });
+    }),
+  )
 );
 
 export function listApiCostCenterDimensionsRequestToJSON(
@@ -63,24 +69,28 @@ export function listApiCostCenterDimensionsRequestToJSON(
 
 /** @internal */
 export const ListApiCostCenterDimensionsResponseBody$inboundSchema:
-  z.ZodMiniType<ListApiCostCenterDimensionsResponseBody, unknown> = z.pipe(
-    z.object({
-      request_id: types.optional(types.string()),
-      object: types.optional(models.ApiSharedEnume0cf0306aa$inboundSchema),
-      data: types.optional(
-        z.array(models.ApiCostCenterDimension$inboundSchema),
-      ),
-      has_more: types.optional(types.boolean()),
-      next_cursor: z.optional(z.nullable(types.string())),
-    }),
-    z.transform((v) => {
-      return remap$(v, {
-        "request_id": "requestId",
-        "has_more": "hasMore",
-        "next_cursor": "nextCursor",
-      });
-    }),
-  );
+  z.ZodMiniType<ListApiCostCenterDimensionsResponseBody, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.pipe(
+        z.object({
+          request_id: types.optional(types.string()),
+          object: types.optional(models.ApiSharedEnume0cf0306aa$inboundSchema),
+          data: types.optional(
+            z.array(models.ApiCostCenterDimension$inboundSchema),
+          ),
+          has_more: types.optional(types.boolean()),
+          next_cursor: z.optional(z.nullable(types.string())),
+          url: types.optional(types.string()),
+        }),
+        z.transform((v) => {
+          return remap$(v, {
+            "request_id": "requestId",
+            "has_more": "hasMore",
+            "next_cursor": "nextCursor",
+          });
+        }),
+      )
+    );
 
 export function listApiCostCenterDimensionsResponseBodyFromJSON(
   jsonString: string,
@@ -102,17 +112,21 @@ export function listApiCostCenterDimensionsResponseBodyFromJSON(
 export const ListApiCostCenterDimensionsResponse$inboundSchema: z.ZodMiniType<
   ListApiCostCenterDimensionsResponse,
   unknown
-> = z.pipe(
-  z.object({
-    Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
-    Result: z.lazy(() => ListApiCostCenterDimensionsResponseBody$inboundSchema),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "Headers": "headers",
-      "Result": "result",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
+      Result: z.lazy(() =>
+        ListApiCostCenterDimensionsResponseBody$inboundSchema
+      ),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "Headers": "headers",
+        "Result": "result",
+      });
+    }),
+  )
 );
 
 export function listApiCostCenterDimensionsResponseFromJSON(

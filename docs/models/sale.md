@@ -6,26 +6,33 @@
 import { Sale } from "lapyme/models";
 
 let value: Sale = {
-  saleId: "0ccd686c-7650-4381-a54c-ab4acdfcc31e",
-  customerId: "4d8f777f-6223-4371-9034-3cb67aec1cbc",
+  installments: [],
+  nextOpenInstallment: {
+    dueDate: new Date("2024-11-19"),
+    openAmount: 92845,
+  },
+  overdueOpenTotal: 762056,
+  balanceAboveSchedule: 822945,
+  saleId: "686c7650-3815-44ca-ab4a-cdfcc31ead4d",
+  invoicePdf: "<value>",
+  customerId: "77f62233-7103-443c-ab67-aec1cbc72862",
   voucherType: "<value>",
-  pointOfSaleId: "2862b77a-1037-4dac-867a-1468d9eaadbb",
-  invoiceNumber: 568737,
+  pointOfSaleId: "77a1037d-ac67-4a14-b68d-9eaadbb039ba",
+  invoiceNumber: 760908,
   formattedInvoiceNumber: "<value>",
-  invoiceStatus: "pending",
-  invoiceDate: new Date("2026-06-13"),
-  dueDate: new Date("2025-11-18"),
-  currency: "Singapore Dollar",
-  subtotal: 371782,
-  taxAmount: 678216,
-  total: 430890,
-  exemptAmount: 150125,
-  nonTaxedAmount: 563132,
-  tributesAmount: 403025,
-  discountAmount: 447651,
-  roundingAdjustment: 771661,
-  balance: 7123.88,
-  createdAt: new Date("2024-07-25T10:57:15.638Z"),
+  invoiceStatus: "issued",
+  invoiceDate: new Date("2025-04-17"),
+  dueDate: new Date("2024-06-13"),
+  currency: "Pataca",
+  subtotal: 403025,
+  taxAmount: 447651,
+  total: 771661,
+  exemptAmount: 712388,
+  nonTaxedAmount: 188372,
+  tributesAmount: 889,
+  discountAmount: 295570,
+  balance: 7176.07,
+  createdAt: new Date("2026-11-30T04:29:41.442Z"),
 };
 ```
 
@@ -33,7 +40,12 @@ let value: Sale = {
 
 | Field                                                                                         | Type                                                                                          | Required                                                                                      | Description                                                                                   |
 | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| `installments`                                                                                | [models.ApiSharedObjecta14661d9be](../models/api-shared-objecta14661d9be.md)[]                | :heavy_check_mark:                                                                            | N/A                                                                                           |
+| `nextOpenInstallment`                                                                         | [models.ApiSharedObject1112460e21](../models/api-shared-object1112460e21.md)                  | :heavy_check_mark:                                                                            | N/A                                                                                           |
+| `overdueOpenTotal`                                                                            | *number*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
+| `balanceAboveSchedule`                                                                        | *number*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `saleId`                                                                                      | *string*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
+| `invoicePdf`                                                                                  | *string*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `customerId`                                                                                  | *string*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `voucherType`                                                                                 | *string*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `pointOfSaleId`                                                                               | *string*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
@@ -50,6 +62,5 @@ let value: Sale = {
 | `nonTaxedAmount`                                                                              | *number*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `tributesAmount`                                                                              | *number*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `discountAmount`                                                                              | *number*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
-| `roundingAdjustment`                                                                          | *number*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `balance`                                                                                     | *number*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
 | `createdAt`                                                                                   | [Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date) | :heavy_check_mark:                                                                            | N/A                                                                                           |

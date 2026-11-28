@@ -5,33 +5,44 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
+import * as discriminatedUnionTypes from "../types/discriminated-union.js";
+import { discriminatedUnion } from "../types/discriminated-union.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
+import { smartUnion } from "../types/smart-union.js";
+import {
+  ApiSharedEnum447a859a74,
+  ApiSharedEnum447a859a74$inboundSchema,
+} from "./api-shared-enum447a859a74.js";
 import {
   ApiSharedEnum539fdceccc,
   ApiSharedEnum539fdceccc$inboundSchema,
 } from "./api-shared-enum539fdceccc.js";
 import {
-  ApiSharedEnum6cfb146157,
-  ApiSharedEnum6cfb146157$inboundSchema,
-} from "./api-shared-enum6cfb146157.js";
-import {
   ApiSharedEnum9ac70a3316,
   ApiSharedEnum9ac70a3316$inboundSchema,
 } from "./api-shared-enum9ac70a3316.js";
+import {
+  ApiSharedEnumffb4886f2b,
+  ApiSharedEnumffb4886f2b$inboundSchema,
+} from "./api-shared-enumffb4886f2b.js";
+import {
+  ApiSharedObject0440e56bc9,
+  ApiSharedObject0440e56bc9$inboundSchema,
+} from "./api-shared-object0440e56bc9.js";
+import {
+  ApiSharedObject1112460e21,
+  ApiSharedObject1112460e21$inboundSchema,
+} from "./api-shared-object1112460e21.js";
 import {
   ApiSharedObject3563932f8e,
   ApiSharedObject3563932f8e$inboundSchema,
 } from "./api-shared-object3563932f8e.js";
 import {
-  ApiSharedObject43ed7be04f,
-  ApiSharedObject43ed7be04f$inboundSchema,
-} from "./api-shared-object43ed7be04f.js";
-import {
-  ApiSharedObject55e2bcf4a7,
-  ApiSharedObject55e2bcf4a7$inboundSchema,
-} from "./api-shared-object55e2bcf4a7.js";
+  ApiSharedObject3d3dc47592,
+  ApiSharedObject3d3dc47592$inboundSchema,
+} from "./api-shared-object3d3dc47592.js";
 import {
   ApiSharedObject6a71e7888b,
   ApiSharedObject6a71e7888b$inboundSchema,
@@ -49,13 +60,34 @@ import {
   ApiSharedObject95929ea589$inboundSchema,
 } from "./api-shared-object95929ea589.js";
 import {
+  ApiSharedObjecta14661d9be,
+  ApiSharedObjecta14661d9be$inboundSchema,
+} from "./api-shared-objecta14661d9be.js";
+import {
+  ApiSharedObjectb659f2ee96,
+  ApiSharedObjectb659f2ee96$inboundSchema,
+} from "./api-shared-objectb659f2ee96.js";
+import {
+  ApiSharedObjectc0c8b78900,
+  ApiSharedObjectc0c8b78900$inboundSchema,
+} from "./api-shared-objectc0c8b78900.js";
+import {
   ApiSharedObjectc671832641,
   ApiSharedObjectc671832641$inboundSchema,
 } from "./api-shared-objectc671832641.js";
+import {
+  ApiSharedObjectd835b52c6b,
+  ApiSharedObjectd835b52c6b$inboundSchema,
+} from "./api-shared-objectd835b52c6b.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type Sale = {
+  installments: Array<ApiSharedObjecta14661d9be>;
+  nextOpenInstallment: ApiSharedObject1112460e21 | null;
+  overdueOpenTotal: number;
+  balanceAboveSchedule: number;
   saleId: string;
+  invoicePdf: string | null;
   customerId: string | null;
   voucherType: string;
   pointOfSaleId: string;
@@ -72,7 +104,6 @@ export type Sale = {
   nonTaxedAmount: number;
   tributesAmount: number;
   discountAmount: number;
-  roundingAdjustment: number;
   balance: number;
   createdAt: Date;
 };
@@ -80,15 +111,16 @@ export type Sale = {
 export type NormalizedSale = {
   customerId: string | null;
   customerTaxCategoryOverride: string | null;
-  voucherType: number;
+  voucherType: any;
   pointOfSaleId: string;
   registerId: string | null;
   operatorId: string | null;
   invoiceDate: Date;
   dueDate: Date;
+  transferType: ApiSharedEnum447a859a74 | null;
   serviceFrom: Date | null;
   serviceTo: Date | null;
-  currency: ApiSharedEnum6cfb146157;
+  currency: ApiSharedEnumffb4886f2b;
   exchangeRate: number | null;
   sameCurrencyPayment: boolean;
   notes: string | null;
@@ -108,11 +140,10 @@ export type NormalizedSale = {
   discountType: ApiSharedEnum539fdceccc | null;
   discountValue: number | null;
   discountAmount: number;
-  roundingAdjustment: number;
   balance: number;
   isFullAmountPending: boolean;
-  items: Array<ApiSharedObject55e2bcf4a7>;
-  paymentMethods: Array<ApiSharedObject43ed7be04f>;
+  items: Array<ApiSharedObjectd835b52c6b>;
+  paymentMethods: Array<ApiSharedObject3d3dc47592>;
 };
 
 export type ApiSaleTransactionSuccessResponseProjectedEffects = {
@@ -123,63 +154,112 @@ export type ApiSaleTransactionSuccessResponseProjectedEffects = {
 };
 
 export type ApiSaleTransactionSuccessResponseData = {
+  items?: Array<ApiSharedObject0440e56bc9> | undefined;
   sale: Sale;
   normalizedSale: NormalizedSale;
   projectedEffects: ApiSaleTransactionSuccessResponseProjectedEffects;
   idempotentReplay: boolean;
 };
 
+export type ApiSaleTransactionSuccessResponseWarning1 =
+  | (ApiSharedObjectc0c8b78900 & { code: "missing_lot_number" })
+  | (ApiSharedObjectc0c8b78900 & { code: "serial_already_on_hand" })
+  | (ApiSharedObjectc0c8b78900 & { code: "unknown_lot_number" })
+  | (ApiSharedObjectc0c8b78900 & { code: "lot_number_not_on_hand" })
+  | (ApiSharedObjectc0c8b78900 & { code: "return_lot_differs" })
+  | (ApiSharedObjectc0c8b78900 & { code: "received_lot_differs" })
+  | (ApiSharedObjectc0c8b78900 & { code: "numbers_ignored_printed_on_invoice" })
+  | ApiSharedObjectb659f2ee96
+  | discriminatedUnionTypes.Unknown<"code">;
+
+export type ApiSaleTransactionSuccessResponseWarning2 =
+  | ApiSharedObjectc671832641
+  | (ApiSharedObjectc0c8b78900 & { code: "missing_lot_number" })
+  | (ApiSharedObjectc0c8b78900 & { code: "serial_already_on_hand" })
+  | (ApiSharedObjectc0c8b78900 & { code: "unknown_lot_number" })
+  | (ApiSharedObjectc0c8b78900 & { code: "lot_number_not_on_hand" })
+  | (ApiSharedObjectc0c8b78900 & { code: "return_lot_differs" })
+  | (ApiSharedObjectc0c8b78900 & { code: "received_lot_differs" })
+  | (ApiSharedObjectc0c8b78900 & { code: "numbers_ignored_printed_on_invoice" })
+  | ApiSharedObjectb659f2ee96
+  | discriminatedUnionTypes.Unknown<"code">;
+
 export type ApiSaleTransactionSuccessResponse = {
   requestId: string;
   data: ApiSaleTransactionSuccessResponseData;
-  warnings: Array<ApiSharedObjectc671832641>;
+  warnings: Array<
+    | ApiSharedObjectc671832641
+    | (ApiSharedObjectc0c8b78900 & { code: "missing_lot_number" })
+    | (ApiSharedObjectc0c8b78900 & { code: "serial_already_on_hand" })
+    | (ApiSharedObjectc0c8b78900 & { code: "unknown_lot_number" })
+    | (ApiSharedObjectc0c8b78900 & { code: "lot_number_not_on_hand" })
+    | (ApiSharedObjectc0c8b78900 & { code: "return_lot_differs" })
+    | (ApiSharedObjectc0c8b78900 & { code: "received_lot_differs" })
+    | (ApiSharedObjectc0c8b78900 & {
+      code: "numbers_ignored_printed_on_invoice";
+    })
+    | ApiSharedObjectb659f2ee96
+    | discriminatedUnionTypes.Unknown<"code">
+  >;
 };
 
 /** @internal */
-export const Sale$inboundSchema: z.ZodMiniType<Sale, unknown> = z.pipe(
-  z.object({
-    sale_id: types.string(),
-    customer_id: types.nullable(types.string()),
-    voucher_type: types.string(),
-    point_of_sale_id: types.string(),
-    invoice_number: types.nullable(types.number()),
-    formatted_invoice_number: types.nullable(types.string()),
-    invoice_status: ApiSharedEnum9ac70a3316$inboundSchema,
-    invoice_date: types.date(),
-    due_date: types.date(),
-    currency: types.string(),
-    subtotal: types.number(),
-    tax_amount: types.number(),
-    total: types.number(),
-    exempt_amount: types.number(),
-    non_taxed_amount: types.number(),
-    tributes_amount: types.number(),
-    discount_amount: types.number(),
-    rounding_adjustment: types.number(),
-    balance: types.number(),
-    created_at: types.date(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "sale_id": "saleId",
-      "customer_id": "customerId",
-      "voucher_type": "voucherType",
-      "point_of_sale_id": "pointOfSaleId",
-      "invoice_number": "invoiceNumber",
-      "formatted_invoice_number": "formattedInvoiceNumber",
-      "invoice_status": "invoiceStatus",
-      "invoice_date": "invoiceDate",
-      "due_date": "dueDate",
-      "tax_amount": "taxAmount",
-      "exempt_amount": "exemptAmount",
-      "non_taxed_amount": "nonTaxedAmount",
-      "tributes_amount": "tributesAmount",
-      "discount_amount": "discountAmount",
-      "rounding_adjustment": "roundingAdjustment",
-      "created_at": "createdAt",
-    });
-  }),
-);
+export const Sale$inboundSchema: z.ZodMiniType<Sale, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.pipe(
+      z.object({
+        installments: z.array(ApiSharedObjecta14661d9be$inboundSchema),
+        next_open_installment: types.nullable(
+          ApiSharedObject1112460e21$inboundSchema,
+        ),
+        overdue_open_total: types.number(),
+        balance_above_schedule: types.number(),
+        sale_id: types.string(),
+        invoice_pdf: types.nullable(types.string()),
+        customer_id: types.nullable(types.string()),
+        voucher_type: types.string(),
+        point_of_sale_id: types.string(),
+        invoice_number: types.nullable(types.number()),
+        formatted_invoice_number: types.nullable(types.string()),
+        invoice_status: ApiSharedEnum9ac70a3316$inboundSchema,
+        invoice_date: types.date(),
+        due_date: types.date(),
+        currency: types.string(),
+        subtotal: types.number(),
+        tax_amount: types.number(),
+        total: types.number(),
+        exempt_amount: types.number(),
+        non_taxed_amount: types.number(),
+        tributes_amount: types.number(),
+        discount_amount: types.number(),
+        balance: types.number(),
+        created_at: types.date(),
+      }),
+      z.transform((v) => {
+        return remap$(v, {
+          "next_open_installment": "nextOpenInstallment",
+          "overdue_open_total": "overdueOpenTotal",
+          "balance_above_schedule": "balanceAboveSchedule",
+          "sale_id": "saleId",
+          "invoice_pdf": "invoicePdf",
+          "customer_id": "customerId",
+          "voucher_type": "voucherType",
+          "point_of_sale_id": "pointOfSaleId",
+          "invoice_number": "invoiceNumber",
+          "formatted_invoice_number": "formattedInvoiceNumber",
+          "invoice_status": "invoiceStatus",
+          "invoice_date": "invoiceDate",
+          "due_date": "dueDate",
+          "tax_amount": "taxAmount",
+          "exempt_amount": "exemptAmount",
+          "non_taxed_amount": "nonTaxedAmount",
+          "tributes_amount": "tributesAmount",
+          "discount_amount": "discountAmount",
+          "created_at": "createdAt",
+        });
+      }),
+    )
+  );
 
 export function saleFromJSON(
   jsonString: string,
@@ -195,79 +275,82 @@ export function saleFromJSON(
 export const NormalizedSale$inboundSchema: z.ZodMiniType<
   NormalizedSale,
   unknown
-> = z.pipe(
-  z.object({
-    customer_id: types.nullable(types.string()),
-    customer_tax_category_override: types.nullable(types.string()),
-    voucher_type: types.number(),
-    point_of_sale_id: types.string(),
-    register_id: types.nullable(types.string()),
-    operator_id: types.nullable(types.string()),
-    invoice_date: types.date(),
-    due_date: types.date(),
-    service_from: types.nullable(types.date()),
-    service_to: types.nullable(types.date()),
-    currency: ApiSharedEnum6cfb146157$inboundSchema,
-    exchange_rate: types.nullable(types.number()),
-    same_currency_payment: types.boolean(),
-    notes: types.nullable(types.string()),
-    subtotal: types.number(),
-    tax_amount: types.number(),
-    total: types.number(),
-    exempt_amount: types.number(),
-    non_taxed_amount: types.number(),
-    tributes_amount: types.number(),
-    national_perception_amount: types.number(),
-    gross_income_perception_amount: types.number(),
-    gross_income_tax_breakdown: z.array(
-      ApiSharedObject95929ea589$inboundSchema,
-    ),
-    municipal_perception_amount: types.number(),
-    internal_tribute_amount: types.number(),
-    uncategorized_vat_perception_amount: types.number(),
-    other_tribute_amount: types.number(),
-    discount_type: types.nullable(ApiSharedEnum539fdceccc$inboundSchema),
-    discount_value: types.nullable(types.number()),
-    discount_amount: types.number(),
-    rounding_adjustment: types.number(),
-    balance: types.number(),
-    is_full_amount_pending: types.boolean(),
-    items: z.array(ApiSharedObject55e2bcf4a7$inboundSchema),
-    payment_methods: z.array(ApiSharedObject43ed7be04f$inboundSchema),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "customer_id": "customerId",
-      "customer_tax_category_override": "customerTaxCategoryOverride",
-      "voucher_type": "voucherType",
-      "point_of_sale_id": "pointOfSaleId",
-      "register_id": "registerId",
-      "operator_id": "operatorId",
-      "invoice_date": "invoiceDate",
-      "due_date": "dueDate",
-      "service_from": "serviceFrom",
-      "service_to": "serviceTo",
-      "exchange_rate": "exchangeRate",
-      "same_currency_payment": "sameCurrencyPayment",
-      "tax_amount": "taxAmount",
-      "exempt_amount": "exemptAmount",
-      "non_taxed_amount": "nonTaxedAmount",
-      "tributes_amount": "tributesAmount",
-      "national_perception_amount": "nationalPerceptionAmount",
-      "gross_income_perception_amount": "grossIncomePerceptionAmount",
-      "gross_income_tax_breakdown": "grossIncomeTaxBreakdown",
-      "municipal_perception_amount": "municipalPerceptionAmount",
-      "internal_tribute_amount": "internalTributeAmount",
-      "uncategorized_vat_perception_amount": "uncategorizedVatPerceptionAmount",
-      "other_tribute_amount": "otherTributeAmount",
-      "discount_type": "discountType",
-      "discount_value": "discountValue",
-      "discount_amount": "discountAmount",
-      "rounding_adjustment": "roundingAdjustment",
-      "is_full_amount_pending": "isFullAmountPending",
-      "payment_methods": "paymentMethods",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      customer_id: types.nullable(types.string()),
+      customer_tax_category_override: types.nullable(types.string()),
+      voucher_type: z.any(),
+      point_of_sale_id: types.string(),
+      register_id: types.nullable(types.string()),
+      operator_id: types.nullable(types.string()),
+      invoice_date: types.date(),
+      due_date: types.date(),
+      transfer_type: types.nullable(ApiSharedEnum447a859a74$inboundSchema),
+      service_from: types.nullable(types.date()),
+      service_to: types.nullable(types.date()),
+      currency: ApiSharedEnumffb4886f2b$inboundSchema,
+      exchange_rate: types.nullable(types.number()),
+      same_currency_payment: types.boolean(),
+      notes: types.nullable(types.string()),
+      subtotal: types.number(),
+      tax_amount: types.number(),
+      total: types.number(),
+      exempt_amount: types.number(),
+      non_taxed_amount: types.number(),
+      tributes_amount: types.number(),
+      national_perception_amount: types.number(),
+      gross_income_perception_amount: types.number(),
+      gross_income_tax_breakdown: z.array(
+        ApiSharedObject95929ea589$inboundSchema,
+      ),
+      municipal_perception_amount: types.number(),
+      internal_tribute_amount: types.number(),
+      uncategorized_vat_perception_amount: types.number(),
+      other_tribute_amount: types.number(),
+      discount_type: types.nullable(ApiSharedEnum539fdceccc$inboundSchema),
+      discount_value: types.nullable(types.number()),
+      discount_amount: types.number(),
+      balance: types.number(),
+      is_full_amount_pending: types.boolean(),
+      items: z.array(ApiSharedObjectd835b52c6b$inboundSchema),
+      payment_methods: z.array(ApiSharedObject3d3dc47592$inboundSchema),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "customer_id": "customerId",
+        "customer_tax_category_override": "customerTaxCategoryOverride",
+        "voucher_type": "voucherType",
+        "point_of_sale_id": "pointOfSaleId",
+        "register_id": "registerId",
+        "operator_id": "operatorId",
+        "invoice_date": "invoiceDate",
+        "due_date": "dueDate",
+        "transfer_type": "transferType",
+        "service_from": "serviceFrom",
+        "service_to": "serviceTo",
+        "exchange_rate": "exchangeRate",
+        "same_currency_payment": "sameCurrencyPayment",
+        "tax_amount": "taxAmount",
+        "exempt_amount": "exemptAmount",
+        "non_taxed_amount": "nonTaxedAmount",
+        "tributes_amount": "tributesAmount",
+        "national_perception_amount": "nationalPerceptionAmount",
+        "gross_income_perception_amount": "grossIncomePerceptionAmount",
+        "gross_income_tax_breakdown": "grossIncomeTaxBreakdown",
+        "municipal_perception_amount": "municipalPerceptionAmount",
+        "internal_tribute_amount": "internalTributeAmount",
+        "uncategorized_vat_perception_amount":
+          "uncategorizedVatPerceptionAmount",
+        "other_tribute_amount": "otherTributeAmount",
+        "discount_type": "discountType",
+        "discount_value": "discountValue",
+        "discount_amount": "discountAmount",
+        "is_full_amount_pending": "isFullAmountPending",
+        "payment_methods": "paymentMethods",
+      });
+    }),
+  )
 );
 
 export function normalizedSaleFromJSON(
@@ -282,13 +365,15 @@ export function normalizedSaleFromJSON(
 
 /** @internal */
 export const ApiSaleTransactionSuccessResponseProjectedEffects$inboundSchema:
-  z.ZodMiniType<ApiSaleTransactionSuccessResponseProjectedEffects, unknown> = z
-    .object({
-      inventory: ApiSharedObject6a71e7888b$inboundSchema,
-      accounting: ApiSharedObject9428e7100c$inboundSchema,
-      fiscal: ApiSharedObject3563932f8e$inboundSchema,
-      payments: ApiSharedObject8e516a9b19$inboundSchema,
-    });
+  z.ZodMiniType<ApiSaleTransactionSuccessResponseProjectedEffects, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        inventory: ApiSharedObject6a71e7888b$inboundSchema,
+        accounting: ApiSharedObject9428e7100c$inboundSchema,
+        fiscal: ApiSharedObject3563932f8e$inboundSchema,
+        payments: ApiSharedObject8e516a9b19$inboundSchema,
+      })
+    );
 
 export function apiSaleTransactionSuccessResponseProjectedEffectsFromJSON(
   jsonString: string,
@@ -310,22 +395,25 @@ export function apiSaleTransactionSuccessResponseProjectedEffectsFromJSON(
 export const ApiSaleTransactionSuccessResponseData$inboundSchema: z.ZodMiniType<
   ApiSaleTransactionSuccessResponseData,
   unknown
-> = z.pipe(
-  z.object({
-    sale: z.lazy(() => Sale$inboundSchema),
-    normalized_sale: z.lazy(() => NormalizedSale$inboundSchema),
-    projected_effects: z.lazy(() =>
-      ApiSaleTransactionSuccessResponseProjectedEffects$inboundSchema
-    ),
-    idempotent_replay: types.boolean(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "normalized_sale": "normalizedSale",
-      "projected_effects": "projectedEffects",
-      "idempotent_replay": "idempotentReplay",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      items: types.optional(z.array(ApiSharedObject0440e56bc9$inboundSchema)),
+      sale: z.lazy(() => Sale$inboundSchema),
+      normalized_sale: z.lazy(() => NormalizedSale$inboundSchema),
+      projected_effects: z.lazy(() =>
+        ApiSaleTransactionSuccessResponseProjectedEffects$inboundSchema
+      ),
+      idempotent_replay: types.boolean(),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "normalized_sale": "normalizedSale",
+        "projected_effects": "projectedEffects",
+        "idempotent_replay": "idempotentReplay",
+      });
+    }),
+  )
 );
 
 export function apiSaleTransactionSuccessResponseDataFromJSON(
@@ -340,20 +428,171 @@ export function apiSaleTransactionSuccessResponseDataFromJSON(
 }
 
 /** @internal */
+export const ApiSaleTransactionSuccessResponseWarning1$inboundSchema:
+  z.ZodMiniType<ApiSaleTransactionSuccessResponseWarning1, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      discriminatedUnion("code", {
+        missing_lot_number: z.intersection(
+          ApiSharedObjectc0c8b78900$inboundSchema,
+          z.object({ code: z.literal("missing_lot_number") }),
+        ),
+        serial_already_on_hand: z.intersection(
+          ApiSharedObjectc0c8b78900$inboundSchema,
+          z.object({ code: z.literal("serial_already_on_hand") }),
+        ),
+        unknown_lot_number: z.intersection(
+          ApiSharedObjectc0c8b78900$inboundSchema,
+          z.object({ code: z.literal("unknown_lot_number") }),
+        ),
+        lot_number_not_on_hand: z.intersection(
+          ApiSharedObjectc0c8b78900$inboundSchema,
+          z.object({ code: z.literal("lot_number_not_on_hand") }),
+        ),
+        return_lot_differs: z.intersection(
+          ApiSharedObjectc0c8b78900$inboundSchema,
+          z.object({ code: z.literal("return_lot_differs") }),
+        ),
+        received_lot_differs: z.intersection(
+          ApiSharedObjectc0c8b78900$inboundSchema,
+          z.object({ code: z.literal("received_lot_differs") }),
+        ),
+        numbers_ignored_printed_on_invoice: z.intersection(
+          ApiSharedObjectc0c8b78900$inboundSchema,
+          z.object({ code: z.literal("numbers_ignored_printed_on_invoice") }),
+        ),
+        numbers_ignored_already_received:
+          ApiSharedObjectb659f2ee96$inboundSchema,
+      })
+    );
+
+export function apiSaleTransactionSuccessResponseWarning1FromJSON(
+  jsonString: string,
+): SafeParseResult<
+  ApiSaleTransactionSuccessResponseWarning1,
+  SDKValidationError
+> {
+  return safeParse(
+    jsonString,
+    (x) =>
+      ApiSaleTransactionSuccessResponseWarning1$inboundSchema.parse(
+        JSON.parse(x),
+      ),
+    `Failed to parse 'ApiSaleTransactionSuccessResponseWarning1' from JSON`,
+  );
+}
+
+/** @internal */
+export const ApiSaleTransactionSuccessResponseWarning2$inboundSchema:
+  z.ZodMiniType<ApiSaleTransactionSuccessResponseWarning2, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      smartUnion([
+        ApiSharedObjectc671832641$inboundSchema,
+        discriminatedUnion("code", {
+          missing_lot_number: z.intersection(
+            ApiSharedObjectc0c8b78900$inboundSchema,
+            z.object({ code: z.literal("missing_lot_number") }),
+          ),
+          serial_already_on_hand: z.intersection(
+            ApiSharedObjectc0c8b78900$inboundSchema,
+            z.object({ code: z.literal("serial_already_on_hand") }),
+          ),
+          unknown_lot_number: z.intersection(
+            ApiSharedObjectc0c8b78900$inboundSchema,
+            z.object({ code: z.literal("unknown_lot_number") }),
+          ),
+          lot_number_not_on_hand: z.intersection(
+            ApiSharedObjectc0c8b78900$inboundSchema,
+            z.object({ code: z.literal("lot_number_not_on_hand") }),
+          ),
+          return_lot_differs: z.intersection(
+            ApiSharedObjectc0c8b78900$inboundSchema,
+            z.object({ code: z.literal("return_lot_differs") }),
+          ),
+          received_lot_differs: z.intersection(
+            ApiSharedObjectc0c8b78900$inboundSchema,
+            z.object({ code: z.literal("received_lot_differs") }),
+          ),
+          numbers_ignored_printed_on_invoice: z.intersection(
+            ApiSharedObjectc0c8b78900$inboundSchema,
+            z.object({ code: z.literal("numbers_ignored_printed_on_invoice") }),
+          ),
+          numbers_ignored_already_received:
+            ApiSharedObjectb659f2ee96$inboundSchema,
+        }),
+      ])
+    );
+
+export function apiSaleTransactionSuccessResponseWarning2FromJSON(
+  jsonString: string,
+): SafeParseResult<
+  ApiSaleTransactionSuccessResponseWarning2,
+  SDKValidationError
+> {
+  return safeParse(
+    jsonString,
+    (x) =>
+      ApiSaleTransactionSuccessResponseWarning2$inboundSchema.parse(
+        JSON.parse(x),
+      ),
+    `Failed to parse 'ApiSaleTransactionSuccessResponseWarning2' from JSON`,
+  );
+}
+
+/** @internal */
 export const ApiSaleTransactionSuccessResponse$inboundSchema: z.ZodMiniType<
   ApiSaleTransactionSuccessResponse,
   unknown
-> = z.pipe(
-  z.object({
-    request_id: types.string(),
-    data: z.lazy(() => ApiSaleTransactionSuccessResponseData$inboundSchema),
-    warnings: z.array(ApiSharedObjectc671832641$inboundSchema),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "request_id": "requestId",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      request_id: types.string(),
+      data: z.lazy(() => ApiSaleTransactionSuccessResponseData$inboundSchema),
+      warnings: z.array(
+        smartUnion([
+          ApiSharedObjectc671832641$inboundSchema,
+          discriminatedUnion("code", {
+            missing_lot_number: z.intersection(
+              ApiSharedObjectc0c8b78900$inboundSchema,
+              z.object({ code: z.literal("missing_lot_number") }),
+            ),
+            serial_already_on_hand: z.intersection(
+              ApiSharedObjectc0c8b78900$inboundSchema,
+              z.object({ code: z.literal("serial_already_on_hand") }),
+            ),
+            unknown_lot_number: z.intersection(
+              ApiSharedObjectc0c8b78900$inboundSchema,
+              z.object({ code: z.literal("unknown_lot_number") }),
+            ),
+            lot_number_not_on_hand: z.intersection(
+              ApiSharedObjectc0c8b78900$inboundSchema,
+              z.object({ code: z.literal("lot_number_not_on_hand") }),
+            ),
+            return_lot_differs: z.intersection(
+              ApiSharedObjectc0c8b78900$inboundSchema,
+              z.object({ code: z.literal("return_lot_differs") }),
+            ),
+            received_lot_differs: z.intersection(
+              ApiSharedObjectc0c8b78900$inboundSchema,
+              z.object({ code: z.literal("received_lot_differs") }),
+            ),
+            numbers_ignored_printed_on_invoice: z.intersection(
+              ApiSharedObjectc0c8b78900$inboundSchema,
+              z.object({
+                code: z.literal("numbers_ignored_printed_on_invoice"),
+              }),
+            ),
+            numbers_ignored_already_received:
+              ApiSharedObjectb659f2ee96$inboundSchema,
+          }),
+        ]),
+      ),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "request_id": "requestId",
+      });
+    }),
+  )
 );
 
 export function apiSaleTransactionSuccessResponseFromJSON(

@@ -5,7 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
-import { safeParse } from "../../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import * as models from "../index.js";
@@ -56,27 +56,29 @@ export type ListApiPurchaseOrdersRequest$Outbound = {
 export const ListApiPurchaseOrdersRequest$outboundSchema: z.ZodMiniType<
   ListApiPurchaseOrdersRequest$Outbound,
   ListApiPurchaseOrdersRequest
-> = z.pipe(
-  z.object({
-    query: z.optional(z.string()),
-    cursor: z.optional(z.string()),
-    limit: z._default(z.int(), 50),
-    dateFrom: z.optional(z.pipe(
-      z.date(),
-      z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
-    )),
-    dateTo: z.optional(z.pipe(
-      z.date(),
-      z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
-    )),
-    status: z.optional(models.ApiSharedEnumf2073aa092$outboundSchema),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      dateFrom: "date_from",
-      dateTo: "date_to",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      query: z.optional(z.string()),
+      cursor: z.optional(z.string()),
+      limit: z._default(z.int(), 50),
+      dateFrom: z.optional(z.pipe(
+        z.date(),
+        z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
+      )),
+      dateTo: z.optional(z.pipe(
+        z.date(),
+        z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
+      )),
+      status: z.optional(models.ApiSharedEnumf2073aa092$outboundSchema),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        dateFrom: "date_from",
+        dateTo: "date_to",
+      });
+    }),
+  )
 );
 
 export function listApiPurchaseOrdersRequestToJSON(
@@ -93,17 +95,19 @@ export function listApiPurchaseOrdersRequestToJSON(
 export const ListApiPurchaseOrdersResponse$inboundSchema: z.ZodMiniType<
   ListApiPurchaseOrdersResponse,
   unknown
-> = z.pipe(
-  z.object({
-    Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
-    Result: models.ApiPurchaseOrderListResponse$inboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "Headers": "headers",
-      "Result": "result",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
+      Result: models.ApiPurchaseOrderListResponse$inboundSchema,
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "Headers": "headers",
+        "Result": "result",
+      });
+    }),
+  )
 );
 
 export function listApiPurchaseOrdersResponseFromJSON(

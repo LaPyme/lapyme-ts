@@ -12,7 +12,7 @@ let value: ApiOrderInvoiceRequest = {
   lines: [
     {
       orderLineId: "4ed05c6f-41d4-477d-8d43-4aacd96c1da4",
-      quantityToInvoice: 942518,
+      quantityToInvoice: 9425.18,
     },
   ],
 };
@@ -22,6 +22,7 @@ let value: ApiOrderInvoiceRequest = {
 
 | Field                                                                              | Type                                                                               | Required                                                                           | Description                                                                        |
 | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| `metafields`                                                                       | [models.ApiSharedObject601104d793](../models/api-shared-object601104d793.md)[]     | :heavy_minus_sign:                                                                 | N/A                                                                                |
 | `voucherType`                                                                      | *number*                                                                           | :heavy_check_mark:                                                                 | N/A                                                                                |
 | `pointOfSaleId`                                                                    | *string*                                                                           | :heavy_check_mark:                                                                 | N/A                                                                                |
 | `invoiceDate`                                                                      | [Date](../types/rfcdate.md)                                                        | :heavy_check_mark:                                                                 | N/A                                                                                |

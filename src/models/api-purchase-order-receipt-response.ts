@@ -5,14 +5,39 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
+import * as discriminatedUnionTypes from "../types/discriminated-union.js";
+import { discriminatedUnion } from "../types/discriminated-union.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import {
-  ApiSharedObjecta6cd4a0a4e,
-  ApiSharedObjecta6cd4a0a4e$inboundSchema,
-} from "./api-shared-objecta6cd4a0a4e.js";
+  ApiSharedObject0440e56bc9,
+  ApiSharedObject0440e56bc9$inboundSchema,
+} from "./api-shared-object0440e56bc9.js";
+import {
+  ApiSharedObject5f7a7d7ad7,
+  ApiSharedObject5f7a7d7ad7$inboundSchema,
+} from "./api-shared-object5f7a7d7ad7.js";
+import {
+  ApiSharedObjectb659f2ee96,
+  ApiSharedObjectb659f2ee96$inboundSchema,
+} from "./api-shared-objectb659f2ee96.js";
+import {
+  ApiSharedObjectc0c8b78900,
+  ApiSharedObjectc0c8b78900$inboundSchema,
+} from "./api-shared-objectc0c8b78900.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
+
+export type ApiPurchaseOrderReceiptResponseLotWarning =
+  | (ApiSharedObjectc0c8b78900 & { code: "missing_lot_number" })
+  | (ApiSharedObjectc0c8b78900 & { code: "serial_already_on_hand" })
+  | (ApiSharedObjectc0c8b78900 & { code: "unknown_lot_number" })
+  | (ApiSharedObjectc0c8b78900 & { code: "lot_number_not_on_hand" })
+  | (ApiSharedObjectc0c8b78900 & { code: "return_lot_differs" })
+  | (ApiSharedObjectc0c8b78900 & { code: "received_lot_differs" })
+  | (ApiSharedObjectc0c8b78900 & { code: "numbers_ignored_printed_on_invoice" })
+  | ApiSharedObjectb659f2ee96
+  | discriminatedUnionTypes.Unknown<"code">;
 
 export type AffectedProduct = {
   sku: string;
@@ -22,13 +47,29 @@ export type AffectedProduct = {
 export type Receipt = {
   object: "receipt";
   id: string;
+  items: Array<ApiSharedObject0440e56bc9>;
   purchaseOrderWarehouseId: string | null;
+  lotWarnings?:
+    | Array<
+      | (ApiSharedObjectc0c8b78900 & { code: "missing_lot_number" })
+      | (ApiSharedObjectc0c8b78900 & { code: "serial_already_on_hand" })
+      | (ApiSharedObjectc0c8b78900 & { code: "unknown_lot_number" })
+      | (ApiSharedObjectc0c8b78900 & { code: "lot_number_not_on_hand" })
+      | (ApiSharedObjectc0c8b78900 & { code: "return_lot_differs" })
+      | (ApiSharedObjectc0c8b78900 & { code: "received_lot_differs" })
+      | (ApiSharedObjectc0c8b78900 & {
+        code: "numbers_ignored_printed_on_invoice";
+      })
+      | ApiSharedObjectb659f2ee96
+      | discriminatedUnionTypes.Unknown<"code">
+    >
+    | undefined;
   affectedProducts: Array<AffectedProduct>;
 };
 
 export type ApiPurchaseOrderReceiptResponseData = {
   receipt: Receipt;
-  purchaseOrder: ApiSharedObjecta6cd4a0a4e;
+  purchaseOrder: ApiSharedObject5f7a7d7ad7;
   idempotentReplay: boolean;
 };
 
@@ -39,19 +80,75 @@ export type ApiPurchaseOrderReceiptResponse = {
 };
 
 /** @internal */
+export const ApiPurchaseOrderReceiptResponseLotWarning$inboundSchema:
+  z.ZodMiniType<ApiPurchaseOrderReceiptResponseLotWarning, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      discriminatedUnion("code", {
+        missing_lot_number: z.intersection(
+          ApiSharedObjectc0c8b78900$inboundSchema,
+          z.object({ code: z.literal("missing_lot_number") }),
+        ),
+        serial_already_on_hand: z.intersection(
+          ApiSharedObjectc0c8b78900$inboundSchema,
+          z.object({ code: z.literal("serial_already_on_hand") }),
+        ),
+        unknown_lot_number: z.intersection(
+          ApiSharedObjectc0c8b78900$inboundSchema,
+          z.object({ code: z.literal("unknown_lot_number") }),
+        ),
+        lot_number_not_on_hand: z.intersection(
+          ApiSharedObjectc0c8b78900$inboundSchema,
+          z.object({ code: z.literal("lot_number_not_on_hand") }),
+        ),
+        return_lot_differs: z.intersection(
+          ApiSharedObjectc0c8b78900$inboundSchema,
+          z.object({ code: z.literal("return_lot_differs") }),
+        ),
+        received_lot_differs: z.intersection(
+          ApiSharedObjectc0c8b78900$inboundSchema,
+          z.object({ code: z.literal("received_lot_differs") }),
+        ),
+        numbers_ignored_printed_on_invoice: z.intersection(
+          ApiSharedObjectc0c8b78900$inboundSchema,
+          z.object({ code: z.literal("numbers_ignored_printed_on_invoice") }),
+        ),
+        numbers_ignored_already_received:
+          ApiSharedObjectb659f2ee96$inboundSchema,
+      })
+    );
+
+export function apiPurchaseOrderReceiptResponseLotWarningFromJSON(
+  jsonString: string,
+): SafeParseResult<
+  ApiPurchaseOrderReceiptResponseLotWarning,
+  SDKValidationError
+> {
+  return safeParse(
+    jsonString,
+    (x) =>
+      ApiPurchaseOrderReceiptResponseLotWarning$inboundSchema.parse(
+        JSON.parse(x),
+      ),
+    `Failed to parse 'ApiPurchaseOrderReceiptResponseLotWarning' from JSON`,
+  );
+}
+
+/** @internal */
 export const AffectedProduct$inboundSchema: z.ZodMiniType<
   AffectedProduct,
   unknown
-> = z.pipe(
-  z.object({
-    sku: types.string(),
-    warehouse_id: types.string(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "warehouse_id": "warehouseId",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      sku: types.string(),
+      warehouse_id: types.string(),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "warehouse_id": "warehouseId",
+      });
+    }),
+  )
 );
 
 export function affectedProductFromJSON(
@@ -65,20 +162,57 @@ export function affectedProductFromJSON(
 }
 
 /** @internal */
-export const Receipt$inboundSchema: z.ZodMiniType<Receipt, unknown> = z.pipe(
-  z.object({
-    object: types.literal("receipt"),
-    id: types.string(),
-    purchase_order_warehouse_id: types.nullable(types.string()),
-    affected_products: z.array(z.lazy(() => AffectedProduct$inboundSchema)),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "purchase_order_warehouse_id": "purchaseOrderWarehouseId",
-      "affected_products": "affectedProducts",
-    });
-  }),
-);
+export const Receipt$inboundSchema: z.ZodMiniType<Receipt, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.pipe(
+      z.object({
+        object: types.literal("receipt"),
+        id: types.string(),
+        items: z.array(ApiSharedObject0440e56bc9$inboundSchema),
+        purchase_order_warehouse_id: types.nullable(types.string()),
+        lot_warnings: types.optional(z.array(discriminatedUnion("code", {
+          missing_lot_number: z.intersection(
+            ApiSharedObjectc0c8b78900$inboundSchema,
+            z.object({ code: z.literal("missing_lot_number") }),
+          ),
+          serial_already_on_hand: z.intersection(
+            ApiSharedObjectc0c8b78900$inboundSchema,
+            z.object({ code: z.literal("serial_already_on_hand") }),
+          ),
+          unknown_lot_number: z.intersection(
+            ApiSharedObjectc0c8b78900$inboundSchema,
+            z.object({ code: z.literal("unknown_lot_number") }),
+          ),
+          lot_number_not_on_hand: z.intersection(
+            ApiSharedObjectc0c8b78900$inboundSchema,
+            z.object({ code: z.literal("lot_number_not_on_hand") }),
+          ),
+          return_lot_differs: z.intersection(
+            ApiSharedObjectc0c8b78900$inboundSchema,
+            z.object({ code: z.literal("return_lot_differs") }),
+          ),
+          received_lot_differs: z.intersection(
+            ApiSharedObjectc0c8b78900$inboundSchema,
+            z.object({ code: z.literal("received_lot_differs") }),
+          ),
+          numbers_ignored_printed_on_invoice: z.intersection(
+            ApiSharedObjectc0c8b78900$inboundSchema,
+            z.object({ code: z.literal("numbers_ignored_printed_on_invoice") }),
+          ),
+          numbers_ignored_already_received:
+            ApiSharedObjectb659f2ee96$inboundSchema,
+        }))),
+        affected_products: z.array(z.lazy(() => AffectedProduct$inboundSchema)),
+      }),
+      z.transform((v) => {
+        return remap$(v, {
+          "purchase_order_warehouse_id": "purchaseOrderWarehouseId",
+          "lot_warnings": "lotWarnings",
+          "affected_products": "affectedProducts",
+        });
+      }),
+    )
+  );
 
 export function receiptFromJSON(
   jsonString: string,
@@ -94,18 +228,20 @@ export function receiptFromJSON(
 export const ApiPurchaseOrderReceiptResponseData$inboundSchema: z.ZodMiniType<
   ApiPurchaseOrderReceiptResponseData,
   unknown
-> = z.pipe(
-  z.object({
-    receipt: z.lazy(() => Receipt$inboundSchema),
-    purchase_order: ApiSharedObjecta6cd4a0a4e$inboundSchema,
-    idempotent_replay: types.boolean(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "purchase_order": "purchaseOrder",
-      "idempotent_replay": "idempotentReplay",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      receipt: z.lazy(() => Receipt$inboundSchema),
+      purchase_order: ApiSharedObject5f7a7d7ad7$inboundSchema,
+      idempotent_replay: types.boolean(),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "purchase_order": "purchaseOrder",
+        "idempotent_replay": "idempotentReplay",
+      });
+    }),
+  )
 );
 
 export function apiPurchaseOrderReceiptResponseDataFromJSON(
@@ -123,17 +259,19 @@ export function apiPurchaseOrderReceiptResponseDataFromJSON(
 export const ApiPurchaseOrderReceiptResponse$inboundSchema: z.ZodMiniType<
   ApiPurchaseOrderReceiptResponse,
   unknown
-> = z.pipe(
-  z.object({
-    request_id: types.string(),
-    data: z.lazy(() => ApiPurchaseOrderReceiptResponseData$inboundSchema),
-    warnings: z.array(z.any()),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "request_id": "requestId",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      request_id: types.string(),
+      data: z.lazy(() => ApiPurchaseOrderReceiptResponseData$inboundSchema),
+      warnings: z.array(z.any()),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "request_id": "requestId",
+      });
+    }),
+  )
 );
 
 export function apiPurchaseOrderReceiptResponseFromJSON(

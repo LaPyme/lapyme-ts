@@ -18,16 +18,22 @@ let value: ApiSupplierDetailResponse = {
     taxId: "<id>",
     taxIdType: "<value>",
     taxCategory: "<value>",
-    paymentTermId: "<id>",
-    isActive: false,
-    country: "Greece",
+    paymentTermDays: 686878,
+    paymentTermLabel: "<value>",
+    paymentTermInstallmentDays: [
+      804611,
+    ],
+    isActive: true,
+    tags: [],
+    defaultAccountId: "609d7c5d-6220-41c1-9fbd-768a8fc67fdd",
+    country: "Angola",
     provinceId: "<id>",
-    city: "West Caterina",
-    address: "68473 Lake Drive",
+    city: "Port Leraburgh",
+    address: "250 Jamarcus Mount",
     apartment: "<value>",
-    postalCode: "08096",
-    createdAt: new Date("2026-06-17T11:47:26.140Z"),
-    updatedAt: new Date("2025-06-06T17:36:15.305Z"),
+    postalCode: "12251-7222",
+    createdAt: new Date("2025-02-08T13:06:50.735Z"),
+    updatedAt: new Date("2026-08-10T06:18:17.446Z"),
   },
 };
 ```
@@ -37,4 +43,4 @@ let value: ApiSupplierDetailResponse = {
 | Field                                                                        | Type                                                                         | Required                                                                     | Description                                                                  |
 | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
 | `requestId`                                                                  | *string*                                                                     | :heavy_check_mark:                                                           | N/A                                                                          |
-| `data`                                                                       | [models.ApiSharedObjectac822ca2fd](../models/api-shared-objectac822ca2fd.md) | :heavy_check_mark:                                                           | N/A                                                                          |
+| `data`                                                                       | [models.ApiSharedObject22d695f6dd](../models/api-shared-object22d695f6dd.md) | :heavy_check_mark:                                                           | N/A                                                                          |

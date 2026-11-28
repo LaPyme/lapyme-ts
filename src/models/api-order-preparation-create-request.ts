@@ -5,37 +5,44 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import {
-  ApiSharedObject1dbe66a4f8,
-  ApiSharedObject1dbe66a4f8$Outbound,
-  ApiSharedObject1dbe66a4f8$outboundSchema,
-} from "./api-shared-object1dbe66a4f8.js";
+  ApiSharedObjectc2dbdba87b,
+  ApiSharedObjectc2dbdba87b$Outbound,
+  ApiSharedObjectc2dbdba87b$outboundSchema,
+} from "./api-shared-objectc2dbdba87b.js";
 
 export type ApiOrderPreparationCreateRequest = {
+  preparationGroupId?: string | undefined;
   warehouseId?: string | undefined;
-  items: Array<ApiSharedObject1dbe66a4f8>;
+  items: Array<ApiSharedObjectc2dbdba87b>;
 };
 
 /** @internal */
 export type ApiOrderPreparationCreateRequest$Outbound = {
+  preparation_group_id?: string | undefined;
   warehouse_id?: string | undefined;
-  items: Array<ApiSharedObject1dbe66a4f8$Outbound>;
+  items: Array<ApiSharedObjectc2dbdba87b$Outbound>;
 };
 
 /** @internal */
 export const ApiOrderPreparationCreateRequest$outboundSchema: z.ZodMiniType<
   ApiOrderPreparationCreateRequest$Outbound,
   ApiOrderPreparationCreateRequest
-> = z.pipe(
-  z.object({
-    warehouseId: z.optional(z.string()),
-    items: z.array(ApiSharedObject1dbe66a4f8$outboundSchema),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      warehouseId: "warehouse_id",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      preparationGroupId: z.optional(z.string()),
+      warehouseId: z.optional(z.string()),
+      items: z.array(ApiSharedObjectc2dbdba87b$outboundSchema),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        preparationGroupId: "preparation_group_id",
+        warehouseId: "warehouse_id",
+      });
+    }),
+  )
 );
 
 export function apiOrderPreparationCreateRequestToJSON(

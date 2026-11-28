@@ -32,7 +32,7 @@ import { Result } from "../types/fp.js";
  * Crear movimiento de stock
  *
  * @remarks
- * Registra un movimiento manual para ajustar stock de un producto o variante.
+ * Registra un movimiento manual para ajustar stock. En mode replace, items[].expected_quantity compara el stock disponible observado con el valor actual bajo bloqueo. Si falta, el reemplazo es incondicional. En mode delta, expected_quantity no se acepta. Para un combo, compará la cantidad disponible del combo.
  */
 export function stockMovementsCreateStockMovement(
   client: LapymeCore,
@@ -186,6 +186,7 @@ async function $do(
     M.jsonErr([400, 401, 403, 404, 409], errors.ApiErrorEnvelope$inboundSchema),
     M.jsonErr(429, errors.ApiErrorEnvelope$inboundSchema, { hdrs: true }),
     M.jsonErr(500, errors.ApiErrorEnvelope$inboundSchema),
+    M.jsonErr(503, errors.ApiErrorEnvelope$inboundSchema, { hdrs: true }),
     M.fail("4XX"),
     M.fail("5XX"),
   )(response, req, { extraFields: responseFields });

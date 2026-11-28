@@ -5,12 +5,17 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
+import {
+  ApiSharedObject0440e56bc9,
+  ApiSharedObject0440e56bc9$inboundSchema,
+} from "./api-shared-object0440e56bc9.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type ApiStockMovementResponseData = {
+  items?: Array<ApiSharedObject0440e56bc9> | undefined;
   stockMovementId: string;
   transactionGroupId: string;
   affectedProductIds: Array<string>;
@@ -27,21 +32,24 @@ export type ApiStockMovementResponse = {
 export const ApiStockMovementResponseData$inboundSchema: z.ZodMiniType<
   ApiStockMovementResponseData,
   unknown
-> = z.pipe(
-  z.object({
-    stock_movement_id: types.string(),
-    transaction_group_id: types.string(),
-    affected_product_ids: z.array(types.string()),
-    idempotent_replay: types.boolean(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "stock_movement_id": "stockMovementId",
-      "transaction_group_id": "transactionGroupId",
-      "affected_product_ids": "affectedProductIds",
-      "idempotent_replay": "idempotentReplay",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      items: types.optional(z.array(ApiSharedObject0440e56bc9$inboundSchema)),
+      stock_movement_id: types.string(),
+      transaction_group_id: types.string(),
+      affected_product_ids: z.array(types.string()),
+      idempotent_replay: types.boolean(),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "stock_movement_id": "stockMovementId",
+        "transaction_group_id": "transactionGroupId",
+        "affected_product_ids": "affectedProductIds",
+        "idempotent_replay": "idempotentReplay",
+      });
+    }),
+  )
 );
 
 export function apiStockMovementResponseDataFromJSON(
@@ -58,17 +66,19 @@ export function apiStockMovementResponseDataFromJSON(
 export const ApiStockMovementResponse$inboundSchema: z.ZodMiniType<
   ApiStockMovementResponse,
   unknown
-> = z.pipe(
-  z.object({
-    request_id: types.string(),
-    data: z.lazy(() => ApiStockMovementResponseData$inboundSchema),
-    warnings: z.array(z.any()),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "request_id": "requestId",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      request_id: types.string(),
+      data: z.lazy(() => ApiStockMovementResponseData$inboundSchema),
+      warnings: z.array(z.any()),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "request_id": "requestId",
+      });
+    }),
+  )
 );
 
 export function apiStockMovementResponseFromJSON(

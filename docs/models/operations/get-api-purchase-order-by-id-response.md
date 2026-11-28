@@ -6,14 +6,7 @@
 import { GetApiPurchaseOrderByIdResponse } from "lapyme/models/operations";
 
 let value: GetApiPurchaseOrderByIdResponse = {
-  headers: {
-    "key": [],
-    "key1": [
-      "<value 1>",
-      "<value 2>",
-      "<value 3>",
-    ],
-  },
+  headers: {},
   result: {
     requestId: "<id>",
     data: {
@@ -26,30 +19,64 @@ let value: GetApiPurchaseOrderByIdResponse = {
       expectedDate: null,
       currency: "Pataca",
       supplier: {
-        id: "ebacdb2a-1c5e-4eee-a30f-5983b0f8c084",
+        id: "a45a7fd5-160a-41a7-baa2-5367b011b0b2",
         name: "<value>",
         description:
-          "fairly which pro upliftingly but super whereas guacamole between",
-        email: "Monserrat_Kovacek@yahoo.com",
-        phone: "1-498-218-0382 x3346",
+          "cod stable snow our famously switchboard as from likewise stiff",
+        email: null,
+        phone: "802.394.0907",
         taxIdType: "<value>",
         taxId: "<id>",
-        taxCategory: "<value>",
-        paymentTermId: "<id>",
-        address: "298 Goldner Views",
+        taxCategory: null,
+        paymentTermDays: 187571,
+        address: "47379 Keeling Courts",
         apartment: "<value>",
-        city: "South Marcelinofurt",
-        province: "<value>",
-        postalCode: "46341",
+        city: "Port Vincenza",
+        province: null,
+        postalCode: "78887",
       },
       warehouse: {
-        id: "1d81895d-9d7f-44ea-9636-e0e6181dee4f",
+        id: "fa73eef2-2e9d-414f-a84d-18f683cead94",
         name: "<value>",
       },
-      createdAt: new Date("2026-05-06T11:30:52.684Z"),
-      warehouseId: "26f43006-9dbb-4033-8332-b7eb47bae627",
+      createdAt: new Date("2026-03-27T15:33:20.950Z"),
+      tags: [
+        {
+          object: "tag",
+          id: "75a399b6-0212-4a82-9b75-ca998fb65f13",
+          scope: "purchase_order",
+          name: "<value>",
+          slug: "<value>",
+          color: "teal",
+          description: "huzzah heavenly until by t-shirt geez however",
+          archivedAt: new Date("2026-12-06T07:31:36.084Z"),
+          createdAt: new Date("2026-08-04T02:33:18.776Z"),
+          updatedAt: new Date("2026-03-09T19:55:25.442Z"),
+        },
+      ],
+      warehouseId: "db2a1c5e-eee3-40f5-a983-b0f8c0848ac9",
       notes: "<value>",
-      items: [],
+      items: [
+        {
+          id: "043432f7-1dfa-4400-93b0-b2207e252c94",
+          orderedQuantity: 4295.35,
+          receivedQuantity: 3130.2,
+          expectedUnitCost: 484659,
+          product: {
+            id: "bd322476-c496-49b7-a68b-a81e5a8b078c",
+            name: "<value>",
+            sku: "<value>",
+            supplierSku: "<value>",
+            productType: "kit",
+            variantOptions: {},
+            optionNames: [
+              "<value 1>",
+              "<value 2>",
+              "<value 3>",
+            ],
+          },
+        },
+      ],
     },
   },
 };
