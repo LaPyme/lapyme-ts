@@ -5,7 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import {
@@ -16,6 +16,10 @@ import {
   ApiSharedObject8aeeceaf0f,
   ApiSharedObject8aeeceaf0f$inboundSchema,
 } from "./api-shared-object8aeeceaf0f.js";
+import {
+  ApiSharedObjected3905a55b,
+  ApiSharedObjected3905a55b$inboundSchema,
+} from "./api-shared-objected3905a55b.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type ApiPurchaseOrderListResponseData = {
@@ -30,6 +34,7 @@ export type ApiPurchaseOrderListResponseData = {
   supplier: ApiSharedObject8aeeceaf0f | null;
   warehouse: ApiSharedObject8aeeceaf0f | null;
   createdAt: Date;
+  tags: Array<ApiSharedObjected3905a55b>;
 };
 
 export type ApiPurchaseOrderListResponse = {
@@ -41,29 +46,32 @@ export type ApiPurchaseOrderListResponse = {
 export const ApiPurchaseOrderListResponseData$inboundSchema: z.ZodMiniType<
   ApiPurchaseOrderListResponseData,
   unknown
-> = z.pipe(
-  z.object({
-    object: types.literal("purchase_order"),
-    id: types.string(),
-    order_number: types.number(),
-    formatted_order_number: types.nullable(types.string()),
-    status: ApiSharedEnumf2073aa092$inboundSchema,
-    order_date: types.date(),
-    expected_date: types.nullable(types.date()),
-    currency: types.string(),
-    supplier: types.nullable(ApiSharedObject8aeeceaf0f$inboundSchema),
-    warehouse: types.nullable(ApiSharedObject8aeeceaf0f$inboundSchema),
-    created_at: types.date(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "order_number": "orderNumber",
-      "formatted_order_number": "formattedOrderNumber",
-      "order_date": "orderDate",
-      "expected_date": "expectedDate",
-      "created_at": "createdAt",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      object: types.literal("purchase_order"),
+      id: types.string(),
+      order_number: types.number(),
+      formatted_order_number: types.nullable(types.string()),
+      status: ApiSharedEnumf2073aa092$inboundSchema,
+      order_date: types.date(),
+      expected_date: types.nullable(types.date()),
+      currency: types.string(),
+      supplier: types.nullable(ApiSharedObject8aeeceaf0f$inboundSchema),
+      warehouse: types.nullable(ApiSharedObject8aeeceaf0f$inboundSchema),
+      created_at: types.date(),
+      tags: z.array(ApiSharedObjected3905a55b$inboundSchema),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "order_number": "orderNumber",
+        "formatted_order_number": "formattedOrderNumber",
+        "order_date": "orderDate",
+        "expected_date": "expectedDate",
+        "created_at": "createdAt",
+      });
+    }),
+  )
 );
 
 export function apiPurchaseOrderListResponseDataFromJSON(
@@ -80,16 +88,20 @@ export function apiPurchaseOrderListResponseDataFromJSON(
 export const ApiPurchaseOrderListResponse$inboundSchema: z.ZodMiniType<
   ApiPurchaseOrderListResponse,
   unknown
-> = z.pipe(
-  z.object({
-    request_id: types.string(),
-    data: z.array(z.lazy(() => ApiPurchaseOrderListResponseData$inboundSchema)),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "request_id": "requestId",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      request_id: types.string(),
+      data: z.array(
+        z.lazy(() => ApiPurchaseOrderListResponseData$inboundSchema),
+      ),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "request_id": "requestId",
+      });
+    }),
+  )
 );
 
 export function apiPurchaseOrderListResponseFromJSON(

@@ -5,8 +5,24 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
+import {
+  ApiSharedObject7b350f629a,
+  ApiSharedObject7b350f629a$Outbound,
+  ApiSharedObject7b350f629a$outboundSchema,
+} from "./api-shared-object7b350f629a.js";
+import {
+  ApiSharedObjecta5d1522378,
+  ApiSharedObjecta5d1522378$Outbound,
+  ApiSharedObjecta5d1522378$outboundSchema,
+} from "./api-shared-objecta5d1522378.js";
 
 export type ApiStockTransferRequestItem = {
+  /**
+   * Select an inventory number by code or lot_id. Serial quantity is one. Unavailable outbound codes return line warnings.
+   */
+  lots?: Array<ApiSharedObjecta5d1522378> | undefined;
+  componentLots?: Array<ApiSharedObject7b350f629a> | undefined;
   productId: string;
   quantity: number;
 };
@@ -14,7 +30,10 @@ export type ApiStockTransferRequestItem = {
 export type ApiStockTransferRequest = {
   sourceWarehouseId: string;
   targetWarehouseId: string;
-  transferDate: Date;
+  /**
+   * Fecha ISO (YYYY-MM-DD) u hora ISO 8601 completa.
+   */
+  transferDate: string;
   notes?: string | undefined;
   items: Array<ApiStockTransferRequestItem>;
   saveAsDraft?: boolean | undefined;
@@ -23,6 +42,8 @@ export type ApiStockTransferRequest = {
 
 /** @internal */
 export type ApiStockTransferRequestItem$Outbound = {
+  lots?: Array<ApiSharedObjecta5d1522378$Outbound> | undefined;
+  component_lots?: Array<ApiSharedObject7b350f629a$Outbound> | undefined;
   product_id: string;
   quantity: number;
 };
@@ -31,16 +52,23 @@ export type ApiStockTransferRequestItem$Outbound = {
 export const ApiStockTransferRequestItem$outboundSchema: z.ZodMiniType<
   ApiStockTransferRequestItem$Outbound,
   ApiStockTransferRequestItem
-> = z.pipe(
-  z.object({
-    productId: z.string(),
-    quantity: z.int(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      productId: "product_id",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      lots: z.optional(z.array(ApiSharedObjecta5d1522378$outboundSchema)),
+      componentLots: z.optional(
+        z.array(ApiSharedObject7b350f629a$outboundSchema),
+      ),
+      productId: z.string(),
+      quantity: z.int(),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        componentLots: "component_lots",
+        productId: "product_id",
+      });
+    }),
+  )
 );
 
 export function apiStockTransferRequestItemToJSON(
@@ -68,25 +96,27 @@ export type ApiStockTransferRequest$Outbound = {
 export const ApiStockTransferRequest$outboundSchema: z.ZodMiniType<
   ApiStockTransferRequest$Outbound,
   ApiStockTransferRequest
-> = z.pipe(
-  z.object({
-    sourceWarehouseId: z.string(),
-    targetWarehouseId: z.string(),
-    transferDate: z.pipe(z.date(), z.transform(v => v.toISOString())),
-    notes: z.optional(z.string()),
-    items: z.array(z.lazy(() => ApiStockTransferRequestItem$outboundSchema)),
-    saveAsDraft: z.optional(z.boolean()),
-    markAsReceived: z.optional(z.boolean()),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      sourceWarehouseId: "source_warehouse_id",
-      targetWarehouseId: "target_warehouse_id",
-      transferDate: "transfer_date",
-      saveAsDraft: "save_as_draft",
-      markAsReceived: "mark_as_received",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      sourceWarehouseId: z.string(),
+      targetWarehouseId: z.string(),
+      transferDate: z.string(),
+      notes: z.optional(z.string()),
+      items: z.array(z.lazy(() => ApiStockTransferRequestItem$outboundSchema)),
+      saveAsDraft: z.optional(z.boolean()),
+      markAsReceived: z.optional(z.boolean()),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        sourceWarehouseId: "source_warehouse_id",
+        targetWarehouseId: "target_warehouse_id",
+        transferDate: "transfer_date",
+        saveAsDraft: "save_as_draft",
+        markAsReceived: "mark_as_received",
+      });
+    }),
+  )
 );
 
 export function apiStockTransferRequestToJSON(

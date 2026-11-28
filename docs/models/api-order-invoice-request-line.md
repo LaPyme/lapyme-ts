@@ -7,7 +7,7 @@ import { ApiOrderInvoiceRequestLine } from "lapyme/models";
 
 let value: ApiOrderInvoiceRequestLine = {
   orderLineId: "693aa504-a183-4a3d-813a-50805658157d",
-  quantityToInvoice: 832927,
+  quantityToInvoice: 8329.27,
 };
 ```
 

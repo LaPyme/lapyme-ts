@@ -5,11 +5,39 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
+import {
+  ApiSharedObject601104d793,
+  ApiSharedObject601104d793$Outbound,
+  ApiSharedObject601104d793$outboundSchema,
+} from "./api-shared-object601104d793.js";
+import {
+  ApiSharedObject937856e041,
+  ApiSharedObject937856e041$Outbound,
+  ApiSharedObject937856e041$outboundSchema,
+} from "./api-shared-object937856e041.js";
 
 /**
- * Actualizacion parcial de metadatos operativos de venta. Envia al menos un campo. integration_source e integration_id deben enviarse juntos; para limpiar la referencia externa, envia ambos en null.
+ * Actualizá los vencimientos y otros metadatos operativos de la venta. Enviá al menos un campo. integration_source e integration_id deben enviarse juntos; para limpiar la referencia externa, envia ambos en null.
  */
 export type ApiSaleMetadataPatchRequest = {
+  /**
+   * Vencimientos en centavos de la moneda de la venta. Si omitís installments y payment_term_installment_days, se usa el plazo del cliente al crear y se conservan las cuotas al editar. Mandá null o [] para quitar las cuotas y conservar el vencimiento final, o una fila para fijar un vencimiento único. Si enviás due_date, tiene que coincidir con la última fila.
+   */
+  installments?: Array<ApiSharedObject937856e041> | null | undefined;
+  /**
+   * Días desde invoice_date (o la fecha de factura guardada al editar), en orden estrictamente creciente y sin repetir. Divide el importe original a cuenta corriente después de pagos y créditos de la creación, con el resto en la última cuota. Un solo plazo fija un vencimiento y quita las cuotas. [0] usa la fecha de factura. Tiene prioridad sobre el plazo del cliente. Omití installments. Si enviás due_date, debe coincidir con la última fecha. Las notas de crédito no admiten plazos y las FCE aceptan un solo día.
+   */
+  paymentTermInstallmentDays?: Array<number> | undefined;
+  /**
+   * Fecha de factura de una venta fiscal pendiente. Si enviás un plazo, se usa esta fecha para calcular los vencimientos nuevos. Para cambiar la fecha de un comprobante no fiscal, editá el comprobante completo.
+   */
+  invoiceDate?: Date | undefined;
+  /**
+   * Vencimiento final. Si la venta tiene cuotas, enviá los vencimientos nuevos o un plazo que coincida con esta fecha final.
+   */
+  dueDate?: Date | undefined;
+  metafields?: Array<ApiSharedObject601104d793> | undefined;
   /**
    * Notas operativas de la venta. Enviar null o string vacio para limpiar.
    */
@@ -23,13 +51,18 @@ export type ApiSaleMetadataPatchRequest = {
    */
   integrationId?: string | null | undefined;
   /**
-   * ID del miembro/vendedor que debe quedar asociado a la venta.
+   * ID de usuario devuelto por GET /api/v1/members. Por compatibilidad se acepta el ID de membresía anterior. El miembro debe estar activo y tener org:sales:write.
    */
   salespersonId?: string | undefined;
 };
 
 /** @internal */
 export type ApiSaleMetadataPatchRequest$Outbound = {
+  installments?: Array<ApiSharedObject937856e041$Outbound> | null | undefined;
+  payment_term_installment_days?: Array<number> | undefined;
+  invoice_date?: string | undefined;
+  due_date?: string | undefined;
+  metafields?: Array<ApiSharedObject601104d793$Outbound> | undefined;
   notes?: string | null | undefined;
   integration_source?: string | null | undefined;
   integration_id?: string | null | undefined;
@@ -40,20 +73,38 @@ export type ApiSaleMetadataPatchRequest$Outbound = {
 export const ApiSaleMetadataPatchRequest$outboundSchema: z.ZodMiniType<
   ApiSaleMetadataPatchRequest$Outbound,
   ApiSaleMetadataPatchRequest
-> = z.pipe(
-  z.object({
-    notes: z.optional(z.nullable(z.string())),
-    integrationSource: z.optional(z.nullable(z.string())),
-    integrationId: z.optional(z.nullable(z.string())),
-    salespersonId: z.optional(z.string()),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      integrationSource: "integration_source",
-      integrationId: "integration_id",
-      salespersonId: "salesperson_id",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      installments: z.optional(
+        z.nullable(z.array(ApiSharedObject937856e041$outboundSchema)),
+      ),
+      paymentTermInstallmentDays: z.optional(z.array(z.int())),
+      invoiceDate: z.optional(z.pipe(
+        z.date(),
+        z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
+      )),
+      dueDate: z.optional(z.pipe(
+        z.date(),
+        z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
+      )),
+      metafields: z.optional(z.array(ApiSharedObject601104d793$outboundSchema)),
+      notes: z.optional(z.nullable(z.string())),
+      integrationSource: z.optional(z.nullable(z.string())),
+      integrationId: z.optional(z.nullable(z.string())),
+      salespersonId: z.optional(z.string()),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        paymentTermInstallmentDays: "payment_term_installment_days",
+        invoiceDate: "invoice_date",
+        dueDate: "due_date",
+        integrationSource: "integration_source",
+        integrationId: "integration_id",
+        salespersonId: "salesperson_id",
+      });
+    }),
+  )
 );
 
 export function apiSaleMetadataPatchRequestToJSON(

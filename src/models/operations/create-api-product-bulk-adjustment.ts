@@ -5,7 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
-import { safeParse } from "../../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import * as models from "../index.js";
@@ -39,18 +39,20 @@ export const CreateApiProductBulkAdjustmentRequest$outboundSchema:
   z.ZodMiniType<
     CreateApiProductBulkAdjustmentRequest$Outbound,
     CreateApiProductBulkAdjustmentRequest
-  > = z.pipe(
-    z.object({
-      idempotencyKey: z.string(),
-      xRequestId: z.optional(z.string()),
-      body: models.ApiProductBulkAdjustmentRequest$outboundSchema,
-    }),
-    z.transform((v) => {
-      return remap$(v, {
-        idempotencyKey: "Idempotency-Key",
-        xRequestId: "X-Request-Id",
-      });
-    }),
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.pipe(
+      z.object({
+        idempotencyKey: z.string(),
+        xRequestId: z.optional(z.string()),
+        body: models.ApiProductBulkAdjustmentRequest$outboundSchema,
+      }),
+      z.transform((v) => {
+        return remap$(v, {
+          idempotencyKey: "Idempotency-Key",
+          xRequestId: "X-Request-Id",
+        });
+      }),
+    )
   );
 
 export function createApiProductBulkAdjustmentRequestToJSON(
@@ -65,18 +67,21 @@ export function createApiProductBulkAdjustmentRequestToJSON(
 
 /** @internal */
 export const CreateApiProductBulkAdjustmentResponse$inboundSchema:
-  z.ZodMiniType<CreateApiProductBulkAdjustmentResponse, unknown> = z.pipe(
-    z.object({
-      Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
-      Result: models.ApiProductBulkAdjustmentResponse$inboundSchema,
-    }),
-    z.transform((v) => {
-      return remap$(v, {
-        "Headers": "headers",
-        "Result": "result",
-      });
-    }),
-  );
+  z.ZodMiniType<CreateApiProductBulkAdjustmentResponse, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.pipe(
+        z.object({
+          Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
+          Result: models.ApiProductBulkAdjustmentResponse$inboundSchema,
+        }),
+        z.transform((v) => {
+          return remap$(v, {
+            "Headers": "headers",
+            "Result": "result",
+          });
+        }),
+      )
+    );
 
 export function createApiProductBulkAdjustmentResponseFromJSON(
   jsonString: string,

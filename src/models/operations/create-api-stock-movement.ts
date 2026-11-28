@@ -5,7 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
-import { safeParse } from "../../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import * as models from "../index.js";
@@ -38,18 +38,20 @@ export type CreateApiStockMovementRequest$Outbound = {
 export const CreateApiStockMovementRequest$outboundSchema: z.ZodMiniType<
   CreateApiStockMovementRequest$Outbound,
   CreateApiStockMovementRequest
-> = z.pipe(
-  z.object({
-    idempotencyKey: z.string(),
-    xRequestId: z.optional(z.string()),
-    body: models.ApiStockMovementRequest$outboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      idempotencyKey: "Idempotency-Key",
-      xRequestId: "X-Request-Id",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      idempotencyKey: z.string(),
+      xRequestId: z.optional(z.string()),
+      body: models.ApiStockMovementRequest$outboundSchema,
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        idempotencyKey: "Idempotency-Key",
+        xRequestId: "X-Request-Id",
+      });
+    }),
+  )
 );
 
 export function createApiStockMovementRequestToJSON(
@@ -66,17 +68,19 @@ export function createApiStockMovementRequestToJSON(
 export const CreateApiStockMovementResponse$inboundSchema: z.ZodMiniType<
   CreateApiStockMovementResponse,
   unknown
-> = z.pipe(
-  z.object({
-    Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
-    Result: models.ApiStockMovementResponse$inboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "Headers": "headers",
-      "Result": "result",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
+      Result: models.ApiStockMovementResponse$inboundSchema,
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "Headers": "headers",
+        "Result": "result",
+      });
+    }),
+  )
 );
 
 export function createApiStockMovementResponseFromJSON(

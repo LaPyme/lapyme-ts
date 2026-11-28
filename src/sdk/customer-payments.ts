@@ -33,7 +33,7 @@ export class CustomerPayments extends ClientSDK {
    * Crear cobranza de cliente
    *
    * @remarks
-   * Registra una cobranza de cliente con uno o más métodos de pago, aplicaciones a ventas o cuenta corriente, retenciones y datos de cheque cuando corresponde.
+   * Registra una cobranza de cliente con uno o más métodos de pago, aplicaciones a ventas o cuenta corriente, retenciones y datos de cheque cuando corresponde. Reintentar con la misma Idempotency-Key y los mismos datos devuelve la cobranza original con idempotent_replay en true y no registra otra; reutilizar la clave con datos distintos devuelve 409 IDEMPOTENCY_CONFLICT. Ante un 503, reintentá con la misma clave.
    */
   async createCustomerPayment(
     request: operations.CreateApiCustomerPaymentRequest,

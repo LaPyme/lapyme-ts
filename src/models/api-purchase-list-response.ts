@@ -5,7 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import {
@@ -13,12 +13,34 @@ import {
   ApiSharedEnum8d46e1ec20$inboundSchema,
 } from "./api-shared-enum8d46e1ec20.js";
 import {
-  ApiSharedObjectf28d5cf256,
-  ApiSharedObjectf28d5cf256$inboundSchema,
-} from "./api-shared-objectf28d5cf256.js";
+  ApiSharedObject1112460e21,
+  ApiSharedObject1112460e21$inboundSchema,
+} from "./api-shared-object1112460e21.js";
+import {
+  ApiSharedObject524ac46285,
+  ApiSharedObject524ac46285$inboundSchema,
+} from "./api-shared-object524ac46285.js";
+import {
+  ApiSharedObject91cc200368,
+  ApiSharedObject91cc200368$inboundSchema,
+} from "./api-shared-object91cc200368.js";
+import {
+  ApiSharedObjected3905a55b,
+  ApiSharedObjected3905a55b$inboundSchema,
+} from "./api-shared-objected3905a55b.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type ApiPurchaseListResponseData = {
+  installments: Array<ApiSharedObject524ac46285>;
+  nextOpenInstallment: ApiSharedObject1112460e21 | null;
+  /**
+   * Saldo vencido, en centavos.
+   */
+  overdueOpenTotal: number;
+  /**
+   * Saldo por encima del cronograma, en centavos.
+   */
+  balanceAboveSchedule: number;
   object: "purchase";
   id: string;
   voucherType: string;
@@ -44,7 +66,8 @@ export type ApiPurchaseListResponseData = {
    */
   supplierInvoiceNumber: string | null;
   createdAt: Date;
-  supplier: ApiSharedObjectf28d5cf256 | null;
+  supplier: ApiSharedObject91cc200368 | null;
+  tags: Array<ApiSharedObjected3905a55b>;
 };
 
 export type ApiPurchaseListResponse = {
@@ -66,35 +89,47 @@ export type ApiPurchaseListResponse = {
 export const ApiPurchaseListResponseData$inboundSchema: z.ZodMiniType<
   ApiPurchaseListResponseData,
   unknown
-> = z.pipe(
-  z.object({
-    object: types.literal("purchase"),
-    id: types.string(),
-    voucher_type: types.string(),
-    invoice_date: types.nullable(types.string()),
-    account_date: types.nullable(types.string()),
-    due_date: types.nullable(types.string()),
-    total: types.nullable(types.number()),
-    balance: types.nullable(types.number()),
-    warehouse_id: types.nullable(types.string()),
-    currency: types.string(),
-    exchange_rate: types.string(),
-    supplier_invoice_number: types.nullable(types.string()),
-    created_at: types.date(),
-    supplier: types.nullable(ApiSharedObjectf28d5cf256$inboundSchema),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "voucher_type": "voucherType",
-      "invoice_date": "invoiceDate",
-      "account_date": "accountDate",
-      "due_date": "dueDate",
-      "warehouse_id": "warehouseId",
-      "exchange_rate": "exchangeRate",
-      "supplier_invoice_number": "supplierInvoiceNumber",
-      "created_at": "createdAt",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      installments: z.array(ApiSharedObject524ac46285$inboundSchema),
+      next_open_installment: types.nullable(
+        ApiSharedObject1112460e21$inboundSchema,
+      ),
+      overdue_open_total: types.number(),
+      balance_above_schedule: types.number(),
+      object: types.literal("purchase"),
+      id: types.string(),
+      voucher_type: types.string(),
+      invoice_date: types.nullable(types.string()),
+      account_date: types.nullable(types.string()),
+      due_date: types.nullable(types.string()),
+      total: types.nullable(types.number()),
+      balance: types.nullable(types.number()),
+      warehouse_id: types.nullable(types.string()),
+      currency: types.string(),
+      exchange_rate: types.string(),
+      supplier_invoice_number: types.nullable(types.string()),
+      created_at: types.date(),
+      supplier: types.nullable(ApiSharedObject91cc200368$inboundSchema),
+      tags: z.array(ApiSharedObjected3905a55b$inboundSchema),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "next_open_installment": "nextOpenInstallment",
+        "overdue_open_total": "overdueOpenTotal",
+        "balance_above_schedule": "balanceAboveSchedule",
+        "voucher_type": "voucherType",
+        "invoice_date": "invoiceDate",
+        "account_date": "accountDate",
+        "due_date": "dueDate",
+        "warehouse_id": "warehouseId",
+        "exchange_rate": "exchangeRate",
+        "supplier_invoice_number": "supplierInvoiceNumber",
+        "created_at": "createdAt",
+      });
+    }),
+  )
 );
 
 export function apiPurchaseListResponseDataFromJSON(
@@ -111,22 +146,24 @@ export function apiPurchaseListResponseDataFromJSON(
 export const ApiPurchaseListResponse$inboundSchema: z.ZodMiniType<
   ApiPurchaseListResponse,
   unknown
-> = z.pipe(
-  z.object({
-    request_id: types.string(),
-    data: z.array(z.lazy(() => ApiPurchaseListResponseData$inboundSchema)),
-    has_more: types.boolean(),
-    next_cursor: types.nullable(types.string()),
-    object: ApiSharedEnum8d46e1ec20$inboundSchema,
-    url: types.string(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "request_id": "requestId",
-      "has_more": "hasMore",
-      "next_cursor": "nextCursor",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      request_id: types.string(),
+      data: z.array(z.lazy(() => ApiPurchaseListResponseData$inboundSchema)),
+      has_more: types.boolean(),
+      next_cursor: types.nullable(types.string()),
+      object: ApiSharedEnum8d46e1ec20$inboundSchema,
+      url: types.string(),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "request_id": "requestId",
+        "has_more": "hasMore",
+        "next_cursor": "nextCursor",
+      });
+    }),
+  )
 );
 
 export function apiPurchaseListResponseFromJSON(

@@ -5,6 +5,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type ReportPeriod = {
   /**
@@ -27,23 +28,25 @@ export type ReportPeriod$Outbound = {
 export const ReportPeriod$outboundSchema: z.ZodMiniType<
   ReportPeriod$Outbound,
   ReportPeriod
-> = z.pipe(
-  z.object({
-    startDate: z.pipe(
-      z.date(),
-      z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
-    ),
-    endDate: z.pipe(
-      z.date(),
-      z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
-    ),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      startDate: "start_date",
-      endDate: "end_date",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      startDate: z.pipe(
+        z.date(),
+        z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
+      ),
+      endDate: z.pipe(
+        z.date(),
+        z.transform(v => v.toISOString().slice(0, "YYYY-MM-DD".length)),
+      ),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        startDate: "start_date",
+        endDate: "end_date",
+      });
+    }),
+  )
 );
 
 export function reportPeriodToJSON(reportPeriod: ReportPeriod): string {

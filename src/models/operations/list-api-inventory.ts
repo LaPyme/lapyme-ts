@@ -5,19 +5,10 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
-import { safeParse } from "../../lib/schemas.js";
-import { ClosedEnum } from "../../types/enums.js";
+import { lazySchema as lazySchema$, safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import * as models from "../index.js";
-
-export const ProductType = {
-  Product: "product",
-  Combo: "combo",
-  Kit: "kit",
-  Service: "service",
-} as const;
-export type ProductType = ClosedEnum<typeof ProductType>;
 
 export type ListApiInventoryRequest = {
   /**
@@ -37,9 +28,13 @@ export type ListApiInventoryRequest = {
    */
   query?: string | undefined;
   /**
-   * Alias de query
+   * IDs de productos (grupos) o variantes, hasta 100. Se combinan con skus[] con OR y con el resto de los filtros con AND. Usalo para consultar el stock de varios productos conocidos en una sola llamada.
    */
-  search?: string | undefined;
+  ids?: Array<string> | undefined;
+  /**
+   * SKUs exactos, sin distinguir mayúsculas ni espacios alrededor, hasta 100. Se combinan con ids[] con OR y con el resto de los filtros con AND.
+   */
+  skus?: Array<string> | undefined;
   /**
    * IDs de categorías. Puede repetirse o enviarse separada por comas.
    */
@@ -47,7 +42,7 @@ export type ListApiInventoryRequest = {
   /**
    * Tipos de producto. Puede repetirse o enviarse separada por comas.
    */
-  productTypes?: Array<ProductType> | undefined;
+  productTypes?: Array<models.ApiSharedEnum5c962a8637> | undefined;
   /**
    * Regla para el filtro de stock disponible
    */
@@ -120,16 +115,13 @@ export type ListApiInventoryResponse = {
 };
 
 /** @internal */
-export const ProductType$outboundSchema: z.ZodMiniEnum<typeof ProductType> = z
-  .enum(ProductType);
-
-/** @internal */
 export type ListApiInventoryRequest$Outbound = {
   warehouse_id: string;
   cursor?: string | undefined;
   limit: number;
   query?: string | undefined;
-  search?: string | undefined;
+  "ids[]"?: Array<string> | undefined;
+  "skus[]"?: Array<string> | undefined;
   category_ids?: Array<string> | undefined;
   product_types?: Array<string> | undefined;
   available_rule?: string | undefined;
@@ -154,55 +146,62 @@ export type ListApiInventoryRequest$Outbound = {
 export const ListApiInventoryRequest$outboundSchema: z.ZodMiniType<
   ListApiInventoryRequest$Outbound,
   ListApiInventoryRequest
-> = z.pipe(
-  z.object({
-    warehouseId: z.string(),
-    cursor: z.optional(z.string()),
-    limit: z._default(z.int(), 50),
-    query: z.optional(z.string()),
-    search: z.optional(z.string()),
-    categoryIds: z.optional(z.array(z.string())),
-    productTypes: z.optional(z.array(ProductType$outboundSchema)),
-    availableRule: z.optional(models.ApiSharedEnuma4e4082638$outboundSchema),
-    availableAmount: z.optional(z.number()),
-    availableMin: z.optional(z.number()),
-    availableMax: z.optional(z.number()),
-    onHandRule: z.optional(models.ApiSharedEnuma4e4082638$outboundSchema),
-    onHandAmount: z.optional(z.number()),
-    onHandMin: z.optional(z.number()),
-    onHandMax: z.optional(z.number()),
-    reservedRule: z.optional(models.ApiSharedEnuma4e4082638$outboundSchema),
-    reservedAmount: z.optional(z.number()),
-    reservedMin: z.optional(z.number()),
-    reservedMax: z.optional(z.number()),
-    incomingRule: z.optional(models.ApiSharedEnuma4e4082638$outboundSchema),
-    incomingAmount: z.optional(z.number()),
-    incomingMin: z.optional(z.number()),
-    incomingMax: z.optional(z.number()),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      warehouseId: "warehouse_id",
-      categoryIds: "category_ids",
-      productTypes: "product_types",
-      availableRule: "available_rule",
-      availableAmount: "available_amount",
-      availableMin: "available_min",
-      availableMax: "available_max",
-      onHandRule: "on_hand_rule",
-      onHandAmount: "on_hand_amount",
-      onHandMin: "on_hand_min",
-      onHandMax: "on_hand_max",
-      reservedRule: "reserved_rule",
-      reservedAmount: "reserved_amount",
-      reservedMin: "reserved_min",
-      reservedMax: "reserved_max",
-      incomingRule: "incoming_rule",
-      incomingAmount: "incoming_amount",
-      incomingMin: "incoming_min",
-      incomingMax: "incoming_max",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      warehouseId: z.string(),
+      cursor: z.optional(z.string()),
+      limit: z._default(z.int(), 50),
+      query: z.optional(z.string()),
+      ids: z.optional(z.array(z.string())),
+      skus: z.optional(z.array(z.string())),
+      categoryIds: z.optional(z.array(z.string())),
+      productTypes: z.optional(
+        z.array(models.ApiSharedEnum5c962a8637$outboundSchema),
+      ),
+      availableRule: z.optional(models.ApiSharedEnuma4e4082638$outboundSchema),
+      availableAmount: z.optional(z.number()),
+      availableMin: z.optional(z.number()),
+      availableMax: z.optional(z.number()),
+      onHandRule: z.optional(models.ApiSharedEnuma4e4082638$outboundSchema),
+      onHandAmount: z.optional(z.number()),
+      onHandMin: z.optional(z.number()),
+      onHandMax: z.optional(z.number()),
+      reservedRule: z.optional(models.ApiSharedEnuma4e4082638$outboundSchema),
+      reservedAmount: z.optional(z.number()),
+      reservedMin: z.optional(z.number()),
+      reservedMax: z.optional(z.number()),
+      incomingRule: z.optional(models.ApiSharedEnuma4e4082638$outboundSchema),
+      incomingAmount: z.optional(z.number()),
+      incomingMin: z.optional(z.number()),
+      incomingMax: z.optional(z.number()),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        warehouseId: "warehouse_id",
+        ids: "ids[]",
+        skus: "skus[]",
+        categoryIds: "category_ids",
+        productTypes: "product_types",
+        availableRule: "available_rule",
+        availableAmount: "available_amount",
+        availableMin: "available_min",
+        availableMax: "available_max",
+        onHandRule: "on_hand_rule",
+        onHandAmount: "on_hand_amount",
+        onHandMin: "on_hand_min",
+        onHandMax: "on_hand_max",
+        reservedRule: "reserved_rule",
+        reservedAmount: "reserved_amount",
+        reservedMin: "reserved_min",
+        reservedMax: "reserved_max",
+        incomingRule: "incoming_rule",
+        incomingAmount: "incoming_amount",
+        incomingMin: "incoming_min",
+        incomingMax: "incoming_max",
+      });
+    }),
+  )
 );
 
 export function listApiInventoryRequestToJSON(
@@ -217,17 +216,19 @@ export function listApiInventoryRequestToJSON(
 export const ListApiInventoryResponse$inboundSchema: z.ZodMiniType<
   ListApiInventoryResponse,
   unknown
-> = z.pipe(
-  z.object({
-    Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
-    Result: models.ApiInventoryListResponse$inboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "Headers": "headers",
-      "Result": "result",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      Headers: z._default(z.record(z.string(), z.array(z.string())), {}),
+      Result: models.ApiInventoryListResponse$inboundSchema,
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "Headers": "headers",
+        "Result": "result",
+      });
+    }),
+  )
 );
 
 export function listApiInventoryResponseFromJSON(

@@ -8,7 +8,7 @@
 
 ## createStockMovement
 
-Registra un movimiento manual para ajustar stock de un producto o variante.
+Registra un movimiento manual para ajustar stock. En mode replace, items[].expected_quantity compara el stock disponible observado con el valor actual bajo bloqueo. Si falta, el reemplazo es incondicional. En mode delta, expected_quantity no se acepta. Para un combo, compará la cantidad disponible del combo.
 
 ### Example Usage
 
@@ -26,7 +26,7 @@ async function run() {
     body: {
       warehouseId: "bd7bbffc-54b1-41ee-9e14-243256fb1a18",
       mode: "replace",
-      operationDate: new Date("2026-04-01T10:38:32.297Z"),
+      operationDate: "2026-04-01T10:38:32.297Z",
       reason: "<value>",
       items: [],
     },
@@ -58,7 +58,7 @@ async function run() {
     body: {
       warehouseId: "bd7bbffc-54b1-41ee-9e14-243256fb1a18",
       mode: "replace",
-      operationDate: new Date("2026-04-01T10:38:32.297Z"),
+      operationDate: "2026-04-01T10:38:32.297Z",
       reason: "<value>",
       items: [],
     },
@@ -94,4 +94,5 @@ run();
 | errors.ApiErrorEnvelope   | 400, 401, 403, 404, 409   | application/json          |
 | errors.ApiErrorEnvelope   | 429                       | application/json          |
 | errors.ApiErrorEnvelope   | 500                       | application/json          |
+| errors.ApiErrorEnvelope   | 503                       | application/json          |
 | errors.LapymeDefaultError | 4XX, 5XX                  | \*/\*                     |

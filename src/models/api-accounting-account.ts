@@ -5,70 +5,78 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../lib/primitives.js";
-import { safeParse } from "../lib/schemas.js";
-import * as openEnums from "../types/enums.js";
-import { OpenEnum } from "../types/enums.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
+import {
+  ApiSharedEnum1d20f1f7e9,
+  ApiSharedEnum1d20f1f7e9$inboundSchema,
+} from "./api-shared-enum1d20f1f7e9.js";
+import {
+  ApiSharedEnum5433445ffc,
+  ApiSharedEnum5433445ffc$inboundSchema,
+} from "./api-shared-enum5433445ffc.js";
+import {
+  ApiSharedEnuma6084829bf,
+  ApiSharedEnuma6084829bf$inboundSchema,
+} from "./api-shared-enuma6084829bf.js";
+import {
+  ApiSharedEnumaec7a1581f,
+  ApiSharedEnumaec7a1581f$inboundSchema,
+} from "./api-shared-enumaec7a1581f.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
-
-export const NormalBalance = {
-  Debit: "debit",
-  Credit: "credit",
-} as const;
-export type NormalBalance = OpenEnum<typeof NormalBalance>;
 
 export type ApiAccountingAccount = {
   object: "account";
   id: string;
   code: string | null;
   name: string;
-  type: string;
-  normalBalance: NormalBalance;
-  systemRole: string | null;
+  description: string | null;
+  type: ApiSharedEnum5433445ffc;
+  normalBalance: ApiSharedEnum1d20f1f7e9;
+  systemRole: ApiSharedEnumaec7a1581f | null;
   isActive: boolean;
   isPostable: boolean;
   parentId: string | null;
-  incomeStatementCategory: string | null;
+  incomeStatementCategory: ApiSharedEnuma6084829bf | null;
   isInflationAdjustable: boolean;
 };
-
-/** @internal */
-export const NormalBalance$inboundSchema: z.ZodMiniType<
-  NormalBalance,
-  unknown
-> = openEnums.inboundSchema(NormalBalance);
 
 /** @internal */
 export const ApiAccountingAccount$inboundSchema: z.ZodMiniType<
   ApiAccountingAccount,
   unknown
-> = z.pipe(
-  z.object({
-    object: types.literal("account"),
-    id: types.string(),
-    code: types.nullable(types.string()),
-    name: types.string(),
-    type: types.string(),
-    normal_balance: NormalBalance$inboundSchema,
-    system_role: types.nullable(types.string()),
-    is_active: types.boolean(),
-    is_postable: types.boolean(),
-    parent_id: types.nullable(types.string()),
-    income_statement_category: types.nullable(types.string()),
-    is_inflation_adjustable: types.boolean(),
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      "normal_balance": "normalBalance",
-      "system_role": "systemRole",
-      "is_active": "isActive",
-      "is_postable": "isPostable",
-      "parent_id": "parentId",
-      "income_statement_category": "incomeStatementCategory",
-      "is_inflation_adjustable": "isInflationAdjustable",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      object: types.literal("account"),
+      id: types.string(),
+      code: types.nullable(types.string()),
+      name: types.string(),
+      description: types.nullable(types.string()),
+      type: ApiSharedEnum5433445ffc$inboundSchema,
+      normal_balance: ApiSharedEnum1d20f1f7e9$inboundSchema,
+      system_role: types.nullable(ApiSharedEnumaec7a1581f$inboundSchema),
+      is_active: types.boolean(),
+      is_postable: types.boolean(),
+      parent_id: types.nullable(types.string()),
+      income_statement_category: types.nullable(
+        ApiSharedEnuma6084829bf$inboundSchema,
+      ),
+      is_inflation_adjustable: types.boolean(),
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        "normal_balance": "normalBalance",
+        "system_role": "systemRole",
+        "is_active": "isActive",
+        "is_postable": "isPostable",
+        "parent_id": "parentId",
+        "income_statement_category": "incomeStatementCategory",
+        "is_inflation_adjustable": "isInflationAdjustable",
+      });
+    }),
+  )
 );
 
 export function apiAccountingAccountFromJSON(

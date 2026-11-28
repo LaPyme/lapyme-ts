@@ -1,0 +1,27 @@
+# ApiInventoryAssemblyRequestDisassembly
+
+## Example Usage
+
+```typescript
+import { ApiInventoryAssemblyRequestDisassembly } from "lapyme/models";
+
+let value: ApiInventoryAssemblyRequestDisassembly = {
+  kitProductId: "b58179e0-fd3d-46b6-922a-842603136cc5",
+  warehouseId: "da614059-7d17-48a5-af51-7f4fb1951407",
+  quantity: 4230.42,
+  type: "disassembly",
+};
+```
+
+## Fields
+
+| Field                                                                                                                  | Type                                                                                                                   | Required                                                                                                               | Description                                                                                                            |
+| ---------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `kitProductId`                                                                                                         | *string*                                                                                                               | :heavy_check_mark:                                                                                                     | N/A                                                                                                                    |
+| `warehouseId`                                                                                                          | *string*                                                                                                               | :heavy_check_mark:                                                                                                     | N/A                                                                                                                    |
+| `quantity`                                                                                                             | *number*                                                                                                               | :heavy_check_mark:                                                                                                     | N/A                                                                                                                    |
+| `notes`                                                                                                                | *string*                                                                                                               | :heavy_minus_sign:                                                                                                     | N/A                                                                                                                    |
+| `componentLots`                                                                                                        | [models.ApiSharedObject7b350f629a](../models/api-shared-object7b350f629a.md)[]                                         | :heavy_minus_sign:                                                                                                     | N/A                                                                                                                    |
+| `type`                                                                                                                 | *"disassembly"*                                                                                                        | :heavy_check_mark:                                                                                                     | N/A                                                                                                                    |
+| `batchCode`                                                                                                            | *string*                                                                                                               | :heavy_minus_sign:                                                                                                     | N/A                                                                                                                    |
+| `lots`                                                                                                                 | [models.ApiSharedObjecta5d1522378](../models/api-shared-objecta5d1522378.md)[]                                         | :heavy_minus_sign:                                                                                                     | Select an inventory number by code or lot_id. Serial quantity is one. Unavailable outbound codes return line warnings. |
